@@ -1,0 +1,71 @@
+@import './../../../assets/sass/variable.scss';
+
+.top-search__item{
+    padding: 0;
+    padding: 30px $space-16;
+
+    &:nth-child(2n){
+        border-left: 1px solid #d5d5d5;
+        border-right: 1px solid #d5d5d5;
+    }
+
+    .box{
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .item--left{
+        position: relative;
+        flex: 225 0;
+        margin-right: 5px;
+    }
+
+    .item--right{
+        display: flex;
+        flex-direction: column;
+        flex: 110 0;
+    }
+
+    .thumb{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+        flex: 1;
+        overflow: hidden;
+
+        .number{
+            position: absolute;
+            width: 24px;
+            height: 30px;
+        }
+
+        img{
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .numSold{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            margin-bottom: 0;
+
+            text-align: center;
+
+            color: #fff;
+            background-color: rgba(0,0,0, .5);
+        }
+    }
+    
+    span{
+
+        font-weight: 600;
+        font-size: $f-18;
+        color: $main-color;
+    }
+
+}

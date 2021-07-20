@@ -1,0 +1,10 @@
+.brand{
+    display: block;
+    border-top: 1px solid #d5d5d5;
+    border-left: 1px solid #d5d5d5;
+
+    &:nth-child(2n){
+        border-right: 1px solid #d5d5d5;
+        border-left: 1px solid #d5d5d5;
+    }
+}

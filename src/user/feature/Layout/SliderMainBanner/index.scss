@@ -1,0 +1,52 @@
+@import './../../../assets/sass/mixin.scss';
+
+.slider-main-banner{
+    background-color: lawngreen ;
+
+    a{
+        display: block;
+        height: 100%;
+
+        div{
+            min-height: 235px;
+            max-height: 235px;
+
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .swiper-button-next, .swiper-button-prev{
+        display: none;
+        height: 60px;
+        width: 36px;
+
+        background-color: rgba(0,0,0,.5);
+        color: #fff;
+
+        border-radius: 2px;
+
+        &::after{
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+
+    &:hover{
+        .swiper-button-next, .swiper-button-prev{
+            display: flex;
+        }
+    }
+
+    .swiper-pagination-bullet{
+        height: 10px;
+        width: 10px;
+
+        background-color: rgba(255, 255, 255, 1);
+        @include transition();
+
+        &-active{
+            background-color: #fff;
+        }
+    }
+}

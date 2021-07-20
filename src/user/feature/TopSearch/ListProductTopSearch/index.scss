@@ -1,0 +1,15 @@
+.list-product-top-search{
+    .col-5{
+        padding: 6px;
+        flex: 1 1 20%;
+    }
+
+    .product__thumbnail .box-img{
+        width: 100%;
+    }
+
+    .product__thumbnail .box-img img {
+        width: 100%;
+        max-width: 250px;
+    }
+}

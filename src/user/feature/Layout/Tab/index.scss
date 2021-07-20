@@ -1,0 +1,74 @@
+@import './../../../assets/sass/variable.scss';
+
+.tab-content{
+    position: sticky;
+    top: 62px;
+
+    margin-bottom: 15px;
+
+    background-color: #fff;
+
+    box-shadow: 0 1px 10px #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+    z-index: 100;
+
+    .tab-item{
+        position: relative;
+
+        padding: 15px 15px;
+
+        cursor: pointer;
+
+        &.active::after{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+
+            height: 3px;
+            width: 100%;
+
+            background-color: $primary-color;
+
+            transform: translateX(-50%);
+        }
+
+        h5{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+
+            min-height: 26px;
+            max-height: 26px;
+
+            line-height: 26px;
+
+            font-size: 22px;
+            font-weight: 400;
+
+            img{
+                height: 20px;
+            }
+        }
+
+        &.active{
+            h5{
+                color: $primary-color;
+            }
+        }
+    }
+
+    .tab-more{
+        position: relative;
+
+        .tab-more-box{
+            position: absolute;
+            right: 0;
+            top: 100%; 
+            visibility: hidden;           
+        }
+    }
+}

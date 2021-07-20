@@ -1,0 +1,7 @@
+@import './../../../assets/sass/mixin.scss';
+
+.slider-product-category__content{
+    .swiper-button-next, .swiper-button-prev{
+        @include normalArrow();
+    }
+}

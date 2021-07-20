@@ -1,0 +1,36 @@
+@mixin font ($name) {
+    font-family: $name, sans-serif;
+}
+
+@mixin background-size{
+    background-position: center;
+    background-size: cover;
+}
+
+@mixin transition ($property: all, $time: .3s, $func: ease) {
+    transition: $property $time $func;
+}
+
+@mixin normalArrow (){
+    width: 36px;
+    height: 36px;
+    
+    font-size: 18px;
+
+    background-color: #fff;
+    color: #30271c;
+
+    border-radius: 50%;
+    border: 1px solid #d5d5d5;
+    box-shadow: 0 0 10px #d5d5d5;
+    transition: all .3s;
+
+    &:after{
+        font-size: inherit;
+    }
+
+    &:hover{
+        transform: scale(1.25);
+    }
+
+}

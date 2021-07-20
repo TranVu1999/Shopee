@@ -1,0 +1,25 @@
+@import './../../../assets/sass/variable.scss';
+@import './../../../assets/sass/mixin.scss';
+
+
+.product-thumbnail-sale-content{
+    display: block;
+
+    .box-img{
+        position: relative;
+        height: 173px;
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .pice{
+        @include font("Merriweather");
+        font-size: 20px;
+        font-weight: 800;
+        color: $primary-color;
+        text-align: center;
+    }
+
+}

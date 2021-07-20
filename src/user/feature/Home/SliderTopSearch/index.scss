@@ -1,0 +1,12 @@
+@import './../../../assets/sass/mixin.scss';
+
+.top-search-content{
+    .swiper-slide:nth-child(3n-1) .top-search__item{
+        border-left: 1px solid #d5d5d5;
+        border-right: 1px solid #d5d5d5;
+    }
+
+    .swiper-button-next, .swiper-button-prev{
+        @include normalArrow();
+    }
+}

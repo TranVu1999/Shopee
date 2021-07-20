@@ -1,0 +1,11 @@
+@import './../../../assets/sass/mixin.scss';
+
+.slide-brand-content{
+    .swiper-slide:first-child .brand{
+        border-left: transparent;
+    }
+
+    .swiper-button-next, .swiper-button-prev{
+        @include normalArrow();
+    }
+}

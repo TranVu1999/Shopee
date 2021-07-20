@@ -1,0 +1,35 @@
+@import './../../../assets/sass/variable.scss';
+
+.sidebar-content{
+    .list-category{
+        text-transform: capitalize;
+
+        li{
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 4px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        li.active{
+            font-weight: 600;
+            color: $primary-color;
+            
+            &::before{
+                content: '\35';
+
+                position: absolute;
+                left: 0;
+                top: 50%;
+
+                font-family: 'ElegantIcons';
+
+                transform: translateY(-50%);
+                
+            }
+        }
+    }
+}
