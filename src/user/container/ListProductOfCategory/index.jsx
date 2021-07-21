@@ -186,6 +186,27 @@ function ListProductOfCategoryPage(props) {
         "trang suc nam"
     ]);
 
+    const [listAddress] = useState([
+        "TP.Ho Chi Minh",
+        "Ha Noi",
+        "Vinh Phuc",
+        "Thai Nguyen",
+        "Hai Phong",
+        "Dong Nai",
+        "Bac Ninh",
+        "Da Nang"
+    ]);
+
+    const [listBrandProduct] = useState([
+        "LADOS",
+        "FASVIN",
+        "CIZA",
+        "Rough",
+        "POLOMAN",
+        "TSIMPLE",
+        "Calvin Klein"
+    ]);
+
     return (
         <div className = "mt-80 list-product-of-category-page">
             <div className="container">
@@ -206,6 +227,8 @@ function ListProductOfCategoryPage(props) {
                                 <SideBar 
                                     choseCategory = {0}
                                     listCategory = {listCategory} 
+                                    listAddress = {listAddress}
+                                    listBrand = {listBrandProduct}
                                 />
                             </div>
                             
