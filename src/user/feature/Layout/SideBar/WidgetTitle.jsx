@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Components
 import styled from 'styled-components';
 
-const SidebarWidgetContent = styled.div`
+const SidebarWidgetTitleContent = styled.div`
     padding-bottom: 15px;
     margin-bottom: 15px;
     border-bottom: 1px solid #d5d5d5;
@@ -14,28 +14,28 @@ const SidebarWidgetContent = styled.div`
     }
 `
 
-SidebarWidget.propTypes = {
+SidebarWidgetTitle.propTypes = {
     title: PropTypes.string,
     icon: PropTypes.element,
 };
 
-SidebarWidget.defaultProps = {
+SidebarWidgetTitle.defaultProps = {
     title: "Tat Ca Danh Muc",
-    icon: (<span aria-hidden="true" className="mr-2 icon_ul"></span>)
+    icon: "icon_hourglass"
 }
 
-function SidebarWidget(props) {
+function SidebarWidgetTitle(props) {
 
     const {title, icon} = props;
 
     return (
-        <SidebarWidgetContent>
+        <SidebarWidgetTitleContent>
             <h5 className = "d-flex align-items-center">
-                 {icon}
+                <span aria-hidden="true" className = {`mr-2 ${icon}`} ></span>
                 {title}
             </h5>
-        </SidebarWidgetContent>
+        </SidebarWidgetTitleContent>
     );
 }
 
-export default SidebarWidget;
+export default SidebarWidgetTitle;

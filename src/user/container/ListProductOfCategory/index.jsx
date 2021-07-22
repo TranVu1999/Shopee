@@ -5,9 +5,10 @@ import SliderMainBanner from './../../feature/Layout/SliderMainBanner';
 import SliderBrand from './../../feature/Layout/SliderBrand';
 import SideBar from './../../feature/Layout/SideBar';
 import Title from '../../common/component/Title';
-
-// CSS
-import './index.scss';
+import WidgetProductCategory from './../../feature/Layout/SideBar/WidgetProductCategory';
+import WidgetListCheck from '../../feature/Layout/SideBar/WidgetListCheck';
+import WidgetRating from '../../feature/Layout/SideBar/WidgetRating';
+import WidgetPrice from '../../feature/Layout/SideBar/WidgetPrice';
 
 
 function ListProductOfCategoryPage(props) {
@@ -225,11 +226,26 @@ function ListProductOfCategoryPage(props) {
                         <div className="col-lg-2">
                             <div className="list-product__left">
                                 <SideBar 
-                                    choseCategory = {0}
-                                    listCategory = {listCategory} 
-                                    listAddress = {listAddress}
-                                    listBrand = {listBrandProduct}
-                                />
+                                    WidgetProductCategory = {
+                                        <WidgetProductCategory items = {listCategory}/>
+                                    }
+                                    WidgetSalerooms = {
+                                        <WidgetListCheck 
+                                            items = {listAddress} 
+                                            maxLength = {4}
+                                        />
+                                    }
+                                    WidgetBrand = {
+                                        <WidgetListCheck 
+                                            items = {listBrandProduct} 
+                                            maxLength = {4}
+                                        />
+                                    }
+                                    WidgetRating = {<WidgetRating/>}
+                                    WidgetPrice = {<WidgetPrice/>}
+
+                                >
+                                </SideBar>
                             </div>
                             
                         </div>
