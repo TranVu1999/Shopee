@@ -40,7 +40,6 @@ function ListProductTopSearch(props) {
             <div className="row">
                 {renderItems()}
             </div>
-
         </div>
     );
 }

@@ -11,6 +11,7 @@ import HomePage from './container/Home';
 import SalePage from './container/Sale';
 import TopSearchPage from './container/TopSearch';
 import ListProductOfCategoryPage from './container/ListProductOfCategory';
+import ListStorePage from './container/ListStore';
 
 function UserRoll(props) {
 
@@ -30,7 +31,10 @@ function UserRoll(props) {
             {/* <TopSearchPage/> */}
 
             {/* LIST PRODUCT OF CATEGORY */}
-            <ListProductOfCategoryPage/>
+            {/* <ListProductOfCategoryPage/> */}
+            
+            {/* LIST STORE */}
+            <ListStorePage/>
             
             <Footer/>
         </div>
