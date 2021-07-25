@@ -1,48 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// Component
+import styled from 'styled-components';
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import styled from 'styled-components';
 
 // Style
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
-import './index.scss';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
-const Banner = styled.div`
-    min-height: ${props => props.isLarge ? "350px!important" : "235px"};
-    max-height: ${props => props.isLarge ? "350px!important" : "235px"};
-    background-image: url(${props => props.image});
-    background-size: cover;
-    background-repeat: no-repeat;
+const WidgetBanner = styled.div`
+    img{
+        width: 100%;
+        height: 100%
+    }
 `;
 
-SliderMainBanner.propTypes = {
+WidgetSliderBanner.propTypes = {
     items: PropTypes.array,
-    isLarge: PropTypes.bool,
 };
 
-SliderMainBanner.defaultProps = {
-    items: [],
-    isLarge: false
+WidgetSliderBanner.defaultProps = {
+    items: []
 }
 
-function SliderMainBanner(props) {
 
-    const {items, isLarge} = props;
+function WidgetSliderBanner(props) {
+    const {items} = props;
 
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
-                    <a href = {item.url}>
-                        <Banner isLarge = {isLarge} image = {item.image}/>
-                    </a>
+                <SwiperSlide key = {item.id}>
+                    <WidgetBanner>
+                        <img src={item.image} alt="banner" />
+                    </WidgetBanner>
                 </SwiperSlide>
                 
             );
@@ -50,7 +44,7 @@ function SliderMainBanner(props) {
     }
 
     return (
-        <div className = "slider-main-banner">
+        <div className = "slider-banner-content normal-arrow">
             <Swiper
                 slidesPerView={1}
                 navigation
@@ -64,4 +58,4 @@ function SliderMainBanner(props) {
     );
 }
 
-export default SliderMainBanner;
+export default WidgetSliderBanner;

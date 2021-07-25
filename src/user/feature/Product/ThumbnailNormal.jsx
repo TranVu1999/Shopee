@@ -36,6 +36,10 @@ const BoxPrice = styled.div`
     }
 `;
 
+const BoxStoreAddress = styled.div`
+    font-size: 12px;
+`;
+
 
 ThumbnailNormal.propTypes = {
     item: PropTypes.object,
@@ -80,6 +84,10 @@ function ThumbnailNormal(props) {
                     {item.numOrder ? <span className="order-number">Da ban {Number.shortcutNumber(item.numOrder)}</span> :  ""}
                     
                 </div>
+
+                <BoxStoreAddress className="text-right">
+                    {item.storeAddress}
+                </BoxStoreAddress>
             </div>
         </Thumbnail>
     );

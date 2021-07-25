@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Component
-import SwiperCore, { Navigation, A11y } from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
 
 // CSS
