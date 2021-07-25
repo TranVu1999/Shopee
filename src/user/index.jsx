@@ -12,6 +12,7 @@ import SalePage from './container/Sale';
 import TopSearchPage from './container/TopSearch';
 import ListProductOfCategoryPage from './container/ListProductOfCategory';
 import ListStorePage from './container/ListStore';
+import StoreDetailPage from './container/StoreDetail';
 
 function UserRoll(props) {
 
@@ -34,7 +35,10 @@ function UserRoll(props) {
             {/* <ListProductOfCategoryPage/> */}
             
             {/* LIST STORE */}
-            <ListStorePage/>
+            {/* <ListStorePage/> */}
+
+            {/* STORE DETAIL */}
+            <StoreDetailPage/>
             
             <Footer/>
         </div>
