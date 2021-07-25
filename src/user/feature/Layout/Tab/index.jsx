@@ -26,7 +26,7 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
     smallHeaderTab: false,
-    full: true,
+    full: false,
     items: [],
     activeIndex: 0,
     onHandleChoseTab: null,
@@ -42,8 +42,7 @@ function Tab(props) {
         activeIndex, 
         onHandleChoseTab, 
         full,
-        smallHeaderTab,
-        moreTab
+        smallHeaderTab, moreTab
     } = props;
 
     const onHandleClick = index =>{
@@ -74,18 +73,22 @@ function Tab(props) {
         >
             {renderListTab()}
 
-            <div 
-                className="tab-item tab-more"
-                onMouseEnter = {() => {setIsShowPopup(true)}}
-                onMouseLeave = {() => {setIsShowPopup(false)}}
-            >
-                <HeaderTab small = {smallHeaderTab}
-                >Xem them  <span aria-hidden="true" class="arrow_triangle-down"></span></HeaderTab>
+            {moreTab ? (
+                <div 
+                    className="tab-item tab-more"
+                    onMouseEnter = {() => {setIsShowPopup(true)}}
+                    onMouseLeave = {() => {setIsShowPopup(false)}}
+                >
+                    <HeaderTab small = {smallHeaderTab}
+                    >Xem them  <span aria-hidden="true" class="arrow_triangle-down"></span></HeaderTab>
 
-                <div className="tab-more-box">
-                    <PopUp isOpen = {isShowPopup}>no no</PopUp>
+                    <div className="tab-more-box">
+                        <PopUp isOpen = {isShowPopup}>no no</PopUp>
+                    </div>
                 </div>
-            </div>
+            ) : ""}
+
+            
         </div>
     );
 }

@@ -7,7 +7,6 @@ import Number from './../../util/number';
 
 const StoreThumbnail = styled.div`
     position: relative;
-    min-height: 135px;
     width: 33.3333333%;
 `;
 
@@ -75,6 +74,20 @@ const Button = styled.button`
     }
 `;
 
+
+const StoreStatisticsItem = styled.div`
+    height: 33.333333%;
+    
+    span{
+        margin-right: 5px;
+    }
+
+    strong{
+        color: #c7a17a;
+        margin-left: 8px;
+    }
+`;
+
 WidgetStoreInformation.propTypes = {
     info: PropTypes.object,
 };
@@ -130,16 +143,49 @@ function WidgetStoreInformation(props) {
                     }}
                 >
                     <Button> 
-                        <span aria-hidden="true" class="icon_plus"></span>
+                        <span className="icon_plus"></span>
                         Theo doi
                     </Button>
                     <Button>
-                        <span aria-hidden="true" class="icon_chat_alt"></span>
+                        <span className="icon_chat_alt"></span>
                         Chat
                     </Button>
                 </div>
             </StoreThumbnail>
             
+            <div 
+                className = "py-3 ml-5 d-flex flex-column flex-wrap "
+                style = {{columnGap: '100px'}}
+            >
+                <StoreStatisticsItem> 
+                    <span className="icon_documents_alt"></span>
+                    San Pham: <strong>110</strong> 
+                </StoreStatisticsItem>
+
+                <StoreStatisticsItem> 
+                    <span className="icon_contacts_alt"></span>
+                    Tỉ lệ phản hồi Chat: 
+                    <strong>98% (trong vài giờ)</strong> 
+                </StoreStatisticsItem>
+
+                <StoreStatisticsItem>
+                    <span className="icon_contacts_alt"></span> 
+                    Người theo dõi:
+                    <strong>36,8k</strong>
+                </StoreStatisticsItem>
+
+                <StoreStatisticsItem> 
+                    <span className="icon_contacts_alt"></span>
+                    Danh gia:  
+                    <strong>4.9 (22,9k danh gia)</strong>
+                </StoreStatisticsItem>
+
+                <StoreStatisticsItem> 
+                    <span className="icon_contacts_alt"></span>
+                    Tham gia:   
+                    <strong>6 nam truoc</strong>
+                </StoreStatisticsItem>
+            </div>
         </div>
     );
 }

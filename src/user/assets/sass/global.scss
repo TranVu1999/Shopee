@@ -147,6 +147,34 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
         background-size: auto;
         background-size: contain;
     }
+}
 
+
+.normal-arrow{
+    .swiper-slide:first-child .brand{
+        border-left: transparent;
+    }
     
+    .swiper-button-next, .swiper-button-prev{
+        width: 36px;
+        height: 36px;
+        
+        font-size: 18px;
+
+        background-color: #fff;
+        color: #30271c;
+
+        border-radius: 50%;
+        border: 1px solid #d5d5d5;
+        box-shadow: 0 0 10px #d5d5d5;
+        transition: all .3s;
+
+        &:after{
+            font-size: inherit;
+        }
+
+        &:hover{
+            transform: scale(1.25);
+        }
+    }
 }
