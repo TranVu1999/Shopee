@@ -151,10 +151,6 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
 
 .normal-arrow{
-    .swiper-slide:first-child .brand{
-        border-left: transparent;
-    }
-    
     .swiper-button-next, .swiper-button-prev{
         width: 36px;
         height: 36px;
@@ -177,4 +173,41 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
             transform: scale(1.25);
         }
     }
+}
+
+.square-arrow-2842{
+    .swiper-button-next, .swiper-button-prev{
+        width: 28px;
+        height: 42px;
+        
+        font-size: 14px;
+
+        background-color: rgba(255, 255, 255, .9);
+        color: #30271c;
+
+        border-radius: 4px;
+        border: 1px solid #d5d5d5;
+        box-shadow: 0 0 10px #d5d5d5;
+        transition: all .3s;
+
+        &:after{
+            font-size: inherit;
+        }
+
+        &:hover{
+            background-color: #fff;
+        }
+    }
+
+    .swiper-button-next{
+        right: 0
+    }
+    .swiper-button-prev{
+        left: 0
+    }
+}
+
+// BORDER RADIUS
+.br-4{
+    border-radius: 4px;
 }
