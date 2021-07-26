@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import WidgetBreadcrumb from '../../feature/Layout/WidgetBreadcrumb';
 import WidgetImage from '../../feature/ProductDetail/WidgetImage';
 import WidgetModalImage from '../../feature/ProductDetail/WidgetModalImage';
+import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailStore';
+
 
 // Hooks
 import useOutsideElement from './../../hooks/outsideElement';
@@ -16,7 +18,7 @@ const ModalImageBox = styled.div`
     width: 100%;
     height: 100%;
 
-    background-color: #000;
+    background-color: rgba(0,0,0,.5);
     z-index: 100;
 `;
 
@@ -33,9 +35,19 @@ const ImageBoxContent = styled.div`
 `;
 
 function ProductDetailPage(props) {
+    // State
     const [indexImageActive, setIndexImageActive] = useState(0);
+    const [storeInformation] = useState({
+        title: "4U SHOP",
+        onlineTime: "70",
+        avatar: "https://cf.shopee.vn/file/efb9073e1dfbabf429278b9e2e592363_tn",
+        bgImage: "https://cf.shopee.vn/file/30e84c8c66e5d13ea95d729c443ee214_tn",
+    });
 
-    const {visible, setVisible, ref} = useOutsideElement(true);
+
+    // Hook
+    const {visible, setVisible, ref} = useOutsideElement(false);
+
 
     // USE EFFECT
     // Toggle disable body scroll
@@ -85,7 +97,7 @@ function ProductDetailPage(props) {
             <div className="container">
                 <WidgetBreadcrumb items = {breadcrumb}/>
 
-                <div className="row bg-white br-4">
+                <div className="row bg-white br-4 mb-3">
                     <WidgetImage 
                         items = {images}
                         onHandleOpenModalImage = {onHandleOpenModalImage}
@@ -104,6 +116,15 @@ function ProductDetailPage(props) {
                         </ModalImageBox>
                     ) : ""}
                     
+                </div>
+
+                <div className="row bg-white py-4">
+                    <div className="col-lg-4">
+                        <WidgetThumbnailStore info = {storeInformation}/>
+                    </div>
+                    <div className="col-lg-8">
+                        <div className="vertical-line-1"></div>
+                    </div>
                     
                 </div>
             </div>
