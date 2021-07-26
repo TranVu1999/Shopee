@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import {Swiper, SwiperSlide} from 'swiper/react';
 
 // Style
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
 import { useState } from 'react';
 
 const ImageBox = styled.div`

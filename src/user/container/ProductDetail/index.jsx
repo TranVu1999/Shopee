@@ -21,16 +21,21 @@ const ModalImageBox = styled.div`
 `;
 
 const ImageBoxContent = styled.div`
+    position: relative;
+    top: 48%;
+
     width: 60%;
-    height: calc(100% - 100px);
+    height: calc(100% - 200px);
     margin: 50px auto;
     background-color: #fff;
+
+    transform: translateY(-55%);
 `;
 
 function ProductDetailPage(props) {
     const [indexImageActive, setIndexImageActive] = useState(0);
 
-    const {visible, setVisible, ref} = useOutsideElement(false);
+    const {visible, setVisible, ref} = useOutsideElement(true);
 
     // USE EFFECT
     // Toggle disable body scroll
