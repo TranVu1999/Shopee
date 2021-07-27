@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import WidgetBreadcrumb from '../../feature/Layout/WidgetBreadcrumb';
 import WidgetImage from '../../feature/ProductDetail/WidgetImage';
 import WidgetModalImage from '../../feature/ProductDetail/WidgetModalImage';
+import WidgetStatisticsStore from '../../feature/ProductDetail/WidgetStatisticsStore';
 import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailStore';
 
 
@@ -42,6 +43,32 @@ function ProductDetailPage(props) {
         onlineTime: "70",
         avatar: "https://cf.shopee.vn/file/efb9073e1dfbabf429278b9e2e592363_tn",
         bgImage: "https://cf.shopee.vn/file/30e84c8c66e5d13ea95d729c443ee214_tn",
+        statistics: [
+            {
+                label: "Đánh giá",
+                number: "6,9k"
+            },
+            {
+                label: "Sản phẩm",
+                number: "330"
+            },
+            {
+                label: "tỉ lệ phản hồi",
+                number: "100%"
+            },
+            {
+                label: "thời gian phản hồi",
+                number: "trong vài giờ"
+            },
+            {
+                label: "tham gia",
+                number: "12 tháng trước"
+            },
+            {
+                label: "Người theo dõi",
+                number: "43k"
+            }
+        ]
     });
 
 
@@ -122,8 +149,10 @@ function ProductDetailPage(props) {
                     <div className="col-lg-4">
                         <WidgetThumbnailStore info = {storeInformation}/>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 d-flex align-items-center">
                         <div className="vertical-line-1"></div>
+
+                        <WidgetStatisticsStore items = {storeInformation.statistics}/>
                     </div>
                     
                 </div>
