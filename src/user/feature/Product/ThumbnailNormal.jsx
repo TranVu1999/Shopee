@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 // Import Module
 import Number from './../../util/number';
 
-const Thumbnail = styled.a`
+const Thumbnail = styled(Link)`
     display: block;
     min-height: 300px;
     border: 1px solid #d5d5d5;
@@ -53,7 +54,7 @@ function ThumbnailNormal(props) {
     const {item} = props;
 
     return (
-        <Thumbnail href = "#/">
+        <Thumbnail to="/product-detail">
             <BoxImage 
                 style = {{
                     backgroundImage: `url(${item.image})`

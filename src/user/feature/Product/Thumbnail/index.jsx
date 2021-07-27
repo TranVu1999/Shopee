@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import './index.scss';
 
 Thumbnail.propTypes = {
@@ -29,7 +30,7 @@ function Thumbnail(props) {
     }
 
     return (
-        <a href="#/" className = "product__thumbnail">
+        <Link to="/product-detail" className = "product__thumbnail">
             <div className="box-img">
                 <img src = {img} alt = "product"/>
 
@@ -50,7 +51,7 @@ function Thumbnail(props) {
                     
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 

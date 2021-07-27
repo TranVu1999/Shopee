@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 // CSS
 import './index.scss';
@@ -27,8 +28,7 @@ function ThumbnailSale(props) {
     const remain =  (numOrder / numSale * 100).toFixed(0);
 
     return (
-        <a 
-            href = {link}
+        <Link to="/product-detail"
             className = "product-thumbnail-sale-content"
         >
             <div className="box-img" 
@@ -54,7 +54,7 @@ function ThumbnailSale(props) {
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 

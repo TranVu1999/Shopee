@@ -40,7 +40,7 @@ const Expire = styled.span`
 `;
 
 const Button = styled.button`
-    padding: 2px 20px;
+    padding: 2px 1rem;
     color: #fff;
     background-color: #ee4d2d;
 `;

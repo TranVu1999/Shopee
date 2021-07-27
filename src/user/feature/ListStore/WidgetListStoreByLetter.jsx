@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom'
 
 const WidgetLetter = styled.div`
     width: 100px;
@@ -11,7 +12,7 @@ const WidgetLetter = styled.div`
     line-height: 43px;
 `;
 
-const WidgetStore = styled.a`
+const WidgetStore = styled(Link)`
     display: block;
     width: 20%;
     padding: 0 20px;
@@ -56,7 +57,7 @@ function WidgetListStoreByLetter(props) {
     const renderListStore = () =>{
         return listStore.map(item =>{
             return (
-                <WidgetStore key = {item.title} href = {item.url}>
+                <WidgetStore key = {item.title} to = "/store-detail">
                     <WidgetImage image = {item.image}/>
                     <span>{item.title}</span>
                 </WidgetStore>

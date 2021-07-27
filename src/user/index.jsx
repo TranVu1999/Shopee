@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {Switch, Route} from 'react-router-dom'
 import './assets/sass/index.scss';
 import HeaderLarge from './common/component/HeadingLarge';
 import HeadingSmall from './common/component/HeadingSmall';
@@ -15,34 +16,27 @@ import ListStorePage from './container/ListStore';
 import StoreDetailPage from './container/StoreDetail';
 import ProductDetailPage from './container/ProductDetail';
 
-function UserRoll(props) {
+import routes from './container/routes';
 
-    
+function UserRoll(props) {
 
     return (
         <div className = "main-wrapper">
             <Header/>
-            
-            {/* HOME PAGE */}
-            {/* <HomePage/> */}
 
-            {/* SALE PAGE */}
-            {/* <SalePage/> */}
-
-            {/* TOP SEARCH PAGE */}
-            {/* <TopSearchPage/> */}
-
-            {/* LIST PRODUCT OF CATEGORY */}
-            {/* <ListProductOfCategoryPage/> */}
-            
-            {/* LIST STORE */}
-            {/* <ListStorePage/> */}
-
-            {/* STORE DETAIL */}
-            {/* <StoreDetailPage/> */}
+            <Switch>
+                {routes.map((item, index) =>{
+                return <Route 
+                    key = {index} 
+                    path = {item.path} 
+                    component = {item.component}
+                    exact = {item.exact || false}
+                />
+                })}
+            </Switch>
 
             {/* PRODUCT DETAIL */}
-            <ProductDetailPage/>
+            {/* <ProductDetailPage/> */}
             
             <Footer/>
         </div>

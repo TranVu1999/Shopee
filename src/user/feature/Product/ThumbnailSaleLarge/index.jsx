@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 // CSS
 import './index.scss';
@@ -19,7 +20,7 @@ function ThumbnailSaleLarge(props) {
 
     return (
         <div className = "thumbnail-sale-large-content">
-            <a href="#/" className = "d-block">
+            <Link to="/product-detail" className = "d-block">
                 <div 
                     className="bg-image box-img mb-3" 
                     style = {{backgroundImage: `url(${item.image})`}}
@@ -55,7 +56,7 @@ function ThumbnailSaleLarge(props) {
                         </div>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 }

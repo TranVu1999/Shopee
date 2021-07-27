@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 // Component
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -38,7 +39,7 @@ function FlashSale(props) {
             {/* Title */}
             <h5 className = "d-flex align-items-center justify-content-between">
                 <img src = "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/fb1088de81e42c4e538967ec12cb5caa.png" alt="title" />
-                <a href="#/">Xem them <span aria-hidden="true" class="arrow_carrot-right"></span></a>
+                <Link to="/flash-sale">Xem them <span aria-hidden="true" class="arrow_carrot-right"></span></Link>
             </h5>
 
 

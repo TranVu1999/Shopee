@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 const WidgetAvatar = styled.div`
     width: 190px;
@@ -44,7 +45,7 @@ function ThumbnailResume(props) {
     
 
     return (
-        <a href = "#/" className = "d-block px-3">
+        <Link to="/product-detail" className = "d-block px-3">
             <WidgetAvatar className = "bg-image" image = {image}/>
             <Title>{title}</Title>
             <div className="box-text">
@@ -54,7 +55,7 @@ function ThumbnailResume(props) {
                     <span className="price">{price - sale}.00<span className="currency-unit">$</span></span>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 

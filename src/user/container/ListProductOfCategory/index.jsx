@@ -411,7 +411,7 @@ function ListProductOfCategoryPage(props) {
                 
 
                 <div className="mb-40 bg-white slider-brand">
-                    <Title title = {"Danh sach nhan hang"} link = {"#/"}/>
+                    <Title title = {"Danh sach nhan hang"} link = {"/list-store"}/>
                     <SliderBrand items = {listBrand} row = {2} col = {6}/>
                 </div>
 

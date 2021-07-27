@@ -824,7 +824,7 @@ function HomePage(props) {
             {/* Top Search */}
             <section className="top-search">
                 <div className="bg-white container">
-                    <Title title = {"Tim kiem hang dau "} link = "#/"/>
+                    <Title title = {"Tim kiem hang dau "} link = "/top-products"/>
                     <SliderTopSearch items = {listTopSearch}/>
                 </div>
             </section>

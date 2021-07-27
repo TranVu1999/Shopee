@@ -13,6 +13,7 @@ import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailSto
 // Hooks
 import useOutsideElement from './../../hooks/outsideElement';
 import WidgetListTopProduct from '../../feature/ProductDetail/WidgetListTopProduct';
+import WidgetDescription from '../../feature/ProductDetail/WidgetDescription';
 
 
 const ModalImageBox = styled.div`
@@ -40,6 +41,32 @@ const ImageBoxContent = styled.div`
 
 function ProductDetailPage(props) {
     // State
+    const [breadcrumb] = useState([
+        {
+            title: "Shopee",
+            url: "#/"
+        },
+        {
+            title: "Thoi Trang Nu",
+            url: "#/"
+        },
+        {
+            title: "Dam",
+            url: "#/"
+        },
+        {
+            title: "Váy babydoll hoa nhí, váy hoa nhí dáng rộng - ullzang dáng dài cổ tim voan tơ Vintage Sota Shop",
+            url: "#/"
+        }
+    ]);
+    const [images] = useState([
+        "https://cf.shopee.vn/file/a23c5f36c458f623cfe57cddc209162f_tn",
+        "https://cf.shopee.vn/file/63a9eb9ed833ad94db2194b7242c1065_tn",
+        "https://cf.shopee.vn/file/1ee6718cabd94a720e8aaa8484f384c4_tn",
+        "https://cf.shopee.vn/file/28428ae673c8c452e7b33b82902d2526_tn",
+        "https://cf.shopee.vn/file/16399f4dd2b077946a3b859a3d593a91_tn",
+        "https://cf.shopee.vn/file/6331fd1e46ba2df1cdd46dbad064115c_tn"
+    ]);
     const [indexImageActive, setIndexImageActive] = useState(0);
     const [storeInformation] = useState({
         title: "4U SHOP",
@@ -128,6 +155,46 @@ function ProductDetailPage(props) {
             price: 159.00
         }
     ]);
+    const [productDescription] = useState({
+        breadcrumb: [
+            {
+                title: "Shopee",
+                url: "#/"
+            },
+            {
+                title: "Thời Trang Nữ",
+                url: "#/"
+            },
+            {
+                title: "Đầm",
+                url: "#/"
+            }
+        ],
+
+        moreDetail: [
+            {
+                label: "Chiều dài tay áo",
+                content: "Dài tay"
+            },
+            {
+                label: "Mẫu",
+                content: "Hoa"
+            },
+            {
+                label: "Kiểu váy",
+                content: "váy xòe"
+            },
+            {
+                label: "Kho hàng",
+                content: "41"
+            },
+            {
+                label: "Gửi từ",
+                content: "Quận Nam Từ Liêm, Hà Nội"
+            }
+        ],
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores, error. Eius quae dolorum eaque. Quo doloremque dolorem magni error laudantium quaerat quos alias vel suscipit? Minus adipisci consequatur voluptatibus voluptatem deserunt, aut esse blanditiis, libero quis illum ipsa a facere magni ad impedit explicabo, atque sapiente earum harum praesentium laborum eum dolore. Rerum nam cupiditate est quasi, ad impedit. Eum magni tenetur debitis temporibus ducimus eligendi quia minus eos amet, molestiae vitae unde enim ipsa ipsam? Consequuntur sit rerum quod perferendis voluptate. Accusamus, voluptatibus officia deleniti consequuntur reprehenderit maiores voluptas illo iste, saepe dicta suscipit animi laborum iusto qui molestiae."
+    });
 
 
     // Hook
@@ -144,33 +211,7 @@ function ProductDetailPage(props) {
         }
     }, [visible]);
 
-    const [breadcrumb] = useState([
-        {
-            title: "Shopee",
-            url: "#/"
-        },
-        {
-            title: "Thoi Trang Nu",
-            url: "#/"
-        },
-        {
-            title: "Dam",
-            url: "#/"
-        },
-        {
-            title: "Váy babydoll hoa nhí, váy hoa nhí dáng rộng - ullzang dáng dài cổ tim voan tơ Vintage Sota Shop",
-            url: "#/"
-        }
-    ]);
-
-    const [images] = useState([
-        "https://cf.shopee.vn/file/a23c5f36c458f623cfe57cddc209162f_tn",
-        "https://cf.shopee.vn/file/63a9eb9ed833ad94db2194b7242c1065_tn",
-        "https://cf.shopee.vn/file/1ee6718cabd94a720e8aaa8484f384c4_tn",
-        "https://cf.shopee.vn/file/28428ae673c8c452e7b33b82902d2526_tn",
-        "https://cf.shopee.vn/file/16399f4dd2b077946a3b859a3d593a91_tn",
-        "https://cf.shopee.vn/file/6331fd1e46ba2df1cdd46dbad064115c_tn"
-    ]);
+   
 
     const onHandleOpenModalImage = index =>{
         setIndexImageActive(index);
@@ -214,12 +255,12 @@ function ProductDetailPage(props) {
                     </div>
                 </div>
 
-                <div className="py-3 row">
-                    <div className="col-lg-9">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem soluta quasi corporis odit at labore in ab! Illo porro temporibus blanditiis voluptatum quas impedit delectus repellat dolor, asperiores ipsam eaque et saepe molestiae ex rem atque modi, minima, aliquid nostrum ipsum ratione alias nihil sint. Deleniti dolore facilis vitae nihil minima doloribus error, nostrum quidem ad omnis delectus iure non est voluptatem numquam sunt, incidunt enim iusto voluptate recusandae sequi quae fugiat repellendus! Dolores nam odit sit non repellendus quaerat temporibus reprehenderit voluptas fugit ex, illo mollitia ducimus expedita aliquid officiis natus fuga quidem error ea illum inventore. Cupiditate, voluptates?
+                <div className="py-3 row ">
+                    <div className = "mr-3" style = {{flex: 1}}>
+                        <WidgetDescription item = {productDescription}/>
                     </div>
 
-                    <div  style = {{width: '16.875em'}}>
+                    <div style = {{width: '16.875em'}}>
                         <div className="br-2 bg-white py-3 px-3 mb-3">
                             <WidgetListDiscount items = {listDiscount}/>
                         </div>
