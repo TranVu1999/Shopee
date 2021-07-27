@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 // Components
 import WidgetBreadcrumb from '../../feature/Layout/WidgetBreadcrumb';
+import WidgetListDiscount from '../../feature/ProductDetail/WidgetListDiscount';
 import WidgetImage from '../../feature/ProductDetail/WidgetImage';
 import WidgetModalImage from '../../feature/ProductDetail/WidgetModalImage';
 import WidgetStatisticsStore from '../../feature/ProductDetail/WidgetStatisticsStore';
@@ -11,6 +12,8 @@ import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailSto
 
 // Hooks
 import useOutsideElement from './../../hooks/outsideElement';
+import WidgetListTopProduct from '../../feature/ProductDetail/WidgetListTopProduct';
+
 
 const ModalImageBox = styled.div`
     position: fixed;
@@ -70,6 +73,61 @@ function ProductDetailPage(props) {
             }
         ]
     });
+    const [listDiscount] = useState([
+        {
+            id: 1,
+            min: "Giảm ₫5k Đơn Tối Thiểu ₫10k",
+            expire: "31.07.2021"
+
+        },
+        {
+            id: 2,
+            min: "Giảm 10% Đơn Tối Thiểu ₫99k",
+            max: "Giảm tối đa ₫5k",
+            expire: "31.07.2021"
+
+        },
+        {
+            id: 3,
+            min: "Giảm 20% Đơn Tối Thiểu ₫150k",
+            max: "Giảm tối đa ₫10k",
+            expire: "31.07.2021"
+
+        }
+    ]);
+    const [listTopProduct] = useState([
+        {
+            id: 1,
+            image: "https://cf.shopee.vn/file/45d51e73b8c33ec92f1b5d0eaad457ac_tn",
+            title: "Đầm nữ thiết kế trắng dễ thương voan nhún ngực mặc dự tiệc dạo phố xinh như công chúa",
+            price: 159.00, 
+            discount: 50
+        },
+        {
+            id: 2,
+            image: "https://cf.shopee.vn/file/c7aeba92603b28ec23bfe9f6fc6228a8_tn",
+            title: "Chân váy dài ulzzang xòe vạt lệch phối đen trắng phong cách Hàn Quốc",
+            price: 75.00
+        },
+        {
+            id: 3,
+            image: "https://cf.shopee.vn/file/eda499019cd077aa44a5fba6c5a9f300_tn",
+            title: "[SIÊU XINH] Áo babydoll cánh tiên tay phồng 2 màu be, trắng (ảnh thật cuối)",
+            price: 159.00
+        },
+        {
+            id: 4,
+            image: "https://cf.shopee.vn/file/27f44d0cd7f995002eb4c30b87da3b34_tn",
+            title: "Áo Sơ Mi Nữ Dài Tay, Áo Kiểu Chiffon Dáng Rộng Hàn Quốc Dễ Phối Đồ Cho Nữ",
+            price: 135.00
+        },
+        {
+            id: 5,
+            image: "https://cf.shopee.vn/file/63ebf3719cf3f4b3978d0505ad4073c7_tn",
+            title: "[SẴN] Váy trắng trễ vai tay bồng cúc bọc tiểu thư xinh xắn",
+            price: 159.00
+        }
+    ]);
 
 
     // Hook
@@ -154,7 +212,23 @@ function ProductDetailPage(props) {
 
                         <WidgetStatisticsStore items = {storeInformation.statistics}/>
                     </div>
-                    
+                </div>
+
+                <div className="py-3 row">
+                    <div className="col-lg-9">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem soluta quasi corporis odit at labore in ab! Illo porro temporibus blanditiis voluptatum quas impedit delectus repellat dolor, asperiores ipsam eaque et saepe molestiae ex rem atque modi, minima, aliquid nostrum ipsum ratione alias nihil sint. Deleniti dolore facilis vitae nihil minima doloribus error, nostrum quidem ad omnis delectus iure non est voluptatem numquam sunt, incidunt enim iusto voluptate recusandae sequi quae fugiat repellendus! Dolores nam odit sit non repellendus quaerat temporibus reprehenderit voluptas fugit ex, illo mollitia ducimus expedita aliquid officiis natus fuga quidem error ea illum inventore. Cupiditate, voluptates?
+                    </div>
+
+                    <div  style = {{width: '16.875em'}}>
+                        <div className="br-2 bg-white py-3 px-3 mb-3">
+                            <WidgetListDiscount items = {listDiscount}/>
+                        </div>
+
+                        <div className="br-2 bg-white py-3">
+                            <WidgetListTopProduct items = {listTopProduct}/>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
 

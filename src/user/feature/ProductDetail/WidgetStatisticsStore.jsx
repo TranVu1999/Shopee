@@ -28,11 +28,9 @@ function WidgetStatisticsStore(props) {
                 <WidgetStatisticsItem>
                     <WidgetStoreStatistics item = {item}/>
                 </WidgetStatisticsItem>
-                
             );
         });
     }
-
 
     return (
         <div className = "ml-5 d-flex flex-wrap">
