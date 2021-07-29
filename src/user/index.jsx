@@ -1,21 +1,14 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom'
-import './assets/sass/index.scss';
-import HeaderLarge from './common/component/HeadingLarge';
-import HeadingSmall from './common/component/HeadingSmall';
-import Button from './common/component/Button';
+import {Switch, Route} from 'react-router-dom';
+
+// Components
 import Footer from './feature/Layout/Footer';
 import Header from './feature/Layout/Header';
-import Thumbnail from './feature/Product/Thumbnail';
 
-import HomePage from './container/Home';
-import SalePage from './container/Sale';
-import TopSearchPage from './container/TopSearch';
-import ListProductOfCategoryPage from './container/ListProductOfCategory';
-import ListStorePage from './container/ListStore';
-import StoreDetailPage from './container/StoreDetail';
-import ProductDetailPage from './container/ProductDetail';
+// Css
+import './assets/sass/index.scss';
 
+// Others
 import routes from './container/routes';
 
 function UserRoll(props) {
@@ -34,9 +27,6 @@ function UserRoll(props) {
                 />
                 })}
             </Switch>
-
-            {/* PRODUCT DETAIL */}
-            {/* <ProductDetailPage/> */}
             
             <Footer/>
         </div>

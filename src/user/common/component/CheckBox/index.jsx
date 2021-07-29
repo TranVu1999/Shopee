@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CheckBox = styled.div`
@@ -12,10 +11,6 @@ const CheckBox = styled.div`
     border: 1px solid #d5d5d5;
     border-radius: 2px;
 `;
-
-WidgetCheckBox.propTypes = {
-    
-};
 
 function WidgetCheckBox(props) {
     return (

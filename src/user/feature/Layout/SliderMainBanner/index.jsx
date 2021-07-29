@@ -39,7 +39,7 @@ function SliderMainBanner(props) {
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
+                <SwiperSlide key = {item.image}>
                     <a href = {item.url}>
                         <Banner isLarge = {isLarge} image = {item.image}/>
                     </a>

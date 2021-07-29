@@ -4,21 +4,24 @@ import {Link} from 'react-router-dom';
 import './index.scss';
 
 ProductCategoryThumbnail.propTypes = {
-    item: PropTypes.array,
+    item: PropTypes.object,
 };
 
 ProductCategoryThumbnail.defaultProps = {
-    item: []
+    item: {
+        title: "",
+        image: ""
+    }
 }
 
 function ProductCategoryThumbnail(props) {
-    const {item} = props;
+    const {title, image} = props.item;
 
     return (
         <div className = "product-category-thumbnail">
             <Link to = "/products-of-category" className = "thumbnail">
-                <img src = {item.image} alt="brand" />
-                <span>{item.title}</span>
+                <img src = {image} alt="brand" />
+                <span>{title}</span>
             </Link>
         </div>
         

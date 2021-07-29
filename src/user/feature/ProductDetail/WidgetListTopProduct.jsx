@@ -27,7 +27,7 @@ function WidgetListTopProduct(props) {
 
     return (
         <div>
-            <div className = "px-3 page-product__voucher--header">Mã giảm giá của Shop</div>
+            <div className = "px-3 page-product__sidebar--header">Mã giảm giá của Shop</div>
             {renderItems()}
         </div>
         

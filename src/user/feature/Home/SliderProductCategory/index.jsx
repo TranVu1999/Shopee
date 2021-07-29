@@ -28,8 +28,8 @@ function SliderProductCategory(props) {
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
-                    <ProductCategoryThumbnail key = {item.id} item = {item}/>
+                <SwiperSlide key = {item.id}>
+                    <ProductCategoryThumbnail item = {item}/>
                 </SwiperSlide>
                 
             );

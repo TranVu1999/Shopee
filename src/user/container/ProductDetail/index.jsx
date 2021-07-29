@@ -14,7 +14,8 @@ import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailSto
 import useOutsideElement from './../../hooks/outsideElement';
 import WidgetListTopProduct from '../../feature/ProductDetail/WidgetListTopProduct';
 import WidgetDescription from '../../feature/ProductDetail/WidgetDescription';
-
+import WidgetComment from '../../feature/ProductDetail/WidgetComment';
+import WidgetCommentStatistics from '../../feature/ProductDetail/WidgetCommentStatistics';
 
 const ModalImageBox = styled.div`
     position: fixed;
@@ -38,6 +39,10 @@ const ImageBoxContent = styled.div`
 
     transform: translateY(-55%);
 `;
+
+
+// Context
+const ExampleContext = React.createContext({fullname: "tranvu"});
 
 function ProductDetailPage(props) {
     // State
@@ -195,6 +200,41 @@ function ProductDetailPage(props) {
         ],
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores, error. Eius quae dolorum eaque. Quo doloremque dolorem magni error laudantium quaerat quos alias vel suscipit? Minus adipisci consequatur voluptatibus voluptatem deserunt, aut esse blanditiis, libero quis illum ipsa a facere magni ad impedit explicabo, atque sapiente earum harum praesentium laborum eum dolore. Rerum nam cupiditate est quasi, ad impedit. Eum magni tenetur debitis temporibus ducimus eligendi quia minus eos amet, molestiae vitae unde enim ipsa ipsam? Consequuntur sit rerum quod perferendis voluptate. Accusamus, voluptatibus officia deleniti consequuntur reprehenderit maiores voluptas illo iste, saepe dicta suscipit animi laborum iusto qui molestiae."
     });
+    const [comments] = useState({
+        average: 4.8,
+        filter: "5 Sao",
+        statistics: [
+            {
+                key: "5 Sao",
+                value: 339
+            },
+            {
+                key: "4 Sao",
+                value: 20
+            },
+            {
+                key: "3 Sao",
+                value: 12
+            },
+            {
+                key: "2 Sao",
+                value: 2
+            },
+            {
+                key: "1 Sao",
+                value: 3
+            },
+            {
+                key: "Có Bình luận",
+                value: 241
+            },
+            {
+                key: "Có hình ảnh / video",
+                value: 206
+            }
+
+        ]
+    });
 
 
     // Hook
@@ -210,7 +250,6 @@ function ProductDetailPage(props) {
             document.body.style.overflow = 'unset';
         }
     }, [visible]);
-
    
 
     const onHandleOpenModalImage = index =>{
@@ -250,7 +289,6 @@ function ProductDetailPage(props) {
                     </div>
                     <div className="col-lg-8 d-flex align-items-center">
                         <div className="vertical-line-1"></div>
-
                         <WidgetStatisticsStore items = {storeInformation.statistics}/>
                     </div>
                 </div>
@@ -258,6 +296,18 @@ function ProductDetailPage(props) {
                 <div className="py-3 row ">
                     <div className = "mr-3" style = {{flex: 1}}>
                         <WidgetDescription item = {productDescription}/>
+
+                        <div className="my-3">
+                            <WidgetComment
+                                commentStatistics = {
+                                    <WidgetCommentStatistics 
+                                        average = {comments.average}
+                                        statistics = {comments.statistics}
+                                        filter = {comments.filter}
+                                    />
+                                }
+                            />
+                        </div>
                     </div>
 
                     <div style = {{width: '16.875em'}}>
@@ -268,7 +318,6 @@ function ProductDetailPage(props) {
                         <div className="br-2 bg-white py-3">
                             <WidgetListTopProduct items = {listTopProduct}/>
                         </div>
-                        
                     </div>
                 </div>
             </div>

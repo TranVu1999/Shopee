@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Component
-import SwiperCore, { Pagination, Autoplay } from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
 
 // Style
@@ -25,7 +24,7 @@ function SliderBannerMall(props) {
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
+                <SwiperSlide key = {item.image}>
                     <div className = "item" style = {{backgroundImage: `url(${item.image})`}}>
                         <a href={item.link}></a>
                     </div>

@@ -3,19 +3,23 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 Brand.propTypes = {
-    id: PropTypes.string,
-    image: PropTypes.string,
+    item: PropTypes.object,
 };
 
 Brand.defaultProps = {
-    id: 0,
-    image: ""
+    item: {
+        id: 0,
+        image: ""
+    }
+    
 }
 
 function Brand(props) {
+    const {image} = props.item;
+
     return (
         <a href = "#/" className = "brand">
-            <img src = {props.image} alt="brand" />
+            <img src = {image} alt="brand" />
         </a>
     );
 }

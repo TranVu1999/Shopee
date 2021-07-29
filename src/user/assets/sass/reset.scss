@@ -7,7 +7,7 @@
 html, body{
     font-family: 'Open Sans', sans-serif;
     line-height: 26px;
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     background-color: #eae7de;
 }
@@ -24,13 +24,12 @@ a, a:hover{
 
 
 
-button, button:focus,
+button,
 input, input:focus,
 textarea, textarea:focus{
     background-color: transparent;
     border: navajowhite;
     cursor: pointer;
-    outline: none;
 }
 
 table {

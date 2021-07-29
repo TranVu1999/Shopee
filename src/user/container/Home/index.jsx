@@ -5,7 +5,6 @@ import { useState } from 'react';
 import Title from '../../common/component/Title';
 import Banner from '../../common/component/Banner';
 import SearchTrend from '../../feature/Home/SearchTrend';
-import SliderBrand from '../../feature/Home/SliderBrand';
 import SliderTopSearch from '../../feature/Home/SliderTopSearch';
 import SliderProductCategory from '../../feature/Home/SliderProductCategory';
 import SliderMainBanner from '../../feature/Layout/SliderMainBanner';
@@ -13,10 +12,10 @@ import RightMainBanner from '../../feature/Home/RightMainBanner';
 import FlashSale from '../../feature/Home/FlashSale';
 import ProductHint from '../../feature/Home/ProductHint';
 import Mall from '../../feature/Home/Mall';
+import WidgetSliderBrand from '../../feature/Home/WidgetSliderBrand';
 
 // CSS
 import './index.scss'
-
 
 HomePage.propTypes = {
     
@@ -64,7 +63,7 @@ function HomePage(props) {
         }
     ]);
 
-    const [listBanner, setListBanner] = useState([
+    const [listBanner] = useState([
         "https://cf.shopee.vn/file/6244c2f7d47b00fef4b1dd617bd94367",
         "https://cf.shopee.vn/file/2ab46fa4127d4329adf07c6b0fc51114",
         "https://cf.shopee.vn/file/367df3234b5f4524e037efd3b1fce22e"
@@ -103,7 +102,7 @@ function HomePage(props) {
             ]
         },
         {
-            id: 1,
+            id: 4,
             title: "Sticker Dan Trang Tri So De Thuong",
             numSold: 48,
             images: [
@@ -113,7 +112,7 @@ function HomePage(props) {
             ]
         },
         {
-            id: 2,
+            id: 5,
             title: "Tui Dung Com Giu Nhiet",
             numSold: 6,
             images: [
@@ -123,7 +122,7 @@ function HomePage(props) {
             ]
         },
         {
-            id: 3,
+            id: 6,
             title: "Tui Dung Com Giu Nhiet",
             numSold: 6,
             images: [
@@ -176,7 +175,7 @@ function HomePage(props) {
             image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
         }
         ,{
-            id: 10,
+            id: 11,
             image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
         }
     ])
@@ -777,7 +776,8 @@ function HomePage(props) {
             <section className = "mb-3 slider-brand">
                 <div className="pt-3 bg-white container">
                     <Title title = {"Cua hang duoc yeu thich nhat"} link = "#/"/>
-                    <SliderBrand items = {listBrand}/>
+                    {/* <SliderBrand items = {listBrand}/> */}
+                    <WidgetSliderBrand items = {listBrand}/>
                 </div>
             </section>
 

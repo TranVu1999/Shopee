@@ -27,7 +27,7 @@ function SliderProductMall(props) {
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
+                <SwiperSlide key = {item.id}>
                     <StoreThumbnail 
                         link = {item.link}
                         image = {item.image}

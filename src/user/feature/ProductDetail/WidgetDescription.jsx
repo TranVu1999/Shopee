@@ -22,10 +22,6 @@ const Label = styled.label`
 
 const Title = styled.h5`
     padding: 1rem 0.875rem;
-    margin-bottom: 2.25rem;
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: rgba(0,0,0,.87);
     background: rgba(0,0,0,.02);
 `;
 
@@ -90,7 +86,7 @@ function WidgetDescription(props) {
 
     return (
         <DescriptionBox className = "br-2">
-            <Title>CHI TIẾT SẢN PHẨM</Title>
+            <Title className = "page-product__content--header">CHI TIẾT SẢN PHẨM</Title>
             <div className="d-flex mb-2">
                 <Label>Danh Mục</Label>
                 <div>{renderBreadcrumb()}</div>
@@ -98,7 +94,7 @@ function WidgetDescription(props) {
             {renderMoreDetail()}
 
 
-            <Title>MÔ TẢ SẢN PHẨM</Title>
+            <Title className = "page-product__content--header">MÔ TẢ SẢN PHẨM</Title>
             <Detail>{description}</Detail>
             
         </DescriptionBox>

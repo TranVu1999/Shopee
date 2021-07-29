@@ -25,11 +25,12 @@ function SliderTopSearch(props) {
 
     const {items} = props;
 
+    // Render
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
-                    <TopSearch key = {item.id} item = {item}/>
+                <SwiperSlide key = {item.id}>
+                    <TopSearch item = {item}/>
                 </SwiperSlide>
                 
             );

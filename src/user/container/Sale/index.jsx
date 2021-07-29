@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import Tab from './../../feature/Layout/Tab';
@@ -10,9 +9,6 @@ import ListSale from '../../feature/Sale/ListSale';
 // CSS
 import './index.scss';
 
-SalePage.propTypes = {
-    
-};
 
 function SalePage(props) {
     const [mainBanner] = useState({
