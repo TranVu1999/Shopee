@@ -1,3 +1,5 @@
+// Product
+
 .page-product__sidebar--header{
     font-size: 1.2rem;
     color: rgba(0,0,0,.4);
@@ -9,4 +11,23 @@ h5.page-product__content--header{
     font-size: 1.4rem;
     font-weight: 400;
     color: rgba(0,0,0,.87);
+}
+
+
+// User
+.page-user--header{
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid #d5d5d5;
+
+    p{
+        margin-bottom: 0;
+        font-size: 1.125rem;
+        text-transform: capitalize;
+        color: #333;
+    }
+    
+    span{
+        font-size: 0.875rem;
+    }
 }

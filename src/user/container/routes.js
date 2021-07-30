@@ -6,9 +6,14 @@ import ListProductOfCategoryPage from './ListProductOfCategory';
 import ListStorePage from './ListStore';
 import StoreDetailPage from './StoreDetail';
 import ProductDetailPage from './ProductDetail';
+import UserPage from './User';
 
 
 const routes =  [
+    {
+        path: "/user",
+        component: UserPage
+    },
     {
         path: "/flash-sale",
         component: SalePage
