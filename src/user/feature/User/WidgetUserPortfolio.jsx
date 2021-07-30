@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useRef }  from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Cropper from "react-easy-crop";
 
 // Theme
 import {Color, BorderColor} from './../../theme';
+import { useState } from 'react';
+
+// Modules
+import {generateDownload } from "./../../util/cropImage";
 
 const WidgetTextForm = styled.form`
     flex: 4;
@@ -158,8 +163,51 @@ WidgetUserPortfolio.propTypes = {
 };
 
 function WidgetUserPortfolio(props) {
+    const [avatar, setAvatar] = useState("https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e");
+    
+
+    let inputImageRef = useRef(null);
+    const openComputer = () => inputImageRef.current.click();
+
+    const [image, setImage] = React.useState(null);
+	const [croppedArea, setCroppedArea] = React.useState(null);
+	const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+	const [zoom, setZoom] = React.useState(1);
+
+    const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
+		setCroppedArea(croppedAreaPixels);
+	};
+
+	const onSelectFile = (event) => {
+		if (event.target.files && event.target.files.length > 0) {
+			const reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.addEventListener("load", () => {
+				setImage(reader.result);
+			});
+		}
+	};
+
     return (
         <div className = "bg-white br-2 py-3 px-4">
+
+            {image ? (
+                <>
+                    <div className='cropper'>
+                        <Cropper
+                            image={image}
+                            crop={crop}
+                            zoom={zoom}
+                            aspect={1}
+                            onCropChange={setCrop}
+                            onZoomChange={setZoom}
+                            onCropComplete={onCropComplete}
+                        />
+                    </div>
+                </>
+            ) : null}
+
+
             <div className = "page-user--header">
                 <p>Hồ sơ của tôi</p>
                 <span>Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
@@ -288,12 +336,19 @@ function WidgetUserPortfolio(props) {
                 
                 <WidgetImageForm>
                     <div>
-                        <Thumbnail className = "bg-image" image = {"https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e"}>
+                        <Thumbnail className = "bg-image" image = {avatar}>
                         </Thumbnail>
 
                         <WidgetButtonAddImage>
-                            <input type="file" accept = ".jpg,.jpeg,.png"/>
-                            <button>Chọn ảnh</button>
+                            <input 
+                                ref = {inputImageRef}
+                                type="file" 
+                                accept = ".jpg,.jpeg,.png"
+                                onChange = {onSelectFile}
+                            />
+                            <button
+                                onClick = {openComputer}
+                            >Chọn ảnh</button>
                             <p>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</p>
                         </WidgetButtonAddImage>
                     </div>
