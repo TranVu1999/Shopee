@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import WidgetSidebar from '../../feature/User/WidgetSidebar';
-import WidgetUserPortfolio from '../../feature/User/WidgetUserPortfolio';
+import WidgetUserPortfolio from '../../feature/User/WidgetUserProfile';
+import WidgetListAddress from '../../feature/User/WidgetListAddress';
 
 UserPage.propTypes = {
     
@@ -16,7 +17,8 @@ function UserPage(props) {
                         <WidgetSidebar/>
                     </div>
                     <div className="pl-5 col-lg-10">
-                        <WidgetUserPortfolio/>
+                        {/* <WidgetUserPortfolio/> */}
+                        <WidgetListAddress/>
                     </div>
                 </div>
             </div>

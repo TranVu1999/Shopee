@@ -41,9 +41,6 @@ const ImageBoxContent = styled.div`
 `;
 
 
-// Context
-const ExampleContext = React.createContext({fullname: "tranvu"});
-
 function ProductDetailPage(props) {
     // State
     const [breadcrumb] = useState([

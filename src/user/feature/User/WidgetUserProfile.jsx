@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import Cropper from "react-easy-crop";
 
 // Theme
-import {Color, BorderColor} from './../../theme';
+import {Color, BorderColor} from '../../theme';
 import { useState } from 'react';
 
 // Modules
-import {generateDownload } from "./../../util/cropImage";
+import {generateDownload } from "../../util/cropImage";
 
 const WidgetTextForm = styled.form`
     flex: 4;
@@ -158,11 +158,11 @@ const WidgetButtonAddImage = styled.div`
     }
 `;
 
-WidgetUserPortfolio.propTypes = {
+WidgetUserProfile.propTypes = {
     
 };
 
-function WidgetUserPortfolio(props) {
+function WidgetUserProfile(props) {
     const [avatar, setAvatar] = useState("https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e");
     
 
@@ -360,4 +360,4 @@ function WidgetUserPortfolio(props) {
     );
 }
 
-export default WidgetUserPortfolio;
+export default WidgetUserProfile;
