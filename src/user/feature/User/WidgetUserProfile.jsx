@@ -189,7 +189,7 @@ function WidgetUserProfile(props) {
 	};
 
     return (
-        <div className = "bg-white br-2 py-3 px-4">
+        <div className = "user-content">
 
             {image ? (
                 <>

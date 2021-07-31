@@ -73,7 +73,7 @@ const ControlCheckbox = styled.div`
         display: block;
         height: 0.75rem;
         width: 0.75rem;
-        
+
         background-color: transparent;
         border-radius: 4px;
     }
@@ -85,6 +85,18 @@ const ControlCheckbox = styled.div`
             background-color: ${Color.mainColor};
         }
     }
+`;
+
+const Button = styled.button`
+    display: inline-block;
+    padding: .25rem 1rem;
+    font-size: .875rem;
+    text-transform: uppercase;
+`;
+
+const CommitButton = styled(Button)`
+    background-color: ${Color.mainColor};
+    color: #fff;
 `;
 
 ModalAddress.propTypes = {
@@ -117,6 +129,12 @@ function ModalAddress(props) {
             <WrapInput>
                 <ControlCheckbox className = "active"/>
                 Đặt làm địa chỉ mặc đinh
+            </WrapInput>
+
+            <WrapInput className = "justify-content-end">
+                <Button>Trở Lại</Button>
+                <CommitButton>Hoàn thành</CommitButton>
+                
             </WrapInput>
 
             

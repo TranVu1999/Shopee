@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import WidgetSidebar from '../../feature/User/WidgetSidebar';
 import WidgetUserPortfolio from '../../feature/User/WidgetUserProfile';
 import WidgetListAddress from '../../feature/User/WidgetListAddress';
+import WidgetUpdatePassword from '../../feature/User/WidgetUpdatePassword';
+import WidgetPurchase from '../../feature/User/WidgetPurchase';
 
 UserPage.propTypes = {
     
@@ -18,7 +20,9 @@ function UserPage(props) {
                     </div>
                     <div className="pl-5 col-lg-10">
                         {/* <WidgetUserPortfolio/> */}
-                        <WidgetListAddress/>
+                        {/* <WidgetListAddress/> */}
+                        {/* <WidgetUpdatePassword/> */}
+                        <WidgetPurchase/>
                     </div>
                 </div>
             </div>

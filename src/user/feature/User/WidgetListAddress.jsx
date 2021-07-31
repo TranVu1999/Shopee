@@ -88,7 +88,7 @@ function WidgetListAddress(props) {
     }
 
     return (
-        <WidgetContent>
+        <WidgetContent className = "user-content">
             <div className = "d-flex align-items-start justify-content-between page-user--header">
                 <p>Địa chỉ của tôi</p>
                 <ButtonAdd 
