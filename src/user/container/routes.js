@@ -7,12 +7,17 @@ import ListStorePage from './ListStore';
 import StoreDetailPage from './StoreDetail';
 import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
+import ArticlePage from './Article';
 
 
-const routes =  [
+const routes = [
     {
         path: "/user",
         component: UserPage
+    },
+    {
+        path: "/article",
+        component: ArticlePage
     },
     {
         path: "/flash-sale",
@@ -47,8 +52,8 @@ const routes =  [
         path: "*",
         component: NotFountPage
     }
-    
-    
+
+
 ]
 
 export default routes;

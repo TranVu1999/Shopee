@@ -207,12 +207,16 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     }
 }
 
-// BORDER RADIUS
+// BORDER
 .br-4{
     border-radius: 4px;
 }
 .br-2{
     border-radius: 2px;
+}
+
+.border-none{
+    border: none!important;
 }
 
 // LINE
@@ -253,4 +257,9 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
     background-color: rgba(0,0,0,.5);
     z-index: 100;
+}
+
+// Font size
+.f-16{
+    font-size: 16px;
 }

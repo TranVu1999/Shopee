@@ -6,6 +6,7 @@ import WidgetListAddress from "../../feature/User/WidgetListAddress";
 import WidgetUpdatePassword from "../../feature/User/WidgetUpdatePassword";
 import WidgetPurchase from "../../feature/User/WidgetPurchase";
 import WidgetShopeeCoin from "../../feature/User/WidgetShopeeCoin";
+import WidgetVoucher from "../../feature/User/WidgetVoucher";
 
 UserPage.propTypes = {};
 
@@ -22,7 +23,8 @@ function UserPage(props) {
             {/* <WidgetListAddress/> */}
             {/* <WidgetUpdatePassword/> */}
             {/* <WidgetPurchase/> */}
-            <WidgetShopeeCoin />
+            {/* <WidgetShopeeCoin /> */}
+            <WidgetVoucher/>
           </div>
         </div>
       </div>
