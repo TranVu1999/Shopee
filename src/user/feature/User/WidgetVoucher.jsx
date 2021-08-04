@@ -88,9 +88,6 @@ const ListVoucher = styled.div`
     }
 `;
 
-const ListHintVoucher = styled.div`
-
-`;
 
 const Title = styled.h5`
     font-size: 1rem;
@@ -279,7 +276,6 @@ function WidgetVoucher(props) {
         }
          
     ]);
-
 
     // Render
     const renderListVoucher = () =>{
