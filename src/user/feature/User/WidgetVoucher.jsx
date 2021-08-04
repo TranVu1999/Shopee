@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 // Theme
 import {BorderColor} from './../../theme';
+import Voucher from '../../common/component/Voucher';
 
 const VoucherHeader = styled.div`
     font-size: .875em;
@@ -80,51 +81,270 @@ const VoucherFilter = styled.div`
     }
 `;
 
+const ListVoucher = styled.div`
+    gap: 20px;
+    &>div{
+        width: calc((100% - 20px) / 2);
+    }
+`;
+
+const ListHintVoucher = styled.div`
+
+`;
+
+const Title = styled.h5`
+    font-size: 1rem;
+    color: rgba(0,0,0,.87);
+`;
+
 WidgetVoucher.propTypes = {
     
 };
 
 function WidgetVoucher(props) {
+    const [items] = React.useState([
+        {
+            id: 1,
+            type: "shop",
+            content: {
+                badge: "Shop Yêu Thích",
+                title: "Giảm ₫15k Đơn Tối Thiểu ₫245k",
+                expire: "04.10.2021",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc",
+                brand: "SoTa Shop"
+            }
+            
+        },
+        {
+            id: 2,
+            type: "shop",
+            content: {
+                badge: "Shop Yêu Thích",
+                title: "Giảm 50% Đơn Tối Thiểu ₫99k Giảm tối đa ₫10k",
+                expire: "30.08.2021",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/d39d6bb8f5ab6c2ee72efb026469f0b1",
+                brand: "MONA MASK OFFICIAL STORE"
+            }
+            
+        },
+        {
+            id: 3,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 4,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 5,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 6,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 7,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 8,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 9,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        },
+        {
+            id: 10,
+            type: "transport",
+            content: {
+                badge: "Freeship Xtra",
+                title: "Tất cả hình thức thanh toán",
+                expire: "30.08.2021",
+                url: "#/",
+            }
+            
+        }
+    ]);
 
-    
+
+    const [hints] = React.useState([
+        {
+            id: 1,
+            type: "hint",
+            content: {
+                badgeShop: "Shop Yêu Thích",
+                title: "[SẴN] Váy trắng trễ vai tay bồng cúc bọc tiểu thư xinh xắn",
+                value: "50",
+                price: "123.00",
+                condition: "Đơn Tối Thiểu ₫600k",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/63ebf3719cf3f4b3978d0505ad4073c7",
+            }
+            
+        },
+        {
+            id: 2,
+            type: "hint",
+            content: {
+                badgeShop: "Shop Yêu Thích",
+                title: "(Hàng có sẵn) Váy trắng midi vintage nơ tay 🌿🌿💯💯",
+                value: "50",
+                price: "159.00",
+                condition: "Đơn Tối Thiểu ₫600k",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/cec51b7160ed80f9a158e507004bb3ce",
+            }
+            
+        },
+        {
+            id: 3,
+            type: "hint",
+            content: {
+                badgeShop: "Shop Yêu Thích",
+                title: "Váy trắng nữ dự tiệc tay dài dáng xòe Jina đi tiệc đi chơi đi cưới",
+                value: "10",
+                price: "300.00",
+                condition: "Đơn Tối Thiểu ₫600k",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/55eeed5203d9aef5f40d31fc410e2062",
+            }
+            
+        },
+        {
+            id: 4,
+            type: "hint",
+            content: {
+                badgeShop: "Shop Yêu Thích",
+                title: "Áo Polo nam Leo Vatino vải Cotton cá sấu cao cấp xuất xịn dệt bo dày dặn chuẩn form áo thun cổ bẻ tay ngắn - Galvin",
+                value: "50",
+                price: "48.00",
+                condition: "Đơn Tối Thiểu ₫600k",
+                url: "#/",
+                image: "https://cf.shopee.vn/file/551d891431a0600e155299591a38be70",
+            }
+            
+        }
+         
+    ]);
+
+
+    // Render
+    const renderListVoucher = () =>{
+        return items.map(item =>{
+            return (
+                <div key={item.id}><Voucher item = {item}/></div>
+            );
+        });
+    };
+
+    const renderListHintVoucher = () =>{
+        return hints.map(item =>{
+            return (
+                <div key={item.id}><Voucher item = {item}/></div>
+            );
+        });
+    };
 
     return (
         <div className = "f-16">
-            <VoucherHeader>
-                <div className = "d-flex align-items-start justify-content-between page-user--header border-none" >
-                    <p>Địa chỉ của tôi</p>
-                    <div>
-                        <a href="#/">Tìm thêm voucher</a>
-                        <a href="#/">Xem lịch sử voucher</a>
-                        <a href="#/">Tìm hiểu thêm</a>
+            <div className="mb-3">
+                <VoucherHeader>
+                    <div className = "d-flex align-items-start justify-content-between page-user--header border-none" >
+                        <p>Địa chỉ của tôi</p>
+                        <div>
+                            <a href="#/">Tìm thêm voucher</a>
+                            <a href="#/">Xem lịch sử voucher</a>
+                            <a href="#/">Tìm hiểu thêm</a>
+                        </div>
                     </div>
-                </div>
-            </VoucherHeader>
+                </VoucherHeader>
 
-            <VoucherForm>
-                <form>
-                    <div class="m-0 d-flex align-items-center justify-content-center form-group ">
-                        <label>Email address</label>
-                        <input type="email" className="form-control"  placeholder="Nhập mã voucher tại đây"/>
-                        <button type="submit" className="btn align-self-stretch" disabled>Lưu</button>
-                    </div>
-                </form>
-            </VoucherForm>
+                <VoucherForm>
+                    <form>
+                        <div class="m-0 d-flex align-items-center justify-content-center form-group ">
+                            <label>Email address</label>
+                            <input type="email" className="form-control"  placeholder="Nhập mã voucher tại đây"/>
+                            <button type="submit" className="btn align-self-stretch" disabled>Lưu</button>
+                        </div>
+                    </form>
+                </VoucherForm>
+                
+                <VoucherTabs className="d-flex align-items-center justify-content-between">
+                    <TabItem className="active">Tất Cả</TabItem>
+                    <TabItem>Shopee</TabItem>
+                    <TabItem>Shop</TabItem>
+                    <TabItem>Nạp thẻ & Dịch vụ</TabItem>
+                    <TabItem>Scan & Pay</TabItem>
+                    <TabItem>Từ Đối Tác</TabItem>
+                </VoucherTabs>
+
+                <VoucherFilter className="d-flex">
+                    <div className="active">Mới nhất</div>
+                    <div>Phổ biến</div>
+                    <div>Sắp hết hạn</div>
+                </VoucherFilter>
+
+                <ListVoucher className="d-flex flex-wrap">{renderListVoucher()}</ListVoucher>
+            </div>
             
-            <VoucherTabs className="d-flex align-items-center justify-content-between">
-                <TabItem className="active">Tất Cả</TabItem>
-                <TabItem>Shopee</TabItem>
-                <TabItem>Shop</TabItem>
-                <TabItem>Nạp thẻ & Dịch vụ</TabItem>
-                <TabItem>Scan & Pay</TabItem>
-                <TabItem>Từ Đối Tác</TabItem>
-            </VoucherTabs>
 
-            <VoucherFilter className="d-flex">
-                <div className="active">Mới nhất</div>
-                <div>Phổ biến</div>
-                <div>Sắp hết hạn</div>
-            </VoucherFilter>
+            <div className="">
+                <Title className="mb-5">Voucher gợi ý</Title>
+                <ListVoucher className="d-flex flex-wrap">{renderListHintVoucher()}</ListVoucher>
+            </div>
         </div>
     );
 }
