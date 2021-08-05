@@ -111,6 +111,7 @@ const Thumbnail = styled.div`
 
 const Title = styled.div`
     flex: 1;
+    
     p{
         margin: 0;
     }
@@ -134,7 +135,6 @@ const UnitPrice = styled.div`
     }
 `;
 
-
 // Purchase Footer
 const PurchaseFooter = styled.div`
     padding: 1.25em 1.5em 2em;
@@ -152,7 +152,7 @@ const PurchaseFooter = styled.div`
 
 const Button = styled(SmallButton)`
     padding: .5em 1.25em;
-    font-size: 1em;
+    font-size: .875rem;
 `;
 
 const TransparentButton = styled(Button)`

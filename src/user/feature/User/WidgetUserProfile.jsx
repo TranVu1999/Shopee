@@ -10,6 +10,11 @@ import { useState } from 'react';
 // Modules
 import {generateDownload } from "../../util/cropImage";
 
+const WidgetContent = styled.div`
+    padding: 1.125rem 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
+
 const WidgetTextForm = styled.form`
     flex: 4;
     font-size: 16px;
@@ -189,7 +194,7 @@ function WidgetUserProfile(props) {
 	};
 
     return (
-        <div className = "user-content">
+        <WidgetContent className = "page-user--content">
 
             {image ? (
                 <>
@@ -356,7 +361,7 @@ function WidgetUserProfile(props) {
             </div>
 
             
-        </div>
+        </WidgetContent>
     );
 }
 

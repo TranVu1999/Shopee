@@ -14,14 +14,18 @@ const Filter = styled.div`
     display: flex;
     align-items: center;
     padding: .5em 1em;
+    margin-bottom: 1rem;
+
+    font-size: .875rem;
 
     color: #212121;
     background: #eaeaea;
-    border-radius: 4px;
+
+    border-radius: 2px;
 
     span{
-        font-size: 1.125em;
-        font-weight: 600;
+        font-size: 1.125rem;
+        font-weight: 800;
     }
 
     input{
@@ -47,6 +51,10 @@ const Tab = styled.div`
             border-bottom: 2px solid #ee4d2d;
         }
     }
+`;
+
+const WidgetListPurchase = styled.div`
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
 
@@ -94,12 +102,12 @@ function WidgetPurchase(props) {
             </Tab>
             <Filter>
                 <button><span class="icon_search"></span></button>
-                <input type="text" />
+                <input type="text" placeholder="Tìm kiếm theo Tên Shop, ID đơn hàng hoặc Tên Sản phẩm"/>
             </Filter>
 
-            <div>
+            <WidgetListPurchase>
                 <PurchaseItem/>
-            </div>
+            </WidgetListPurchase>
         </WidgetContent>
     );
 }

@@ -8,7 +8,8 @@ import {TextField} from '@material-ui/core';
 import {BorderColor, Color} from './../../theme';
 
 const WidgetContent = styled.div`
-    font-size: 16px;
+    padding: 1.125rem 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
 const FormUpdate = styled.form`
@@ -125,7 +126,7 @@ function WidgetUpdatePassword(props) {
     }
 
     return (
-        <WidgetContent className = "page-user--content">
+        <WidgetContent className = "page-user--content br-2">
             <div className = "page-user--header">
                 <p>Đổi mật khẩu</p>
                 <span>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</span>
