@@ -6,7 +6,20 @@ import styled from 'styled-components';
 import {BorderColor} from './../../theme';
 
 const WidgetContent = styled.div`
-    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em
+    position: relative;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+
+    &.disable:after{
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #bbbbbb80;
+    }
 `;
 
 const Thumbnail = styled.div`
@@ -14,7 +27,6 @@ const Thumbnail = styled.div`
     width: 7.375rem;
     height: 7.375rem;
     border-right: 1px dashed ${BorderColor.mainColor};
-
 `;
 
 const WidgetBadge = styled.div`
@@ -117,7 +129,7 @@ const Title = styled.div`
 `;
 
 const Control = styled.div`
-    padding: .5em 1em .5em 0;
+    padding: 0em 1em 0em 0;
     font-size: .875em;
     flex: 2;
 
@@ -176,10 +188,9 @@ const Control = styled.div`
     }
 `;
 
-
-
 Voucher.propTypes = {
     item: PropTypes.object,
+    expired: PropTypes.bool,
 };
 
 Voucher.defaultProps = {
@@ -187,11 +198,13 @@ Voucher.defaultProps = {
         id: 0,
         type: "shop", 
         content: {}
-    }
+    }, 
+    expired: false
 }
 
 function Voucher(props) {
     const {id, type, content} = props.item;
+    const {expired} = props;
 
     // Render
     const renderThumbnail = () =>{
@@ -254,7 +267,9 @@ function Voucher(props) {
     }
 
     return (
-        <WidgetContent className = "f-16 d-flex">
+        <WidgetContent 
+            className = {expired ? "f-16 d-flex disable" : "f-16 d-flex"}
+        >
             {renderThumbnail()}
                 
             <WidgetText className="d-flex">

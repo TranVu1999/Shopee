@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 // Theme
 import {BorderColor} from './../../theme';
 import Voucher from '../../common/component/Voucher';
+
+const WidgetContent = styled.div`
+    padding: 1.25rem 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
 
 const VoucherHeader = styled.div`
     font-size: .875em;
@@ -99,6 +105,7 @@ WidgetVoucher.propTypes = {
 };
 
 function WidgetVoucher(props) {
+    // Data
     const [items] = React.useState([
         {
             id: 1,
@@ -296,13 +303,13 @@ function WidgetVoucher(props) {
 
     return (
         <div className = "f-16">
-            <div className="mb-3">
+            <WidgetContent className="bg-white mb-4">
                 <VoucherHeader>
                     <div className = "d-flex align-items-start justify-content-between page-user--header border-none" >
                         <p>Địa chỉ của tôi</p>
                         <div>
                             <a href="#/">Tìm thêm voucher</a>
-                            <a href="#/">Xem lịch sử voucher</a>
+                            <Link to={`/user/voucher-history`}>Xem lịch sử voucher</Link>
                             <a href="#/">Tìm hiểu thêm</a>
                         </div>
                     </div>
@@ -334,13 +341,13 @@ function WidgetVoucher(props) {
                 </VoucherFilter>
 
                 <ListVoucher className="d-flex flex-wrap">{renderListVoucher()}</ListVoucher>
-            </div>
+            </WidgetContent>
             
 
-            <div className="">
+            <WidgetContent className="bg-white">
                 <Title className="mb-5">Voucher gợi ý</Title>
                 <ListVoucher className="d-flex flex-wrap">{renderListHintVoucher()}</ListVoucher>
-            </div>
+            </WidgetContent>
         </div>
     );
 }

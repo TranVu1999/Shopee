@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 // Theme
 import {BorderColor} from './../../theme';
@@ -71,6 +72,8 @@ WidgetSidebar.propTypes = {
 };
 
 function WidgetSidebar(props) {
+    // Data
+    let {path} = useRouteMatch();
     const [indexOpen, setIndexOpen] = useState(0);
 
     const onHandleChoseTab = index =>{
@@ -101,18 +104,18 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <a href="#/" onClick = {() =>{onHandleChoseTab(0)}}>Tài khoản của tôi</a>
+                        <Link to={`${path}/information`} onClick = {() =>{onHandleChoseTab(0)}}>Tài khoản của tôi</Link>
                     </div>
 
                     <WidgetListDropdownItem className = {indexOpen === 0 ? "open" : ""}>
                         <WidgetDropdownItem>
-                            <a href="#/">Hồ sơ</a>
+                            <Link to={`${path}/information`}>Hồ sơ</Link>
                         </WidgetDropdownItem>
                         <WidgetDropdownItem>
-                            <a href="#/">Địa chỉ</a>
+                            <Link to={`${path}/address`}>Địa chỉ</Link>
                         </WidgetDropdownItem>
                         <WidgetDropdownItem>
-                            <a href="#/">Đổi mật khẩu</a>
+                            <Link to={`${path}/update-password`}>Đổi mật khẩu</Link>
                         </WidgetDropdownItem>
                     </WidgetListDropdownItem>
                 </WidgetDropdown>
@@ -123,7 +126,7 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <a href="#/" onClick = {() =>{onHandleChoseTab(1)}}>Đơn Mua</a>
+                        <Link to={`${path}/purchase`} onClick = {() =>{onHandleChoseTab(1)}}>Đơn Mua</Link>
                     </div>
                 </WidgetDropdown>
 
@@ -133,7 +136,7 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/e10a43b53ec8605f4829da5618e0717c" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <a href="#/" onClick = {() =>{onHandleChoseTab(2)}}>Thông báo</a>
+                        <Link to={`${path}/notification`}  onClick = {() =>{onHandleChoseTab(2)}}>Thông báo</Link>
                     </div>
 
                     <WidgetListDropdownItem className = {indexOpen === 2 ? "open" : ""} >
@@ -164,7 +167,7 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/84feaa363ce325071c0a66d3c9a88748" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <a href="#/" onClick = {() =>{onHandleChoseTab(3)}}>Kho Voucher</a>
+                        <Link to={`${path}/voucher`}  onClick = {() =>{onHandleChoseTab(3)}}>Kho Voucher</Link>
                     </div>
                 </WidgetDropdown>
 
@@ -174,7 +177,7 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/a0ef4bd8e16e481b4253bd0eb563f784" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <a href="#/" onClick = {() =>{onHandleChoseTab(4)}}>Shopee Xu</a>
+                        <Link to={`${path}/coin`} onClick = {() =>{onHandleChoseTab(4)}}>Shopee Xu</Link>
                     </div>
                 </WidgetDropdown>
 

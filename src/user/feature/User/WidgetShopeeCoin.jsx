@@ -9,7 +9,8 @@ import { BorderColor } from "./../../theme";
 import WidgetNotifyPopup from "./../../common/component/NotifyPopup";
 
 const WidgetContent = styled.div`
-  font-size: 16px;
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
 const Title = styled.div`

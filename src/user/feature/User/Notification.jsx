@@ -4,7 +4,13 @@ import styled from 'styled-components';
 import { BorderColor } from '../../theme';
 
 const WidgetContent = styled.div`
+    padding: 1.125rem 1.5rem;
     cursor: pointer;
+    
+    
+    &:hover{
+        background-color: #f8f8f8;
+    }
 `;
 
 const Thumbnail = styled.div`
@@ -50,7 +56,8 @@ const WidgetStones = styled.div`
     }
 `;
 
-const StoneItem = styled.div`
+const StoneItem = styled.div` 
+
     .dot{
         position: relative;
         margin-right: 1.25rem;
@@ -60,31 +67,27 @@ const StoneItem = styled.div`
 
         box-sizing: content-box;
 
-        &:before{
+        &:before, &:after{
             content: "";
             position: absolute;
-            top: 0;
             left: 50%;
             transform: translateX(-50%);
 
             display: block;
+            background: rgba(0,0,0,.09);
+        }
+
+        &:before{
+            top: 0;
             height: 100%;
             width: 1px;
-            background-color: #f8f8f8;
+            
         }
 
         &:after{
-            content: "";
-            position: absolute;
             top: .5rem;
-            left: 50%;
-            transform: translateX(-50%);
-
-            display: block;
             height: .5rem;
             width: .5rem;
-
-            background-color: #f8f8f8;
             border-radius: 50%;
         }
     }
@@ -173,7 +176,7 @@ function Notification(props) {
                     <div>{description}</div>
                     <div className="mt-1 d-flex align-items-center time">
                         {time}
-                        {stones && stones.length > 0 ? <span       className="arrow_carrot-down" 
+                        {stones && stones.length > 0 ? <span className={isShowStones ? "arrow_carrot-up" : "arrow_carrot-down"} 
                         onClick = {() =>{setIsShowStones(!isShowStones)}}></span> : ""}
                         
                     </div>

@@ -6,8 +6,12 @@ import styled from 'styled-components';
 import {BorderColor} from './../../theme';
 import Notification from './Notification';
 
+const WidgetContent = styled.div`
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
+
 const Header = styled.div`
-    padding: .75rem 0;
+    padding: .75rem 1.5rem;
     font-size: .875em;
     color: rgba(0,0,0,.8);
     border-bottom: 1px solid ${BorderColor.mainColor};
@@ -16,6 +20,7 @@ const Header = styled.div`
         color: #ee4d2d;
     }
 `;
+
 
 WidgetListNotification.propTypes = {
     items: PropTypes.array,
@@ -82,14 +87,14 @@ function WidgetListNotification(props) {
     }
 
     return (
-        <div className='f-16'>
+        <WidgetContent className='f-16 bg-white'>
             <Header className="text-right">
                 <button>Đánh dấu Đã đọc tất cả</button>
             </Header>
             <div>
                 {renderNotifications()}
             </div>
-        </div>
+        </WidgetContent>
     );
 }
 
