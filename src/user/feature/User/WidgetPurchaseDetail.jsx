@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 // Theme
 import {BorderColor} from './../../theme';
+import Purchase from './Purchase';
 
 const WidgetContent = styled.div`
 
@@ -373,6 +374,7 @@ function WidgetPurchaseDetail(props) {
                 </div>
             </WidgetStones>
 
+            <Purchase full/>
         </WidgetContent>
     );
 }
