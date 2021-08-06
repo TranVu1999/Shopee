@@ -7,7 +7,8 @@ import WidgetShopeeCoin from "../../feature/User/WidgetShopeeCoin";
 import WidgetVoucher from "../../feature/User/WidgetVoucher";
 import WidgetExpireVoucher from "../../feature/User/WidgetExpireVoucher";
 import WidgetListNotification from "../../feature/User/WidgetListNotification";
-
+import WidgetVoucherDetail from "../../feature/User/WidgetVoucherDetail";
+import WidgetPurchaseDetail from "../../feature/User/WidgetPurchaseDetail";
 
 const routes = [
     {
@@ -41,6 +42,14 @@ const routes = [
     {
         path: "/user/voucher-history",
         component: WidgetExpireVoucher
+    },
+    {
+        path: "/user/voucher-detail",
+        component: WidgetVoucherDetail
+    },
+    {
+        path: "/user/purchase-detail",
+        component: WidgetPurchaseDetail
     }
 ]
 

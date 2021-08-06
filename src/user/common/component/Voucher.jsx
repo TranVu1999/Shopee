@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 // Theme
 import {BorderColor} from './../../theme';
@@ -191,20 +192,17 @@ const Control = styled.div`
 Voucher.propTypes = {
     item: PropTypes.object,
     expired: PropTypes.bool,
+    detail: PropTypes.bool,
 };
 
 Voucher.defaultProps = {
-    item: {
-        id: 0,
-        type: "shop", 
-        content: {}
-    }, 
-    expired: false
+    expired: false,
+    detail: false
 }
 
 function Voucher(props) {
     const {id, type, content} = props.item;
-    const {expired} = props;
+    const {expired, detail} = props;
 
     // Render
     const renderThumbnail = () =>{
@@ -261,7 +259,7 @@ function Voucher(props) {
         return (
             <>
                 <a href="#/" className="d-flex align-items-end">Dùng ngay <span  className="arrow_carrot-right"></span></a>
-                <a href="#/">Điều Kiện</a>
+                <Link to="/user/voucher-detail">Điều Kiện</Link>
             </>
         )
     }
@@ -282,9 +280,12 @@ function Voucher(props) {
                         {content.price ? <span className="price">{content.price}</span> : ""}
                     </div>
                 </Title>
-                <Control className="d-flex flex-column justify-content-between align-items-end">
-                    {renderControl()}
-                </Control>
+                {!detail ? (
+                    <Control className="d-flex flex-column justify-content-between align-items-end">
+                        {renderControl()}
+                    </Control>
+                ) : ""}
+                
             </WidgetText>
         </WidgetContent>
     );
