@@ -8,12 +8,17 @@ import StoreDetailPage from './StoreDetail';
 import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
 import ArticlePage from './Article';
+import CartPage from './Cart';
 
 
 const routes = [
     {
         path: "/user",
         component: UserPage
+    },
+    {
+        path: "/cart",
+        component: CartPage
     },
     {
         path: "/article",
