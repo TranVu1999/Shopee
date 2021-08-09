@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// UI
-import {TextField} from '@material-ui/core'
-
 // Theme
 import { BorderColor } from './../../theme';
+import RangeDateBox from '../../components/RangeDateBox';
 
 const WidgetContent = styled.div`
     padding: 1.125rem 1.5rem;
@@ -83,20 +81,8 @@ function Filter(props) {
 
             <WidgetDate className="d-flex align-items-center">
                 <span>Ngày đặt hàng</span>
-                <DateBox className="d-flex align-items-center">
-                    <TextField
-                        type="date"
-                        defaultValue="2017-05-24"
-                    />
 
-                    <span></span>
-
-                    <TextField
-                        type="date"
-                        defaultValue="2017-05-24"
-                    />
-                    
-                </DateBox>
+                <RangeDateBox/>
             </WidgetDate>
         </WidgetContent>
     );
