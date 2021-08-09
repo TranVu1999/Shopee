@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Models
+import {getDaysInMonth} from './../util/DateTime';
+
 // Theme
 import {BorderColor} from './../theme';
 
@@ -13,9 +16,11 @@ const WidgetContent = styled.div`
 `;
 
 const Result = styled.div`
+
     label{
         margin-bottom: 0;
         color: #333;
+        cursor: pointer;
     }
 
     span{
@@ -26,7 +31,7 @@ const Result = styled.div`
 
 const DatePickerRange = styled.div`
     position: absolute;
-    top: 100%;
+    top: 110%;
     right: 0;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 `;
@@ -67,7 +72,14 @@ const ListDate = styled.div`
     }
 `;
 
+const WidgetDateOfMonth = styled.div`
+    width: calc(100% / 7);
+    text-align: center;
+    margin-bottom: .5rem;
+`;
+
 const DateOfMonth = styled.div`
+    display: inline-block;
     height: 1.5rem;
     width: 1.5rem;
 
@@ -92,14 +104,49 @@ RangeDateBox.propTypes = {
 };
 
 function RangeDateBox(props) {
+
+    // Data
+    const [isShowPicker, setIsShowPicker] = React.useState(false);
+    const listDateOfMonth = getDaysInMonth(7, 2021);
+
+    // Render
+    const renderListDate = () =>{
+        const elm = [];
+
+        const date = new Date("Aug 1, 2021");
+        const numericalOrderDate = date.getDay();
+
+        for(let i = 0; i < numericalOrderDate; i++){
+            elm.push(
+                <WidgetDateOfMonth key={-i}>
+                    <DateOfMonth></DateOfMonth>
+                </WidgetDateOfMonth>
+            )
+        }
+
+        for(let item of listDateOfMonth){
+            elm.push(
+                <WidgetDateOfMonth key={item.getDate()}>
+                    <DateOfMonth>{item.getDate()}</DateOfMonth>
+                </WidgetDateOfMonth>
+            )
+        }
+
+        return elm;
+    }
+
+    // console.log(getDaysInMonth(7, 2021))
+
     return (
         <WidgetContent>
-            <Result>
+            <Result onClick = {() => setIsShowPicker(!isShowPicker)}>
                 <span className="icon_calendar"></span>
                 <label> 2021/07/10 – 2021/08/09</label>
             </Result>
 
-            <DatePickerRange className="d-flex">
+            <DatePickerRange 
+                style = {{display: isShowPicker ? "flex" : "none"}}
+            >
                 <DatePicker>
                     <Header className="d-flex align-items-center justify-content-between">
                         <div>
@@ -128,61 +175,8 @@ function RangeDateBox(props) {
                         <DateOfMonth>T7</DateOfMonth>
                     </DateOfWeek>
 
-                    <ListDate >
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth>1</DateOfMonth>
-                            <DateOfMonth>2</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>3</DateOfMonth>
-                            <DateOfMonth>4</DateOfMonth>
-                            <DateOfMonth>5</DateOfMonth>
-                            <DateOfMonth>6</DateOfMonth>
-                            <DateOfMonth>7</DateOfMonth>
-                            <DateOfMonth>8</DateOfMonth>
-                            <DateOfMonth>9</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>10</DateOfMonth>
-                            <DateOfMonth>11</DateOfMonth>
-                            <DateOfMonth>12</DateOfMonth>
-                            <DateOfMonth>13</DateOfMonth>
-                            <DateOfMonth>14</DateOfMonth>
-                            <DateOfMonth>15</DateOfMonth>
-                            <DateOfMonth>16</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>17</DateOfMonth>
-                            <DateOfMonth>18</DateOfMonth>
-                            <DateOfMonth>19</DateOfMonth>
-                            <DateOfMonth>20</DateOfMonth>
-                            <DateOfMonth>21</DateOfMonth>
-                            <DateOfMonth>22</DateOfMonth>
-                            <DateOfMonth>23</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>24</DateOfMonth>
-                            <DateOfMonth>25</DateOfMonth>
-                            <DateOfMonth>26</DateOfMonth>
-                            <DateOfMonth>27</DateOfMonth>
-                            <DateOfMonth>28</DateOfMonth>
-                            <DateOfMonth>29</DateOfMonth>
-                            <DateOfMonth>30</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>31</DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                        </div>
+                    <ListDate className="d-flex flex-wrap">
+                        {renderListDate()}
                     </ListDate>
                     
 

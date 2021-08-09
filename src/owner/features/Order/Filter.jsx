@@ -62,8 +62,20 @@ const DateBox = styled.div`
     
 `;
 
+const Button = styled.button`
+    padding: 0 1.25rem;
+    margin: 0 1rem;
+    border: 1px solid ${BorderColor.mainColor};
+    border-radius: 4px;
+    color: #333;
+`;
 
-const Button = styled.button``;
+const ButtonHamburger = styled(Button)`
+    margin: 0;
+    padding: 0 .5rem;
+    font-size: 1.5rem;
+    color: #999;
+`;
 
 Filter.propTypes = {
     
@@ -81,8 +93,11 @@ function Filter(props) {
 
             <WidgetDate className="d-flex align-items-center">
                 <span>Ngày đặt hàng</span>
-
                 <RangeDateBox/>
+                <Button className="align-self-stretch">Xuất</Button>
+                <ButtonHamburger className="align-self-stretch">
+                    <span aria-hidden="true" className="icon_menu"></span>
+                </ButtonHamburger>
             </WidgetDate>
         </WidgetContent>
     );
