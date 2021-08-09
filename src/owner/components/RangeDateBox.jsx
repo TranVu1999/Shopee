@@ -33,6 +33,10 @@ const DatePickerRange = styled.div`
     position: absolute;
     top: 110%;
     right: 0;
+    
+    border: 1px solid ${BorderColor.mainColor};
+    border-top: none;
+
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 `;
 
@@ -209,61 +213,8 @@ function RangeDateBox(props) {
                         <DateOfMonth>T7</DateOfMonth>
                     </DateOfWeek>
 
-                    <ListDate >
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth>1</DateOfMonth>
-                            <DateOfMonth>2</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>3</DateOfMonth>
-                            <DateOfMonth>4</DateOfMonth>
-                            <DateOfMonth>5</DateOfMonth>
-                            <DateOfMonth>6</DateOfMonth>
-                            <DateOfMonth>7</DateOfMonth>
-                            <DateOfMonth>8</DateOfMonth>
-                            <DateOfMonth>9</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>10</DateOfMonth>
-                            <DateOfMonth>11</DateOfMonth>
-                            <DateOfMonth>12</DateOfMonth>
-                            <DateOfMonth>13</DateOfMonth>
-                            <DateOfMonth>14</DateOfMonth>
-                            <DateOfMonth>15</DateOfMonth>
-                            <DateOfMonth>16</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>17</DateOfMonth>
-                            <DateOfMonth>18</DateOfMonth>
-                            <DateOfMonth>19</DateOfMonth>
-                            <DateOfMonth>20</DateOfMonth>
-                            <DateOfMonth>21</DateOfMonth>
-                            <DateOfMonth>22</DateOfMonth>
-                            <DateOfMonth>23</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>24</DateOfMonth>
-                            <DateOfMonth>25</DateOfMonth>
-                            <DateOfMonth>26</DateOfMonth>
-                            <DateOfMonth>27</DateOfMonth>
-                            <DateOfMonth>28</DateOfMonth>
-                            <DateOfMonth>29</DateOfMonth>
-                            <DateOfMonth>30</DateOfMonth>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <DateOfMonth>31</DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                            <DateOfMonth></DateOfMonth>
-                        </div>
+                    <ListDate className="d-flex flex-wrap">
+                        {renderListDate()}
                     </ListDate>
                 </DatePicker>
             </DatePickerRange>

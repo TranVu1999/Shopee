@@ -4,27 +4,24 @@ import styled from 'styled-components';
 
 // Components
 import TabBox from '../components/TabBox';
-import Filter from '../features/Order/Filter';
+import Filter from '../features/Product/Filter';
 
-const WidgetContent = styled.div`
-`;
+const WidgetContent = styled.div``;
 
-OrderManagement.propTypes = {
+ProductManagement.propTypes = {
     
 };
 
-function OrderManagement(props) {
+function ProductManagement(props) {
     // Data
     const [tab, setTab] = React.useState({
         indexActive: 0,
         listTab: [
             "Tất cả",
-            "Chờ xác nhận",
-            "Chờ lấy hàng",
-            "Đang giao",
-            "Đã giao",
-            "Đơn huỷ",
-            "Trả hàng/Hoàn tiền",
+            "Đang hoạt động",
+            "Hết hàng",
+            "Vi phạm",
+            "Đã ẩn",
         ]
     });
 
@@ -41,9 +38,10 @@ function OrderManagement(props) {
                 indexActive={tab.indexActive}
                 handleChoseTab = {handleChoseTab}
             />
+
             <Filter/>
         </WidgetContent>
     );
 }
 
-export default OrderManagement;
+export default ProductManagement;

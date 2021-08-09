@@ -9,6 +9,7 @@ import Sidebar from './features/Layout/Sidebar';
 import Header from './features/Layout/Header';
 import SetupTransport from './containers/SetupTransport';
 import OrderManagement from './containers/OrderManagement';
+import ProductManagement from './containers/ProductManagement';
 
 const WidgetBodyManagement = styled.div`
     margin: 4rem 0 0 15rem;
@@ -34,6 +35,7 @@ function OwnerRoll(props) {
                 <Content>
                     {/* <SetupTransport/> */}
                     <OrderManagement/>
+                    {/* <ProductManagement/> */}
                 </Content>
                 
             </WidgetBodyManagement>
