@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 // Components
 import TabBox from '../components/TabBox';
 import Filter from '../features/Order/Filter';
-
-const WidgetContent = styled.div`
-`;
+import ListOrder from '../features/Order/ListOrder';
 
 OrderManagement.propTypes = {
     
@@ -35,14 +32,16 @@ function OrderManagement(props) {
     }
 
     return (
-        <WidgetContent>
+        <div>
             <TabBox 
                 listTab={tab.listTab} 
                 indexActive={tab.indexActive}
                 handleChoseTab = {handleChoseTab}
             />
             <Filter/>
-        </WidgetContent>
+            <ListOrder/>
+            
+        </div>
     );
 }
 
