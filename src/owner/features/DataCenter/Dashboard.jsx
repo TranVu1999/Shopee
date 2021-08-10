@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SquareStatistics from '../../components/SquareStatistics';
+import { BorderColor } from '../../theme';
 
 const WidgetContent = styled.div`
     width: 79rem;
@@ -14,6 +15,12 @@ const ImportantIndicator = styled.section`
     background-color: #fff;
     border-radius: 4px;
     box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+
+    .chart{
+        img{
+            width: 100%;
+        }
+    }
 `;
 
 const Title = styled.h5`
@@ -23,6 +30,7 @@ const Title = styled.h5`
 `;
 
 const WidgetListStatisticsBox = styled.div`
+    margin-bottom: 2rem;
     gap: .5rem;
 
     &>div{
@@ -30,20 +38,53 @@ const WidgetListStatisticsBox = styled.div`
     }
 `;
 
+const WidgetListLine = styled.div`
+    font-size: .875rem;
+
+    label{
+        font-size: 1rem;
+        color: #333;
+    }
+
+    span.number{
+        color: red;
+    }
+`;
+
+const WidgetLineLabel = styled.p`
+    position: relative;
+    margin: 0;
+    margin-right: 2rem;
+
+    &:after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -.875rem;
+        transform: translateY(-50%);
+
+        height: .5rem;
+        width: .5rem;
+        border-radius: 50%;
+        background-color: ${props=>props.background};
+    }
+`;
+
 Dashboard.propTypes = {
-    
 };
 
 function Dashboard(props) {
     // Data 
-    const listSquareStatistics = [
+    const [listSquareStatistics, setListSquareStatistics] = React.useState([
         {
             index: 0,
             type: "Doanh thu",
             value: "₫ 0",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Tổng giá trị của các đơn đặt hàng đã đặt (đã thanh toán, chưa thanh toán và thanh toán khi nhận hàng) trong khoảng thời gian đã chọn, bao gồm doanh thu từ các đơn đặt hàng bị hủy và trả lại / hoàn tiền."
+            notify: "Tổng giá trị của các đơn đặt hàng đã đặt (đã thanh toán, chưa thanh toán và thanh toán khi nhận hàng) trong khoảng thời gian đã chọn, bao gồm doanh thu từ các đơn đặt hàng bị hủy và trả lại / hoàn tiền.",
+            isActive: false,
+            color: "rgb(54, 127, 227)"
         },
         {
             index: 1,
@@ -51,7 +92,9 @@ function Dashboard(props) {
             value: "0",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Tổng số đơn đặt hàng đã đặt (đã thanh toán, chưa thanh toán, thanh toán khi nhận hàng) trong khoảng thời gian đã chọn, bao gồm cả đơn đặt hàng bị hủy và trả lại / hoàn tiền."
+            notify: "Tổng số đơn đặt hàng đã đặt (đã thanh toán, chưa thanh toán, thanh toán khi nhận hàng) trong khoảng thời gian đã chọn, bao gồm cả đơn đặt hàng bị hủy và trả lại / hoàn tiền.",
+            isActive: false,
+            color: "rgb(246, 189, 22)"
         },
         {
             index: 2,
@@ -59,7 +102,9 @@ function Dashboard(props) {
             value: "0.00%",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Tỉ lệ khách đặt hàng trên tổng số khách truy cập"
+            notify: "Tỉ lệ khách đặt hàng trên tổng số khách truy cập",
+            isActive: false,
+            color: "rgb(35, 170, 171)"
         },
         {
             index: 3,
@@ -67,7 +112,9 @@ function Dashboard(props) {
             value: "₫ 0",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Doanh thu trung bình của một đơn hàng phát sinh trong khoảng thời gian đã chọn."
+            notify: "Doanh thu trung bình của một đơn hàng phát sinh trong khoảng thời gian đã chọn.",
+            isActive: false,
+            color: "rgb(88, 183, 241)"
         },
         {
             index: 4,
@@ -75,7 +122,9 @@ function Dashboard(props) {
             value: "0",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Tổng số khách truy cập duy nhất đã xem trang chủ và trang sản phẩm của Shop trong khoảng thời gian được chọn. Mỗi khách xem một trang sản phẩm nhiều lần được tính là khách truy cập duy nhất."
+            notify: "Tổng số khách truy cập duy nhất đã xem trang chủ và trang sản phẩm của Shop trong khoảng thời gian được chọn. Mỗi khách xem một trang sản phẩm nhiều lần được tính là khách truy cập duy nhất.",
+            isActive: true,
+            color: "rgb(251, 115, 75);"
         },
         {
             index: 5,
@@ -83,46 +132,24 @@ function Dashboard(props) {
             value: "0",
             compareSpan: "so với 7 ngày trước",
             compareNumber: "0.00%",
-            notify: "Tổng số lượt xem trang chủ và trang sản phẩm của Shop trong khoảng thời gian được chọn (từ Máy tính và Ứng dụng)"
-        }
-    ];
-    
-    const [listChoseTypeStatistics, setListChoseTypeStatistics] = React.useState([
-        {
-            isActive: false,
-            color: " rgb(54, 127, 227)"
-        },
-        {
-            isActive: false,
-            color: "rgb(246, 189, 22)"
-        },
-        {
-            isActive: false,
-            color: "rgb(35, 170, 171)"
-        },
-        {
-            isActive: false,
-            color: "rgb(88, 183, 241)"
-        },
-        {
-            isActive: true,
-            color: "rgb(251, 115, 75);"
-        },
-        {
+            notify: "Tổng số lượt xem trang chủ và trang sản phẩm của Shop trong khoảng thời gian được chọn (từ Máy tính và Ứng dụng)",
             isActive: false,
             color: "rgb(148, 95, 185)"
-        },
-
+        }
     ]);
 
     // Handle event
     const onHandleActive = index =>{
-        let newArr = [...listChoseTypeStatistics];
+        let newArr = [...listSquareStatistics];
         newArr[index] = {...newArr[index], isActive: !newArr[index].isActive};
 
-        setListChoseTypeStatistics(newArr);
+        const lengthActive = newArr.filter(item => item.isActive).length;
+        if(lengthActive >= 1 && lengthActive <= 4){
+            setListSquareStatistics(newArr);
+        }   
     }
 
+    // render
     const renderListSquareStatistics = () =>{
         return listSquareStatistics.map((item, index) =>{
             return (
@@ -130,13 +157,30 @@ function Dashboard(props) {
                     key = {item.type}
                 ><SquareStatistics 
                     info = {item} 
-                    active = {listChoseTypeStatistics[index].isActive} 
-                    colorActive={listChoseTypeStatistics[index].color}
+                    active = {item.isActive} 
+                    colorActive={item.color}
                     handleActive = {onHandleActive}
                 /></div>
             );
         })
     }
+
+    const renderListLineLabel = () =>{
+        let elm = [];
+
+        for(let lineItem of listSquareStatistics){
+            if(lineItem.isActive){
+                let line = (
+                    <WidgetLineLabel key={lineItem.index} background = {lineItem.color}>{lineItem.type}</WidgetLineLabel>
+                );
+                elm.push(line);
+            }
+        }
+
+        return elm;
+    }
+
+    const listLineLabel = renderListLineLabel();
 
     return (
         <WidgetContent>
@@ -145,6 +189,23 @@ function Dashboard(props) {
 
                 <WidgetListStatisticsBox className="d-flex">{renderListSquareStatistics()}
                 </WidgetListStatisticsBox>
+
+                <WidgetListLine className="d-flex justify-content-between">
+                    <label>Biểu đồ</label>
+
+                    <div className="d-flex">
+                        <div className="d-flex">
+                            {listLineLabel}
+                        </div>
+
+                        <span>Đã chọn: <span className="number">{listLineLabel.length}</span> /4</span>
+                    </div>
+                </WidgetListLine>
+
+
+                <div className="chart">
+                    <img src="https://apexcharts.com/wp-content/uploads/2018/01/line-chart-zoomable-timeseries.svg" alt="chart" />
+                </div>
             </ImportantIndicator>
         </WidgetContent>
     );
