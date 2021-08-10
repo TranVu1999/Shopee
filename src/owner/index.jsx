@@ -10,6 +10,7 @@ import Header from './features/Layout/Header';
 import SetupTransport from './containers/SetupTransport';
 import OrderManagement from './containers/OrderManagement';
 import ProductManagement from './containers/ProductManagement';
+import DataCenter from './containers/DataCenter';
 
 const WidgetBodyManagement = styled.div`
     margin: 4rem 0 0 15rem;
@@ -29,17 +30,19 @@ function OwnerRoll(props) {
     return (
         <div className = "main-wrapper">
             <Header/>
-            <Sidebar/>
+            {/* <Sidebar/> */}
 
-            <WidgetBodyManagement>
-                <Content>
+            {/* <WidgetBodyManagement> */}
+                {/* <Content> */}
                     {/* <TransportManagement/> */}
                     {/* <SetupTransport/> */}
-                    <OrderManagement/>
+                    {/* <OrderManagement/> */}
                     {/* <ProductManagement/> */}
-                </Content>
+                {/* </Content> */}
                 
-            </WidgetBodyManagement>
+            {/* </WidgetBodyManagement> */}
+
+            <DataCenter/>
             
         </div>
     );
