@@ -139,8 +139,6 @@ function RangeDateBox(props) {
         return elm;
     }
 
-    // console.log(getDaysInMonth(7, 2021))
-
     return (
         <WidgetContent>
             <Result onClick = {() => setIsShowPicker(!isShowPicker)}>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import TabBox from '../components/TabBox';
 
 // Theme
-import {BorderColor} from './../theme';
+import {BorderColor} from '../theme';
 import Dashboard from '../features/DataCenter/Dashboard';
 
 const WidgetContent = styled.div`

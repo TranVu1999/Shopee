@@ -1,8 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+// Components
+import LabelLine from '../../components/LabelLine';
 import SquareStatistics from '../../components/SquareStatistics';
+import FrameTime from '../../components/FrameTime';
+import SelectBox from '../../components/SelectBox';
+import Header from './Header';
+import ButtonDownload from './ButtonDownload';
+
+// Theme
 import { BorderColor } from '../../theme';
+
 
 const WidgetContent = styled.div`
     width: 79rem;
@@ -53,8 +63,8 @@ const WidgetListLine = styled.div`
 
 const WidgetLineLabel = styled.p`
     position: relative;
-    margin: 0;
     margin-right: 2rem;
+    line-height: 1rem;
 
     &:after{
         content: '';
@@ -137,6 +147,12 @@ function Dashboard(props) {
             color: "rgb(148, 95, 185)"
         }
     ]);
+    const [listTypeInvoice, setListTypeInvoice] = React.useState({
+        listTypeInvoice: [
+            "Tất Cả Đơn", "Đơn Đã Xác Nhận", "Đơn Đã Thanh Toán"
+        ],
+        indexSelected: 0
+    });
 
     // Handle event
     const onHandleActive = index =>{
@@ -147,6 +163,13 @@ function Dashboard(props) {
         if(lengthActive >= 1 && lengthActive <= 4){
             setListSquareStatistics(newArr);
         }   
+    }
+
+    const onHandleSelectOption = index =>{
+        if(index !== listTypeInvoice.indexSelected) setListTypeInvoice({
+            ...listTypeInvoice, 
+            indexSelected: index
+        });
     }
 
     // render
@@ -165,43 +188,37 @@ function Dashboard(props) {
         })
     }
 
-    const renderListLineLabel = () =>{
-        let elm = [];
-
-        for(let lineItem of listSquareStatistics){
-            if(lineItem.isActive){
-                let line = (
-                    <WidgetLineLabel key={lineItem.index} background = {lineItem.color}>{lineItem.type}</WidgetLineLabel>
-                );
-                elm.push(line);
-            }
-        }
-
-        return elm;
-    }
-
-    const listLineLabel = renderListLineLabel();
-
     return (
         <WidgetContent>
+            
+            <Header>
+                <div className="d-flex">
+                    <div className="mr-4">
+                        <span className="mr-2">Khung Thời Gian</span>
+                        <FrameTime/>
+                    </div>
+
+                    <div>
+                        <span className="mr-2">Loại Đơn Hàng</span>
+                        <SelectBox 
+                            listOption = {listTypeInvoice.listTypeInvoice}
+                            indexSelected={listTypeInvoice.indexSelected}
+                            handleSelectOption={onHandleSelectOption}
+                        />
+                    </div>
+                </div>
+
+                <ButtonDownload/>
+            </Header>
+            
+
             <ImportantIndicator>
                 <Title>Chỉ số quan trọng</Title>
 
                 <WidgetListStatisticsBox className="d-flex">{renderListSquareStatistics()}
                 </WidgetListStatisticsBox>
 
-                <WidgetListLine className="d-flex justify-content-between">
-                    <label>Biểu đồ</label>
-
-                    <div className="d-flex">
-                        <div className="d-flex">
-                            {listLineLabel}
-                        </div>
-
-                        <span>Đã chọn: <span className="number">{listLineLabel.length}</span> /4</span>
-                    </div>
-                </WidgetListLine>
-
+                <LabelLine listLine={listSquareStatistics}/>
 
                 <div className="chart">
                     <img src="https://apexcharts.com/wp-content/uploads/2018/01/line-chart-zoomable-timeseries.svg" alt="chart" />

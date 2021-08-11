@@ -27,8 +27,9 @@ const ResultSelected = styled.div`
         word-wrap: break-word;
         overflow: hidden;
         
-        width: 240px;
-        padding: .25rem 1.875rem .25rem .875rem;
+        max-width: 240px;
+        // min-width: 180px;
+        padding: .25rem 2.875rem .25rem .875rem;
 
         cursor: pointer;
     }
@@ -43,10 +44,13 @@ const ResultSelected = styled.div`
 `;
 
 const WidgetOptions = styled.div`
-    position: relative;
+    position: absolute;
+    top: 105%;
+    left: 0;
+
     padding: .25rem 0;
     margin-top: .25rem;
-    width: 100%;
+    min-width: 100%;
 
     background-color: #fff;
     border: 1px solid ${BorderColor.mainColor};
@@ -57,6 +61,7 @@ const WidgetOptions = styled.div`
     div{
         padding: .25rem .875rem;
         cursor: pointer;
+        white-space: nowrap;
 
         &:hover{
             background-color: rgba(0,0,0,.2);
@@ -92,7 +97,7 @@ function SelectBox({listOption, indexSelected, handleSelectOption}) {
     }
 
     return (
-        <WidgetContent>
+        <WidgetContent className="d-inline-block">
             <ResultSelected>
                 <div
                     onClick = {() => setIsShowListOption(!isShowListOption)}
@@ -101,7 +106,10 @@ function SelectBox({listOption, indexSelected, handleSelectOption}) {
                 <span aria-hidden="true" className="arrow_carrot-down"></span>
             </ResultSelected>
 
-            <WidgetOptions style={{display: isShowListOption ? "block" : "none"}}>{renderOptions()}</WidgetOptions>
+            <WidgetOptions 
+                style={{display: isShowListOption ? "block" : "none"}}
+            >{renderOptions()}
+            </WidgetOptions>
         </WidgetContent>
     );
 }
