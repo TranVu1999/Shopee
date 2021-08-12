@@ -13,6 +13,7 @@ import ProductManagement from './containers/ProductManagement';
 import DataCenterDashboard from './containers/DataCenterDashboard';
 import DataCenterLearn from './containers/DataCenterLearn';
 import DataCenterTraffic from './containers/DataCenterTraffic';
+import SettingAccount from './containers/SettingAccount';
 
 
 const WidgetBodyManagement = styled.div`
@@ -35,17 +36,18 @@ function OwnerRoll(props) {
             <Header/>
             {/* <Sidebar/> */}
 
-            {/* <WidgetBodyManagement> */}
-                {/* <Content> */}
+            <WidgetBodyManagement>
+                <Content>
                     {/* <TransportManagement/> */}
                     {/* <SetupTransport/> */}
                     {/* <OrderManagement/> */}
                     {/* <ProductManagement/> */}
-                {/* </Content> */}
+                    <SettingAccount/>
+                </Content>
                 
-            {/* </WidgetBodyManagement> */}
+            </WidgetBodyManagement>
 
-            <DataCenterTraffic/>
+            {/* <DataCenterTraffic/> */}
             {/* <DataCenterDashboard/> */}
             {/* <DataCenterLearn/> */}
         </div>
