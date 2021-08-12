@@ -44,7 +44,7 @@ SwitchBox.propTypes = {
 };
 
 SwitchBox.defaultProps = {
-    isActive: true,
+    isActive: false,
     handleSwitch: null
 } 
 

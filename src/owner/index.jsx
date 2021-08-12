@@ -14,6 +14,7 @@ import DataCenterDashboard from './containers/DataCenterDashboard';
 import DataCenterLearn from './containers/DataCenterLearn';
 import DataCenterTraffic from './containers/DataCenterTraffic';
 import SettingAccount from './containers/SettingAccount';
+import SettingShop from './containers/SettingShop';
 
 
 const WidgetBodyManagement = styled.div`
@@ -42,7 +43,8 @@ function OwnerRoll(props) {
                     {/* <SetupTransport/> */}
                     {/* <OrderManagement/> */}
                     {/* <ProductManagement/> */}
-                    <SettingAccount/>
+                    {/* <SettingAccount/> */}
+                    <SettingShop/>
                 </Content>
                 
             </WidgetBodyManagement>
