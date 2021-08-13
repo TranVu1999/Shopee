@@ -23,6 +23,9 @@ Sidebar.propTypes = {
 
 function Sidebar(props) {
     // Data
+    const portalSetting = "/portal/settings/";
+    const portal = "/portal/";
+
     const SubMenuTransport = [
         {
             title: "Quản Lý Vận Chuyển",
@@ -35,6 +38,44 @@ function Sidebar(props) {
         {
             title: "Cài Đặt Vận Chuyển",
             url: "#/"
+        }
+    ]
+
+    const SubMenuSetting = [
+        {
+            title: "Địa Chỉ",
+            url: `${portalSetting}address`
+        },
+        {
+            title: "Thiết Lập Shop",
+            url: `${portalSetting}shop/basic`
+        },
+        {
+            title: "Tài Khoản",
+            url: `${portalSetting}account`
+        }
+    ]
+
+    const SubShopManagement = [
+        {
+            title: "Đánh Giá Shop",
+            url: "#/"
+        },
+        {
+            title: "Hồ Sơ Shop",
+            url: "#/"
+        },
+        {
+            title: "Trang Trí Shop",
+            url: "#/"
+        },
+        {
+            title: "Danh Mục Của Shop",
+            url: `${portal}category`
+        },
+        {
+            title: "Báo Cáo Của Tôi",
+            url: `${portalSetting}shop/report`
         }
     ]
 
@@ -91,13 +132,13 @@ function Sidebar(props) {
             <SidebarItem 
                 icon="https://cf.shopee.vn/file/6b1ffcde1ff12621088110f419a5283a" 
                 span="Quản Lý Shop" 
-                subMenu={SubMenuTransport}
+                subMenu={SubShopManagement}
             />
 
             <SidebarItem 
                 icon="https://cf.shopee.vn/file/789f116a0778cf137519cadb1165d70f" 
                 span="Thiết Lập Shop" 
-                subMenu={SubMenuTransport}
+                subMenu={SubMenuSetting}
             />
         </WidgetContent>
     );

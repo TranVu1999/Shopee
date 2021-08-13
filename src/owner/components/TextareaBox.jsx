@@ -15,25 +15,21 @@ const WidgetContent = styled.div`
     border: 1px solid ${BorderColor.mainColor};
     border-radius: 4px;
 
-    input{
+    textarea{
         width: 100%;
     }
-`;
+`
 
-InputBox.propTypes = {
-    placeholder: PropTypes.string,
+TextareaBox.propTypes = {
+    
 };
 
-InputBox.defaultProps = {
-    placeholder: "Nhập vào"
-};
-
-function InputBox({placeholder}) {
+function TextareaBox(props) {
     return (
-        <WidgetContent className="d-inline-block">
-            <input type="text" placeholder = {placeholder}/>
+        <WidgetContent>
+            <textarea placeholder="Số nhà, tên đường.v.v.."/>
         </WidgetContent>
     );
 }
 
-export default InputBox;
+export default TextareaBox;

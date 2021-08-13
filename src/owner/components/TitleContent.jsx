@@ -12,7 +12,7 @@ const WidgetContent = styled.div`
     h5{
         color: #333;
         font-size: 1.375rem;
-        font-weight: 600;
+        font-weight: 400;
     }
 
     p{
@@ -24,17 +24,28 @@ const WidgetContent = styled.div`
 TitleContent.propTypes = {
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string,
+    button: PropTypes.element,
 };
 
 TitleContent.defaultProps = {
-    subTitle: ""
+    subTitle: "",
+    button: null
 };
 
-function TitleContent({title, subTitle}) {
+function TitleContent({title, subTitle, button}) {
+
     return (
-        <WidgetContent>
-            <h5>{title}</h5>
-            <p>{subTitle}</p>
+        <WidgetContent 
+            className="d-flex align-items-center justify-content-between"
+        >
+            <div>
+                <h5>{title}</h5>
+                <p>{subTitle}</p>
+            </div>
+            
+            <div>
+                {button}
+            </div>
         </WidgetContent>
     );
 }

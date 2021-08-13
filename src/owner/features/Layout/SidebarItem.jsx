@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import classnames from 'classnames';
+import {NavLink} from 'react-router-dom';
 
 const WidgetContent = styled.div`
     margin-bottom: 1rem;
@@ -38,7 +39,7 @@ const SubMenu = styled.ul`
     transition: all .3s;
 
     &.open{
-        max-height: 8rem;
+        max-height: 10rem;
     }
 `;
 
@@ -46,6 +47,11 @@ const SubMenuItem = styled.li`
     font-size: 13px;
     color: #333;
     margin-bottom: .375rem;
+
+    a.active{
+        color: #ee4d2d;
+        font-weight: 600;
+    }
 `;
 
 SidebarItem.propTypes = {
@@ -67,7 +73,10 @@ function SidebarItem({icon, span, subMenu}) {
         return subMenu.map(item =>{
             return (
                 <SubMenuItem key={item.title}>
-                    <a href={item.url}>{item.title}</a>
+                    <NavLink 
+                        to={item.url}
+                        activeClassName="active"
+                    >{item.title}</NavLink>
                 </SubMenuItem>
             );
         });
