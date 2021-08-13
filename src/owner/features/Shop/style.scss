@@ -1,0 +1,83 @@
+.owner-manage-shop__widget-list-category{
+    .header, .category-item{
+        background-color: #f6f6f6;
+        border-bottom: 1px solid #d5d5d5;
+
+        &>div{
+            padding: .75rem .875rem;
+        }
+
+        .name{
+            flex: 1;
+        }
+
+        .control{
+            width: 8.125rem;
+            box-sizing: content-box;
+        }
+
+        .amount{
+            width: 8.125rem;
+        }
+
+        .created{
+            width: 11.25rem;
+            box-sizing: content-box;
+        }
+
+        .action{
+            width: 7.375rem;
+            box-sizing: content-box;
+        }
+    }
+
+    .category-item{
+        background-color: transparent;
+        padding: .5rem 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        &:last-child{
+            border: none;
+        }
+
+        &>div{
+            &:first-child{
+                padding-left: 0;
+            }
+            &:last-child{
+                padding-right: 0;
+            }
+        }
+
+        
+
+        .action{
+            button{
+                position: relative;
+                height: 2rem;
+                width: 2rem;
+                margin: 0 .5rem;
+
+                border-radius: 50%;
+                border: 1px solid #d5d5d5;
+
+
+                svg{
+                    position: absolute;
+                    top: 25%;
+                    left: 25%;
+
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+
+            button.transparent{
+                height: auto;
+                width: auto;
+                border: none;
+                color: #2673dd;
+            }
+        }
+    }
+}
