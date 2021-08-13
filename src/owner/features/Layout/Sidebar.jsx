@@ -67,7 +67,7 @@ function Sidebar(props) {
         },
         {
             title: "Trang Trí Shop",
-            url: "#/"
+            url: `${portal}decoration`
         },
         {
             title: "Danh Mục Của Shop",

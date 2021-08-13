@@ -3,6 +3,7 @@ import SettingShop from './SettingShop';
 import SettingAddress from './SettingAddress';
 import ShopReport from './ShopReport';
 import ShopCategory from './ShopCategory';
+import ShopDecoration from './ShopDecoration';
 
 const portalSetting = "/portal/settings/";
 const portal = "/portal/";
@@ -16,6 +17,10 @@ const routes = [
     {
         path: `${portal}category`,
         component: ShopCategory
+    },
+    {
+        path: `${portal}decoration`,
+        component: ShopDecoration
     },
 
     // Setting
