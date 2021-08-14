@@ -41,6 +41,21 @@ function Sidebar(props) {
         }
     ]
 
+    const SubMenuOrder = [
+        {
+            title: "Tất cả",
+            url: `${portal}sale/order`
+        },
+        {
+            title: "Đơn huỷ",
+            url: "#/"
+        },
+        {
+            title: "Trả Hàng / Hoàn Tiền",
+            url: "#/"
+        }
+    ]
+
     const SubMenuSetting = [
         {
             title: "Địa Chỉ",
@@ -59,11 +74,11 @@ function Sidebar(props) {
     const SubShopManagement = [
         {
             title: "Đánh Giá Shop",
-            url: "#/"
+            url: `${portalSetting}shop/rating`
         },
         {
             title: "Hồ Sơ Shop",
-            url: "#/"
+            url: `${portalSetting}shop/profile`
         },
         {
             title: "Trang Trí Shop",
@@ -90,7 +105,7 @@ function Sidebar(props) {
             <SidebarItem 
                 icon="https://cf.shopee.vn/file/f82f8ccb649afcdf4f07f1dd9c41bcb0" 
                 span="Quản Lý Đơn Hàng" 
-                subMenu={SubMenuTransport}
+                subMenu={SubMenuOrder}
             />
 
             <SidebarItem 

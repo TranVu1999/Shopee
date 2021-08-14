@@ -24,15 +24,15 @@ const WidgetContent = styled.div`
 TitleContent.propTypes = {
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string,
-    button: PropTypes.element,
+    rightElm: PropTypes.element,
 };
 
 TitleContent.defaultProps = {
     subTitle: "",
-    button: null
+    rightElm: null
 };
 
-function TitleContent({title, subTitle, button}) {
+function TitleContent({title, subTitle, rightElm}) {
 
     return (
         <WidgetContent 
@@ -44,7 +44,7 @@ function TitleContent({title, subTitle, button}) {
             </div>
             
             <div>
-                {button}
+                {rightElm}
             </div>
         </WidgetContent>
     );
