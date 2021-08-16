@@ -7,15 +7,28 @@ import ShopDecoration from './ShopDecoration';
 import ShopProfile from './ShopProfile';
 import ShopRating from './ShopRating';
 import OrderManagement from './OrderManagement';
+import ProductManagement from './ProductManagement';
+
+// const 
+import * as URL from './../constant/url';
 
 const portalSetting = "/portal/settings/";
 const portal = "/portal/";
 
 const routes = [
+
+    // Management Product
+    {
+        path: `${URL.PORTAL_PRODUCT}list/:alias?`,
+        component: ProductManagement,
+        exact: true
+    },
+
     // Management Order
     {
-        path: `${portal}sale/order`,
-        component: OrderManagement
+        path: `${portal}sale/order/:alias?`,
+        component: OrderManagement,
+        exact: true
     },
 
     // Management Shop
@@ -42,11 +55,11 @@ const routes = [
 
     // Setting
     {
-        path: `${portalSetting}account`,
+        path: `${portalSetting}account/:alias?`,
         component: SettingAccount
     },
     {
-        path: `${portalSetting}shop/basic`,
+        path: `${portalSetting}shop/:alias?`,
         component: SettingShop
     },
     {

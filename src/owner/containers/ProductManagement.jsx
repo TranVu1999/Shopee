@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 // Components
-import TabBox from '../components/TabBox';
+import TabBoxButton from '../components/TabBoxButton';
 import Filter from '../features/Product/Filter';
+import Title from '../features/Product/Title';
+import DataTable from '../features/Product/DataTable';
 
-const WidgetContent = styled.div``;
+const WidgetContent = styled.div`
+    padding-bottom: 2rem;
+`;
 
 ProductManagement.propTypes = {
     
@@ -14,6 +19,8 @@ ProductManagement.propTypes = {
 
 function ProductManagement(props) {
     // Data
+    const {alias} = useParams();
+
     const [tab, setTab] = React.useState({
         indexActive: 0,
         listTab: [
@@ -25,6 +32,14 @@ function ProductManagement(props) {
         ]
     });
 
+    React.useEffect(() =>{
+        if(alias === "all"){
+            setTab({...tab, indexActive: 0});
+        }else{
+            setTab({...tab, indexActive: 3});
+        }
+    }, [alias]);
+
     // handle event
     const handleChoseTab = indexActive =>{
         if(indexActive === tab.indexActive) return;
@@ -33,13 +48,20 @@ function ProductManagement(props) {
 
     return (
         <WidgetContent>
-            <TabBox 
+            <TabBoxButton 
                 listTab={tab.listTab} 
                 indexActive={tab.indexActive}
                 handleChoseTab = {handleChoseTab}
             />
 
+            <div className="mb-2"></div>
+
             <Filter/>
+            <Title/>
+
+            <div className="mb-4"></div>
+            <DataTable/>
+
         </WidgetContent>
     );
 }

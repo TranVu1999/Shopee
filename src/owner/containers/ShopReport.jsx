@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // Components
 import TitleContent from './../components/TitleContent';
-import TabBox from './../components/TabBox';
+import TabBoxButton from './../components/TabBoxButton';
 import DataTable from '../features/Shop/DataTable';
 
 const WidgetContent = styled.div`
@@ -46,7 +46,7 @@ function ShopReport(props) {
             />
 
             <WidgetContent>
-                <TabBox 
+                <TabBoxButton
                     indexActive={listTab.indexActive}
                     listTab={listTab.listTab}
                     handleChoseTab={handleChoseTab}

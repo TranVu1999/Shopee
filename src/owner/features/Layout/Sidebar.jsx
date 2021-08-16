@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SidebarItem from './SidebarItem';
 
+// Constants
+import * as URL from './../../constant/url';
+
 const WidgetContent = styled.div`
     position: fixed;
     top: 4rem;
@@ -29,7 +32,7 @@ function Sidebar(props) {
     const SubMenuTransport = [
         {
             title: "Quản Lý Vận Chuyển",
-            url: "#/"
+            url: `${URL.PORTAL_SALE_ORDER}toship`
         },
         {
             title: "Giao Hàng Loạt",
@@ -39,22 +42,22 @@ function Sidebar(props) {
             title: "Cài Đặt Vận Chuyển",
             url: "#/"
         }
-    ]
+    ];
 
     const SubMenuOrder = [
         {
             title: "Tất cả",
-            url: `${portal}sale/order`
+            url: `${portal}sale/order/all`
         },
         {
             title: "Đơn huỷ",
-            url: "#/"
+            url: `${portal}sale/order/cancelled`
         },
         {
             title: "Trả Hàng / Hoàn Tiền",
-            url: "#/"
+            url: `${portal}sale/order/returnlist`
         }
-    ]
+    ];
 
     const SubMenuSetting = [
         {
@@ -69,7 +72,7 @@ function Sidebar(props) {
             title: "Tài Khoản",
             url: `${portalSetting}account`
         }
-    ]
+    ];
 
     const SubShopManagement = [
         {
@@ -92,6 +95,21 @@ function Sidebar(props) {
             title: "Báo Cáo Của Tôi",
             url: `${portalSetting}shop/report`
         }
+    ];
+
+    const subMenuProduct = [
+        {
+            title: "Tất Cả Sản Phẩm",
+            url: `${URL.PORTAL_PRODUCT}list/all`
+        },
+        {
+            title: "Thêm Sản Phẩm",
+            url: `#/`
+        },
+        {
+            title: "Sản Phẩm Vi Phạm",
+            url: `${URL.PORTAL_PRODUCT}list/banned`
+        },
     ]
 
     return (
@@ -111,7 +129,7 @@ function Sidebar(props) {
             <SidebarItem 
                 icon="https://cf.shopee.vn/file/3fa3bdb20eb201ae3f157ee8d11a39d5" 
                 span="Quản Lý Sản Phẩm" 
-                subMenu={SubMenuTransport}
+                subMenu={subMenuProduct}
             />
 
             <SidebarItem 

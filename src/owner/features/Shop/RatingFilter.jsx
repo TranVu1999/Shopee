@@ -5,7 +5,7 @@ import styled from 'styled-components';
 // Components 
 import InputBox from './../../components/InputBox';
 import RangeDateBox from './../../components/RangeDateBox';
-import TabBox from './../../components/TabBox';
+import TabBoxButton from './../../components/TabBoxButton';
 
 // Theme
 import {BorderColor} from './../../theme';
@@ -137,7 +137,7 @@ function RatingFilter(props) {
                 </InputGroup>
             </FormFilter>
 
-            <TabBox 
+            <TabBoxButton
                 listTab = {listTab.listTab}
                 indexActive = {listTab.indexActive}
                 handleChoseTab = {handleChoseTab}

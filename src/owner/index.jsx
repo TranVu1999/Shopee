@@ -4,6 +4,7 @@ import {Switch, Route} from 'react-router-dom';
 
 // Css
 import './assets/sass/index.scss';
+import './style.scss';
 
 // Components
 import Header from './features/Layout/Header';
