@@ -4,10 +4,13 @@ import styled from 'styled-components';
 
 // Theme
 import {BorderColor} from './../../theme';
+import { useEffect } from 'react';
 
 const WidgetContent = styled.div`
-    padding: 1.5rem .875rem;
-    background-color: #FAFAFA;
+    .widget-list-cat{
+        padding: 1.5rem .875rem;
+        background-color: #FAFAFA;
+    }
 `;
 
 const WidgetFilter = styled.div`
@@ -31,6 +34,7 @@ const WidgetSearchForm = styled.div`
 `;
 
 const WidgetListCategory = styled.div`
+    padding: .25rem 0;
     background-color: #fff;
     overflow-x: scroll;
     white-space: nowrap;
@@ -68,6 +72,45 @@ const ListCategory = styled.div`
             color: #ee4d2d;
         }
     }
+`;
+
+const WidgetResultSelect = styled.div`
+    padding: 1.125rem 0;
+
+    label{
+        margin: 0 1rem 0 0;
+    }
+
+    li{
+        display: inline-block;
+        margin-right: .5rem;
+        color: #ee4d2d;
+        font-weight: 700;
+
+        span{
+            margin-left: .5rem;
+            font-size: 1.125rem;
+        }
+
+        &:last-child{
+            span{
+                display: none;
+            }
+        }
+    }
+
+    &>span{
+        color: #999;
+    }
+`;
+
+const Button = styled.button`
+    padding: .5rem 1.5rem;
+
+    color: #fff;
+    background-color: #ee4d2d;
+    border-radius: 4px;
+    
 `;
 
 
@@ -733,8 +776,31 @@ function ListCategoryOption(props) {
     ]
 
     const [indexActive, setIndexActive] = React.useState([-1, -1, -1, -1, -1]);
+    const [isMaxLevel, setIsMaxLevel] = React.useState(false);
 
-    // functions
+    // effect 
+    // check max level
+    useEffect(() =>{
+        let level = indexActive.findIndex(item => item < 0) - 1;
+
+        if(level === -1){
+            setIsMaxLevel(false);
+        }else{
+            let step = 0;
+            let listSubCate = [...listCategory];
+
+            do{
+                listSubCate = indexActive[step] > -1 ? [...listSubCate[indexActive[step]].subList] : [];
+                step++;
+            }while(step <= level)
+
+            setIsMaxLevel(!listSubCate.length > 0);
+        }
+
+        
+    }, [indexActive])
+
+    // handle event
     const handleChoseCategory = (index, level) =>{
 
         let tempIndexActive = [...indexActive];
@@ -744,8 +810,30 @@ function ListCategoryOption(props) {
         for(let i = level + 1; i < length; i++){
             tempIndexActive[i] = -1;
         }
-
         setIndexActive(tempIndexActive);
+    }
+
+    // functions
+    const getCategory = () =>{
+        let elm = [];
+
+        let level = indexActive.findIndex(item => item < 0) - 1;
+        let step = 0;
+        let listSubCate = [...listCategory];
+
+        while(step <= level){
+            
+            let title = listSubCate[indexActive[step]].title;
+            listSubCate = [...listSubCate[indexActive[step]].subList];
+            elm.push(
+                <li className="d-inline-flex align-items-center">
+                    {title} 
+                    <span aria-hidden="true" className="arrow_carrot-right"></span>
+                </li>
+            );
+            step++;
+        }
+        return elm;
     }
 
     // render
@@ -779,7 +867,7 @@ function ListCategoryOption(props) {
 
         if(level >= 0){
             let step = 0;
-            let listOptions = listCategory[indexActive[step]].subList;
+            let listOptions = listCategory[indexActive[step]].subList;            
 
             while(step <= level && listOptions.length > 0){                
                 elm.push(renderListCategory(listOptions, step + 1));
@@ -791,22 +879,43 @@ function ListCategoryOption(props) {
         return elm;        
     }
 
+    const elmResultSelected = getCategory();
+
     return (
         <WidgetContent>
-            <WidgetFilter>
-                <WidgetSearchForm className="mr-3 d-inline-flex align-items-center">
-                    <span aria-hidden="true" className="icon_search"></span>
-                    <input className="flex-fill" type="text" placeholder="Tên Ngành Hàng"/>
-                </WidgetSearchForm>
+            <div className="widget-list-cat">
+                <WidgetFilter className="mb-3">
+                    <WidgetSearchForm className="mr-3 d-inline-flex align-items-center">
+                        <span aria-hidden="true" className="icon_search"></span>
+                        <input className="flex-fill" type="text" placeholder="Tên Ngành Hàng"/>
+                    </WidgetSearchForm>
 
-                <span> Chọn ngành hàng chính xác, <a href="#/">bấm vào đây để tìm hiểu</a></span>
-            </WidgetFilter>
+                    <span> Chọn ngành hàng chính xác, <a href="#/">bấm vào đây để tìm hiểu</a></span>
+                </WidgetFilter>
 
-            <WidgetListCategory>
-                {renderListCategory(listCategory, 0)}
-                {renderListLevel()}
+                <WidgetListCategory>
+                    {renderListCategory(listCategory, 0)}
+                    {renderListLevel()}
+                </WidgetListCategory>  
+            </div>
+                      
+
+            <WidgetResultSelect>
+                <div className="d-flex align-items-center mb-3">
+                    <label >Đã chọn :</label>
+
+                    {
+                        elmResultSelected.length > 0 ? elmResultSelected : (
+                            <span>Chưa chọn ngành hàng</span>
+                        )
+                    }
+                </div>
+
+                {isMaxLevel && <Button > Tiếp theo </Button>}
                 
-            </WidgetListCategory>
+            </WidgetResultSelect>
+
+
 
         </WidgetContent>
     );
