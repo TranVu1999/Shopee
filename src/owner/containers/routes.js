@@ -9,6 +9,7 @@ import ShopRating from './ShopRating';
 import OrderManagement from './OrderManagement';
 import ProductManagement from './ProductManagement';
 import ProductCategory from './ProductCategory';
+import ProductNew from './ProductNew';
 
 // const 
 import * as URL from './../constant/url';
@@ -27,6 +28,11 @@ const routes = [
     {
         path: `${URL.PORTAL_PRODUCT}category`,
         component: ProductCategory,
+        exact: true
+    },
+    {
+        path: `${URL.PORTAL_PRODUCT}new`,
+        component: ProductNew,
         exact: true
     },
 
