@@ -31,10 +31,7 @@ textarea, textarea:focus{
     border: navajowhite;
     cursor: pointer;
     -webkit-appearance: none;
-}
-
-::-webkit-calendar-picker-indicator{
-    display: none;
+    outline: none;
 }
 
 table {

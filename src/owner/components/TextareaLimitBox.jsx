@@ -17,6 +17,7 @@ const WidgetContent = styled.div`
 
     textarea{
         width: 100%;
+        resize: none;
     }
 `
 
@@ -24,24 +25,25 @@ TextareaLimitBox.propTypes = {
     placeholder: PropTypes.string,
     limit: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
+    large: PropTypes.bool,
 };
 
 TextareaLimitBox.defaultProps = {
-    placeholder: "Nhập vào"
+    placeholder: "Nhập vào",
+    large: false
 };
 
-function TextareaLimitBox({placeholder, limit, value}) {
+function TextareaLimitBox({placeholder, limit, value, large}) {
     return (
         <div>
             <WidgetContent>
                 <textarea 
                     placeholder={placeholder} 
                     value={value}
-                    rows="5"
+                    rows = {large ? "8" : "5"}
                 />
             </WidgetContent>
             <div className="text-right"><span>{value.length}/{limit}</span></div>
-           
         </div>
         
     );

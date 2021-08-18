@@ -19,6 +19,11 @@ const WidgetContent = styled.div`
         margin-right: .5rem;
         width: 100%;
     }
+
+    span{
+        padding-left: .75rem;
+        border-left: 1px solid ${BorderColor.mainColor};
+    }
 `;
 InputLimitBox.propTypes = {
     value: PropTypes.string.isRequired,

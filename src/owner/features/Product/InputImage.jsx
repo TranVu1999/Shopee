@@ -122,16 +122,13 @@ function InputImage({label, required}) {
                 {image && <WidgetButtonUpdate className="align-items-center justify-content-center width-button-edit">
                     <button><span aria-hidden="true" className="icon_pencil-edit"></span></button>
                     <button><span aria-hidden="true" className="icon_trash_alt"></span></button>
-                </WidgetButtonUpdate>}
-
-                
+                </WidgetButtonUpdate>}                
                 
                 {!image && <WidgetAddImageButton>
                     <button
                         onClick = {handleOpenInputFile}
                     ><span aria-hidden="true" className="icon_plus_alt2"></span></button>
                 </WidgetAddImageButton>}
-
                 
 
             </WidgetThumbnail>
