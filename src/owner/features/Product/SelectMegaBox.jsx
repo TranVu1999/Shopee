@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
-import {BorderColor} from './../../theme';
+import {BorderColor} from '../../theme';
 
 const WidgetContent = styled.div`
     position: relative;
@@ -99,7 +99,11 @@ const WidgetOption = styled.div`
     cursor: pointer;
 
     &:hover{
-        background-color: rgba(0,0,0,.2);
+        background-color: rgba(0,0,0,.04);
+    }
+
+    &.active{
+        color: #ee4d2d;
     }
 `;
 
@@ -147,59 +151,99 @@ const WidgetFormAddNewItem = styled.div`
 `;
 
 
-InputMegaBox.propTypes = {
+SelectMegaBox.propTypes = {
     name: PropTypes.string.isRequired,
     listOption: PropTypes.array.isRequired,
     indexSelected: PropTypes.number,
     arrIndexSelected: PropTypes.array,
     limit: PropTypes.number,
     selectedQuantity: PropTypes.number,
+    isExtended: PropTypes.bool,
+
+    handleChoseOption: PropTypes.func.isRequired,
 };
 
-InputMegaBox.defaultProps = {
+SelectMegaBox.defaultProps = {
     indexSelected: -1,
     arrIndexSelected: [],
     limit: 0,
     selectedQuantity: 0,
+    isExtended: false
 };
 
-function InputMegaBox({
+function SelectMegaBox({
     name,
     listOption, 
     limit,
-    selectedQuantity,
     indexSelected,
-    arrIndexSelected
+    arrIndexSelected,
+    isExtended,
+    handleChoseOption
 }) {
+
+    console.log({arrIndexSelected})
 
     // Data
     const [isShowListOption, setIsShowListOption] = React.useState(false);
     const [isOpenFormAddNew, setIsOpenFormAddNew] = React.useState(false);
+    const amountSelected = arrIndexSelected.filter(item => item).length;
+
+    // handle event
+    const handleChose = index =>{
+        if(!handleChoseOption) return;
+        handleChoseOption({name, index});
+    }
 
     // render
     const renderListOption = () =>{
-        return listOption.map(item =>{
+        if(limit){
+            return listOption.map((item, index) =>{
+                return(
+                    <WidgetOption 
+                        key = {item}
+                        onClick = {() => handleChose(index)}
+                        className = {indexSelected === index && "active"}
+                    >{item}</WidgetOption>
+                );
+            })
+        }
+
+        return listOption.map((item, index) =>{
             return(
-                <WidgetOption key = {item}>{item}</WidgetOption>
+                <WidgetOption 
+                    key = {item}
+                    onClick = {() => handleChose(index)}
+                    className = {arrIndexSelected[index] && "active"}
+                >{item}</WidgetOption>
             );
-        })
+        })        
     }
 
     const renderResultSelected = () =>{
-        if(indexSelected === -1 && arrIndexSelected.length === 0){
+        if(indexSelected === -1 && amountSelected === 0){
             return (<span className="result">Vui lòng chọn</span>)
         }
         
         if(indexSelected !== -1){
             return (<span className="result active">{listOption[indexSelected]}</span>)
         }else{
-            return arrIndexSelected.map(item => {
-                return (
-                    <label key = {item}>{listOption[item]} <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.85355339,1.98959236 L8.157,7.29314575 L13.4601551,1.98959236 C13.6337215,1.81602601 13.9031459,1.79674086 14.098014,1.93173691 L14.1672619,1.98959236 C14.362524,2.18485451 14.362524,2.501437 14.1672619,2.69669914 L14.1672619,2.69669914 L8.864,8.00014575 L14.1672619,13.3033009 C14.362524,13.498563 14.362524,13.8151455 14.1672619,14.0104076 C13.9719997,14.2056698 13.6554173,14.2056698 13.4601551,14.0104076 L8.157,8.70714575 L2.85355339,14.0104076 C2.67998704,14.183974 2.41056264,14.2032591 2.2156945,14.0682631 L2.14644661,14.0104076 C1.95118446,13.8151455 1.95118446,13.498563 2.14644661,13.3033009 L2.14644661,13.3033009 L7.45,8.00014575 L2.14644661,2.69669914 C1.95118446,2.501437 1.95118446,2.18485451 2.14644661,1.98959236 C2.34170876,1.79433021 2.65829124,1.79433021 2.85355339,1.98959236 Z"></path></svg></span></label>
-                );
-            })
+            let elm = [];
+            
+            for(let idx in listOption){
+                if(arrIndexSelected[idx]){
+                    elm.push(
+                        <label key = {listOption[idx]}>{listOption[idx]} 
+                            <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fillRule="evenodd" d="M2.85355339,1.98959236 L8.157,7.29314575 L13.4601551,1.98959236 C13.6337215,1.81602601 13.9031459,1.79674086 14.098014,1.93173691 L14.1672619,1.98959236 C14.362524,2.18485451 14.362524,2.501437 14.1672619,2.69669914 L14.1672619,2.69669914 L8.864,8.00014575 L14.1672619,13.3033009 C14.362524,13.498563 14.362524,13.8151455 14.1672619,14.0104076 C13.9719997,14.2056698 13.6554173,14.2056698 13.4601551,14.0104076 L8.157,8.70714575 L2.85355339,14.0104076 C2.67998704,14.183974 2.41056264,14.2032591 2.2156945,14.0682631 L2.14644661,14.0104076 C1.95118446,13.8151455 1.95118446,13.498563 2.14644661,13.3033009 L2.14644661,13.3033009 L7.45,8.00014575 L2.14644661,2.69669914 C1.95118446,2.501437 1.95118446,2.18485451 2.14644661,1.98959236 C2.34170876,1.79433021 2.65829124,1.79433021 2.85355339,1.98959236 Z"></path></svg></span>
+                        </label>
+                    );
+                }
+            }
+
+            return elm;
         }
     }
+
+    
 
     return (
         <WidgetContent>
@@ -212,7 +256,7 @@ function InputMegaBox({
                 </div>
                 
                 <div>
-                    {limit !== 0 && (<span className="mr-4 number">{`${arrIndexSelected.length}/${limit}`}</span>)}
+                    {limit !== 0 && (<span className="mr-4 number">{`${amountSelected}/${limit}`}</span>)}
                     <span aria-hidden="true" className="arrow_carrot-down"></span>
                 </div>
             </WidgetResultSelected>
@@ -229,7 +273,7 @@ function InputMegaBox({
                     {renderListOption()}
                 </WidgetListOption>
 
-                <WidgetFooter>
+                {isExtended && <WidgetFooter>
                     {!isOpenFormAddNew && <ButtonOpenFormAdd 
                         className = "d-flex align-items-center"
                         onClick = {() => setIsOpenFormAddNew(true)}
@@ -253,11 +297,13 @@ function InputMegaBox({
                         </div>
                     </WidgetFormAddNewItem>}
                     
-                </WidgetFooter>
+                </WidgetFooter>}
+
+                
             </WidgetDropDown>
 
         </WidgetContent>
     );
 }
 
-export default InputMegaBox;
+export default SelectMegaBox;

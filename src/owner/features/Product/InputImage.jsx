@@ -80,6 +80,7 @@ const WidgetText = styled.div`
 `;
 
 InputImage.propTypes = {
+    name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
 };
@@ -89,7 +90,7 @@ InputImage.defaultProps = {
     required: false,
 }
 
-function InputImage({label, required}) {
+function InputImage({label, required, name}) {
     // Data
     const inputFile = React.useRef();
     const [image, setImage] = React.useState("");

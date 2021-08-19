@@ -20,7 +20,7 @@ function ProductNew(props) {
     
 
     return (
-        <WidgetContent>
+        <WidgetContent className="owner-product-add">
             <WidgetAddInformation/>
         </WidgetContent>
     );
