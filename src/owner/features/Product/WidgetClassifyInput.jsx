@@ -75,13 +75,15 @@ function WidgetClassifyInput(props) {
     const [listClassify, setListClassify] = useState({
         first: {
             label: "Nhóm phân loại 1",
+            limit: 14,
             isOpen: true,
             classifyName: "",
-            listType: ["", ""]
+            listType: ["",]
         },
         second: {
             label: "Nhóm phân loại 2",
-            isOpen: true,
+            limit: 14,
+            isOpen: false,
             classifyName: "",
             listType: [""]
         }
@@ -103,21 +105,80 @@ function WidgetClassifyInput(props) {
 
         if(tempState.second.isOpen){
             tempState.second.isOpen = false;
+            tempState = {...resetForm("second")};
             setListClassify(tempState);
         }
     }
 
+    const handleOpenForm = () =>{
+        let tempState = {...listClassify};
+        tempState.second.isOpen = true;
+        console.log(tempState)
+        setListClassify(tempState);
+    }
+
+    const handleRemoveTypeClassify = (key, indexRemove) =>{
+        let tempState = {...listClassify};
+
+        tempState[key].listType.splice(indexRemove, 1);
+
+        setListClassify(tempState);
+    }
+
+    const addNewTypeOfClassify = classifyKey =>{
+        let tempState = {...listClassify};
+        tempState[classifyKey].listType.push("");
+        setListClassify(tempState);
+    }
+
+    const onHandleChange = event =>{
+        const {
+            classifyKey, 
+            type, 
+            value, 
+            index
+        } = event;
+
+        let tempState = {...listClassify};
+
+        if(type === "classify-name"){
+            if(value.length <= 14){
+                tempState[classifyKey].classifyName = value;
+                setListClassify(tempState);
+            }
+        }else if(type === "type-of-classify"){            
+
+            if(value.length <= 20){
+                tempState[classifyKey].listType[index] = value;
+
+                setListClassify(tempState);
+            }
+        }
+    }
+
     // render
-    const renderListTypeOfClassify = listType =>{
-        const lengthType = listType.length;
+    const renderListTypeOfClassify = classifyKey =>{
+        const lengthType = listClassify[classifyKey].listType.length;
 
         if(lengthType === 1){
+            const verify = {
+                classifyKey: classifyKey,
+                type: "type-of-classify",
+                index: 0
+            }
+
             return (
                 <div className="d-flex row-input">
                     <div className="label">Phân loại hàng</div>
 
                     <div className="flex-fill">
-                        <InputLimitBox limit={14} value=""/>
+                        <InputLimitBox 
+                            verify = {verify}
+                            limit = {20} 
+                            value = {listClassify[classifyKey].listType[0]}
+
+                            handleChange = {onHandleChange}
+                        />
                     </div>
 
                     <div className="control-button">
@@ -126,7 +187,13 @@ function WidgetClassifyInput(props) {
             );
         }
         
-        return listType.map((item, index) =>{
+        return listClassify[classifyKey].listType.map((item, index) =>{
+            const verify = {
+                classifyKey: classifyKey,
+                type: "type-of-classify",
+                index: index
+            }
+
             return (
                 <div className="d-flex row-input">
                     
@@ -135,11 +202,18 @@ function WidgetClassifyInput(props) {
                     </div>
 
                     <div className="flex-fill">
-                        <InputLimitBox limit={14} value={item}/>
+                        <InputLimitBox 
+                            verify = {verify}
+                            limit={20} 
+                            value={item}
+                            handleChange = {onHandleChange}
+                        />
                     </div>
 
                     <div className="align-items-stretch d-flex align-items-center control-button">
-                        <button>{iconTrash}</button>
+                        <button
+                            onClick = {() => handleRemoveTypeClassify(classifyKey, index)}
+                        >{iconTrash}</button>
                     </div>
                 </div>
             );
@@ -151,6 +225,11 @@ function WidgetClassifyInput(props) {
 
         for(let key in listClassify){
             if(listClassify[key].isOpen){
+                const verify = {
+                    classifyKey: key,
+                    type: "classify-name"
+                };
+
                 elm.push(
                     <div className="widget-input-row">
                         <div className="label">{listClassify[key].label}</div>
@@ -164,19 +243,26 @@ function WidgetClassifyInput(props) {
                             <div className="d-flex row-input">
                                 <div className="label">Tên nhóm phân loại</div>
                                 <div className="flex-fill">
-                                    <InputLimitBox limit={14} value=""/>
+                                    <InputLimitBox 
+                                        verify = {verify}
+                                        limit = {14} 
+                                        value = {listClassify[key].classifyName}
+                                        handleChange = {onHandleChange}
+                                    />
                                 </div>
                             </div>
                             <div className="mb-4"></div>
 
-                            {renderListTypeOfClassify(listClassify[key].listType)}
+                            {renderListTypeOfClassify(key)}
     
                             {/* Button */}
                             <div className="d-flex row-input">
                                 <div className="label"></div>
     
                                 <div className="flex-fill">
-                                    <ButtonAdd>
+                                    <ButtonAdd
+                                        onClick = {() => addNewTypeOfClassify(key)}
+                                    >
                                         <span aria-hidden="true" className="icon_plus_alt2"></span>
                                         Thêm phân loại hàng
                                     </ButtonAdd>
@@ -190,16 +276,55 @@ function WidgetClassifyInput(props) {
                     </div>
                 );
             }
-            
+        }
+
+        if(!listClassify.second.isOpen){
+            elm.push(<div className="widget-input-row">
+                <div className="label">{listClassify.second.label}</div>
+
+                <div style={{width: '60%'}}>
+                    <ButtonAdd
+                        onClick = {() => handleOpenForm()}
+                    >
+                        <span aria-hidden="true" className="icon_plus_alt2"></span>
+                        Thêm phân loại hàng
+                    </ButtonAdd>
+                </div>
+
+            </div>);
         }
 
         return elm;
     }
 
+    // functions
+    const resetForm = (key) =>{
+        let tempState = {...listClassify};
+        
+        if(key === "first"){
+            tempState.first = {
+                label: "Nhóm phân loại 1",
+                limit: 14,
+                isOpen: true,
+                classifyName: "",
+                listType: ["",]
+            }
+        }else{
+            tempState.second = {
+                label: "Nhóm phân loại 2",
+                limit: 14,
+                isOpen: false,
+                classifyName: "",
+                listType: ["",]
+            }
+        }
+
+        return tempState;
+    }
+
     return (
         <WidgetContent>
             {renderListFormClassify()}
-            
         </WidgetContent>
     );
 }

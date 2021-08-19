@@ -181,8 +181,6 @@ function SelectMegaBox({
     handleChoseOption
 }) {
 
-    console.log({arrIndexSelected})
-
     // Data
     const [isShowListOption, setIsShowListOption] = React.useState(false);
     const [isOpenFormAddNew, setIsOpenFormAddNew] = React.useState(false);

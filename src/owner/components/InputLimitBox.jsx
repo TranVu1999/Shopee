@@ -26,18 +26,39 @@ const WidgetContent = styled.div`
     }
 `;
 InputLimitBox.propTypes = {
+    verify: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
     limit: PropTypes.number.isRequired,
     placeholder: PropTypes.string,
     large: PropTypes.bool,
+
+    handleChange: PropTypes.func.isRequired,
 };
 
 InputLimitBox.defaultProps = {
     placeholder: "Nhập vào",
-    large: false
+    large: false,
 };
 
-function InputLimitBox({placeholder, limit, value, large}) {
+function InputLimitBox({
+    placeholder, 
+    limit, 
+    value, 
+    large,
+    verify,
+    handleChange
+}) {
+
+    const onHandleChange = event =>{
+        if(!handleChange) return;
+
+        handleChange({
+            ...verify,
+            value: event.target.value
+        })
+    }
+
+   
 
     return (
         <WidgetContent className="d-flex" large>
@@ -45,6 +66,7 @@ function InputLimitBox({placeholder, limit, value, large}) {
                 type = "text" 
                 placeholder = {placeholder}
                 value = {value}
+                onChange = {onHandleChange}
             />
             <span>{value.length}/{limit}</span>
         </WidgetContent>
