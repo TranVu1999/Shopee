@@ -7,6 +7,7 @@ import InputLimitBox from '../../components/InputLimitBox';
 import InputBox from '../../components/InputBox';
 import InputPriceNumber from './InputPriceNumber';
 import { BorderColor } from '../../theme';
+import { useEffect } from 'react';
 
 const WidgetContent = styled.div``;
 
@@ -128,7 +129,7 @@ const WidgetTablePrice = styled.div`
         justify-content: center;
     }
 
-    .sub-row{
+    .body .sub-row, .body .row{
         border-bottom: 1px solid ${BorderColor.mainColor};
 
         &:last-child{
@@ -163,7 +164,7 @@ function WidgetClassifyInput(props) {
             limit: 14,
             isOpen: true,
             classifyName: "",
-            listType: ["",]
+            listType: [""]
         },
         second: {
             label: "Nhóm phân loại 2",
@@ -183,6 +184,71 @@ function WidgetClassifyInput(props) {
             inventory: 0
         }
     ]);
+
+    // Effect
+    useEffect(() =>{
+        let tempTablePrice = [];
+
+        if(!listClassify.second.isOpen){
+            for(let item of listClassify.first.listType){
+                let temp = {
+                    firstClassifyName: item,
+                    price: 0,
+                    sku: "",
+                    inventory: 0
+                }
+
+                tempTablePrice.push(temp);
+            }
+        }else{
+            for(let firstItem of listClassify.first.listType){
+                for(let secondItem of listClassify.second.listType){
+                    let temp = {
+                        firstClassifyName: firstItem,
+                        secondClassifyName: secondItem,
+                        price: 0,
+                        sku: "",
+                        inventory: 0
+                    }
+    
+                    tempTablePrice.push(temp);
+                }
+                
+            }
+        }
+
+        setTablePrice(tempTablePrice);
+
+    }, [listClassify])
+
+    // functions
+    const resetForm = (key) =>{
+        let tempState = {...listClassify};
+        
+        if(key === "first"){
+            tempState.first = {
+                label: "Nhóm phân loại 1",
+                limit: 14,
+                isOpen: true,
+                classifyName: "",
+                listType: ["",]
+            }
+        }else{
+            tempState.second = {
+                label: "Nhóm phân loại 2",
+                limit: 14,
+                isOpen: false,
+                classifyName: "",
+                listType: ["",]
+            }
+        }
+
+        return tempState;
+    }
+
+    const getIndexRowTablePrice = (firstClassifyName, secondClassifyName) =>{        
+        return tablePrice.findIndex(item => item.firstClassifyName === firstClassifyName && item.secondClassifyName === secondClassifyName);
+    }
 
     // handle event
     const handleCloseForm = () =>{
@@ -238,6 +304,43 @@ function WidgetClassifyInput(props) {
 
                 setListClassify(tempState);
             }
+        }
+    }
+
+    const onHandleGetValueTable = event =>{
+        const {
+            firstTypeName,
+            secondTypeName,
+            type,
+            value
+        } = event;
+
+        
+
+        let tempTablePrice = [...tablePrice];        
+
+        if(!listClassify.second.isOpen && firstTypeName){   
+                    
+            for(let row of tempTablePrice){
+                
+                if(row.firstClassifyName === firstTypeName){
+                    row[type] = value;
+                    break;
+                }
+            }
+
+            setTablePrice(tempTablePrice);
+        }else if(firstTypeName && secondTypeName){
+            for(let row of tempTablePrice){
+                if(
+                    row.firstClassifyName === firstTypeName && 
+                    row.secondClassifyName === secondTypeName
+                ){
+                    row[type] = value;
+                    break;
+                }
+            }
+            setTablePrice(tempTablePrice);
         }
     }
 
@@ -382,34 +485,79 @@ function WidgetClassifyInput(props) {
         return elm;
     }
 
+    const renderSubRow = (firstClassifyName) =>{
+        return listClassify.second.listType.map(item =>{
+            let verify = {
+                firstTypeName: firstClassifyName,
+                secondTypeName: item,
+                type: ""
+            }
+
+            return (
+                <div className="d-flex sub-row" >
+                    <div className="classify">{item || "Tên"}</div>
+                    <div className="price">
+                        <InputPriceNumber
+                            verify = {{...verify, type: "price"}}
+                            value = {tablePrice[getIndexRowTablePrice(firstClassifyName, item)] ? tablePrice[getIndexRowTablePrice(firstClassifyName, item)].price : 0}
+                            onHandleChange = {onHandleGetValueTable}
+                        />
+                    </div>
+                    <div className="inventory"><InputBox/></div>
+                    <div className="sku-classify"><InputBox/></div>
+                </div>
+            );
+        })
+    }
+
     const renderTablePrice = () =>{
-        
+        return listClassify.first.listType.map((item, index) =>{
+            let verify = {
+                firstTypeName: item,
+                secondTypeName: "",
+                type: ""
+            }
+
+            return (
+                <div className="row">
+                    <div className="classify" style={{flex: 1}}>{item || "Tên"}</div>
+
+                    {!listClassify.second.isOpen && (<>
+                        <div className="price">
+                            <InputPriceNumber
+                                verify = {{...verify, type: "price"}}
+                                value = {tablePrice[index] ? tablePrice[index].price : 0}
+                                onHandleChange = {onHandleGetValueTable}
+                            />
+                        </div>
+
+                        <div className="inventory">
+                            <InputBox
+                                verify = {{...verify, type: "inventory"}}
+                                value = {tablePrice[index] ? tablePrice[index].inventory : 0}
+                                onHandleChange = {onHandleGetValueTable}
+                            />
+                        </div>
+
+                        <div className="sku-classify">
+                            <InputBox
+                                verify = {{...verify, type: "sku"}}
+                                value = {tablePrice[index] ? tablePrice[index].sku : 0}
+                                onHandleChange = {onHandleGetValueTable}
+                            />
+                        </div>
+                    </>)}
+
+                    {listClassify.second.isOpen && <div style={{flex: 4}}>
+                        {renderSubRow(item)} </div>
+                    }
+                    
+                </div>
+            );
+        })
     }
 
-    // functions
-    const resetForm = (key) =>{
-        let tempState = {...listClassify};
-        
-        if(key === "first"){
-            tempState.first = {
-                label: "Nhóm phân loại 1",
-                limit: 14,
-                isOpen: true,
-                classifyName: "",
-                listType: ["",]
-            }
-        }else{
-            tempState.second = {
-                label: "Nhóm phân loại 2",
-                limit: 14,
-                isOpen: false,
-                classifyName: "",
-                listType: ["",]
-            }
-        }
-
-        return tempState;
-    }
+    
 
     return (
         <WidgetContent>
@@ -445,50 +593,16 @@ function WidgetClassifyInput(props) {
 
                 <WidgetTablePrice className="flex-fill">
                     <div className="d-flex header row">
-                        <div className="classify">Tên</div>
-                        <div className="classify">Tên</div>
+                        <div className="classify">{listClassify.first.classifyName || "Tên"}</div>
+                        {listClassify.second.isOpen && <div className="classify">{listClassify.second.classifyName || "Tên"}</div>}
+                        
                         <div className="price">Giá</div>
                         <div className="inventory">Kho hàng</div>
                         <div className="sku-classify">SKU phân loại</div>
                     </div>
 
                     <div className="body">
-                        <div className="row">
-
-                            <div className="classify" style={{flex: 1}}>Tên</div>
-
-                            <div style={{flex: 4}}>
-                                <div className="d-flex sub-row" >
-                                    <div className="classify">Tên</div>
-                                    <div className="price">
-                                        <InputPriceNumber/>
-                                    </div>
-                                    <div className="inventory"><InputBox/></div>
-                                    <div className="sku-classify"><InputBox/></div>
-                                </div>
-
-                                <div className="d-flex sub-row">
-                                    <div className="classify">Tên</div>
-                                    <div className="price">
-                                        <InputPriceNumber/>
-                                    </div>
-                                    <div className="inventory"><InputBox/></div>
-                                    <div className="sku-classify"><InputBox/></div>
-                                </div>
-
-                                <div className="d-flex sub-row">
-                                    <div className="classify">Tên</div>
-                                    <div className="price">
-                                        <InputPriceNumber/>
-                                    </div>
-                                    <div className="inventory"><InputBox/></div>
-                                    <div className="sku-classify"><InputBox/></div>
-                                </div>
-                            </div>
-
-                            
-                        </div>
-                        
+                        {renderTablePrice()}
                     </div>
                     
                 </WidgetTablePrice>

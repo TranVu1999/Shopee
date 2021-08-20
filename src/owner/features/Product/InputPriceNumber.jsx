@@ -16,14 +16,35 @@ const WidgetContent = styled.div`
 `;
 
 InputPriceNumber.propTypes = {
-    
+    verify: PropTypes.object.isRequired,
+    onHandleChange: PropTypes.func.isRequired,
+    value: PropTypes.number,
 };
 
-function InputPriceNumber(props) {
+InputPriceNumber.defaultProps = {
+    value: 0,
+}
+
+function InputPriceNumber({verify, value, onHandleChange}) {
+
+    const handleChange = event =>{
+        if(!onHandleChange) return;
+
+        onHandleChange({
+            ...verify,
+            value: event.target.value
+        });
+    }
+
     return (
         <WidgetContent className="d-flex align-items-center widget-input-box">
             <span>₫</span>
-            <input type="text" placeholder="Nhập vào"/>
+            <input 
+                type="text" 
+                placeholder="Nhập vào" 
+                value = {value}
+                onChange = {handleChange}
+            />
         </WidgetContent>
     );
 }
