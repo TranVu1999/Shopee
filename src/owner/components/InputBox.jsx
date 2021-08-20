@@ -1,38 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-// Theme
-import {BorderColor} from './../theme';
-
-const WidgetContent = styled.div`
-    width: 100%;
-    padding: .25rem .875rem;
-
-    font-size: .875rem;
-
-    background-color: #fff;
-    border: 1px solid ${BorderColor.mainColor};
-    border-radius: 4px;
-
-    input{
-        width: 100%;
-    }
-`;
 
 InputBox.propTypes = {
     placeholder: PropTypes.string,
+    large: PropTypes.bool,
 };
 
 InputBox.defaultProps = {
-    placeholder: "Nhập vào"
+    placeholder: "Nhập vào",
+    large: false
 };
 
-function InputBox({placeholder}) {
+function InputBox({placeholder, large}) {
     return (
-        <WidgetContent className="d-inline-block">
+        <div
+            className="d-inline-block widget-input-box" 
+            style = {{padding: large ? ".5rem .875rem" : ".25rem .875rem"}}
+        >
             <input type="text" placeholder = {placeholder}/>
-        </WidgetContent>
+        </div>
     );
 }
 

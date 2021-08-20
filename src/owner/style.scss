@@ -104,6 +104,7 @@
 
 // ======================== INPUT ===========================
 .widget-input-box{
+    width: 100%;
     padding: .25rem .875rem;
     border-radius: 4px;
     border: 1px solid #d5d5d5;
@@ -112,3 +113,17 @@
         width: 100%;
     }
 }
+
+
+// ======================== BUTTON ===========================
+button.shopee-primary-btn{
+    padding: 0 .875rem;
+
+    color: #fff;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+
+    white-space: nowrap;
+    border-radius: 4px;
+}
+

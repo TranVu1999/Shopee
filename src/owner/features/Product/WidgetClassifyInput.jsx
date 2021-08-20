@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 // Components
 import InputLimitBox from '../../components/InputLimitBox';
+import InputBox from '../../components/InputBox';
+import InputPriceNumber from './InputPriceNumber';
+import { BorderColor } from '../../theme';
 
 const WidgetContent = styled.div``;
 
@@ -61,6 +64,88 @@ const ButtonAdd = styled.button`
 
 `;
 
+const WidgetApplyAll = styled.div`
+
+    .group-input-apply-all{
+        &>div:first-child{
+            .widget-input-box{
+                margin-right: -10px;
+                border-radius: 4px 0 0 4px;
+            }
+        }
+        &>div:nth-child(2){
+            .widget-input-box{
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+        }
+        &>div:last-child{
+            .widget-input-box{
+                border-radius: 0 4px 4px 0;
+            }
+        }
+    }
+
+    
+
+    button{ 
+        margin-left: .75rem;
+    }
+`;
+
+const WidgetTablePrice = styled.div`
+    border: 1px solid ${BorderColor.mainColor};
+
+    .header{
+        background-color: #FAFAFA;
+        border-bottom: 1px solid ${BorderColor.mainColor};
+    }
+
+    .row{
+        margin: 0;
+        border-bottom: 1px solid ${BorderColor.mainColor};
+
+        &:last-child{
+            border: none;
+        }
+
+        &>div{
+            flex: 1;
+        }
+
+        .classify, .price, .inventory{
+            border-right: 1px solid ${BorderColor.mainColor};
+        }
+    }
+
+    .classify, .price, .inventory, .sku-classify{
+        display: flex;
+        padding: .625rem 0;
+
+        width: 165px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sub-row{
+        border-bottom: 1px solid ${BorderColor.mainColor};
+
+        &:last-child{
+            border: none;
+        }
+
+        .classify, .price, .inventory, .sku-classify{
+            padding: 0;
+        }
+
+        .widget-input-box{
+            border: none;
+        }
+    }
+
+    
+`;
 
 // Icons
 const iconTrash = <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill-rule="nonzero"><path d="M14.516 3.016h-4v-1a.998.998 0 0 0-.703-.955.99.99 0 0 0-.297-.045h-3a.998.998 0 0 0-.955.703.99.99 0 0 0-.045.297v1h-4a.5.5 0 1 0 0 1h1v10a.998.998 0 0 0 .703.955.99.99 0 0 0 .297.045h9a.998.998 0 0 0 .955-.703.99.99 0 0 0 .045-.297v-10h1a.5.5 0 1 0 0-1zm-8-1h3v1h-3v-1zm6 12h-9v-10h9v10z"></path><path d="M5.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5zM8.016 12.016a.5.5 0 0 0 .5-.5v-5a.5.5 0 1 0-1 0v5a.5.5 0 0 0 .5.5zM10.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5z"></path></g></svg>
@@ -297,6 +382,10 @@ function WidgetClassifyInput(props) {
         return elm;
     }
 
+    const renderTablePrice = () =>{
+        
+    }
+
     // functions
     const resetForm = (key) =>{
         let tempState = {...listClassify};
@@ -325,6 +414,85 @@ function WidgetClassifyInput(props) {
     return (
         <WidgetContent>
             {renderListFormClassify()}
+
+            {/* Apply all */}
+            <div className="widget-input-row">
+                <div className="label">Mẹo thiết lập phân loại hàng</div>
+
+                <WidgetApplyAll className="d-flex">
+                    <div className="d-flex group-input-apply-all">
+                        <div className="flex-fill">
+                            <InputPriceNumber/>
+                        </div>
+                        
+                        <div className="flex-fill">
+                            <InputBox large/>
+                        </div>
+
+                        <div className="flex-fill">
+                            <InputBox large/>
+                        </div>
+                    </div>
+
+                    <button className="shopee-primary-btn">Áp dụng cho tất cả phân loại</button>
+                    
+                </WidgetApplyAll>
+            </div>
+
+            {/* Table Price */}
+            <div className="widget-input-row">
+                <div className="label">Danh sách phân loại hàng </div>
+
+                <WidgetTablePrice className="flex-fill">
+                    <div className="d-flex header row">
+                        <div className="classify">Tên</div>
+                        <div className="classify">Tên</div>
+                        <div className="price">Giá</div>
+                        <div className="inventory">Kho hàng</div>
+                        <div className="sku-classify">SKU phân loại</div>
+                    </div>
+
+                    <div className="body">
+                        <div className="row">
+
+                            <div className="classify" style={{flex: 1}}>Tên</div>
+
+                            <div style={{flex: 4}}>
+                                <div className="d-flex sub-row" >
+                                    <div className="classify">Tên</div>
+                                    <div className="price">
+                                        <InputPriceNumber/>
+                                    </div>
+                                    <div className="inventory"><InputBox/></div>
+                                    <div className="sku-classify"><InputBox/></div>
+                                </div>
+
+                                <div className="d-flex sub-row">
+                                    <div className="classify">Tên</div>
+                                    <div className="price">
+                                        <InputPriceNumber/>
+                                    </div>
+                                    <div className="inventory"><InputBox/></div>
+                                    <div className="sku-classify"><InputBox/></div>
+                                </div>
+
+                                <div className="d-flex sub-row">
+                                    <div className="classify">Tên</div>
+                                    <div className="price">
+                                        <InputPriceNumber/>
+                                    </div>
+                                    <div className="inventory"><InputBox/></div>
+                                    <div className="sku-classify"><InputBox/></div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </WidgetTablePrice>
+            </div>
         </WidgetContent>
     );
 }
