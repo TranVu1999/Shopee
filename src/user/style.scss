@@ -1,8 +1,12 @@
+.page-content{
+    margin-top: 150px;
+}
+
 // ==================== INPUT ========================
 
 .widget-input-box{
     width: 100%;
-    padding: .25rem .875rem;
+    padding: .375rem .875rem;
     border-radius: 4px;
     border: 1px solid #d5d5d5;
 
@@ -11,7 +15,7 @@
     }
 }
 
-button:disabled{
+button.disabled{
     opacity: .7;
     cursor: not-allowed;
 }

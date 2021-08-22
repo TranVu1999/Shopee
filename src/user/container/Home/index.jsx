@@ -14,9 +14,6 @@ import ProductHint from '../../feature/Home/ProductHint';
 import Mall from '../../feature/Home/Mall';
 import WidgetSliderBrand from '../../feature/Home/WidgetSliderBrand';
 
-// CSS
-import './index.scss'
-
 HomePage.propTypes = {
     
 };
@@ -756,7 +753,7 @@ function HomePage(props) {
 
     return (
 
-        <div className="home-page-content">
+        <div className="page-content">
             {/* Full Banner */}
             <div className = "full-home-banner">
                 <div className="container">

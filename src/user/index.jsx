@@ -2,20 +2,15 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 // Components
-import Footer from './feature/Layout/Footer';
-import Header from './feature/Layout/Header';
 import Login from './container/Login';
+import Layout from './container/Layout';
 
 // Css
 import './assets/sass/index.scss';
 import './style.scss';
 
-// Others
-import routes from './container/routes';
-import Layout from './container/Layout';
 
-function UserRoll(props) {
-
+function UserRoll() {
     return (
         <div className = "main-wrapper">
             <Switch>
