@@ -1,11 +1,13 @@
-import OwnerRoll from "./owner";
-// import UserRoll from "./user";
+// import OwnerRoll from "./owner";
+import UserRoll from "./user";
+
 
 function App() {
   return (
     <div className="App">
-        {/* <UserRoll/> */}
-        <OwnerRoll/>
+
+        <UserRoll/>
+        {/* <OwnerRoll/> */}
     </div>
   );
 }
