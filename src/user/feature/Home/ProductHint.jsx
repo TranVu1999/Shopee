@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // Components
 import Tab from './../Layout/Tab';
-import Thumbnail from './../Product/Thumbnail';
+import Thumbnail from '../Product/Thumbnail.jsx';
 
 
 const WidgetContent = styled.div`
@@ -65,6 +65,23 @@ const Tabs = styled.div`
     }
 `;
 
+const WidgetButton = styled.div`
+    a{
+        display: inline-block;
+        min-width: 24.375rem;
+        height: 2.5rem;
+
+        text-align: center;
+
+        color: #555;
+        background-color: #fff;
+
+        border: 1px solid rgba(0,0,0,.03);
+        border-radius: 2px;
+        line-height: 2.5rem;
+    }
+`;
+
 
 ProductHint.propTypes = {
     items: PropTypes.array,
@@ -80,7 +97,6 @@ function ProductHint(props) {
 
     const {items} = props;
 
-
     // handle event
     const onHandleChoseTab = index =>{
         if(index !== activeIndex){
@@ -93,13 +109,7 @@ function ProductHint(props) {
         return items.map(item =>{
             return (
                 <div className="col-lg-2" key = {item.id}>
-                    <Thumbnail 
-                        title = {item.title} 
-                        img = {item.img} 
-                        price = {item.price}
-                        discount = {item.discount}
-                        numOrder = {item.numOrder}
-                    />
+                    <Thumbnail item = {item}/>
                 </div>
             );
         })
@@ -113,9 +123,13 @@ function ProductHint(props) {
                 <div>Thanh toan bang xu</div>
             </Tabs>
 
-            <div className="mt-2 row">
+            <div className="mt-2 mb-3 row" style={{backgroundColor: "#EAE7DE"}}>
                 {renderItems()}
             </div>
+
+            <WidgetButton className="text-center">
+                <a href="#/">Xem thêm</a>
+            </WidgetButton>
 
         </WidgetContent>
     );
