@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -177,7 +178,7 @@ function Header(props) {
                     <TopLeft>
                         <ul>
                             <li>
-                                <a href="#/">Kênh Người Bán</a>
+                                <Link to="/ban-hang">Kênh Người Bán</Link>
                             </li>
                             <li>
                                 <a href="#/">Tải ứng dụng</a>
