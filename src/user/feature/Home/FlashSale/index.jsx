@@ -11,7 +11,6 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import './index.scss';
 
-
 FlashSale.propTypes = {
     items: PropTypes.array,
 };

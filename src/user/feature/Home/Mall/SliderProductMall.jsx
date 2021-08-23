@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 // Component
 import {Swiper, SwiperSlide} from 'swiper/react';
-import StoreThumbnail from '../StoreThumbnail';
+import Thumbnail from './Thumbnail';
 
 // Style
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
-import './index.scss';
 
 
 SliderProductMall.propTypes = {
@@ -22,13 +21,11 @@ SliderProductMall.defaultProps = {
 function SliderProductMall(props) {
     const {items} = props;
 
-    console.log({items})
-
     const renderItems = () =>{
         return items.map(item => {
             return (
                 <SwiperSlide key = {item.id}>
-                    <StoreThumbnail 
+                    <Thumbnail 
                         link = {item.link}
                         image = {item.image}
                         title = {item.title}
@@ -40,7 +37,7 @@ function SliderProductMall(props) {
     }
 
     return (
-        <div className = "slider-product-mall">
+        <div className = "normal-arrow" style={{marginRight: ".5rem"}}>
             <Swiper
                 slidesPerView = {4}
                 slidesPerColumn = {2}

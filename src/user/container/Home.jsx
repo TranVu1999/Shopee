@@ -1,24 +1,24 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 // Components
-import Title from '../../common/component/Title';
-import Banner from '../../common/component/Banner';
-import SearchTrend from '../../feature/Home/SearchTrend';
-import SliderTopSearch from '../../feature/Home/SliderTopSearch';
-import SliderProductCategory from '../../feature/Home/SliderProductCategory';
-import SliderMainBanner from '../../feature/Layout/SliderMainBanner';
-import RightMainBanner from '../../feature/Home/RightMainBanner';
-import FlashSale from '../../feature/Home/FlashSale';
-import ProductHint from '../../feature/Home/ProductHint';
-import Mall from '../../feature/Home/Mall';
-import WidgetSliderBrand from '../../feature/Home/WidgetSliderBrand';
+import Title from '../common/component/Title';
+import Banner from '../common/component/Banner';
+import SearchTrend from '../feature/Home/SearchTrend';
+import SliderTopSearch from '../feature/Home/SliderTopSearch';
+import SliderProductCategory from '../feature/Home/SliderProductCategory';
+import SliderMainBanner from '../feature/Layout/SliderMainBanner';
+import RightMainBanner from '../feature/Home/RightMainBanner';
+import FlashSale from '../feature/Home/FlashSale';
+import ProductHint from '../feature/Home/ProductHint.jsx';
+import Mall from '../feature/Home/Mall';
+import ListServices from '../feature/Home/ListServices';
+import BestSeller from '../feature/Home/BestSeller';
 
-HomePage.propTypes = {
+Home.propTypes = {
     
 };
 
-function HomePage(props) {
+function Home(props) {
 
     const [listSlideMainBanner] = useState([
 
@@ -129,53 +129,6 @@ function HomePage(props) {
             ]
         }
     ]);
-
-    const [listBrand] = useState([
-        {
-            id: 1,
-            image: "https://cf.shopee.vn/file/f84f0971c5898444983eb5cca6b387a1_tn",
-        },
-        {
-            id: 2,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        },
-        {
-            id: 3,
-            image: "https://cf.shopee.vn/file/f84f0971c5898444983eb5cca6b387a1_tn",
-        },
-        {
-            id: 4,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        },
-        {
-            id: 5,
-            image: "https://cf.shopee.vn/file/f84f0971c5898444983eb5cca6b387a1_tn",
-        },
-        {
-            id: 6,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        },
-        {
-            id: 7,
-            image: "https://cf.shopee.vn/file/f84f0971c5898444983eb5cca6b387a1_tn",
-        },
-        {
-            id: 8,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        },
-        {
-            id: 9,
-            image: "https://cf.shopee.vn/file/f84f0971c5898444983eb5cca6b387a1_tn",
-        },
-        {
-            id: 10,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        }
-        ,{
-            id: 11,
-            image: "https://cf.shopee.vn/file/3d8abcc0870a0a3aeedb8d76f7e67ebc_tn"
-        }
-    ])
 
     const [listProductCategory] = useState([
         {
@@ -688,7 +641,7 @@ function HomePage(props) {
         {
             id: 1,
             image: "https://cf.shopee.vn/file/751825ad2c43a2b9609e0936ca23cc62_tn",
-            price: 539,
+            price: 139000,
             numOrder: 5,
             numSale: 50,
             link: "#/",
@@ -697,7 +650,7 @@ function HomePage(props) {
         {
             id: 2,
             image: "https://cf.shopee.vn/file/904566ca82c7a83bfb4bb313207db8d7_tn",
-            price: 539,
+            price: 155000,
             numOrder: 2,
             numSale: 100,
             link: "#/",
@@ -706,7 +659,7 @@ function HomePage(props) {
         {
             id: 3,
             image: "https://cf.shopee.vn/file/62d47fd854c272af2f431eaff2430ed5_tn",
-            price: 115,
+            price: 690000,
             numOrder: 13,
             numSale: 50,
             link: "#/",
@@ -715,7 +668,7 @@ function HomePage(props) {
         {
             id: 4,
             image: "https://cf.shopee.vn/file/26eafd8d728ae505b4faf8bcd216bd93_tn",
-            price: 1,
+            price: 179000,
             numOrder: 45,
             numSale: 50,
             link: "#/",
@@ -724,8 +677,8 @@ function HomePage(props) {
         {
             id: 5,
             image: "https://cf.shopee.vn/file/84f5f657148a434b700d2109217b0302_tn",
-            price: 29,
-            numOrder: 29,
+            price: 130000,
+            numOrder: 259000,
             numSale: 50,
             link: "#/",
             discount: 68
@@ -733,7 +686,7 @@ function HomePage(props) {
         {
             id: 6,
             image: "https://cf.shopee.vn/file/4ffe24459bc98afa38f64f1a35ac78e7_tn",
-            price: 142,
+            price: 5099000,
             numOrder: 40,
             numSale: 100,
             link: "#/",
@@ -742,7 +695,7 @@ function HomePage(props) {
         {
             id: 7,
             image: "https://cf.shopee.vn/file/4503f53b0b1fe3502c3c3e842aa1392f_tn",
-            price: 142,
+            price: 500000,
             numOrder: 97,
             numSale: 100,
             link: "#/",
@@ -752,47 +705,29 @@ function HomePage(props) {
     
 
     return (
-
         <div className="page-content">
             {/* Full Banner */}
             <div className = "full-home-banner">
                 <div className="container">
                     <div className="row">
-                        <div className="col-8 pr-1">
+                        <div className="col-8">
                             <SliderMainBanner items = {listSlideMainBanner}/>
                         </div>
                         <div className="col-4 pl-1">
                             <RightMainBanner items = {listRightMainBanner}/>
                         </div>
                     </div>
+
+                    <div className="mt-2 mb-3">
+                        <ListServices/>
+                    </div>
+                    
                 </div>
             </div>
-            
 
-            {/* Slider Brand */}
-            <section className = "mb-3 slider-brand">
-                <div className="pt-3 bg-white container">
-                    <Title title = {"Cua hang duoc yeu thich nhat"} link = "#/"/>
-                    {/* <SliderBrand items = {listBrand}/> */}
-                    <WidgetSliderBrand items = {listBrand}/>
-                </div>
-            </section>
-
-            {/* Large Banner */}
-            <section className = "mb-3 large-banner">
-                <div className="container" style = {{height: "110px"}}>
-                    <Banner link = "#/" image = "https://cf.shopee.vn/file/9c078b39474a7b12a33c380ab7ccf1d8_xxhdpi"/>
-                </div>
-            </section>
-
-            {/* Mall */}
-            <section className="mb-3 mall">
-                <div className="bg-white container">
-                    <Mall listMallBanner = {listMallBanner} listProduct = {listMallProduct}/>
-                </div>
-            </section>
-            
-
+            <div className="mb-3 container">
+                <BestSeller/>
+            </div>
 
             {/* Slider ProductCategory */}         
             <section className = "mb-3 slider-product-category">
@@ -803,23 +738,29 @@ function HomePage(props) {
             </section>
 
             {/* Flash Sale */}
-            <section className="flash-sale">
+            <section className="mb-3 flash-sale">
                 <div className="bg-white container">
                     <FlashSale items = {listFlashSale}/>
                 </div>
             </section>
 
+            {/* Large Banner */}
+            <section className = "mb-3 large-banner">
+                <div className="container" style = {{height: "110px"}}>
+                    <Banner link = "#/" image = "https://cf.shopee.vn/file/9c078b39474a7b12a33c380ab7ccf1d8_xxhdpi"/>
+                </div>
+            </section>            
 
-
-            {/* Banner */}
-            <section className = "banner">
-                <div className="py-3 container">
-                    <Banner listBanner = {listBanner}/>
+            {/* Mall */}
+            <section className="mb-3 mall">
+                <div className="bg-white container">
+                    <Mall listMallBanner = {listMallBanner} listProduct = {listMallProduct}/>
                 </div>
             </section>
+
             
             {/* Top Search */}
-            <section className="top-search">
+            <section className="mb-3 top-search">
                 <div className="bg-white container">
                     <Title title = {"Tim kiem hang dau "} link = "/top-products"/>
                     <SliderTopSearch items = {listTopSearch}/>
@@ -828,7 +769,7 @@ function HomePage(props) {
            
            {/* Search Trend */}
             <section className = "mb-5 search-trend">
-                <div className="pt-3 bg-white container">
+                <div className="bg-white container">
                     <Title title = {"Xu Huong tim kien hang dau"} link = "#/"/>
 
                     <SearchTrend items = {listSearchTrend}/>
@@ -846,4 +787,4 @@ function HomePage(props) {
     );
 }
 
-export default HomePage;
+export default Home;

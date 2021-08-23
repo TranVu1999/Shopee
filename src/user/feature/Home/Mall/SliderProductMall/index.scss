@@ -1,7 +1,0 @@
-@import './../../../../assets/sass/mixin.scss';
-
-.slider-product-mall{
-    .swiper-button-prev, .swiper-button-next{
-        @include normalArrow();
-    }
-}

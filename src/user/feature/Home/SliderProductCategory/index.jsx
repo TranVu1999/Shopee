@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Component
 import SwiperCore, { Navigation, A11y } from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import ProductCategoryThumbnail from './../../../common/component/ProductCategoryThumbnail';
+import ProductCategoryThumbnail from '../../../common/component/ProductCategoryThumbnail';
 
 // Style
 import 'swiper/swiper.scss';

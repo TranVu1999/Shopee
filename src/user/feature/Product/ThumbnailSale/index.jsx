@@ -1,9 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import styled from 'styled-components';
 
-// CSS
-import './index.scss';
+// Modules 
+import Number from '../../../util/number';
+
+const WidgetContent = styled(Link)`
+    display: block;
+
+    .box-img{
+        position: relative;
+        height: 173px;
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .pice{
+        font-size: 20px;
+        color: #ee4d2d;
+        text-align: center;
+    }
+
+    .sale-progress{
+        font-size: .75rem;
+    }
+`;
 
 
 ThumbnailSale.propTypes = {
@@ -28,7 +52,7 @@ function ThumbnailSale(props) {
     const remain =  (numOrder / numSale * 100).toFixed(0);
 
     return (
-        <Link to="/product-detail"
+        <WidgetContent to="/product-detail"
             className = "product-thumbnail-sale-content"
         >
             <div className="box-img" 
@@ -41,7 +65,7 @@ function ThumbnailSale(props) {
                 ) : ""}
             </div>
             <div className="box-text">
-                <div className="mb-2 pice">{price}.00$</div>
+                <div className="mb-2 pice">₫ {Number.convertToMoney(price) }</div>
                 <div className="sale-progress">
                     <div className="num-sold">
                         <div className="progress-mark" style={{width: `${100 - remain}%`}}></div>
@@ -54,7 +78,7 @@ function ThumbnailSale(props) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </WidgetContent>
     );
 }
 

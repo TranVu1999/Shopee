@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 // Component
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -7,7 +8,19 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 // Style
 import 'swiper/swiper.scss';
 import 'swiper/components/pagination/pagination.scss';
-import './index.scss';
+
+const WidgetContent = styled.div`
+    padding: .5rem;
+
+    .item{
+        height: 452px;
+
+        a{
+            display: block;
+            height: 100%;
+        }
+    }
+`;
 
 SliderBannerMall.propTypes = {
     items: PropTypes.array,
@@ -35,7 +48,7 @@ function SliderBannerMall(props) {
     }
 
     return (
-        <div className = "slider-banner-mall">
+        <WidgetContent className = "slider-banner-mall">
             <Swiper
                 pagination={{ clickable: true }}
                 loop={true}
@@ -43,7 +56,7 @@ function SliderBannerMall(props) {
             >
                 {renderItems()}
             </Swiper>
-        </div>
+        </WidgetContent>
     );
 }
 

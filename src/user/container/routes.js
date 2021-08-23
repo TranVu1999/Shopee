@@ -1,4 +1,4 @@
-import HomePage from './Home';
+import Home from './Home.jsx';
 import SalePage from './Sale';
 import NotFountPage from './404';
 import TopSearchPage from './TopSearch';
@@ -9,7 +9,6 @@ import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
 import ArticlePage from './Article';
 import CartPage from './Cart';
-
 
 const routes = [
     {
@@ -51,7 +50,7 @@ const routes = [
     {
         path: "/",
         exact: true,
-        component: HomePage
+        component: Home
     },
     {
         path: "*",
