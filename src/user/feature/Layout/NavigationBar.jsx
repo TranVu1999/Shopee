@@ -54,7 +54,16 @@ function NavigationBar({
     // handle event
     const choseNavIndex = data =>{
         if(handleChosePage){
-            handleChosePage(data);
+            if(data.type === "scroll-page"){
+                if(
+                    (data.value === 1 && end < maximum) ||
+                    (data.value === -1 && start > 0)
+                ){
+                    handleChosePage(data);
+                }
+            }else{
+                handleChosePage(data);
+            }
         }
     }
 
@@ -73,7 +82,7 @@ function NavigationBar({
             );
         }
 
-        if(maximum > 6){
+        if(maximum > 6 && end < maximum){
             elm.push(<NavItemDisable>...</NavItemDisable>); 
         }
 

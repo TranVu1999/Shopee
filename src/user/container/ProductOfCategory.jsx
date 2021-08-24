@@ -405,6 +405,31 @@ function ProductOfCategory(props) {
                 break;
 
             case "scroll-page":
+                let {start, index} = tempState;
+
+                if(value === 1 && start + 11 <= maxIndex){
+                    tempState = {
+                        start: start + 6,
+                        indexActive: start + 6
+                    }
+                }else if (value === 1 && start + 11 > maxIndex){
+                    tempState = {
+                        start: maxIndex - 5,
+                        indexActive: maxIndex - 5
+                    }
+                }
+
+                if(value === -1 && start - 6 >= 0){
+                    tempState = {
+                        start: start - 6,
+                        indexActive: start - 1
+                    }
+                }else if(value == -1 && start - 6 < 0){
+                    tempState = {
+                        start: 0,
+                        indexActive: 5
+                    }
+                }
                 break;
             default:
                 break;
@@ -415,6 +440,7 @@ function ProductOfCategory(props) {
             tempState.start + 5 <= maxIndex &&
             tempState.indexActive <= maxIndex
         ){
+            console.log({tempState})
             setNavigationData(tempState);
         }
         
