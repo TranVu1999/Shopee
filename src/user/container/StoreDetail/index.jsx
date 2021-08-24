@@ -14,8 +14,8 @@ import WidgetProductCategory from './../../feature/Layout/SideBar/WidgetProductC
 import WidgetListCheck from '../../feature/Layout/SideBar/WidgetListCheck';
 import WidgetRating from '../../feature/Layout/SideBar/WidgetRating';
 import WidgetPrice from '../../feature/Layout/SideBar/WidgetPrice';
-import WidgetControl from '../../feature/ListProductOfCategory/WidgetControl';
-import WidgetListProduct from '../../feature/ListProductOfCategory/WidgetListProduct';
+import WidgetControl from '../../feature/ProductOfCategory/WidgetControl';
+import WidgetListProduct from '../../feature/ProductOfCategory/WidgetListProduct';
 
 const Title = styled.h5`
     font-size: 18px;

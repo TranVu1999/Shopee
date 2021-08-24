@@ -31,8 +31,8 @@ function SliderBrand(props) {
     const renderItems = () =>{
         return items.map(item => {
             return (
-                <SwiperSlide>
-                    <Brand key = {item.id} id = {item.id} image = {item.image}/>
+                <SwiperSlide key = {item.id}>
+                    <Brand item = {item}/>
                 </SwiperSlide>
                 
             );

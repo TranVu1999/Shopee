@@ -10,7 +10,8 @@ import './assets/sass/index.scss';
 import './style.scss';
 
 
-function UserRoll() {
+function UserRoll(props) {
+
     return (
         <div className = "main-wrapper">
             <Switch>

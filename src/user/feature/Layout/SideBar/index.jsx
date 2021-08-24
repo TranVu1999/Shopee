@@ -6,6 +6,14 @@ import WidgetTitle from './WidgetTitle';
 import WidgetLine from './WidgetLine';
 import WidgetLabel from './WidgetLabel';
 
+const Title = styled.div`
+
+`;
+
+const Label = styled.div`
+    
+`;
+
 
 const Button = styled.button`
     width: 100%;

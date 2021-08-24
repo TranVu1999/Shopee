@@ -6,7 +6,7 @@ import Banner from '../common/component/Banner';
 import SearchTrend from '../feature/Home/SearchTrend';
 import SliderTopSearch from '../feature/Home/SliderTopSearch';
 import SliderProductCategory from '../feature/Home/SliderProductCategory';
-import SliderMainBanner from '../feature/Layout/SliderMainBanner';
+import SliderMainBanner from '../feature/Layout/HeroSlider';
 import RightMainBanner from '../feature/Home/RightMainBanner';
 import FlashSale from '../feature/Home/FlashSale';
 import ProductHint from '../feature/Home/ProductHint.jsx';

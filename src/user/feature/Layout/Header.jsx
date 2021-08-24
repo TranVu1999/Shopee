@@ -19,6 +19,7 @@ const WidgetContent = styled.header`
     top: 0;
     left: 0;
     width: 100%;
+    height: 125px;
     
     font-size: .875rem;
 

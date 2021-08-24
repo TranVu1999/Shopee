@@ -10,9 +10,12 @@ import styled from 'styled-components';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
-import './index.scss';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
+
+const WidgetContent = styled.div`
+
+`;
 
 const Banner = styled.div`
     min-height: ${props => props.isLarge ? "350px!important" : "235px"};
@@ -22,17 +25,17 @@ const Banner = styled.div`
     background-repeat: no-repeat;
 `;
 
-SliderMainBanner.propTypes = {
+HeroSlider.propTypes = {
     items: PropTypes.array,
     isLarge: PropTypes.bool,
 };
 
-SliderMainBanner.defaultProps = {
+HeroSlider.defaultProps = {
     items: [],
     isLarge: false
 }
 
-function SliderMainBanner(props) {
+function HeroSlider(props) {
 
     const {items, isLarge} = props;
 
@@ -50,7 +53,7 @@ function SliderMainBanner(props) {
     }
 
     return (
-        <div className = "slider-main-banner">
+        <WidgetContent className = "slider-main-banner square-arrow">
             <Swiper
                 slidesPerView={1}
                 navigation
@@ -60,8 +63,8 @@ function SliderMainBanner(props) {
             >
                 {renderItems()}
             </Swiper>
-        </div>
+        </WidgetContent>
     );
 }
 
-export default SliderMainBanner;
+export default HeroSlider;

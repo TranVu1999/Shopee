@@ -1,14 +1,21 @@
-import Home from './Home.jsx';
+import {lazy} from 'react';
+
 import SalePage from './Sale';
 import NotFountPage from './404';
 import TopSearchPage from './TopSearch';
-import ListProductOfCategoryPage from './ListProductOfCategory';
+
 import ListStorePage from './ListStore';
-import StoreDetailPage from './StoreDetail';
+
+
 import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
 import ArticlePage from './Article';
 import CartPage from './Cart';
+
+const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
+const HomePage = lazy(() => import("./Home"));
+const StoreDetailPage = lazy(() => import("./StoreDetail"));
+
 
 const routes = [
     {
@@ -37,7 +44,7 @@ const routes = [
     },
     {
         path: "/products-of-category",
-        component: ListProductOfCategoryPage
+        component: ProductOfCategoryPage
     },
     {
         path: "/list-store",
@@ -50,7 +57,7 @@ const routes = [
     {
         path: "/",
         exact: true,
-        component: Home
+        component: HomePage
     },
     {
         path: "*",

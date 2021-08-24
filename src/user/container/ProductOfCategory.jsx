@@ -1,50 +1,48 @@
 import React, {useState} from 'react';
 
 // Components
-import SliderMainBanner from './../../feature/Layout/SliderMainBanner';
-import SliderBrand from './../../feature/Layout/SliderBrand';
-import SideBar from './../../feature/Layout/SideBar';
-import Title from '../../common/component/Title';
-import WidgetProductCategory from './../../feature/Layout/SideBar/WidgetProductCategory';
-import WidgetListCheck from '../../feature/Layout/SideBar/WidgetListCheck';
-import WidgetRating from '../../feature/Layout/SideBar/WidgetRating';
-import WidgetPrice from '../../feature/Layout/SideBar/WidgetPrice';
-import WidgetControl from '../../feature/ListProductOfCategory/WidgetControl';
-import WidgetListProduct from '../../feature/ListProductOfCategory/WidgetListProduct';
+import HeroSlider from './../feature/Layout/HeroSlider';
+import SliderBrand from './../feature/Layout/SliderBrand';
+import SideBar from './../feature/Layout/SideBar';
+import Title from './../common/component/Title';
+import WidgetProductCategory from './../feature/Layout/SideBar/WidgetProductCategory';
+import WidgetListCheck from './../feature/Layout/SideBar/WidgetListCheck';
+import WidgetRating from './../feature/Layout/SideBar/WidgetRating';
+import WidgetPrice from './../feature/Layout/SideBar/WidgetPrice';
+import ProductSale from './../feature/ProductOfCategory/ProductSale'
+
+// import WidgetControl from './../feature/ProductOfCategory/WidgetControl';
+// import WidgetListProduct from './../feature/ProductOfCategory/WidgetListProduct';
+
+// images
+import banner1 from './../assets/image/banners/banner1.jpeg';
+import banner2 from './../assets/image/banners/banner2.jpeg';
+import banner3 from './../assets/image/banners/banner3.jpeg';
+import banner4 from './../assets/image/banners/banner4.jpeg';
 
 
-function ListProductOfCategoryPage(props) {
+function ProductOfCategory(props) {
 
     const [listSlideMainBanner] = useState([
         {
             id: 1,
             url: "#/",
-            image: "https://cf.shopee.vn/file/5722f153e0e5ed0e5d06a4c492be9a0c"
+            image: banner1
         },
         {
             id: 2,
             url: "#/",
-            image: "https://cf.shopee.vn/file/54e81fd2da17a55c8d9f52463b148fae"
+            image: banner2
         },
         {
             id: 3,
             url: "#/",
-            image: "https://cf.shopee.vn/file/6f2e0a933fba7a6a02e2462c6d01d011"
+            image: banner3
         },
         {
             id: 4,
             url: "#/",
-            image: "https://cf.shopee.vn/file/cb5dd33c1b4ba19613c1125a1dfbf804"
-        },
-        {
-            id: 5,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/3fe7ed4471fa151b624d093da7b782d6"
-        },
-        {
-            id: 6,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/fcbacc756d4d6a74c8b98cd883d5dec7"
+            image: banner4
         }
     ]);
 
@@ -403,16 +401,20 @@ function ListProductOfCategoryPage(props) {
     ]);
 
     return (
-        <div className = "mt-80 list-product-of-category-page">
+        <div className = "user-page-content list-product-of-category-page">
             <div className="container">
                 <div className="mb-20 slider-main-banner">
-                    <SliderMainBanner items = {listSlideMainBanner} isLarge = {true}/>
+                    <HeroSlider items = {listSlideMainBanner} isLarge = {true}/>
                 </div>
                 
 
                 <div className="mb-40 bg-white slider-brand">
                     <Title title = {"Danh sach nhan hang"} link = {"/list-store"}/>
                     <SliderBrand items = {listBrand} row = {2} col = {6}/>
+                </div>
+
+                <div className="mb-3">
+                    <ProductSale/>
                 </div>
 
                 <div className="mb-40 list-product">
@@ -446,9 +448,9 @@ function ListProductOfCategoryPage(props) {
 
                         <div className="col-lg-10">
                             <div className="pl-5 list-product__right">
-                                <WidgetControl/>
+                                {/* <WidgetControl/> */}
                                 <div className="mb-3"></div>
-                                <WidgetListProduct items = {listProduct}/>
+                                {/* <WidgetListProduct items = {listProduct}/> */}
                             </div>
                         </div>
                         
@@ -462,4 +464,4 @@ function ListProductOfCategoryPage(props) {
     );
 }
 
-export default ListProductOfCategoryPage;
+export default ProductOfCategory;

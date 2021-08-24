@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router-dom';
 
@@ -15,9 +15,12 @@ Layout.propTypes = {
 };
 
 function Layout(props) {
+    console.log(props);
+
     return (
         <div className = "main-wrapper">
             <Header/>
+
             <Switch>
                 {routes.map((item, index) =>{
                 return <Route 
@@ -27,8 +30,8 @@ function Layout(props) {
                     exact = {item.exact || false}
                 />
                 })}
-            </Switch>
-            
+            </Switch>  
+
             <Footer/>
         </div>
     );
