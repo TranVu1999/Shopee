@@ -10,6 +10,20 @@ const ListProductCategory = styled.ul`
 
 const ProductCategoryItem = styled.li`
     padding-left: 15px;
+    position: relative;
+    margin-bottom: .25rem;
+    cursor: pointer;
+
+    .arrow_carrot-right{
+        position: absolute;
+        left: -4px;
+        top: 50%;
+
+        display: none;
+
+        transform: translateY(-50%);
+        font-size: 1.125rem;
+    }
 
     &:hover{
         color: #c7a17a;
@@ -18,6 +32,10 @@ const ProductCategoryItem = styled.li`
     &.active{
         color: #c7a17a;
         font-weight: 600;
+
+        .arrow_carrot-right{
+            display: block;
+        }
     }
 `;
 
@@ -74,6 +92,7 @@ function WidgetProductCategory(props) {
                     key = {item} 
                     className = {indexActive === index ? "active" : ""}
                 >
+                    <span aria-hidden="true" className="arrow_carrot-right"></span>
                     <span>{item}</span>
                 </ProductCategoryItem>
             );

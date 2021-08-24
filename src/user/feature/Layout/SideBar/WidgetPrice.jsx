@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Input = styled.input`
     width: 100%;
-    padding: 0 4px;
+    padding: .125rem .5rem;
 
     background-color: #fff;
     border: 1px solid #d5d5d5;

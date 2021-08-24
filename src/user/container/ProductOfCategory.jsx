@@ -10,15 +10,16 @@ import WidgetListCheck from './../feature/Layout/SideBar/WidgetListCheck';
 import WidgetRating from './../feature/Layout/SideBar/WidgetRating';
 import WidgetPrice from './../feature/Layout/SideBar/WidgetPrice';
 import ProductSale from './../feature/ProductOfCategory/ProductSale'
+import WidgetControl from '../feature/ProductOfCategory/WidgetControl';
+import WidgetListProduct from '../feature/ProductOfCategory/WidgetListProduct';
 
-// import WidgetControl from './../feature/ProductOfCategory/WidgetControl';
-// import WidgetListProduct from './../feature/ProductOfCategory/WidgetListProduct';
 
 // images
 import banner1 from './../assets/image/banners/banner1.jpeg';
 import banner2 from './../assets/image/banners/banner2.jpeg';
 import banner3 from './../assets/image/banners/banner3.jpeg';
 import banner4 from './../assets/image/banners/banner4.jpeg';
+import NavigationBar from '../feature/Layout/NavigationBar';
 
 
 function ProductOfCategory(props) {
@@ -170,21 +171,15 @@ function ProductOfCategory(props) {
     ]);
 
     const [listCategory] = useState([
-        "Thoi trang nam",
-        "ao khoac",
-        "quan jeans",
-        "quan dai/quan au",
-        "quan short",
-        "ao",
-        "ao ba lo",
-        "do lot",
-        "do ngu",
-        "do bo",
-        "vo/tat",
-        "trang phuc truyen thong",
-        "do hoa trang",
-        "trang phuc nganh nghe",
-        "trang suc nam"
+        "Thời Trang Nam",
+        "Áo Khoác",
+        "Áo Vest và Blazer",
+        "Áo Hoodie, Áo Len & Áo Nỉ",
+        "Quần Jeans",
+        "Quần Dài/Quần Âu",
+        "Quần Short",
+        "Áo",
+        "Áo Ba Lỗ",
     ]);
 
     const [listAddress] = useState([
@@ -367,38 +362,63 @@ function ProductOfCategory(props) {
             discount: 36,
             numOrder: 114
         },
-        {
-            id: 21,
-            title: "Tui sach nu mini, deo cheo phoi quai ngoc nhan tao cu chuoi",
-            image: "https://cf.shopee.vn/file/8429cf96e9b200b58e74293f0e42263e_tn",
-            price: 55.00,
-            discount: 56,
-            numOrder: 946
-        },
-        {
-            id: 22,
-            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
-            image: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
-            price: 82.00,
-            discount: 13,
-            numOrder: 3
-        },
-        {
-            id: 23,
-            title: "Giay da bong",
-            image: "https://cf.shopee.vn/file/cfd352c72697bfa056fe09c1bc5df1af_tn",
-            price: 39.0,
-            numOrder: 504
-        },
-        {
-            id: 24,
-            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
-            image: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
-            price: 82.00,
-            discount: 13,
-            numOrder: 3
-        },
     ]);
+
+    const [navigationData, setNavigationData] = useState({
+       start: 0, 
+       indexActive: 0,
+    });
+
+    // handle event
+    const handleChosePage = event =>{
+        const {type, value} = event;
+        const maxIndex = listProduct.length - 1;
+
+        let tempState = {...navigationData}
+
+        switch(type){
+            case "chose-index":
+                tempState = {
+                    ...tempState, 
+                    indexActive: value
+                }
+                break;
+
+            case "neighbor-page":
+                tempState = {
+                    ...tempState,
+                    indexActive: tempState.indexActive + value
+                }
+
+                if(
+                    (value === 1 && 
+                    tempState.indexActive > tempState.start + 5) ||
+                    (value === -1 && 
+                    tempState.indexActive < tempState.start)
+                ){
+                    tempState = {
+                        ...tempState,
+                        start: tempState.start + value,
+                    }
+                }
+
+                break;
+
+            case "scroll-page":
+                break;
+            default:
+                break;
+        }
+
+        if(
+            tempState.indexActive >= 0 && 
+            tempState.start + 5 <= maxIndex &&
+            tempState.indexActive <= maxIndex
+        ){
+            setNavigationData(tempState);
+        }
+        
+    }
 
     return (
         <div className = "user-page-content list-product-of-category-page">
@@ -406,14 +426,13 @@ function ProductOfCategory(props) {
                 <div className="mb-20 slider-main-banner">
                     <HeroSlider items = {listSlideMainBanner} isLarge = {true}/>
                 </div>
-                
 
                 <div className="mb-40 bg-white slider-brand">
                     <Title title = {"Danh sach nhan hang"} link = {"/list-store"}/>
                     <SliderBrand items = {listBrand} row = {2} col = {6}/>
                 </div>
 
-                <div className="mb-3">
+                <div className="mb-40">
                     <ProductSale/>
                 </div>
 
@@ -448,9 +467,19 @@ function ProductOfCategory(props) {
 
                         <div className="col-lg-10">
                             <div className="pl-5 list-product__right">
-                                {/* <WidgetControl/> */}
+                                <WidgetControl/>
                                 <div className="mb-3"></div>
-                                {/* <WidgetListProduct items = {listProduct}/> */}
+                                <WidgetListProduct items = {listProduct}/>
+
+                                <div className="mb-5"></div>
+                                <NavigationBar 
+                                    maximum = {listProduct.length}
+                                    indexActive = {navigationData.indexActive}
+                                    start = {navigationData.start}
+                                    end = {navigationData.start + 6}
+
+                                    handleChosePage = {handleChosePage}
+                                />
                             </div>
                         </div>
                         

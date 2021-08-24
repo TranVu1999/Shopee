@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import Checkbox from './../../../common/component/CheckBox';
+
+const WidgetItem = styled.li`
+    margin-bottom: .25rem;
+    cursor: pointer;
+`;
 
 
 WidgetListCheck.propTypes = {
@@ -43,13 +49,13 @@ function WidgetListCheck(props) {
 
         let elm = listItemsTemp.map(item =>{
             return (
-                <li 
+                <WidgetItem 
                     className = "d-flex align-items-center"
                     key = {item}
                 >
                     <Checkbox/>
                     <span>{item}</span>
-                </li>
+                </WidgetItem>
             );
         });
 

@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const WidgetContent = styled.div`
+    padding: .875rem 1.125rem;
+    font-size: .875rem;
+    background-color: #EDEDED;
+`;
+
 
 const ButtonControl = styled.button`
-    padding: 8px 15px;
+    padding: .25rem .875rem;
     background-color: #fff;
 
     &.active{
@@ -44,30 +50,26 @@ WidgetControl.propTypes = {
 
 function WidgetControl(props) {
     return (
-        <div className = "d-flex align-items-center justify-content-between">
+        <WidgetContent className = "d-flex align-items-center justify-content-between">
             <div className = "d-flex align-items-center">
                 <div className = "mr-4">Sap xep theo</div>
                 <div className = "mr-3">
-                    <ButtonControl className = "active">Pho Bien</ButtonControl>
+                    <ButtonControl className = "active">Phổ biến</ButtonControl>
                 </div>
 
                 <div className = "mr-3">
-                    <ButtonControl>Moi Nhat</ButtonControl>
+                    <ButtonControl>Mới nhất</ButtonControl>
                 </div>
 
                 <div className = "mr-3">
-                    <ButtonControl>Moi Nhat</ButtonControl>
-                </div>
-
-                <div className = "mr-3">
-                    <ButtonControl>Ban Chay</ButtonControl>
+                    <ButtonControl>Bán chạy</ButtonControl>
                 </div>
 
                 <div className="px-2 align-self-stretch bg-white">
                     <SelectControl>
-                        <option value="">Gia</option>
-                        <option value="">Gia: Thap den Cao</option>
-                        <option value="">Gia: Cao den Thap</option>
+                        <option value="">Giá</option>
+                        <option value="">Giá: Thấp đến Cao</option>
+                        <option value="">Giá: Cao đến Thấp</option>
                     </SelectControl>
                 </div>
             </div>
@@ -85,7 +87,7 @@ function WidgetControl(props) {
                         </NavigationButton>
                     </div>
                 </div>
-        </div>
+        </WidgetContent>
     );
 }
 
