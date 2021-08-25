@@ -17,8 +17,9 @@ const WidgetStore = styled(Link)`
     width: 20%;
     padding: 0 20px;
     margin-bottom: 25px;
+
     text-align: center;
-    transition: all .3s ease;
+    transition: all .3s ease;    
 
     &:hover{
         color: #c7a17a;
@@ -29,6 +30,8 @@ const WidgetStore = styled(Link)`
 `;
 
 const WidgetImage = styled.div`
+    position: relative;
+
     min-height: 95px;
     margin-bottom: 10px;
     background-image: url(${props => props.image});
@@ -37,6 +40,25 @@ const WidgetImage = styled.div`
 
     border: 1px solid #d5d5d5;
     transition: all .3s ease;
+    overflow: hidden;
+
+    .label{
+        position: absolute;
+        top: -33px;
+        left: -33px;
+        transform: rotate(-45deg);
+
+        padding-top: 40px;
+        height: 65px;
+        width: 65px;
+
+        text-transform: capitalize;
+        text-align: center;
+
+        background-color: #d0011b;
+        color: #fff;
+
+    }
 `;
 
 
@@ -58,7 +80,11 @@ function WidgetListStoreByLetter(props) {
         return listStore.map(item =>{
             return (
                 <WidgetStore key = {item.title} to = "/store-detail">
-                    <WidgetImage image = {item.image}/>
+                    <WidgetImage image = {item.image}>
+                        {item.new && <div className="label">Mới</div>}
+                        
+                    </WidgetImage>
+
                     <span>{item.title}</span>
                 </WidgetStore>
             );
@@ -67,7 +93,7 @@ function WidgetListStoreByLetter(props) {
 
     return (
         <div className = "d-flex">
-            <WidgetLetter>{letter}</WidgetLetter>
+            <WidgetLetter id = {letter}>{letter}</WidgetLetter>
 
             <div 
                 className="d-flex flex-wrap flex-fill" 

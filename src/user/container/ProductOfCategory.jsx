@@ -440,7 +440,6 @@ function ProductOfCategory(props) {
             tempState.start + 5 <= maxIndex &&
             tempState.indexActive <= maxIndex
         ){
-            console.log({tempState})
             setNavigationData(tempState);
         }
         

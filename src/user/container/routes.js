@@ -4,9 +4,6 @@ import SalePage from './Sale';
 import NotFountPage from './404';
 import TopSearchPage from './TopSearch';
 
-import ListStorePage from './ListStore';
-
-
 import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
 import ArticlePage from './Article';
@@ -15,6 +12,7 @@ import CartPage from './Cart';
 const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
 const HomePage = lazy(() => import("./Home"));
 const StoreDetailPage = lazy(() => import("./StoreDetail"));
+const ListStorePage = lazy(() => import("./ListStore"));
 
 
 const routes = [

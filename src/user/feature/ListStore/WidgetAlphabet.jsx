@@ -12,8 +12,13 @@ const WidgetAmountStore = styled.div`
     padding: 8px 8px;
 `;
 
-const Letter = styled.div`
-    font-size: 24px;
+const Letter = styled.a`
+    font-size: 1.25rem;
+    cursor: pointer;
+
+    &:hover{
+        text-decoration: underline;
+    }
 `;
 
 
@@ -34,7 +39,7 @@ function WidgetAlphabet(props) {
 
         return letters.map(item =>{
             return (
-                <Letter key = {item}>{item}</Letter>
+                <Letter href = {`#${item}`} key = {item}>{item}</Letter>
             );
         });
     }

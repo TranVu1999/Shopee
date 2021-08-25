@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const WidgetContent = styled.div`
+    font-size: .8125rem;
+    color: #333;
+`;
+
 const BreadcrumbBox = styled.li`
     display: inline-flex;
     align-items: center;
@@ -12,14 +17,10 @@ const BreadcrumbBox = styled.li`
     a{
         transition: all .3s ease;
         margin-right: 5px;
-
-        &:hover{
-            color: #c7a17a;
-        }
     }
 
     span{
-        font-size: 24px;
+        font-size: 1.25rem;
     }
 
     &:last-child{
@@ -53,7 +54,7 @@ function WidgetBreadcrumb(props) {
         });
     }
 
-    return (<ul className = "mt-2">{renderItems()}</ul>);
+    return (<WidgetContent>{renderItems()}</WidgetContent>);
 }
 
 export default WidgetBreadcrumb;
