@@ -54,7 +54,7 @@ function WidgetListStore(props) {
                         listStore = {item.listStore}
                     />
                 );
-                elm.push(<hr/>)
+                elm.push(<hr className="my-5"/>)
             }
         }
         return elm;

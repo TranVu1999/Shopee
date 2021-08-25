@@ -11,7 +11,7 @@ import CartPage from './Cart';
 
 const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
 const HomePage = lazy(() => import("./Home"));
-const StoreDetailPage = lazy(() => import("./StoreDetail"));
+const StoreDetailPage = lazy(() => import("./StoreDetail.jsx"));
 const ListStorePage = lazy(() => import("./ListStore"));
 
 

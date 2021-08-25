@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Modules
-import Number from './../../util/number';
+import Number from '../../util/number';
 
 const StoreThumbnail = styled.div`
     position: relative;
@@ -88,17 +88,17 @@ const StoreStatisticsItem = styled.div`
     }
 `;
 
-WidgetStoreInformation.propTypes = {
+Information.propTypes = {
     info: PropTypes.object,
 };
 
-WidgetStoreInformation.defaultProps = {
+Information.defaultProps = {
     info: null
 }
 
 
 
-function WidgetStoreInformation(props) {
+function Information(props) {
     const {
         title,
         avatar, 
@@ -190,4 +190,4 @@ function WidgetStoreInformation(props) {
     );
 }
 
-export default WidgetStoreInformation;
+export default Information;

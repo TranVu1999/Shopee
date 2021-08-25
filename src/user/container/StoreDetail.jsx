@@ -2,24 +2,44 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // Components
-import Tab from './../../feature/Layout/Tab';
-import WidgetStoreInformation from '../../feature/StoreDetail/WidgetStoreInformation';
-import WidgetSliderDiscount from '../../feature/StoreDetail/WidgetSliderDiscount';
-import WidgetSliderBanner from '../../feature/StoreDetail/WidgetSliderBanner';
-import WidgetBanner from '../../feature/StoreDetail/WidgetBanner';
-import WidgetListHotProduct from '../../feature/StoreDetail/WidgetListHotProduct';
+import Tab from '../feature/Layout/Tab';
+import Information from '../feature/StoreDetail/Information';
 
-import SideBar from './../../feature/Layout/SideBar';
-import WidgetProductCategory from './../../feature/Layout/SideBar/WidgetProductCategory';
-import WidgetListCheck from '../../feature/Layout/SideBar/WidgetListCheck';
-import WidgetRating from '../../feature/Layout/SideBar/WidgetRating';
-import WidgetPrice from '../../feature/Layout/SideBar/WidgetPrice';
-import WidgetControl from '../../feature/ProductOfCategory/WidgetControl';
-import WidgetListProduct from '../../feature/ProductOfCategory/WidgetListProduct';
+import WidgetSliderDiscount from '../feature/StoreDetail/WidgetSliderDiscount';
+import WidgetSliderBanner from '../feature/StoreDetail/WidgetSliderBanner';
+import WidgetBanner from '../feature/StoreDetail/WidgetBanner';
+import WidgetListHotProduct from '../feature/StoreDetail/WidgetListHotProduct';
+
+import SideBar from '../feature/Layout/SideBar';
+import WidgetProductCategory from '../feature/Layout/SideBar/WidgetProductCategory';
+
+import WidgetListCheck from './../feature/Layout/SideBar/WidgetListCheck';
+
+import WidgetRating from '../feature/Layout/SideBar/WidgetRating';
+import WidgetPrice from '../feature/Layout/SideBar/WidgetPrice';
+import WidgetControl from '../feature/ProductOfCategory/WidgetControl';
+import WidgetListProduct from '../feature/ProductOfCategory/WidgetListProduct';
+import TabFull from '../feature/Layout/TabFull';
+
+const WidgetContent = styled.section`
+    margin-top: 125px;
+
+    .store-information{
+        border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+
+    .store-tab{
+        border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+`;
 
 const Title = styled.h5`
     font-size: 18px;
     font-weight: 400;
+`;
+
+const WidgetTab = styled.div`
+
 `;
 
 function StoreDetailPage(props) {
@@ -30,20 +50,37 @@ function StoreDetailPage(props) {
         bgImage: "https://cf.shopee.vn/file/30e84c8c66e5d13ea95d729c443ee214_tn",
     });
 
-    const [listTab] = useState([
-        {
-            title: "Dao choi",
-        },
-        {
-            title: "Tat ca san pham",
-        },
-        {
-            title: "Deal duoi 49K",
-        },
-        {
-            title: "Sale off 50%",
-        }
-    ]);
+    const [listTab] = useState({
+        listTab: [
+            {
+                title: "Dao choi",
+            },
+            {
+                title: "TẤT CẢ SẢN PHẨM",
+            },
+            {
+                title: "Quần Lót Nam Tam Giác",
+            },
+            {
+                title: "Áo Ba Lỗ",
+            },
+            {
+                title: "Quần Lót Nam Boxer",
+            },
+            {
+                title: "Áo Thun Nam",
+            }
+        ], 
+        moreTab: [
+            {
+                title: "Quần Lót Nam Boxer",
+            },
+            {
+                title: "Áo Thun Nam",
+            }
+        ]
+        
+    });
 
     const [listDiscount] = useState([
         {
@@ -319,42 +356,7 @@ function StoreDetailPage(props) {
             discount: 36,
             numOrder: 114,
             storeAddress: "TP.Ho Chi Minh"
-        },
-        {
-            id: 21,
-            title: "Tui sach nu mini, deo cheo phoi quai ngoc nhan tao cu chuoi",
-            image: "https://cf.shopee.vn/file/8429cf96e9b200b58e74293f0e42263e_tn",
-            price: 55.00,
-            discount: 56,
-            numOrder: 946,
-            storeAddress: "TP.Ho Chi Minh"
-        },
-        {
-            id: 22,
-            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
-            image: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
-            price: 82.00,
-            discount: 13,
-            numOrder: 3,
-            storeAddress: "TP.Ho Chi Minh"
-        },
-        {
-            id: 23,
-            title: "Giay da bong",
-            image: "https://cf.shopee.vn/file/cfd352c72697bfa056fe09c1bc5df1af_tn",
-            price: 39.0,
-            numOrder: 504,
-            storeAddress: "TP.Ho Chi Minh"
-        },
-        {
-            id: 24,
-            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
-            image: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
-            price: 82.00,
-            discount: 13,
-            numOrder: 3,
-            storeAddress: "TP.Ho Chi Minh"
-        },
+        }
     ]);
 
     const [listAddress] = useState([
@@ -397,23 +399,28 @@ function StoreDetailPage(props) {
     ]);
 
     return (
-        <div className = "mt-80 store-detail-page-content">
-            <div className="bg-white pb-3" style = {{borderBottom: "1px solid #d5d5d5"}}>
+        <WidgetContent className = "store-detail-page-content">
+            <div className="bg-white pt-5 pb-4 store-information">
                 <div className="container">
-                    <WidgetStoreInformation
+                    <Information
                         info = {storeInformation}
                     />
                 </div>
             </div>
 
-            <div>
+            <div className="bg-white mb-4 store-tab">
                 <div className="container">
-                    <Tab
-                        smallHeaderTab = {true}
-                        items = {listTab} 
-                        activeIndex = {0}
+                    <TabFull 
+                        listTab = {listTab.listTab}
+                        moreTab = {listTab.moreTab}
                     />
+                </div>
+            </div>
 
+            <div>
+                
+
+                <div className="container">
                     <div className="p-4 bg-white">
                         <Title className = "mb-3">Mã giảm giá của Shop</Title>
                         <WidgetSliderDiscount items = {listDiscount}/>
@@ -482,7 +489,7 @@ function StoreDetailPage(props) {
                 </div>
             </div>
             
-        </div>
+        </WidgetContent>
     );
 }
 
