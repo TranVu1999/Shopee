@@ -13,6 +13,7 @@ const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
 const HomePage = lazy(() => import("./Home"));
 const StoreDetailPage = lazy(() => import("./StoreDetail.jsx"));
 const ListStorePage = lazy(() => import("./ListStore"));
+const ProductOfStorePage = lazy(() => import("./ProductOfStore"));
 
 
 const routes = [
@@ -43,6 +44,10 @@ const routes = [
     {
         path: "/products-of-category",
         component: ProductOfCategoryPage
+    },
+    {
+        path: "/products-of-store",
+        component: ProductOfStorePage
     },
     {
         path: "/list-store",

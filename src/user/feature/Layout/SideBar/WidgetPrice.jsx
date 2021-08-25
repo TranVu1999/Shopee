@@ -7,6 +7,8 @@ const Input = styled.input`
     width: 100%;
     padding: .125rem .5rem;
 
+    font-size: .875rem;
+
     background-color: #fff;
     border: 1px solid #d5d5d5;
 
@@ -17,10 +19,10 @@ const Input = styled.input`
 `;
 
 const Hyphen = styled.div`
-    max-width: 20px;
-    min-width: 20px;
+    max-width: 10px;
+    min-width: 10px;
     height: 1px;
-    margin: 0 5px;
+    margin: 0 7px;
 
     background-color: #d5d5d5;
 `;

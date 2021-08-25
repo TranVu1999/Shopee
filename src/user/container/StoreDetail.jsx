@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // Components
-import Tab from '../feature/Layout/Tab';
 import Information from '../feature/StoreDetail/Information';
 
 import WidgetSliderDiscount from '../feature/StoreDetail/WidgetSliderDiscount';
@@ -19,7 +18,8 @@ import WidgetRating from '../feature/Layout/SideBar/WidgetRating';
 import WidgetPrice from '../feature/Layout/SideBar/WidgetPrice';
 import WidgetControl from '../feature/ProductOfCategory/WidgetControl';
 import WidgetListProduct from '../feature/ProductOfCategory/WidgetListProduct';
-import TabFull from '../feature/Layout/TabFull';
+import TabFull from '../feature/StoreDetail/TabFull';
+import NavigationBar from '../feature/Layout/NavigationBar';
 
 const WidgetContent = styled.section`
     margin-top: 125px;
@@ -53,7 +53,7 @@ function StoreDetailPage(props) {
     const [listTab] = useState({
         listTab: [
             {
-                title: "Dao choi",
+                title: "Dạo Chơi",
             },
             {
                 title: "TẤT CẢ SẢN PHẨM",
@@ -398,6 +398,87 @@ function StoreDetailPage(props) {
         "Calvin Klein"
     ]);
 
+    const [navigationData, setNavigationData] = useState({
+        start: 0, 
+        indexActive: 0,
+    });
+
+
+     // handle event
+     const handleChosePage = event =>{
+        const {type, value} = event;
+        const maxIndex = listProduct.length - 1;
+
+        let tempState = {...navigationData}
+
+        switch(type){
+            case "chose-index":
+                tempState = {
+                    ...tempState, 
+                    indexActive: value
+                }
+                break;
+
+            case "neighbor-page":
+                tempState = {
+                    ...tempState,
+                    indexActive: tempState.indexActive + value
+                }
+
+                if(
+                    (value === 1 && 
+                    tempState.indexActive > tempState.start + 5) ||
+                    (value === -1 && 
+                    tempState.indexActive < tempState.start)
+                ){
+                    tempState = {
+                        ...tempState,
+                        start: tempState.start + value,
+                    }
+                }
+
+                break;
+
+            case "scroll-page":
+                let {start, index} = tempState;
+
+                if(value === 1 && start + 11 <= maxIndex){
+                    tempState = {
+                        start: start + 6,
+                        indexActive: start + 6
+                    }
+                }else if (value === 1 && start + 11 > maxIndex){
+                    tempState = {
+                        start: maxIndex - 5,
+                        indexActive: maxIndex - 5
+                    }
+                }
+
+                if(value === -1 && start - 6 >= 0){
+                    tempState = {
+                        start: start - 6,
+                        indexActive: start - 1
+                    }
+                }else if(value == -1 && start - 6 < 0){
+                    tempState = {
+                        start: 0,
+                        indexActive: 5
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        if(
+            tempState.indexActive >= 0 && 
+            tempState.start + 5 <= maxIndex &&
+            tempState.indexActive <= maxIndex
+        ){
+            setNavigationData(tempState);
+        }
+    }
+
     return (
         <WidgetContent className = "store-detail-page-content">
             <div className="bg-white pt-5 pb-4 store-information">
@@ -418,8 +499,6 @@ function StoreDetailPage(props) {
             </div>
 
             <div>
-                
-
                 <div className="container">
                     <div className="p-4 bg-white">
                         <Title className = "mb-3">Mã giảm giá của Shop</Title>
@@ -480,6 +559,16 @@ function StoreDetailPage(props) {
                                     <WidgetControl/>
                                     <div className="mb-3"></div>
                                     <WidgetListProduct items = {listProduct}/>
+
+                                    <div className="mb-5"></div>
+                                    <NavigationBar 
+                                        maximum = {listProduct.length}
+                                        indexActive = {navigationData.indexActive}
+                                        start = {navigationData.start}
+                                        end = {navigationData.start + 6}
+
+                                        handleChosePage = {handleChosePage}
+                                    />
                                 </div>
                             </div>
                             

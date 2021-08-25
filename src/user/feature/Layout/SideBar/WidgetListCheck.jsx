@@ -7,6 +7,7 @@ import Checkbox from './../../../common/component/CheckBox';
 const WidgetItem = styled.li`
     margin-bottom: .25rem;
     cursor: pointer;
+    font-size: .875rem;
 `;
 
 
