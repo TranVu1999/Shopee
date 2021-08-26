@@ -224,7 +224,7 @@ function Header(props) {
             <HeaderBottom className="container">
                 <div className="d-flex align-items-start justify-content-between">
                     <Logo>
-                        <a href="#/">{logo}</a>
+                        <Link to="/">{logo}</Link>
                     </Logo>
 
                     <SearchBox className="flex-fill">

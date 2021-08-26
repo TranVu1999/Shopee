@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Components
 import Title from '../common/component/Title';
@@ -8,11 +8,13 @@ import SliderTopSearch from '../feature/Home/SliderTopSearch';
 import SliderProductCategory from '../feature/Home/SliderProductCategory';
 import SliderMainBanner from '../feature/Layout/HeroSlider';
 import RightMainBanner from '../feature/Home/RightMainBanner';
-import FlashSale from '../feature/Home/FlashSale';
+
+import FlashSale from '../feature/Home/FlashSale.jsx';
 import ProductHint from '../feature/Home/ProductHint.jsx';
 import Mall from '../feature/Home/Mall';
 import ListServices from '../feature/Home/ListServices';
 import BestSeller from '../feature/Home/BestSeller';
+import productApi from '../../api/productAPI';
 
 Home.propTypes = {
     
@@ -702,6 +704,24 @@ function Home(props) {
             discount: 96
         }
     ]);
+
+    const [productList, setProductList] = useState([]);
+
+    // Effect
+    useEffect(() =>{
+        const fetchProductList = async () =>{
+            try{
+                const res = await productApi.getAll();
+                console.log(res)
+                setProductList(res.data);
+            }catch(err){
+                console.log("Failed to fetch product list: ", err);
+            }
+        }
+
+        fetchProductList();
+
+    }, []);
     
 
     return (

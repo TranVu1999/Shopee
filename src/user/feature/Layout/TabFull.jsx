@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 
 const WidgetContent = styled.div`
     font-size: .9375rem;
-    background-color: #fff;
 `;
 
 const Item = styled.div`

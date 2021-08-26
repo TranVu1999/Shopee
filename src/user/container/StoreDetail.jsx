@@ -38,10 +38,6 @@ const Title = styled.h5`
     font-weight: 400;
 `;
 
-const WidgetTab = styled.div`
-
-`;
-
 function StoreDetailPage(props) {
     const [storeInformation] = useState({
         title: "4U SHOP",

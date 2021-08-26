@@ -1,36 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import styled from 'styled-components';
-
+import {useParams} from 'react-router-dom';
 
 // Components
-import WidgetBreadcrumb from '../../feature/Layout/WidgetBreadcrumb';
-import WidgetAlphabet from '../../feature/ListStore/WidgetAlphabet';
-import WidgetListStore from '../../feature/ListStore/WidgetListStore';
+import WidgetBreadcrumb from '../feature/Layout/WidgetBreadcrumb';
+import WidgetAlphabet from '../feature/ListStore/WidgetAlphabet';
+import WidgetListStore from '../feature/ListStore/WidgetListStore';
 
-const WidgetContent = styled.div``;
+const ListTypeStore = lazy(() => import("../feature/ListStore/ListTypeStore"))
 
 const Title = styled.h5`
     margin: 25px 0 40px;
     font-size: 1.75rem;
     color: #333;
-    
 `;
 
-function ListStorePage(props) {
-    const [breadcrumb] = useState([
-        {
-            title: "Shopee",
-            url: "#/"
-        },
-        {
-            title: "Tat ca cua hang",
-            url: "#/"
-        },
-        {
-            title: "Thoi Trang Nam",
-            url: "#/"
+function ListStore(props) {
+    // data
+    const {alias} = useParams();
+    
+    const [breadcrumb, setBreadcrumb] = useState(() =>{
+        let breadcrumb = [
+            { title: "Shopee", url: "#/" },
+            { title: "Tất cả cửa hàng", url: "/list-store" }
+        ]
+
+        if(alias){
+            breadcrumb.push({
+                title: "Thể Thao & Du Lịch",
+                url: "#/"
+            })
         }
-    ]);
+
+        return breadcrumb;
+    });
 
     const [listStore] = useState([
         {
@@ -524,15 +527,174 @@ function ListStorePage(props) {
             image: "https://cf.shopee.vn/file/5ae4a69caf8172da365898519b0d6b17",
             url: "#/",
         }
-    ])
+    ]);
+
+    const [listTypeStore, setListTypeStore] = useState([
+        {
+            id: "lstpc1",
+            title: "Thể Thao & Du Lịch",
+            alias: "the-thao-&-du-lich"
+        },
+        {
+            id: "lstpc2",
+            title: "Sắc Đẹp",
+            alias: "sac-dep"
+        },
+        {
+            id: "lstpc3",
+            title: "Thời Trang Nữ",
+            alias: "thoi-trang-nu"
+        },
+        {
+            id: "lstpc4",
+            title: "Nhà Sách Online",
+            alias: "nha-sach-online"
+        },
+        {
+            id: "lstpc5",
+            title: "Đồng Hồ",
+            alias: "dong-ho"
+        },
+        {
+            id: "lstpc6",
+            title: "Thời Trang Nam",
+            alias: "thoi-trang-nam"
+        },
+        {
+            id: "lstpc7",
+            title: "Thể Thao & Du Lịch",
+            alias: "the-thao-&-du-lich"
+        },
+        {
+            id: "lstpc8",
+            title: "Sức Khỏe",
+            alias: "suc-khoe"
+        },
+        {
+            id: "lstpc9",
+            title: "Ô tô - xe máy - xe đạp",
+            alias: "oto-xe-may-xe-dap"
+        },
+        {
+            id: "lstpc10",
+            title: "Máy tính & Laptop",
+            alias: "may-tinh&laptop"
+        },
+        {
+            id: "lstpc11",
+            title: "Túi Ví Nữ",
+            alias: "tui-vi-nu"
+        },
+        {
+            id: "lstpc12",
+            title: "Thể Thao & Du Lịch",
+            alias: "the-thao-&-du-lich"
+        },
+        {
+            id: "lstpc13",
+            title: "Thời trang trẻ em",
+            alias: "thoi-trang-tre-em"
+        },
+        {
+            id: "lstpc14",
+            title: "Thiết Bị Điện Tử",
+            alias: "thiet-bi-dien-tu"
+        },
+        {
+            id: "lstpc15",
+            title: "Giày Dép Nữ",
+            alias: "giay-dep-nu"
+        },
+        {
+            id: "lstpc16",
+            title: "Bách hóa Online",
+            alias: "back-hoa-online"
+        },
+        {
+            id: "lstpc17",
+            title: "Voucher & Dịch vụ",
+            alias: "voucher&dich-vu"
+        },
+        {
+            id: "lstpc18",
+            title: "Mẹ & Bé",
+            alias: "me&be"
+        },
+        {
+            id: "lstpc19",
+            title: "Điện Thoại và Phụ Kiện",
+            alias: "dien-thoai&phu-kien"
+        },
+        {
+            id: "lstpc20",
+            title: "Giày Dép Nam",
+            alias: "giay-dep-nam"
+        },
+        {
+            id: "lstpc21",
+            title: "Thiết Bị Điện Gia Dụng",
+            alias: "thiet-bi-gia-dung"
+        },
+        {
+            id: "lstpc22",
+            title: "Nhà Cửa & Đời Sống",
+            alias: "nha-cua&doi-song"
+        },
+        {
+            id: "lstpc23",
+            title: "Máy ảnh - Máy quay phim",
+            alias: "may-anh&may-quay-phim"
+        },
+        {
+            id: "lstpc24",
+            title: "Thú cưng",
+            alias: "thu-cung"
+        },
+        {
+            id: "lstpc25",
+            title: "Phụ Kiện & Trang Sức Nữ",
+            alias: "phu-kien&trang-suc-nu"
+        },
+        {
+            id: "lstpc26",
+            title: "Đồ chơi",
+            alias: "do-choi"
+        },
+        {
+            id: "lstpc27",
+            title: "Giặt giũ & Chăm sóc nhà cửa",
+            alias: "giat-giu&cham-soc-nha-cua"
+        },
+
+    ]);
+
+    // effect
+    useEffect(() =>{
+        let breadcrumb = [
+            { title: "Shopee", url: "#/" },
+            { title: "Tất cả cửa hàng", url: "/list-store" }
+        ]
+
+        if(alias){
+            breadcrumb.push({
+                title: "Thể Thao & Du Lịch",
+                url: "#/"
+            })
+        }
+
+        setBreadcrumb(breadcrumb);
+    }, [alias])
+
 
     return (
-        <WidgetContent className = "user-page-content mb-5 list-store-page-content">
+        <section className = "user-page-content mb-5 list-store-page-content">
             <div className="container">
                 {/* Breadcrumb */}
                 <WidgetBreadcrumb items = {breadcrumb}/>
 
-                <Title>Thời Trang Nam</Title>
+                <Title>{alias ? "Thể Thao & Du Lịch" : "Tất cả cửa hàng"}</Title>
+                {!alias && <ListTypeStore listTypeStore = {listTypeStore}/>}
+               
 
                 <WidgetAlphabet numStore = {listStore.length}/>
                 <div className="mt-5"></div>
@@ -541,8 +703,8 @@ function ListStorePage(props) {
                 
             </div>
             
-        </WidgetContent>
+        </section>
     );
 }
 
-export default ListStorePage;
+export default ListStore;

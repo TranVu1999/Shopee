@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import ThumbnailSaleLarge from './../../Product/ThumbnailSaleLarge';
+import ThumbnailSaleLarge from '../Product/ThumbnailSaleLarge';
 
-// CSS
-import './index.scss';
 
 ListSale.propTypes = {
     items: PropTypes.array,

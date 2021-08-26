@@ -1,6 +1,5 @@
 import {lazy} from 'react';
 
-import SalePage from './Sale';
 import NotFountPage from './404';
 import TopSearchPage from './TopSearch';
 
@@ -12,9 +11,9 @@ import CartPage from './Cart';
 const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
 const HomePage = lazy(() => import("./Home"));
 const StoreDetailPage = lazy(() => import("./StoreDetail.jsx"));
-const ListStorePage = lazy(() => import("./ListStore"));
+const ListStorePage = lazy(() => import("./ListStore.jsx"));
 const ProductOfStorePage = lazy(() => import("./ProductOfStore"));
-
+const SalePage = lazy(() => import("./Sale.jsx"));
 
 const routes = [
     {
@@ -50,8 +49,9 @@ const routes = [
         component: ProductOfStorePage
     },
     {
-        path: "/list-store",
-        component: ListStorePage
+        path: "/list-store/:alias?",
+        component: ListStorePage, 
+        exact: true
     },
     {
         path: "/top-products",
