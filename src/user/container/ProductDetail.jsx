@@ -2,20 +2,23 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 // Components
-import WidgetBreadcrumb from '../../feature/Layout/WidgetBreadcrumb';
-import WidgetListDiscount from '../../feature/ProductDetail/WidgetListDiscount';
-import WidgetImage from '../../feature/ProductDetail/WidgetImage';
-import WidgetModalImage from '../../feature/ProductDetail/WidgetModalImage';
-import WidgetStatisticsStore from '../../feature/ProductDetail/WidgetStatisticsStore';
-import WidgetThumbnailStore from '../../feature/ProductDetail/WidgetThumbnailStore';
+import WidgetBreadcrumb from '../feature/Layout/WidgetBreadcrumb';
+import WidgetListDiscount from '../feature/ProductDetail/WidgetListDiscount';
+import WidgetImage from '../feature/ProductDetail/WidgetImage';
+import WidgetModalImage from '../feature/ProductDetail/WidgetModalImage';
+import StatisticsStore from '../feature/ProductDetail/StatisticsStore';
+import ThumbnailStore from '../feature/ProductDetail/ThumbnailStore';
+import WidgetListTopProduct from '../feature/ProductDetail/WidgetListTopProduct';
+import WidgetDescription from '../feature/ProductDetail/WidgetDescription';
+import WidgetComment from '../feature/ProductDetail/WidgetComment';
+import WidgetCommentStatistics from '../feature/ProductDetail/WidgetCommentStatistics';
 
 
 // Hooks
-import useOutsideElement from './../../hooks/outsideElement';
-import WidgetListTopProduct from '../../feature/ProductDetail/WidgetListTopProduct';
-import WidgetDescription from '../../feature/ProductDetail/WidgetDescription';
-import WidgetComment from '../../feature/ProductDetail/WidgetComment';
-import WidgetCommentStatistics from '../../feature/ProductDetail/WidgetCommentStatistics';
+import useOutsideElement from '../hooks/outsideElement';
+import WidgetDetail from '../feature/ProductDetail/WidgetDetail';
+import ComboPromo from '../feature/ProductDetail/ComboPromo';
+
 
 const ModalImageBox = styled.div`
     position: fixed;
@@ -41,7 +44,7 @@ const ImageBoxContent = styled.div`
 `;
 
 
-function ProductDetailPage(props) {
+function ProductDetail(props) {
     // State
     const [breadcrumb] = useState([
         {
@@ -255,15 +258,19 @@ function ProductDetailPage(props) {
     }
 
     return (
-        <div className = "mt-80 mb-5 product-detail-page-content">
+        <div className = "user-page-content product-detail-page-content">
             <div className="container">
                 <WidgetBreadcrumb items = {breadcrumb}/>
 
-                <div className="row bg-white br-4 mb-3">
+                <div className="d-flex bg-white br-4 mb-3">
                     <WidgetImage 
                         items = {images}
                         onHandleOpenModalImage = {onHandleOpenModalImage}
                     />
+
+                    <div className = "flex-fill">
+                        <WidgetDetail/>
+                    </div>
 
                     {visible ? (
                         <ModalImageBox >
@@ -280,16 +287,23 @@ function ProductDetailPage(props) {
                     
                 </div>
 
+                {/* Combo Promo */}
+                <div className="bg-white mb-3">
+                    <ComboPromo/>
+                </div>
+                
+                {/* Store */}
                 <div className="row bg-white py-4">
                     <div className="col-lg-4">
-                        <WidgetThumbnailStore info = {storeInformation}/>
+                        <ThumbnailStore info = {storeInformation}/>
                     </div>
                     <div className="col-lg-8 d-flex align-items-center">
                         <div className="vertical-line-1"></div>
-                        <WidgetStatisticsStore items = {storeInformation.statistics}/>
+                        <StatisticsStore items = {storeInformation.statistics}/>
                     </div>
                 </div>
 
+            
                 <div className="py-3 row ">
                     <div className = "mr-3" style = {{flex: 1}}>
                         <WidgetDescription item = {productDescription}/>
@@ -323,4 +337,4 @@ function ProductDetailPage(props) {
     );
 }
 
-export default ProductDetailPage;
+export default ProductDetail;

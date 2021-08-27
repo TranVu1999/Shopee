@@ -3,7 +3,6 @@ import {lazy} from 'react';
 import NotFountPage from './404';
 import TopSearchPage from './TopSearch';
 
-import ProductDetailPage from './ProductDetail';
 import UserPage from './User';
 import ArticlePage from './Article';
 import CartPage from './Cart';
@@ -14,6 +13,7 @@ const StoreDetailPage = lazy(() => import("./StoreDetail.jsx"));
 const ListStorePage = lazy(() => import("./ListStore.jsx"));
 const ProductOfStorePage = lazy(() => import("./ProductOfStore"));
 const SalePage = lazy(() => import("./Sale.jsx"));
+const ProductDetailPage = lazy(() => import("./ProductDetail.jsx"));
 
 const routes = [
     {

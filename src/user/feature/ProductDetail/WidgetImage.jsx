@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Swiper, SwiperSlide} from 'swiper/react';
 
 // Style
-import { useState } from 'react';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
 
 const ImageBox = styled.div`
     width: 480px;

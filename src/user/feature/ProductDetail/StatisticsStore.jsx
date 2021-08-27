@@ -7,18 +7,19 @@ import WidgetStoreStatistics from '../Store/WidgetStoreStatistics';
 
 const WidgetStatisticsItem = styled.div`
     width: 33.333333%;
+    font-size: .875rem;
     line-height: 36px;
 `;
 
-WidgetStatisticsStore.propTypes = {
+StatisticsStore.propTypes = {
     items: PropTypes.array,
 };
 
-WidgetStatisticsStore.defaultProps = {
+StatisticsStore.defaultProps = {
     items: []
 }
 
-function WidgetStatisticsStore(props) {
+function StatisticsStore(props) {
     const {items} = props;
 
     // Render
@@ -39,4 +40,4 @@ function WidgetStatisticsStore(props) {
     );
 }
 
-export default WidgetStatisticsStore;
+export default StatisticsStore;
