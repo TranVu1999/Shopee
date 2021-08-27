@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const DescriptionBox = styled.div`
     padding: 1.4rem 1.5rem;
+    font-size: .875rem;
     background-color: #fff;
 `;
 
@@ -17,7 +18,6 @@ const Label = styled.label`
     width: 8.5rem;
     
     color: rgba(0,0,0,.4);
-    font-size: 1rem
 `;
 
 const Title = styled.h5`

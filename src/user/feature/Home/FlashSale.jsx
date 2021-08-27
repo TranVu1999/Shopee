@@ -71,7 +71,7 @@ function FlashSale(props) {
 
 
             {/* List product */}
-            <div className="normal-arrow">
+            <div className="normal-arrow w-100">
                 <Swiper 
                     slidesPerView = {6}
                     slidesPerGroup = {6}

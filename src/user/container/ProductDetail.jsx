@@ -18,6 +18,7 @@ import WidgetCommentStatistics from '../feature/ProductDetail/WidgetCommentStati
 import useOutsideElement from '../hooks/outsideElement';
 import WidgetDetail from '../feature/ProductDetail/WidgetDetail';
 import ComboPromo from '../feature/ProductDetail/ComboPromo';
+import WidgetListProduct from '../feature/ProductDetail/WidgetListProduct';
 
 
 const ModalImageBox = styled.div`
@@ -130,34 +131,31 @@ function ProductDetail(props) {
     const [listTopProduct] = useState([
         {
             id: 1,
-            image: "https://cf.shopee.vn/file/45d51e73b8c33ec92f1b5d0eaad457ac_tn",
-            title: "Đầm nữ thiết kế trắng dễ thương voan nhún ngực mặc dự tiệc dạo phố xinh như công chúa",
-            price: 159.00, 
-            discount: 50
+            image: "https://cf.shopee.vn/file/adb558bc03d28db14cc8e4356a127205_tn",
+            title: "ÁO SOMI TAY BỒNG OVERSIZE ( ẢNH THẬT)",
+            price: 165000, 
+            discount: 20
         },
         {
             id: 2,
-            image: "https://cf.shopee.vn/file/c7aeba92603b28ec23bfe9f6fc6228a8_tn",
-            title: "Chân váy dài ulzzang xòe vạt lệch phối đen trắng phong cách Hàn Quốc",
-            price: 75.00
+            image: "https://cf.shopee.vn/file/b6ec3944bead9c416bdde180dc66dbef_tn",
+            title: "Áo somi Freesize dài tay trơn SP000043  ( ẢNH THẬT)",
+            price: 158000,
+            discount: 30
         },
         {
             id: 3,
-            image: "https://cf.shopee.vn/file/eda499019cd077aa44a5fba6c5a9f300_tn",
-            title: "[SIÊU XINH] Áo babydoll cánh tiên tay phồng 2 màu be, trắng (ảnh thật cuối)",
-            price: 159.00
+            image: "https://cf.shopee.vn/file/763a037a6842aaae1fcceb048671b7fd_tn",
+            title: "Quần baggy vải đen. Quần tây nữ   ( Ảnh thật Tia19 chụp )",
+            price: 150000,
+            discount: 25
         },
         {
             id: 4,
-            image: "https://cf.shopee.vn/file/27f44d0cd7f995002eb4c30b87da3b34_tn",
-            title: "Áo Sơ Mi Nữ Dài Tay, Áo Kiểu Chiffon Dáng Rộng Hàn Quốc Dễ Phối Đồ Cho Nữ",
-            price: 135.00
-        },
-        {
-            id: 5,
-            image: "https://cf.shopee.vn/file/63ebf3719cf3f4b3978d0505ad4073c7_tn",
-            title: "[SẴN] Váy trắng trễ vai tay bồng cúc bọc tiểu thư xinh xắn",
-            price: 159.00
+            image: "https://cf.shopee.vn/file/dec0fc1f94575815b9dcaca50ac86349_tn",
+            title: "ÁO SOMI TRẮNG TAY LỠ SP000193 ( KÉO SANG XEM FEEDBACK)",
+            price: 149000,
+            discount: 40
         }
     ]);
     const [productDescription] = useState({
@@ -235,6 +233,132 @@ function ProductDetail(props) {
 
         ]
     });
+    const [listComboPromo] = useState([
+        {
+            id: 1,
+            image: "https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn",
+            title: "Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)",
+            price: 248000, 
+            discount: 50
+        },
+        {
+            id: 2,
+            image: "https://cf.shopee.vn/file/397551b0a65ac7aa904995a69a789677_tn",
+            title: "Áo cardigan len giấy vintage ( Ảnh thật)",
+            price: 139000,
+            discount: 30
+        },
+        {
+            id: 3,
+            image: "https://cf.shopee.vn/file/d3673d487ebb4792d01d85621c88baaa_tn",
+            title: "ÁO BRA HỞ LƯNG",
+            price: 75000,
+            discount: 10
+        },
+        {
+            id: 4,
+            image: "https://cf.shopee.vn/file/aada394a3c7b366606fee7eca5f85ff6_tn",
+            title: "ÁO BRA 2 DÂY TĂM",
+            price: 75000,
+            discount: 10
+        },
+        {
+            id: 5,
+            image: "https://cf.shopee.vn/file/0b8f419df34ee1eae78a9140925a420d_tn",
+            title: "ÁO BRA DÂY CHÉO KHÔNG GỌNG LOẠI 1 ( ẢNH THẬT)",
+            price: 199000,
+            discount: 30
+        },
+        {
+            id: 6,
+            image: "https://cf.shopee.vn/file/3fed2301c24fbb95cc15d80a51bf4fd5_tn",
+            title: "ÁO BRA QUÂY ĐÚC",
+            price: 75000,
+            discount: 30
+        }
+    ]);
+
+    const [listProduct] = useState([
+        {
+            id: 1,
+            title: "Paper Pouch (The good approach)",
+            img: "https://res.cloudinary.com/doem0ysxl/image/upload/v1611851630/BaristaCoffee/shop/prod2_xocw36.jpg",
+            price: 24000,
+            discount: 50,
+            numOrder: 128
+        },
+        {
+            id: 2,
+            title: "Kho heo chay toi dac biet TOKYOLIFE TolyoSelect",
+            img: "https://cf.shopee.vn/file/ea9500849bf4d871dae72724fd29ca49_tn",
+            price: 24000,
+            discount: 50,
+            numOrder: 128
+        },
+        {
+            id: 3,
+            title: "Dam ngan tay phong kieu Retro Phap Thiet ke xinh xan kho cuong lai",
+            img: "https://cf.shopee.vn/file/6e9402796a259240eee3d318ddc5b879_tn",
+            price: 165000,
+            discount: 25,
+            numOrder: 5
+        },
+        {
+            id: 4,
+            title: "Vay 2 day babydoll dang suong Korean - V8",
+            img: "https://cf.shopee.vn/file/adfe6fdb185fa4a0e05d7899f18a417e_tn",
+            price: 69000,
+            discount: 34,
+            numOrder: 4300
+        },
+        {
+            id: 5,
+            title: "Dam nu dang om Phoi khoa Keo kieu Vintage Thoi Trang So 1",
+            img: "https://cf.shopee.vn/file/a5bcdad5e07cd5a7aa17897a07da19b2_tn",
+            price: 99000,
+            discount: 18,
+            numOrder: 15
+        },
+        {
+            id: 6,
+            title: "[Anh that/Tu chup] Vay hoa nhi - Vay hoa nhi Vintage Sieu to",
+            img: "https://cf.shopee.vn/file/1115de74f11030de5611528ddfc59a09_tn",
+            price: 159000,
+            discount: 36,
+            numOrder: 114
+        },
+        {
+            id: 7,
+            title: "Tui sach nu mini, deo cheo phoi quai ngoc nhan tao cu chuoi",
+            img: "https://cf.shopee.vn/file/8429cf96e9b200b58e74293f0e42263e_tn",
+            price: 55000,
+            discount: 56,
+            numOrder: 946
+        },
+        {
+            id: 8,
+            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
+            img: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
+            price: 82000,
+            discount: 13,
+            numOrder: 3
+        },
+        {
+            id: 9,
+            title: "Giay da bong",
+            img: "https://cf.shopee.vn/file/cfd352c72697bfa056fe09c1bc5df1af_tn",
+            price: 39000,
+            numOrder: 504
+        },
+        {
+            id: 10,
+            title: "Paper Pouch (The good approach)",
+            img: "https://res.cloudinary.com/doem0ysxl/image/upload/v1611851630/BaristaCoffee/shop/prod2_xocw36.jpg",
+            price: 24000,
+            discount: 50,
+            numOrder: 128
+        }
+    ]);
 
 
     // Hook
@@ -289,7 +413,7 @@ function ProductDetail(props) {
 
                 {/* Combo Promo */}
                 <div className="bg-white mb-3">
-                    <ComboPromo/>
+                    <ComboPromo listComboPromo = {listComboPromo}/>
                 </div>
                 
                 {/* Store */}
@@ -319,9 +443,12 @@ function ProductDetail(props) {
                                 }
                             />
                         </div>
+
+                        <WidgetListProduct listProduct={listProduct}/>
+                        
                     </div>
 
-                    <div style = {{width: '16.875em'}}>
+                    <div style = {{width: '230px'}}>
                         <div className="br-2 bg-white py-3 px-3 mb-3">
                             <WidgetListDiscount items = {listDiscount}/>
                         </div>

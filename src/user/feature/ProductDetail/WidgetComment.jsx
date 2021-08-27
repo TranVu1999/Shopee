@@ -31,11 +31,6 @@ function WidgetComment(props) {
             <hr />
             <WidgetCommentItems/>
             <hr />
-            <WidgetCommentItems/>
-            <hr />
-            <WidgetCommentItems/>
-            <hr />
-            <WidgetCommentItems/>
         </CommentBox>
     );
 }

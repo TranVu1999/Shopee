@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Modules
+import Number from '../../util/number';
+
 const WidgetContent = styled.div`
     padding: 1.125rem 1.5rem;
 `;
@@ -39,6 +42,7 @@ const ListProduct = styled.div`
 `;
 
 const Product = styled.div`
+    width: calc((100% - 5rem) / 6);
     font-size: .875rem;
 
     .thumbnail{
@@ -57,6 +61,8 @@ const Product = styled.div`
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+
+        height: 40px;
         margin-bottom: .5rem;
 
         font-weight: 400;
@@ -91,10 +97,43 @@ const Product = styled.div`
 `;
 
 ComboPromo.propTypes = {
-    
+    listComboPromo: PropTypes.array.isRequired,
 };
 
-function ComboPromo(props) {
+function ComboPromo({listComboPromo}) {
+    // render
+    const renderListComboPromo = () =>{        
+        return listComboPromo.map(item =>{
+
+            const remainPrice = item.price - (item.price * item.discount / 100);
+
+            return (
+                <Product key = {item.id}>
+                    <div 
+                        className="thumbnail"
+                        style = {{backgroundImage: `url(${item.image})`}}
+                    />
+
+                    <div className="text">
+                        <div className="name">
+                            <span>{item.title}</span>
+                        </div>
+                        <div className="d-flex price">
+                            <div className="old">
+                                <small>₫</small>
+                                {Number.convertToMoney(item.price)}
+                            </div>
+                            <div className="new">
+                                <small>₫</small>
+                                {Number.convertToMoney(remainPrice)}
+                            </div>
+                        </div>
+                    </div>
+                </Product>
+            );
+        })
+    }   
+
     return (
         <WidgetContent>
             <Title className="d-flex align-items-center justify-content-between">
@@ -113,133 +152,7 @@ function ComboPromo(props) {
             </Title>
 
             <ListProduct className="d-flex">
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
-                <Product>
-                    <div 
-                        className="thumbnail"
-                        style = {{backgroundImage: `url(https://cf.shopee.vn/file/633d4e82fb8d41fea9c3bf8fe56c4f05_tn)`}}
-                    />
-                    <div className="text">
-                        <div className="name">
-                            <span>Váy tay bồng buộc dây Tia19 . Đầm trễ vai cutout ulzzang ( Ảnh thật)</span>
-                        </div>
-                        <div className="d-flex price">
-                            <div className="old">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                            <div className="new">
-                                <small>₫</small>
-                                248.000
-                            </div>
-                        </div>
-                    </div>
-                </Product>
+                {renderListComboPromo()}
             </ListProduct>
         </WidgetContent>
     );

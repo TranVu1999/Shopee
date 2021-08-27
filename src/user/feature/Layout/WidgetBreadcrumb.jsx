@@ -47,7 +47,7 @@ function WidgetBreadcrumb(props) {
     const renderItems = () =>{
         return items.map(item =>{
             return (
-                <BreadcrumbBox>
+                <BreadcrumbBox key = {item.title}>
                     <Link to={item.url}>{item.title}</Link>
                     <span aria-hidden="true" className="arrow_carrot-right"></span>
                 </BreadcrumbBox>
