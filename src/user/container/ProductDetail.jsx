@@ -318,45 +318,6 @@ function ProductDetail(props) {
             price: 99000,
             discount: 18,
             numOrder: 15
-        },
-        {
-            id: 6,
-            title: "[Anh that/Tu chup] Vay hoa nhi - Vay hoa nhi Vintage Sieu to",
-            img: "https://cf.shopee.vn/file/1115de74f11030de5611528ddfc59a09_tn",
-            price: 159000,
-            discount: 36,
-            numOrder: 114
-        },
-        {
-            id: 7,
-            title: "Tui sach nu mini, deo cheo phoi quai ngoc nhan tao cu chuoi",
-            img: "https://cf.shopee.vn/file/8429cf96e9b200b58e74293f0e42263e_tn",
-            price: 55000,
-            discount: 56,
-            numOrder: 946
-        },
-        {
-            id: 8,
-            title: "Quan dui - Short nu kaki Cai Cuc dang A, Quan Coc nu sieu dep",
-            img: "https://cf.shopee.vn/file/5d8081f33d2d5994ec5cf145511bc17e_tn",
-            price: 82000,
-            discount: 13,
-            numOrder: 3
-        },
-        {
-            id: 9,
-            title: "Giay da bong",
-            img: "https://cf.shopee.vn/file/cfd352c72697bfa056fe09c1bc5df1af_tn",
-            price: 39000,
-            numOrder: 504
-        },
-        {
-            id: 10,
-            title: "Paper Pouch (The good approach)",
-            img: "https://res.cloudinary.com/doem0ysxl/image/upload/v1611851630/BaristaCoffee/shop/prod2_xocw36.jpg",
-            price: 24000,
-            discount: 50,
-            numOrder: 128
         }
     ]);
 
@@ -443,8 +404,28 @@ function ProductDetail(props) {
                                 }
                             />
                         </div>
+                        
+                        <div className="mb-3">
+                            <WidgetListProduct 
+                                title="Các sản phẩm khác của Shop"
+                                url = "/similar-products" 
+                                listProduct={listProduct}
+                            />
+                        </div>
 
-                        <WidgetListProduct listProduct={listProduct}/>
+                        <div className="mb-3">
+                            <WidgetListProduct 
+                                title="Sản phẩm tương tự" 
+                                listProduct={listProduct}
+                                url = "/similar-products" 
+                            />
+                        </div>
+
+                        <WidgetListProduct 
+                            title="Có thể bạn cũng thích" 
+                            listProduct={listProduct}
+                            url = "/similar-products" 
+                        />
                         
                     </div>
 

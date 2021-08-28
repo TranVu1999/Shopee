@@ -236,7 +236,7 @@ function TopSearchPage(props) {
     ]);
 
     return (
-        <div className = "mt-80 top-search-page-content">
+        <div className = "user-page-content top-search-page-content">
             <div className="container">
                 {/* Main Banner */}
                 <PageMainBanner image = {mainBanner.image}/>

@@ -24,11 +24,7 @@ function ListProductTopSearch(props) {
             return (
                 <div className="col-5" key = {item.id}>
                     <Thumbnail 
-                        title = {item.title} 
-                        img = {item.img} 
-                        price = {item.price}
-                        discount = {item.discount}
-                        numOrder = {item.numOrder}
+                        item = {item}
                     />
                 </div>
             );

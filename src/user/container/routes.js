@@ -14,6 +14,7 @@ const ListStorePage = lazy(() => import("./ListStore.jsx"));
 const ProductOfStorePage = lazy(() => import("./ProductOfStore"));
 const SalePage = lazy(() => import("./Sale.jsx"));
 const ProductDetailPage = lazy(() => import("./ProductDetail.jsx"));
+const ProductSimilarPage = lazy(() => import("./ProductSimilar.jsx"));
 
 const routes = [
     {
@@ -35,6 +36,10 @@ const routes = [
     {
         path: "/product-detail",
         component: ProductDetailPage
+    },
+    {
+        path: "/similar-products",
+        component: ProductSimilarPage
     },
     {
         path: "/store-detail",
@@ -66,7 +71,6 @@ const routes = [
         path: "*",
         component: NotFountPage
     }
-
 
 ]
 
