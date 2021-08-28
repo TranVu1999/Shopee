@@ -1,7 +1,6 @@
 import {lazy} from 'react';
 
 import NotFountPage from './404';
-import TopSearchPage from './TopSearch';
 
 import UserPage from './User';
 import ArticlePage from './Article';
@@ -15,6 +14,9 @@ const ProductOfStorePage = lazy(() => import("./ProductOfStore"));
 const SalePage = lazy(() => import("./Sale.jsx"));
 const ProductDetailPage = lazy(() => import("./ProductDetail.jsx"));
 const ProductSimilarPage = lazy(() => import("./ProductSimilar.jsx"));
+const ProductSameShopPage = lazy(() => import("./ProductSameShop"));
+const ProductMayLikePage = lazy(() => import("./ProductMayLike"));
+const TopSearchPage = lazy(() => import("./TopSearch.jsx"));
 
 const routes = [
     {
@@ -40,6 +42,14 @@ const routes = [
     {
         path: "/similar-products",
         component: ProductSimilarPage
+    },
+    {
+        path: "/from-same-shop",
+        component: ProductSameShopPage
+    },
+    {
+        path: "/you-may-also-like",
+        component: ProductMayLikePage
     },
     {
         path: "/store-detail",

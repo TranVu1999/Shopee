@@ -408,7 +408,7 @@ function ProductDetail(props) {
                         <div className="mb-3">
                             <WidgetListProduct 
                                 title="Các sản phẩm khác của Shop"
-                                url = "/similar-products" 
+                                url = "/from-same-shop" 
                                 listProduct={listProduct}
                             />
                         </div>
@@ -424,7 +424,7 @@ function ProductDetail(props) {
                         <WidgetListProduct 
                             title="Có thể bạn cũng thích" 
                             listProduct={listProduct}
-                            url = "/similar-products" 
+                            url = "/you-may-also-like" 
                         />
                         
                     </div>

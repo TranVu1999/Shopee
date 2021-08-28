@@ -144,7 +144,7 @@ function TabFull({
         for(let tab of listTab){
             listTabElm.push(
                 <Item>
-                    <Link to="/products-of-store">
+                    <Link to={tab.url}>
                         {tab.title}
                     </Link>
                 </Item>

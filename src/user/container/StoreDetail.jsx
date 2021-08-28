@@ -50,29 +50,37 @@ function StoreDetailPage(props) {
         listTab: [
             {
                 title: "Dạo Chơi",
+                url: "/products-of-store"
             },
             {
                 title: "TẤT CẢ SẢN PHẨM",
+                url: "/products-of-store"
             },
             {
                 title: "Quần Lót Nam Tam Giác",
+                url: "/products-of-store"
             },
             {
                 title: "Áo Ba Lỗ",
+                url: "/products-of-store"
             },
             {
                 title: "Quần Lót Nam Boxer",
+                url: "/products-of-store"
             },
             {
                 title: "Áo Thun Nam",
+                url: "/products-of-store"
             }
         ], 
         moreTab: [
             {
                 title: "Quần Lót Nam Boxer",
+                url: "/products-of-store"
             },
             {
                 title: "Áo Thun Nam",
+                url: "/products-of-store"
             }
         ]
         
