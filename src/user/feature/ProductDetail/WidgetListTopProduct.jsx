@@ -44,6 +44,7 @@ const Title = styled.h5`
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 
+    font-size: .875rem;
     font-weight: 400;
     text-transform: capitalize;
 

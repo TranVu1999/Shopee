@@ -1,55 +1,69 @@
+import {lazy} from 'react';
 
-import WidgetUserPortfolio from "../../feature/User/WidgetUserProfile";
-import WidgetListAddress from "../../feature/User/WidgetListAddress";
-import WidgetUpdatePassword from "../../feature/User/WidgetUpdatePassword";
-import WidgetPurchase from "../../feature/User/WidgetPurchase";
-import WidgetShopeeCoin from "../../feature/User/WidgetShopeeCoin";
-import WidgetVoucher from "../../feature/User/WidgetVoucher";
-import WidgetExpireVoucher from "../../feature/User/WidgetExpireVoucher";
-import WidgetListNotification from "../../feature/User/WidgetListNotification";
-import WidgetVoucherDetail from "../../feature/User/WidgetVoucherDetail";
-import WidgetPurchaseDetail from "../../feature/User/WidgetPurchaseDetail";
+const WidgetPurchaseDetail = lazy(() => import("../../feature/User/WidgetPurchaseDetail"));
+const WidgetVoucherDetail = lazy(() => import("../../feature/User/WidgetVoucherDetail"));
+const WidgetListNotification = lazy(() => import("../../feature/User/WidgetListNotification"));
+const WidgetExpireVoucher = lazy(() => import("../../feature/User/WidgetExpireVoucher"));
+const WidgetVoucher = lazy(() => import("../../feature/User/WidgetVoucher"));
+const WidgetShopeeCoin = lazy(() => import("../../feature/User/WidgetShopeeCoin"));
+const WidgetPurchase = lazy(() => import("../../feature/User/WidgetPurchase"));
+const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));
+const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
+const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
+
 
 const routes = [
     {
-        path: "/user/information",
-        component: WidgetUserPortfolio
+        path: "",
+        component: WidgetUserPortfolio,
+        exact: true
     },
     {
-        path: "/user/address",
+        path: "information",
+        component: WidgetUserPortfolio,
+        exact: true
+    },
+    {
+        path: "address",
         component: WidgetListAddress
     },
     {
-        path: "/user/update-password",
+        path: "update-password",
         component: WidgetUpdatePassword
     },
     {
-        path: "/user/purchase",
-        component: WidgetPurchase
+        path: "purchase",
+        component: WidgetPurchase,
+        exact: true
     },
     {
-        path: "/user/coin",
-        component: WidgetShopeeCoin
+        path: "coin",
+        component: WidgetShopeeCoin,
+        exact: true
     },
     {
-        path: "/user/voucher",
-        component: WidgetVoucher
+        path: "voucher",
+        component: WidgetVoucher,
+        exact: true
     },
     {
-        path: "/user/notification",
-        component: WidgetListNotification
+        path: "notification",
+        component: WidgetListNotification,
+        exact: true
     },
     {
-        path: "/user/voucher-history",
+        path: "voucher-history",
         component: WidgetExpireVoucher
     },
     {
-        path: "/user/voucher-detail",
-        component: WidgetVoucherDetail
+        path: "voucher-detail",
+        component: WidgetVoucherDetail,
+        exact: true
     },
     {
-        path: "/user/purchase-detail",
-        component: WidgetPurchaseDetail
+        path: "purchase-detail",
+        component: WidgetPurchaseDetail,
+        exact: true
     }
 ]
 

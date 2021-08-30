@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, useRouteMatch} from 'react-router-dom';
+import {
+    Switch, 
+    Route, 
+    useRouteMatch
+} from 'react-router-dom';
 
 // Components
 import WidgetSidebar from "../../feature/User/WidgetSidebar";
@@ -23,9 +27,10 @@ function UserPage(props) {
                     <div className="pl-5 col-lg-10">
                         <Switch>
                         {routes.map((item, index) =>{
+                            console.log(`${path}/${item.path}`)
                             return <Route 
                                 key = {index} 
-                                path = {item.path} 
+                                path = {`${path}/${item.path}`} 
                                 component = {item.component}
                                 exact = {item.exact || false}
                             />

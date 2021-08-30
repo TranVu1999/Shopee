@@ -347,7 +347,7 @@ function ProductDetail(props) {
             <div className="container">
                 <WidgetBreadcrumb items = {breadcrumb}/>
 
-                <div className="d-flex bg-white br-4 mb-3">
+                <div className="d-flex bg-white br-4 my-3">
                     <WidgetImage 
                         items = {images}
                         onHandleOpenModalImage = {onHandleOpenModalImage}

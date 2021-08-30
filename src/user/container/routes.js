@@ -1,6 +1,6 @@
 import {lazy} from 'react';
 
-import NotFountPage from './404';
+import NotFountPage from './NotFound';
 
 import UserPage from './User';
 import ArticlePage from './Article';
@@ -21,7 +21,7 @@ const TopSearchPage = lazy(() => import("./TopSearch.jsx"));
 const routes = [
     {
         path: "/user",
-        component: UserPage
+        component: UserPage,
     },
     {
         path: "/cart",
