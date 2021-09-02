@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+// API
+import accountApi from '../../../api/accountAPI';
 
 
 // Icons
@@ -81,11 +84,19 @@ const TopRight = styled.div`
         }
     }
 
-    img{
+    img, div.avatar-thumbnail{
         height: 1.375rem;
         width: 1.375rem;
         margin-right: .5rem;
         border-radius: 50%;
+    }
+
+    div.avatar-thumbnail{
+        background-color: #EC407A;
+        color: #fff;
+        font-size: 1.125rem;
+        text-align: center;
+        line-height: 1.375rem;
     }
 `;
 
@@ -167,11 +178,45 @@ const SearchBox = styled.div`
 
 `;
 
+
 Header.propTypes = {
     
 };
 
-function Header(props) {
+function Header(props) {  
+    // Data
+    const [accountInfo, setAccountInfo] = useState({
+        avatar: "",
+        username: ""
+    });
+
+    // Effect
+    // Get infomation of account
+    useEffect(() =>{
+        if(localStorage.getItem("accessToken")){
+            const fetchAccountInfo = async () =>{    
+                try{
+                    const res = await accountApi.getShortInfo();
+                    console.log({res})
+
+                    if(res.success){
+                        setAccountInfo({
+                            avatar: res.user.avatar,
+                            username: res.user.username
+                        })
+                    }
+                    
+                }catch(err){
+                    console.log("header err", err)
+                }
+                
+            }
+            fetchAccountInfo();
+        }
+        
+
+    }, []);
+
     return (
         <WidgetContent>
             <HeaderTop className="container">
@@ -210,12 +255,19 @@ function Header(props) {
                                     Hỗ Trợ
                                 </a>
                             </li>
-                            <li>
+
+                            {
+                                accountInfo.username && <li>
                                 <a href="#/" className="account">
-                                    <img src="https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn" alt="avatar" />
-                                    <span>tranvudpqn456</span>
+                                    {accountInfo.avatar ? <img src="https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn" alt="avatar" /> : <div className="d-inline-block avatar-thumbnail">
+                                        {accountInfo.username.slice(0, 1)}
+                                    </div>}
+                                    
+                                    <span>{accountInfo.username}</span>
                                 </a>
                             </li>
+                            }
+                            
                         </ul>
                     </TopRight>
                 </div>

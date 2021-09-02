@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -9,11 +9,8 @@ import InputBox from '../../common/component/InputBox';
 // Theme
 import {BorderColor} from './../../theme';
 
-// Others
-import {googleProvider} from './../../../config/authMethods';
-import socialMediaAuth from './../../../service/auth';
-import { Redirect } from 'react-router-dom';
 
+// Others
 
 const Form = styled.div`
     padding: 1.375rem 1.875rem 1rem;
@@ -157,27 +154,27 @@ const WidgetNotify = styled.div`
 
 FormLogin.propTypes = {
     error: PropTypes.string,
+    handleSubmit: PropTypes.func.isRequired,
 };
 
 FormLogin.defaultProps = {
     error: ""
 }
 
-function FormLogin({error}) {
+function FormLogin({error, handleSubmit}) {
 
     // Data
     const [loginData, setLoginData] = React.useState({
-        username: "",
+        email: "",
         password: ""
     });
 
-    const usernameVerify = {
-        name: "username",
+    const emailVerify = {
+        name: "email",
     }
     const passwordVerify = {
         name: "password",
     }
-
 
     // handle event
     const onHandleGetValue = event =>{
@@ -191,10 +188,14 @@ function FormLogin({error}) {
         });
     }
 
-    const handleSocialLogin = async provider =>{
-        const res = await socialMediaAuth(provider);
-        console.log({res})
-        window.location.replace("http://localhost:3000/");
+    const onHandleLogin = () =>{
+        if(!handleSubmit) return;
+
+        const data = {
+            email: loginData.email,
+            password: loginData.password 
+        }
+        handleSubmit(data);
     }
 
     return (
@@ -210,10 +211,10 @@ function FormLogin({error}) {
 
             <FormRow>
                 <InputBox 
-                    verify = {usernameVerify}
+                    verify = {emailVerify}
                     placeholder="Email/Số điện thoại/Tên đăng nhập"
                     onHandleChange = {onHandleGetValue}
-                    value = {loginData.username}
+                    value = {loginData.email}
                 />
             </FormRow>
             <FormRow>
@@ -226,7 +227,8 @@ function FormLogin({error}) {
             </FormRow>
 
             <LoginButton 
-                className = {(loginData.username && loginData.password) ? "" : "disabled"}
+                className = {(loginData.email && loginData.password) ? "" : "disabled"}
+                onClick = {onHandleLogin}
             >Đăng nhập</LoginButton>
 
             <div className="mt-1 d-flex justify-content-between">
@@ -246,9 +248,7 @@ function FormLogin({error}) {
                     Facebook
                 </SocialLogin>
 
-                <SocialLogin
-                    onClick = {() => handleSocialLogin(googleProvider)}
-                >
+                <SocialLogin>
                     <div 
                         className="thumb-icon" 
                         style = {{backgroundColor: "#fff", marginRight: ".5rem"}}>

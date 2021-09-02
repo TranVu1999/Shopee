@@ -14,13 +14,9 @@ import ProductHint from '../feature/Home/ProductHint.jsx';
 import Mall from '../feature/Home/Mall';
 import ListServices from '../feature/Home/ListServices';
 import BestSeller from '../feature/Home/BestSeller';
-import productApi from '../../api/productAPI';
 
-Home.propTypes = {
-    
-};
-
-function Home(props) {
+function Home() {
+    // data
 
     const [listSlideMainBanner] = useState([
 
@@ -707,21 +703,7 @@ function Home(props) {
 
     const [productList, setProductList] = useState([]);
 
-    // Effect
-    useEffect(() =>{
-        const fetchProductList = async () =>{
-            try{
-                const res = await productApi.getAll();
-                console.log(res)
-                setProductList(res.data);
-            }catch(err){
-                console.log("Failed to fetch product list: ", err);
-            }
-        }
-
-        fetchProductList();
-
-    }, []);
+    
     
 
     return (

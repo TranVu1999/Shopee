@@ -7,7 +7,7 @@ import queryString from 'query-string';
 
 
 const axiosClient = axios.create({
-    baseURL: "https://js-post-api.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api/",
     headers: {
         'content-type': 'application/json',
     },
@@ -15,7 +15,11 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-    // Handle token here ...
+    const accessToken = localStorage.getItem("accessToken");
+    if(accessToken){
+        config.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+
     return config;
 });
 

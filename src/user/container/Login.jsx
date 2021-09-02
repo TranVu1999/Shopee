@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 
 // components
 import Header from './../feature/Login/Header';
@@ -6,8 +7,14 @@ import Footer from './../feature/Layout/Footer';
 import WrapContent from './../feature/Login/WrapContent';
 import FormLogin from './../feature/Login/FormLogin';
 
+// Modules
+import Validate from './../util/validate';
 
-function Login(props) {
+// API
+import authAPI from './../../api/authAPI';
+
+
+function Login() {
     // Data
     const [loginNotify, setLoginNotify] = useState({
         indexActive: 0,
@@ -18,14 +25,48 @@ function Login(props) {
         ]
     });
 
+    // hooks
+    const history = useHistory();
+
     // handle event
+    // validate email at client
+    const handleLogin = async data =>{
+        
+        if(!Validate.email(data.email)){
+            setLoginNotify({
+                ...loginNotify,
+                indexActive: 1
+            })
+        }else{
+            try{
+                const res = await authAPI.login(data);
+    
+                if(res.success){
+                    localStorage.setItem("accessToken", res.accessToken);
+                    history.push("/");
+                }else{
+                    setLoginNotify({
+                        ...loginNotify,
+                        indexActive: 2
+                    })
+                }
+                
+            }catch(err){
+                console.log("login err", err)
+            }
+        }
+        
+    }
 
     return (
         <section>
             <Header/>
             <WrapContent
                 FormLogin = {
-                    <FormLogin error = {loginNotify.listNotify[loginNotify.indexActive]}/>
+                    <FormLogin 
+                        error = {loginNotify.listNotify[loginNotify.indexActive]}
+                        handleSubmit = {handleLogin}
+                    />
                 }
             />
             <Footer/>

@@ -32,7 +32,37 @@ export default product = {
     like_number: 0,
 
     classify: {
+        classify_group: [
+            {
+                label: "classify-label1",
+                classify: ["11", "12"]
+            },
+            {
+                label: "classify-label2",
+                classify: ["21", "22"]
+            }
+        ],
 
+        table_price: [
+            {
+                first_classify: "classify-label1",
+                second_classify: "classify-label2",
+                price: 0,
+                inventory: 0,
+                sku: 0
+            }
+        ],
+
+        list_image: [""]
+
+    },
+
+    state: "new/old",
+    weight: 0,
+    size: {
+        height: 0,
+        width: 0,
+        length: 0
     }
-
+    
 }
