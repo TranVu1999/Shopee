@@ -1,5 +1,9 @@
 import React from 'react';
-import {Switch, Route, useRouteMatch} from 'react-router-dom';
+import {
+    Switch, 
+    Route, 
+    useRouteMatch
+} from 'react-router-dom';
 
 // Css
 import './assets/sass/index.scss';

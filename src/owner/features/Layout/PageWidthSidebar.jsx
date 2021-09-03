@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Switch, Route} from 'react-router-dom';
+import {
+    Switch, 
+    Route, 
+    useHistory
+} from 'react-router-dom';
 
 // Components
 import Sidebar from './Sidebar';
@@ -29,6 +33,13 @@ PageWidthSidebar.propTypes = {
 };
 
 function PageWidthSidebar(props) {
+    const history = useHistory();
+    const accessToken = localStorage.getItem("accessToken");
+
+    if(!accessToken){
+        history.push(`/ban-hang/login`);
+    }
+
     return (
         <>
             <Header/>

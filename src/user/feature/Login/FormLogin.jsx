@@ -9,8 +9,8 @@ import InputBox from '../../common/component/InputBox';
 // Theme
 import {BorderColor} from './../../theme';
 
-
 // Others
+import {auth, googleProvider} from './../../../service/firebase'
 
 const Form = styled.div`
     padding: 1.375rem 1.875rem 1rem;
@@ -198,6 +198,18 @@ function FormLogin({error, handleSubmit}) {
         handleSubmit(data);
     }
 
+    const handleSocialLogin = (socialProvider) =>{
+        auth.signInWithPopup(socialProvider)
+        .then((res) => {
+            const {user} = res;
+
+            console.log("data", user);
+            console.log("social token", user._delegate.accessToken)
+        }).catch((error) => {
+            console.log(error.message)
+        })
+    }
+
     return (
         
         <Form>
@@ -248,7 +260,9 @@ function FormLogin({error, handleSubmit}) {
                     Facebook
                 </SocialLogin>
 
-                <SocialLogin>
+                <SocialLogin
+                    onClick = {() => handleSocialLogin(googleProvider)}
+                >
                     <div 
                         className="thumb-icon" 
                         style = {{backgroundColor: "#fff", marginRight: ".5rem"}}>
