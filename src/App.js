@@ -14,7 +14,6 @@ function App() {
     <div className="App">
         <Suspense fallback={<Loading/>}>
             <Route 
-                exact = {true}
                 path = "/ban-hang"
                 component = {OwnerRoll}
             />

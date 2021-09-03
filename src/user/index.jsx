@@ -10,7 +10,7 @@ import './assets/sass/index.scss';
 import './style.scss';
 
 
-function UserRoll(props) {
+function UserRoll() {
 
     return (
         <div className = "main-wrapper">
@@ -24,7 +24,10 @@ function UserRoll(props) {
                 <Route 
                     path = "/" 
                     component = {Layout}
+                    exact = {true}
                 />
+
+                
             </Switch>
         </div>
     );

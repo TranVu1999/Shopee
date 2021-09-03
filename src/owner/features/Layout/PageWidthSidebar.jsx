@@ -5,6 +5,7 @@ import {Switch, Route} from 'react-router-dom';
 
 // Components
 import Sidebar from './Sidebar';
+import Header from './Header';
 import ShopReport from '../../containers/ShopReport';
 
 // Others
@@ -30,6 +31,7 @@ PageWidthSidebar.propTypes = {
 function PageWidthSidebar(props) {
     return (
         <>
+            <Header/>
             <Sidebar/>
             <WidgetBodyManagement>
                 <Content>

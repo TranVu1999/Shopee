@@ -14,7 +14,7 @@ import Validate from './../util/validate';
 import authAPI from './../../api/authAPI';
 
 
-function Login() {
+function Login(props) {
     // Data
     const [loginNotify, setLoginNotify] = useState({
         indexActive: 0,

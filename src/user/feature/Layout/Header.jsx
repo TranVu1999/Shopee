@@ -70,6 +70,19 @@ const TopRight = styled.div`
 
     li{
         margin-right: 1rem;
+
+        &:last-child{
+            margin: 0;
+        }
+
+        &.sign-up {
+            margin-right: .5rem;
+
+            a{
+                padding-right: .5rem;
+                border-right: 1px solid rgba(255, 255, 255, .5);
+            }
+        }
     }
 
     svg{
@@ -258,15 +271,27 @@ function Header(props) {
 
                             {
                                 accountInfo.username && <li>
-                                <a href="#/" className="account">
-                                    {accountInfo.avatar ? <img src="https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn" alt="avatar" /> : <div className="d-inline-block avatar-thumbnail">
-                                        {accountInfo.username.slice(0, 1)}
-                                    </div>}
-                                    
-                                    <span>{accountInfo.username}</span>
-                                </a>
-                            </li>
+                                    <a href="#/" className="account">
+                                        {accountInfo.avatar ? <img src="https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn" alt="avatar" /> : <div className="d-inline-block avatar-thumbnail">
+                                            {accountInfo.username.slice(0, 1)}
+                                        </div>}
+                                        
+                                        <span>{accountInfo.username}</span>
+                                    </a>
+                                </li>
                             }
+
+                            {
+                                !accountInfo.username && (<>
+                                    <li className="sign-up">
+                                        <a href="#/">Đăng ký</a>
+                                    </li>
+                                    <li>
+                                        <Link to="/login">Đăng nhập</Link>
+                                    </li>
+                                </>)
+                            }
+                            
                             
                         </ul>
                     </TopRight>

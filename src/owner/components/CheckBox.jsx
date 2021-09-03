@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const WidgetCheckBox = styled.div`
+    font-size: .875rem;
+    line-height: 1rem;
+`;
+
+const Box = styled.div`
     margin-right: 8px;
     height: 1.125rem;
     width: 1.125rem;
@@ -29,19 +34,25 @@ const WidgetCheckBox = styled.div`
 
 CheckBox.propTypes = {
     checked: PropTypes.bool,
+    label: PropTypes.string,
 }
 
 CheckBox.defaultProps = {
-    checked: false
+    checked: false,
+    label: ""
 }
 
-function CheckBox({checked}) {
+function CheckBox({checked, label}) {
     return (
-        <WidgetCheckBox 
-            className={checked ? "d-inline-block checked" : "d-inline-block"}
-        >
-            <span aria-hidden="true" className="icon_check"></span>
+        <WidgetCheckBox className="d-flex align-items-center">
+            <Box 
+                className={checked ? "d-inline-block checked" : "d-inline-block"}
+            >
+                <span aria-hidden="true" className="icon_check"></span>
+            </Box>
+            <span>{label}</span>
         </WidgetCheckBox>
+        
     );
 }
 

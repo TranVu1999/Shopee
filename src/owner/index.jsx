@@ -1,37 +1,32 @@
 import React from 'react';
-import styled from 'styled-components';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, useRouteMatch} from 'react-router-dom';
 
 // Css
 import './assets/sass/index.scss';
 import './style.scss';
 
 // Components
-import Header from './features/Layout/Header';
 import PageWidthSidebar from './features/Layout/PageWidthSidebar';
-
-// Others
-import routes from './containers/routes';
+import Login from './containers/Login';
 
 
-function OwnerRoll(props) {
+function OwnerRoll() {
+    // data
+    const {path} = useRouteMatch();
 
     return (
         <div className = "main-wrapper">
-            <Header/>
-
             <Switch>
                 <Route
-                    path = "/portal" 
+                    path = {`${path}/login`} 
+                    component = {Login}
+                    exact = {true}
+                />
+                <Route
+                    path = "/"
                     component = {PageWidthSidebar}
-                    exact = {false}
                 />
             </Switch>
-            
-
-            {/* <DataCenterTraffic/> */}
-            {/* <DataCenterDashboard/> */}
-            {/* <DataCenterLearn/> */}
         </div>
     );
 }
