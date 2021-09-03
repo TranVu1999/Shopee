@@ -5,6 +5,9 @@ import styled from 'styled-components';
 // Components
 import CheckBox from './../../components/CheckBox';
 
+// Modules
+import Validate from './../../../utils/validate';
+
 const WidgetContent = styled.div`
     font-size: .875rem;
 `;
@@ -27,12 +30,10 @@ const WidgetInput = styled.div`
         }
     }
 
-    input[type="password"]{
-        background-color: #FFFCC8;
-    }
-
     p{
         margin: 0;
+        font-size: .75rem;
+        color: #ee4d2d;
     }
 
     button{
@@ -63,10 +64,10 @@ const AnotherLogin = styled.div`
 `;
 
 FromLogin.propTypes = {
-    
+   onHandleSubmit: PropTypes.func.isRequired,
 };
 
-function FromLogin(props) {
+function FromLogin({onHandleSubmit}) {
     // data
     const [loginData, setLoginData] = React.useState({
         username: {
@@ -97,10 +98,67 @@ function FromLogin(props) {
         setLoginData(newData);
     }
 
+    const handleSubmit = event => {
+        event.preventDefault();
+
+        let flag = false;
+        let newData = {
+            ...loginData
+        }
+
+        if(!username.value){
+            flag = true;
+            newData = {
+                ...newData,
+                username: {
+                    value: newData.username.value,
+                    error: "Không được để trống ô này!"
+                }
+            }
+        }else if(!Validate.email(username.value)){
+            
+            flag = true;
+            newData = {
+                ...newData,
+                username: {
+                    value: username.value,
+                    error: "Dữ liệu bạn nhập vào không đúng!"
+                }
+            }
+        }
+
+        if(!password.value){
+            flag = true;
+            newData = {
+                ...newData,
+                password: {
+                    value: newData.password.value,
+                    error: "Không được để trống ô này!"
+                }
+            }
+        }
+
+
+        if(flag){
+            console.log({newData})
+            setLoginData({...newData});
+        }else{
+            if(!onHandleSubmit) return;
+
+            const data = {
+                email: username.value,
+                password: password.value
+            }
+            onHandleSubmit(data);
+        }
+        
+    }
+    
+
     return (
         <WidgetContent>
             <form
-                
+               onSubmit = {handleSubmit} 
             >
                 <WidgetInput 
                     className= {username.error && "ping-pong"}
@@ -113,20 +171,20 @@ function FromLogin(props) {
                         onChange = {handleChange}
                     />
 
-                    {username.error && <p>Không được để trống ô</p>}
+                    {username.error && <p>{username.error}</p>}
                     
                 </WidgetInput>
                 <WidgetInput
                     className= {password.error && "ping-pong"}
                 >
                     <input 
-                        type="password" 
+                        type="text" 
                         placeholder="Password"
                         name = "password"
                         value = {password.value}
                         onChange = {handleChange}
                     />
-                    {password.error && <p>Không được để trống ô</p>}
+                    {password.error && <p>{password.error}</p>}
                 </WidgetInput>
 
                 <WidgetInput>
@@ -137,8 +195,7 @@ function FromLogin(props) {
                 </WidgetInput>
 
                 <WidgetInput>
-                    <button 
-                        className = {username.value && password.value ? "d-block w-100" : "d-block w-100 disable"}
+                    <button className = "d-block w-100"
                     >Đăng nhập</button>
                 </WidgetInput>
             </form>

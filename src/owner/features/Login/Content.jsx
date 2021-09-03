@@ -54,11 +54,28 @@ const WidgetForm = styled.div`
     }
 `;
 
+const WidgetNotify = styled.div`
+    padding: 11px 16px;
+    margin-bottom: 16px;
+    font-size: .875rem;
+
+    color: rgb(255, 66, 79);
+    background-color: #ffe9e8;
+    border: 1px solid #ff736f;
+    border-radius: 4px;
+    line-height: 1.125rem;
+`;
+
 Content.propTypes = {
     Form: PropTypes.element.isRequired,  
+    serverNotify: PropTypes.string,
 };
 
-function Content({Form}) {
+Content.defaultProps = {
+    serverNotify: ""
+}
+
+function Content({Form, serverNotify}) {
 
     return (
         <WidgetContent className="d-flex container">
@@ -74,6 +91,11 @@ function Content({Form}) {
             <div className="right">
                 <WidgetForm>
                     <div className="title">Đăng nhập vào Kênh Người Bán </div>
+                    
+                    {serverNotify && <WidgetNotify>
+                        {serverNotify}
+                    </WidgetNotify>}
+                    
                     {Form}
 
                 </WidgetForm>
