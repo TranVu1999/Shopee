@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SidebarItem from './SidebarItem';
 
@@ -20,14 +19,10 @@ const WidgetContent = styled.div`
     z-index: 100;
 `;
 
-Sidebar.propTypes = {
-    
-};
-
-function Sidebar(props) {
+function Sidebar() {
     // Data
-    const portalSetting = "/portal/settings/";
-    const portal = "/portal/";
+    const portalSetting = "/ban-hang/portal/settings/";
+    const portal = "/ban-hang/portal/";
 
     const SubMenuTransport = [
         {

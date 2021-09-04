@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import {
     Switch, 
     Route, 
-    useHistory
+    useHistory,
+    useRouteMatch
 } from 'react-router-dom';
 
 // Components
@@ -34,6 +35,7 @@ PageWidthSidebar.propTypes = {
 
 function PageWidthSidebar(props) {
     const history = useHistory();
+    const {path} = useRouteMatch();
     const accessToken = localStorage.getItem("accessToken");
 
     if(!accessToken){
@@ -51,7 +53,7 @@ function PageWidthSidebar(props) {
                         {routes.map((item, index) =>{
                             return <Route 
                                 key = {index} 
-                                path = {item.path} 
+                                path = {`${path}${item.path}`} 
                                 component = {item.component}
                                 exact = {item.exact || false}
                             />

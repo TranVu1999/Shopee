@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import {
     Switch, 
     Route, 
@@ -10,8 +10,8 @@ import './assets/sass/index.scss';
 import './style.scss';
 
 // Components
-import PageWidthSidebar from './features/Layout/PageWidthSidebar';
-import Login from './containers/Login';
+const Login = lazy(() => import("./containers/Login"));
+const PageWidthSidebar = lazy(() => import("./features/Layout/PageWidthSidebar"));
 
 
 function OwnerRoll() {
@@ -27,7 +27,7 @@ function OwnerRoll() {
                     exact = {true}
                 />
                 <Route
-                    path = "/"
+                    path = "/ban-hang"
                     component = {PageWidthSidebar}
                 />
             </Switch>

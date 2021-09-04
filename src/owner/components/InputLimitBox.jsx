@@ -6,24 +6,27 @@ import styled from 'styled-components';
 import {BorderColor} from './../theme';
 
 const WidgetContent = styled.div`
-    width: 100%;
-    padding: ${props=>props.large ? ".5rem .875rem" : ".25rem .875rem"};
-
-    font-size: .875rem;
-
-    background-color: #fff;
-    border: 1px solid ${BorderColor.mainColor};
-    border-radius: 4px;
-
-    input{
-        margin-right: .5rem;
+    &>div{
         width: 100%;
+        padding: ${props=>props.large ? ".5rem .875rem" : ".25rem .875rem"};
+    
+        font-size: .875rem;
+    
+        background-color: #fff;
+        border: 1px solid ${BorderColor.mainColor};
+        border-radius: 4px;
+    
+        input{
+            margin-right: .5rem;
+            width: 100%;
+        }
+    
+        span{
+            padding-left: .75rem;
+            border-left: 1px solid ${BorderColor.mainColor};
+        }
     }
-
-    span{
-        padding-left: .75rem;
-        border-left: 1px solid ${BorderColor.mainColor};
-    }
+    
 `;
 InputLimitBox.propTypes = {
     verify: PropTypes.object.isRequired,
@@ -31,13 +34,16 @@ InputLimitBox.propTypes = {
     limit: PropTypes.number.isRequired,
     placeholder: PropTypes.string,
     large: PropTypes.bool,
+    error: PropTypes.string.isRequired,
 
     handleChange: PropTypes.func.isRequired,
+    handleBlur: PropTypes.func,
 };
 
 InputLimitBox.defaultProps = {
     placeholder: "Nhập vào",
     large: false,
+    handleBlur: null
 };
 
 function InputLimitBox({
@@ -46,29 +52,41 @@ function InputLimitBox({
     value, 
     large,
     verify,
-    handleChange
+    handleChange,
+    handleBlur,
+    error
 }) {
 
+    // handle event
     const onHandleChange = event =>{
         if(!handleChange) return;
 
         handleChange({
             ...verify,
             value: event.target.value
-        })
+        });
+    } 
+    
+    const onHandleBlur = () =>{
+        if(!handleBlur) return;
+        handleBlur({...verify})
     }
 
-   
-
     return (
-        <WidgetContent className="d-flex" large>
-            <input 
-                type = "text" 
-                placeholder = {placeholder}
-                value = {value}
-                onChange = {onHandleChange}
-            />
-            <span>{value.length}/{limit}</span>
+        <WidgetContent 
+            className = {error ? "input-box ping-pong" : "input-box"} 
+        >
+            <div className="d-flex">
+                <input 
+                    type = "text" 
+                    placeholder = {placeholder}
+                    value = {value}
+                    onChange = {onHandleChange}
+                    onBlur = {onHandleBlur}
+                />
+                <span>{value.length}/{limit}</span>
+            </div>
+            <p className="notify">{error}</p>
         </WidgetContent>
     );
 }

@@ -1,0 +1,18 @@
+.owner-page-content{
+    background-color: #fff;
+    box-shadow: 0 .2rem .4rem rgba(0,0,0,.09);
+}
+
+.input-box{
+    &.ping-pong{
+        &>div{
+            border-color: #ee4d2d;
+        }
+    }
+
+    p.notify{
+        margin: 0;
+        font-size: .75rem;
+        color: #ee4d2d;
+    }
+}

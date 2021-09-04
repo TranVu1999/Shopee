@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -36,11 +36,78 @@ Information.propTypes = {
 };
 
 function Information(props) {
+    // data
+    const [shopInfo, setShopInfo] = useState({
+        brand: {value: "", error: ""}
+    });
+
+    const {brand} = shopInfo;
+
+    // handle event
+    const handleChange = data =>{
+        const {name, value} = data;
+
+        let tempShopInfo = {
+            ...shopInfo,
+            [name]: {
+                value,
+                error: ""
+            }
+        }
+        setShopInfo(tempShopInfo);
+    }
+
+    const handleBlur = data =>{
+        const {name} = data;
+        console.log({name})
+        
+        let error = "";
+        let lengthString = 0;
+
+        switch(name){
+            case "brand":
+                lengthString = brand.value.length;
+                if(!lengthString){
+                    error = "Không được để trống ô này."
+                }else if(lengthString < 5 || lengthString > 30){
+                    error = "Tên Shop mới phải có từ 5-30 ký tự."
+                }
+                break;
+            default:
+                break;
+        }
+
+        if(error){
+            
+            let tempShopInfo = {
+                ...shopInfo,
+                [name]: {
+                    value: shopInfo[name].value,
+                    error
+                }
+            };
+
+            setShopInfo(tempShopInfo);
+        }
+
+        
+        
+    }
+
+
+
     return (
         <WidgetContent>
             <WidgetInputGroup>
                 <label>Tên Shop</label>
-                <InputLimitBox limit={30} value="tranvudpqn456"/>
+                <InputLimitBox 
+                    limit = {30} 
+                    value = {brand.value}
+                    error = {brand.error}
+                    handleChange = {handleChange}
+                    handleBlur = {handleBlur}
+                    verify = {{name: "brand"}}
+                />
             </WidgetInputGroup>
 
             <WidgetInputGroup>
