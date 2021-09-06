@@ -140,14 +140,14 @@ function FromLogin({onHandleSubmit}) {
 
 
         if(flag){
-            console.log({newData})
             setLoginData({...newData});
         }else{
             if(!onHandleSubmit) return;
 
             const data = {
                 email: username.value,
-                password: password.value
+                password: password.value,
+                role: "owner"
             }
             onHandleSubmit(data);
         }

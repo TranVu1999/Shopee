@@ -26,6 +26,9 @@ TextareaLimitBox.propTypes = {
     limit: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
     large: PropTypes.bool,
+    verify: PropTypes.object.isRequired,
+
+    handleChange: PropTypes.func.isRequired,
 };
 
 TextareaLimitBox.defaultProps = {
@@ -33,7 +36,25 @@ TextareaLimitBox.defaultProps = {
     large: false
 };
 
-function TextareaLimitBox({placeholder, limit, value, large}) {
+function TextareaLimitBox({
+    placeholder, 
+    limit, 
+    value, 
+    large,
+    verify,
+    handleChange
+}) {
+
+    // handle event
+    const onHandleChange = event =>{
+        if(!handleChange) return;
+
+        handleChange({
+            ...verify,
+            value: event.target.value
+        });
+    }
+
     return (
         <div>
             <WidgetContent>
@@ -41,6 +62,7 @@ function TextareaLimitBox({placeholder, limit, value, large}) {
                     placeholder={placeholder} 
                     value={value}
                     rows = {large ? "8" : "5"}
+                    onChange = {onHandleChange}
                 />
             </WidgetContent>
             <div className="text-right"><span>{value.length}/{limit}</span></div>

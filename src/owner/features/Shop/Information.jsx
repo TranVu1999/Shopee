@@ -8,24 +8,12 @@ import NotifyPopup from '../../components/NotifyPopup';
 import TextareaLimitBox from '../../components/TextareaLimitBox';
 import WidgetDescriptionImage from './WidgetDescriptionImage';
 
-// Modules
-import {storage} from './../../../config/firebase-config';
 
 const WidgetContent = styled.div`
     font-size: .875rem;
 
     label{
         font-size: 1rem;
-    }
-
-    &>button{
-        padding: .25rem 1.5rem;
-        line-height: 1.5rem;
-
-        color: #fff;
-        background-color: #ee4d2d;
-        border-color: #ee4d2d;
-        border-radius: 4px;
     }
 `;
 
@@ -35,117 +23,63 @@ const WidgetInputGroup = styled.div`
 
 
 Information.propTypes = {
-    
+    brand: PropTypes.object.isRequired,
+    description: PropTypes.object.isRequired,
+    images: PropTypes.array.isRequired,
+
+    handleChangeInput: PropTypes.func.isRequired,
+    handleChangeImage: PropTypes.func.isRequired,
+    handleBlurInput: PropTypes.func.isRequired,
 };
 
-function Information(props) {
+function Information({
+    brand,
+    description,
+    images,
+    handleChangeInput,
+    handleChangeImage,
+    handleBlurInput
+}) {
     // data
     const [shopInfo, setShopInfo] = useState({
-        brand: {value: "", error: ""},
+        
         images: [
             "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg",
-            "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg"
+            "https://firebasestorage.googleapis.com/v0/b/shopee-5da7d.appspot.com/o/images%2Fpic3.jpeg?alt=media&token=83517c22-14bc-487e-b83c-8021b5a63745"
         ]
     });
 
-    const {brand, images} = shopInfo;
-
     // handle event
-    const handleChange = data =>{
-        const {name, value} = data;
-
-        let tempShopInfo = {
-            ...shopInfo,
-            [name]: {
-                value,
-                error: ""
-            }
+    const onHandleChange = data =>{
+        if(handleChangeInput){
+            handleChangeInput({
+                name: data.name,
+                value: data.value
+            })
         }
-        setShopInfo(tempShopInfo);
     }
 
-    const handleBlur = data =>{
-        const {name} = data;
-        
-        let error = "";
-        let lengthString = 0;
-
-        switch(name){
-            case "brand":
-                lengthString = brand.value.length;
-                if(!lengthString){
-                    error = "Không được để trống ô này."
-                }else if(lengthString < 5 || lengthString > 30){
-                    error = "Tên Shop mới phải có từ 5-30 ký tự."
-                }
-                break;
-            default:
-                break;
-        }
-
-        if(error){
-            
-            let tempShopInfo = {
-                ...shopInfo,
-                [name]: {
-                    value: shopInfo[name].value,
-                    error
-                }
-            };
-
-            setShopInfo(tempShopInfo);
-        }
-
-        
-        
+    const onHandleBlur = data =>{
+        console.log({data})
+        if(handleBlurInput){
+            handleBlurInput({
+                name: data.name
+            })
+        }        
     }
 
-    const handleChangeImage = data =>{
-        const {name, urlIndex, value} = data;
-
-        let tempImages = [...images];
-
-        switch(name){
-            case "images":
-                const uploadTask = storage.ref(`images/${value.name}`).put(value);
-        
-                uploadTask.on(
-                    "state-changed",
-                    snapshot => {},
-                    error =>{
-                        console.log("upload image", error)
-                    },
-                    () =>{
-                        storage
-                        .ref("images")
-                        .child(value.name)
-                        .getDownloadURL()
-                        .then(url =>{
-                            tempImages.push(url);
-                            setShopInfo({
-                                ...shopInfo,
-                                images: tempImages
-                            })
-                        });
-                    }
-                )
-
-                break;
-            default:
-                break;
+    const onHandleChangeImage = data =>{
+        if(handleChangeImage){
+            handleChangeImage(data);
         }
-
-        setShopInfo({
-            ...shopInfo,
-            images: tempImages
-        })
+        
     }
 
     // render
     const renderListInputImage = () =>{
         return images.map((url, index) =>{
             const verify = {
-                urlIndex: index,
+                indexImage: index,
                 name: "images"
             }
 
@@ -154,13 +88,11 @@ function Information(props) {
                     key = {index}
                     image = {url}
                     verify = {verify}
-                    handleChangeImage = {handleChangeImage}
+                    handleChangeImage = {onHandleChangeImage}
                 />
             );
         })
     }
-
-
 
     return (
         <WidgetContent>
@@ -170,8 +102,8 @@ function Information(props) {
                     limit = {30} 
                     value = {brand.value}
                     error = {brand.error}
-                    handleChange = {handleChange}
-                    handleBlur = {handleBlur}
+                    handleChange = {onHandleChange}
+                    handleBlur = {onHandleBlur}
                     verify = {{name: "brand"}}
                 />
             </WidgetInputGroup>
@@ -186,12 +118,10 @@ function Information(props) {
                     {renderListInputImage()}
 
                     <WidgetDescriptionImage
-                        verify = {
-                            {
-                                urlIndex: -1,
-                                name: "images"  
-                            }
-                        }
+                        verify = {{
+                            indexImage: -1,
+                            name: "images"
+                        }}
                         handleChangeImage = {handleChangeImage}
                     />
                 </div>
@@ -200,13 +130,13 @@ function Information(props) {
             <WidgetInputGroup>
                 <label>Mô tả Shop </label>
                 <TextareaLimitBox 
-                    limit={500} 
-                    value="" 
+                    limit = {500} 
+                    value = {description.value} 
                     placeholder="Nhập mô tả hoặc thông tin về Shop của bạn tại đây"
+                    verify = {{name: "description"}}
+                    handleChange = {onHandleChange}
                 />
             </WidgetInputGroup>
-
-            <button>Lưu</button>
         </WidgetContent>
     );
 }

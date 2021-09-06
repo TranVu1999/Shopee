@@ -193,7 +193,8 @@ function FormLogin({error, handleSubmit}) {
 
         const data = {
             email: loginData.email,
-            password: loginData.password 
+            password: loginData.password ,
+            role: "user"
         }
         handleSubmit(data);
     }
