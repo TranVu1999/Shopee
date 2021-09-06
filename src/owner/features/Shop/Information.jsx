@@ -8,6 +8,9 @@ import NotifyPopup from '../../components/NotifyPopup';
 import TextareaLimitBox from '../../components/TextareaLimitBox';
 import WidgetDescriptionImage from './WidgetDescriptionImage';
 
+// Modules
+import {storage} from './../../../config/firebase-config';
+
 const WidgetContent = styled.div`
     font-size: .875rem;
 
@@ -38,10 +41,14 @@ Information.propTypes = {
 function Information(props) {
     // data
     const [shopInfo, setShopInfo] = useState({
-        brand: {value: "", error: ""}
+        brand: {value: "", error: ""},
+        images: [
+            "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg",
+            "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg"
+        ]
     });
 
-    const {brand} = shopInfo;
+    const {brand, images} = shopInfo;
 
     // handle event
     const handleChange = data =>{
@@ -59,7 +66,6 @@ function Information(props) {
 
     const handleBlur = data =>{
         const {name} = data;
-        console.log({name})
         
         let error = "";
         let lengthString = 0;
@@ -94,6 +100,66 @@ function Information(props) {
         
     }
 
+    const handleChangeImage = data =>{
+        const {name, urlIndex, value} = data;
+
+        let tempImages = [...images];
+
+        switch(name){
+            case "images":
+                const uploadTask = storage.ref(`images/${value.name}`).put(value);
+        
+                uploadTask.on(
+                    "state-changed",
+                    snapshot => {},
+                    error =>{
+                        console.log("upload image", error)
+                    },
+                    () =>{
+                        storage
+                        .ref("images")
+                        .child(value.name)
+                        .getDownloadURL()
+                        .then(url =>{
+                            tempImages.push(url);
+                            setShopInfo({
+                                ...shopInfo,
+                                images: tempImages
+                            })
+                        });
+                    }
+                )
+
+                break;
+            default:
+                break;
+        }
+
+        setShopInfo({
+            ...shopInfo,
+            images: tempImages
+        })
+    }
+
+    // render
+    const renderListInputImage = () =>{
+        return images.map((url, index) =>{
+            const verify = {
+                urlIndex: index,
+                name: "images"
+            }
+
+            return (
+                <WidgetDescriptionImage 
+                    key = {index}
+                    image = {url}
+                    verify = {verify}
+                    handleChangeImage = {handleChangeImage}
+                />
+            );
+        })
+    }
+
 
 
     return (
@@ -117,11 +183,17 @@ function Information(props) {
                 </label>
 
                 <div className="d-flex flex-wrap" style={{gap: "15px"}}>
-                    <WidgetDescriptionImage image="https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg"/>
-                    <WidgetDescriptionImage image="https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg"/>
-                    <WidgetDescriptionImage image="https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg"/>
+                    {renderListInputImage()}
 
-                    <WidgetDescriptionImage/>
+                    <WidgetDescriptionImage
+                        verify = {
+                            {
+                                urlIndex: -1,
+                                name: "images"  
+                            }
+                        }
+                        handleChangeImage = {handleChangeImage}
+                    />
                 </div>
             </WidgetInputGroup>
 

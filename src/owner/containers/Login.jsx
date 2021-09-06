@@ -1,6 +1,5 @@
 import React from 'react';
-import {useHistory, useRouteMatch} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {useHistory} from 'react-router-dom';
 
 // Component
 import Header from './../features/Login/Header';
@@ -10,11 +9,7 @@ import FromLogin from '../features/Login/FromLogin';
 // APIs
 import authAPI from './../../api/authAPI';
 
-Login.propTypes = {
-    
-};
-
-function Login(props) {
+function Login() {
     // data
     const [loginNotify, setLoginNotify] = React.useState("");
     const history = useHistory();

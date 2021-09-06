@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -16,6 +16,10 @@ const WidgetContent = styled.div`
     border: 1px dashed #d8d8d8;
     border-radius: 4px;
     cursor: pointer;
+
+    input{
+        display: none;
+    }
 `;
 
 const Label = styled.div`
@@ -107,16 +111,23 @@ const WidgetButtonMove = styled.div`
 
 WidgetDescriptionImage.propTypes = {
     image: PropTypes.string,
+    handleChangeImage: PropTypes.func.isRequired,
+    verify: PropTypes.object.isRequired,
 };
 
 WidgetDescriptionImage.defaultProps = {
     image: ""
 }
 
-function WidgetDescriptionImage({image}) {
+function WidgetDescriptionImage({
+    image,
+    handleChangeImage,
+    verify
+}) {
 
     // Data
-    const [isHover, setIsHover] = React.useState(false);
+    const [isHover, setIsHover] = useState(false);
+    const imageRef = useRef(null);
 
     // handle event
     const handleMouseOver = () =>{
@@ -126,11 +137,35 @@ function WidgetDescriptionImage({image}) {
         setIsHover(false);
     }
 
+    const openInputImageBox = () =>{
+        if(imageRef.current){
+            imageRef.current.click();
+        }
+    }
+
+    const handleChange = event =>{
+        if(handleChangeImage){
+            const data = {
+                ...verify,
+                type: "add-new",
+                value: event.target.files[0]
+            }
+
+            handleChangeImage(data);
+        }
+    }
+
     return (
         <WidgetContent
             onMouseOver = {handleMouseOver}
             onMouseLeave = {handleMouseLeave}
         >
+            <input 
+                type = "file" 
+                ref = {imageRef}
+                onChange = {handleChange}
+            />
+
             {image && <Thumbnail image = {image}>
                 <button>Thay đổi hình ảnh</button>
             </Thumbnail>}
@@ -142,7 +177,9 @@ function WidgetDescriptionImage({image}) {
             </Label>}
 
             {(isHover && !image) && <WidgetButtonAdd>
-                <button>Tải hình ảnh</button>
+                <button
+                    onClick = {openInputImageBox}
+                >Tải hình ảnh</button>
                 <button>Thêm URL Video YouTube</button>
             </WidgetButtonAdd>}
 
