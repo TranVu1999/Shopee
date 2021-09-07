@@ -25,6 +25,7 @@ TextareaLimitBox.propTypes = {
     placeholder: PropTypes.string,
     limit: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired,
     large: PropTypes.bool,
     verify: PropTypes.object.isRequired,
 
@@ -39,7 +40,8 @@ TextareaLimitBox.defaultProps = {
 function TextareaLimitBox({
     placeholder, 
     limit, 
-    value, 
+    value,
+    error, 
     large,
     verify,
     handleChange
@@ -56,7 +58,7 @@ function TextareaLimitBox({
     }
 
     return (
-        <div>
+        <div className="input-box">
             <WidgetContent>
                 <textarea 
                     placeholder={placeholder} 
@@ -65,7 +67,10 @@ function TextareaLimitBox({
                     onChange = {onHandleChange}
                 />
             </WidgetContent>
-            <div className="text-right"><span>{value.length}/{limit}</span></div>
+            <div className="d-flex align-items-center justify-content-between">
+                <p className="notify">{error}</p>
+                <span>{value.length}/{limit}</span>
+            </div>
         </div>
         
     );

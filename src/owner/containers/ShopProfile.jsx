@@ -72,6 +72,19 @@ function ShopProfile() {
         getShopInformation();
 
     }, []);
+
+    // handle event
+    const handleUpdateShop = shop =>{
+        const data = {
+            avatar: shop.avatar,
+            backgroundImage: shop.backgroundImage,
+            brand: shop.brand.value,
+            images: shop.images,
+            description: shop.description.value
+        }
+
+        console.log({data})
+    }
     
     return (
         <section className="owner-page-content">
@@ -80,7 +93,10 @@ function ShopProfile() {
                 subTitle="Xem tình trạng Shop và cập nhật hồ sơ Shop của bạn"
             />
 
-            <Profile shop = {{...shop}}/>
+            <Profile 
+                shop = {{...shop}} 
+                handleUpdateProfile = {handleUpdateShop}
+            />
         </section>
     );
 }

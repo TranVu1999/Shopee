@@ -8,6 +8,7 @@ import Information from './Information';
 
 // Module
 import {uploadImage} from './../../../utils/firebase';
+import Validate from './../../../utils/validate';
 
 const WidgetContent = styled.div`
     padding: 1.124rem 1.5rem;
@@ -30,9 +31,17 @@ const WidgetRight = styled.div`
 
 Profile.propTypes = {
     shop: PropTypes.object.isRequired,
+
+    handleUpdateProfile: PropTypes.func.isRequired,
 };
 
-function Profile({shop}) {
+// return true is invalid and otherwise
+const checkInputText = value =>{
+    let standardizeString = value.trim();  
+    return standardizeString.length < value.length || Validate.checkSpecialCharacter(value)
+}
+
+function Profile({shop, handleUpdateProfile}) {
     // data
     const [shopInfo, setShopInfo] = useState({...shop});
 
@@ -174,7 +183,44 @@ function Profile({shop}) {
     }
 
     const handleSave = () =>{
+        let {brand, description} = shopInfo;
+        
+        let flag = true;
 
+        if(!brand.value){
+            flag = false;
+            brand = {
+                ...brand,
+                error: "Vui lòng nhập tên nhãn hiệu của bạn!"
+            }
+        }else if(checkInputText(brand.value)){
+            flag = false;
+            brand = {
+                ...brand,
+                error: "Tên thương hiệu của bạn không hợp lệ. Vui lòng nhập lại!"
+            }
+        }
+
+        if(checkInputText(description.value)){
+            flag = false;
+            description = {
+                ...description,
+                error: "Mô tả của bạn không hợp lệ. Vui lòng nhập lại."
+            }
+        }
+
+        if(flag){
+            console.log("ok");
+            if(handleUpdateProfile){
+                handleUpdateProfile({...shopInfo})
+            }
+        }else{
+            setShopInfo({
+                ...shopInfo,
+                brand: {...brand},
+                description: {...description}
+            });
+        }
     }
 
     return (

@@ -60,7 +60,6 @@ function Information({
     }
 
     const onHandleBlur = data =>{
-        console.log({data})
         if(handleBlurInput){
             handleBlurInput({
                 name: data.name
@@ -132,6 +131,7 @@ function Information({
                 <TextareaLimitBox 
                     limit = {500} 
                     value = {description.value} 
+                    error = {description.error}
                     placeholder="Nhập mô tả hoặc thông tin về Shop của bạn tại đây"
                     verify = {{name: "description"}}
                     handleChange = {onHandleChange}
