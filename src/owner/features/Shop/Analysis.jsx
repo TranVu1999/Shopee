@@ -153,9 +153,9 @@ const StatisticsRow = styled.div`
 
 Analysis.propTypes = {
     analysis: PropTypes.object.isRequired,
-    avatar: PropTypes.string.isRequired,
+    avatar: PropTypes.object.isRequired,
     username: PropTypes.string,
-    backgroundImage: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.object.isRequired,
     createdDate: PropTypes.string.isRequired,
 
     handleChangeImage: PropTypes.func.isRequired,
@@ -209,11 +209,11 @@ function Analysis({
                 onChange = {onHandleChangeImage}
             />
             <WidgetImage>
-                {backgroundImage && <div className="widget-background" style = {{backgroundImage: `url(${backgroundImage})`}}></div>}
+                {backgroundImage.url && <div className="widget-background" style = {{backgroundImage: `url(${backgroundImage.url})`}}></div>}
                 
                 <div className="d-flex thumbnail">
                     <Thumbnail>
-                        <div style={{backgroundImage: `url(${avatar})`}}>
+                        <div style={{backgroundImage: `url(${avatar.url})`}}>
                             <button
                                 onClick = {() => openImageBox("avatar")}
                             >Sửa</button>

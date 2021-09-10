@@ -4,17 +4,26 @@ import React, {useState, useEffect} from 'react';
 import TitleContent from './../components/TitleContent';
 import Profile from './../features/Shop/Profile';
 
+// Module 
+import {uploadImages} from './../../utils/firebase';
+
 // Api
-import shopAPI from './../../api/shopAPI'
+import shopAPI from './../../api/shopAPI';
 
 
 function ShopProfile() {
     // data
     const [shop, setShop] = useState({
-        avatar: "https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e",
+        avatar: {
+            url: "",
+            localImage: null
+        },
         username: "tranvudpqn123",
         createdDate: "05/08/2020 ",
-        backgroundImage: "",
+        backgroundImage: {
+            url: "",
+            localImage: null
+        },
 
         brand: {
             value: "",
@@ -24,10 +33,7 @@ function ShopProfile() {
             value: "",
             error: ""
         },
-        images: [
-            "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg",
-            "https://firebasestorage.googleapis.com/v0/b/shopee-5da7d.appspot.com/o/images%2Fpic3.jpeg?alt=media&token=83517c22-14bc-487e-b83c-8021b5a63745"
-        ],
+        images: [],
         analysis: {
             numberProduct: 0,
             ratioReplay: 57,
@@ -46,10 +52,16 @@ function ShopProfile() {
                 const shop_res = res.shop;
 
                 const data = {
-                    avatar: shop_res.avatar,
+                    avatar: {
+                        url: shop_res.avatar,
+                        localImage: null
+                    },
                     username: shop_res.username,
                     createdDate: shop_res.createdDate,
-                    backgroundImage: shop_res.backgroundImage,
+                    backgroundImage: {
+                        url: shop_res.backgroundImage,
+                        localImage: null
+                    },
 
                     brand: {
                         value: shop_res.brand,
@@ -59,7 +71,7 @@ function ShopProfile() {
                         value: shop_res.description,
                         error: ""
                     },
-                    images: shop_res.images,
+                    images: shop_res.images.map(image => ({url: image, localImage: null})),
 
                     analysis: shop_res.analysis
                 }
@@ -75,15 +87,44 @@ function ShopProfile() {
 
     // handle event
     const handleUpdateShop = shop =>{
-        const data = {
-            avatar: shop.avatar,
-            backgroundImage: shop.backgroundImage,
+        const shopInfo = {
+            avatar: "",
+            backgroundImage: "",
             brand: shop.brand.value,
-            images: shop.images,
+            images: [],
             description: shop.description.value
         }
 
-        console.log({data})
+        const promiseUploadImages = uploadImages(
+            shop.images.map(image => image.localImage),
+            (url) =>{
+                shopInfo.images.push(url)
+            }
+        );
+        const promiseUploadAvatar = uploadImages(
+            [shop.avatar.localImage],
+            (url) =>{
+                shopInfo.avatar = url;
+            }
+        );
+        const promiseUploadBackground = uploadImages(
+            [shop.backgroundImage.localImage],
+            (url) =>{
+                shopInfo.backgroundImage = url;
+            }
+        );
+
+
+
+        Promise.all([
+            ...promiseUploadImages, 
+            ...promiseUploadAvatar, 
+            ...promiseUploadBackground
+        ])
+        .then(() => console.log("Completed Upload"))
+        .catch(err => console.log("Failed Upload"));
+
+        console.log({shopInfo})
     }
     
     return (

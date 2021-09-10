@@ -40,14 +40,6 @@ function Information({
     handleChangeImage,
     handleBlurInput
 }) {
-    // data
-    const [shopInfo, setShopInfo] = useState({
-        
-        images: [
-            "https://thumbs.dreamstime.com/b/autumn-landscape-fall-scene-trees-leaves-sunlight-rays-foggy-forest-151793239.jpg",
-            "https://firebasestorage.googleapis.com/v0/b/shopee-5da7d.appspot.com/o/images%2Fpic3.jpeg?alt=media&token=83517c22-14bc-487e-b83c-8021b5a63745"
-        ]
-    });
 
     // handle event
     const onHandleChange = data =>{
@@ -71,12 +63,11 @@ function Information({
         if(handleChangeImage){
             handleChangeImage(data);
         }
-        
     }
 
     // render
     const renderListInputImage = () =>{
-        return images.map((url, index) =>{
+        return images.map((image, index) =>{
             const verify = {
                 indexImage: index,
                 name: "images"
@@ -85,7 +76,7 @@ function Information({
             return (
                 <WidgetDescriptionImage 
                     key = {index}
-                    image = {url}
+                    image = {image.url}
                     verify = {verify}
                     handleChangeImage = {onHandleChangeImage}
                 />

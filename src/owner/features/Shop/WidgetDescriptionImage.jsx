@@ -240,10 +240,10 @@ function WidgetDescriptionImage({
             {image && <WidgetButtonMove className="d-flex justify-content-around">
                 <button
                     onClick = {() =>handleMoveImage(-1)}
-                ><span class="icon icon-arrow-left"></span></button> 
+                ><span className="icon icon-arrow-left"></span></button> 
                 <button
                     onClick = {() =>handleMoveImage(1)}
-                ><span class="icon icon-arrow-right"></span></button> 
+                ><span className="icon icon-arrow-right"></span></button> 
             </WidgetButtonMove>}
             
             

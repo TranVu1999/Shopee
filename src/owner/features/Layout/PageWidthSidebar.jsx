@@ -36,6 +36,8 @@ PageWidthSidebar.propTypes = {
 function PageWidthSidebar(props) {
     const history = useHistory();
     const {path} = useRouteMatch();
+
+    // Chưa check accessToken có phải là role owner hay không.
     const accessToken = localStorage.getItem("accessToken");
 
     if(!accessToken){

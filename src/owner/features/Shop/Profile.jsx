@@ -7,7 +7,6 @@ import Analysis from './Analysis';
 import Information from './Information';
 
 // Module
-import {uploadImage} from './../../../utils/firebase';
 import Validate from './../../../utils/validate';
 
 const WidgetContent = styled.div`
@@ -48,21 +47,13 @@ function Profile({shop, handleUpdateProfile}) {
     // effect
     useEffect(() =>{
         setShopInfo({...shop});
-        
     }, [shop])
 
     const {
-        avatar,
-        username,
-        createdDate,
-        backgroundImage,
-
-        brand, 
-        description, 
-        images,
-        analysis
+        avatar, username, createdDate,
+        backgroundImage, brand, description, 
+        images, analysis
     } = shopInfo;
-
     
 
     
@@ -117,13 +108,13 @@ function Profile({shop, handleUpdateProfile}) {
         const {name, value, indexImage} = data;
 
         let tempImages = [...images];
+        let fileReader = new FileReader();
 
         switch(name){
             case "images":
                 const {type} = data;
 
                 switch(type){
-
                     case "move":
                         const lengthImage = images.length;
                         if(value === -1 && indexImage === 0) return;
@@ -151,18 +142,27 @@ function Profile({shop, handleUpdateProfile}) {
                         })
                         break;    
                     default:
-                        uploadImage(value, (urlImage) =>{
-                            if(indexImage === -1){
-                                tempImages.push(urlImage);
-                            }else{
-                                tempImages[indexImage] = urlImage
+                        
+                        fileReader.onload = event =>{
+                            const url = event.target.result;
+                            const imageItem = {
+                                url,
+                                localImage: value
                             }
+
+                            if(indexImage === -1){
+                                tempImages.push(imageItem);
+                            }else{
+                                tempImages[indexImage] = imageItem;
+                            }
+
                             setShopInfo({
                                 ...shopInfo,
                                 images: tempImages
                             })
-                            
-                        })
+                        };
+
+                        fileReader.readAsDataURL(value);
                         break;
                 }
                 
@@ -170,12 +170,17 @@ function Profile({shop, handleUpdateProfile}) {
 
             case "avatar":
             case "backgroundImage":
-                uploadImage(value, (urlImage) =>{
+                fileReader.onload = event =>{
+                    const url = event.target.result;
                     setShopInfo({
                         ...shopInfo,
-                        [name]: urlImage
+                        [name]: {
+                            url,
+                            localImage: value
+                        }
                     })
-                })
+                };
+                fileReader.readAsDataURL(value);
                 break;
             default:
                 break;
@@ -210,7 +215,6 @@ function Profile({shop, handleUpdateProfile}) {
         }
 
         if(flag){
-            console.log("ok");
             if(handleUpdateProfile){
                 handleUpdateProfile({...shopInfo})
             }
