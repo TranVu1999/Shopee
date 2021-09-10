@@ -75,6 +75,7 @@ const Thumbnail = styled.div`
         background-size: cover;
         background-position: center;
         overflow: hidden;
+        border: 3px solid #d5d5d5;
     }
 
     button{
