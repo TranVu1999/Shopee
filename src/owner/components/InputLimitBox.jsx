@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,21 +6,7 @@ import styled from 'styled-components';
 import {BorderColor} from './../theme';
 
 const WidgetContent = styled.div`
-    &>div{
-        width: 100%;
-        padding: ${props=>props.large ? ".5rem .875rem" : ".25rem .875rem"};
-    
-        font-size: .875rem;
-    
-        background-color: #fff;
-        border: 1px solid ${BorderColor.mainColor};
-        border-radius: 4px;
-    
-        input{
-            margin-right: .5rem;
-            width: 100%;
-        }
-    
+    &>div{ 
         span{
             padding-left: .75rem;
             border-left: 1px solid ${BorderColor.mainColor};

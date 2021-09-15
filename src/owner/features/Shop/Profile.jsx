@@ -36,7 +36,8 @@ Profile.propTypes = {
 
 // return true is invalid and otherwise
 const checkInputText = value =>{
-    let standardizeString = value.trim();  
+    let standardizeString = value.replace(/\s+/g,' ').trim(); 
+    
     return standardizeString.length < value.length || Validate.checkSpecialCharacter(value)
 }
 
@@ -53,10 +54,7 @@ function Profile({shop, handleUpdateProfile}) {
         avatar, username, createdDate,
         backgroundImage, brand, description, 
         images, analysis
-    } = shopInfo;
-    
-
-    
+    } = shopInfo;      
 
     // handle event
     const handleChangeInput = data =>{
@@ -189,7 +187,10 @@ function Profile({shop, handleUpdateProfile}) {
 
     const handleSave = () =>{
         let {brand, description} = shopInfo;
-        
+        console.log(brand.value.replace(/\s+/g,' ').trim().length);
+        console.log(brand.value.length);
+        console.log(Validate.checkSpecialCharacter(brand.value))
+
         let flag = true;
 
         if(!brand.value){
@@ -198,7 +199,10 @@ function Profile({shop, handleUpdateProfile}) {
                 ...brand,
                 error: "Vui lòng nhập tên nhãn hiệu của bạn!"
             }
-        }else if(checkInputText(brand.value)){
+        }else if(
+            brand.value.replace(/\s+/g,' ').trim().length < brand.value.length ||
+            Validate.checkSpecialCharacter(brand.value)
+        ){
             flag = false;
             brand = {
                 ...brand,

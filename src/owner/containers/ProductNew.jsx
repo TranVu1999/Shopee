@@ -17,7 +17,6 @@ ProductNew.propTypes = {
 };
 
 function ProductNew(props) {
-    
 
     return (
         <WidgetContent className="owner-product-add">

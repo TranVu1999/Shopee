@@ -115,7 +115,7 @@ const Button = styled.button`
 
 
 ListCategoryOption.propTypes = {
-    
+    getProductCategory: PropTypes.func.isRequired,
 };
 
 function ListCategoryOption(props) {
@@ -776,29 +776,30 @@ function ListCategoryOption(props) {
     ]
 
     const [indexActive, setIndexActive] = React.useState([-1, -1, -1, -1, -1]);
-    const [isMaxLevel, setIsMaxLevel] = React.useState(false);
 
     // effect 
     // check max level
-    useEffect(() =>{
+    useEffect((emitHighestLevel) =>{
         let level = indexActive.findIndex(item => item < 0) - 1;
 
-        if(level === -1){
-            setIsMaxLevel(false);
-        }else{
+        if(level !== -1){
             let step = 0;
             let listSubCate = [...listCategory];
 
             do{
                 listSubCate = indexActive[step] > -1 ? [...listSubCate[indexActive[step]].subList] : [];
                 step++;
-            }while(step <= level)
+            }while(step <= level);
 
-            setIsMaxLevel(!listSubCate.length > 0);
+            if(!listSubCate.length > 0 && props.getProductCategory){
+                props.getProductCategory(getCategory());
+            }else if(props.getProductCategory){
+                props.getProductCategory([]);
+            }
         }
-
         
-    }, [indexActive])
+    }, [indexActive]);
+
 
     // handle event
     const handleChoseCategory = (index, level) =>{
@@ -815,7 +816,7 @@ function ListCategoryOption(props) {
 
     // functions
     const getCategory = () =>{
-        let elm = [];
+        let listProdCate = [];
 
         let level = indexActive.findIndex(item => item < 0) - 1;
         let step = 0;
@@ -825,15 +826,10 @@ function ListCategoryOption(props) {
             
             let title = listSubCate[indexActive[step]].title;
             listSubCate = [...listSubCate[indexActive[step]].subList];
-            elm.push(
-                <li className="d-inline-flex align-items-center">
-                    {title} 
-                    <span aria-hidden="true" className="arrow_carrot-right"></span>
-                </li>
-            );
+            listProdCate.push(title);
             step++;
         }
-        return elm;
+        return listProdCate;
     }
 
     // render
@@ -905,13 +901,21 @@ function ListCategoryOption(props) {
                     <label >Đã chọn :</label>
 
                     {
-                        elmResultSelected.length > 0 ? elmResultSelected : (
+                        elmResultSelected.length > 0 ? elmResultSelected.map(prodCate =>{
+                            return (
+                                <li 
+                                    key = {prodCate}
+                                    className="d-inline-flex align-items-center"
+                                >
+                                    {prodCate} 
+                                    <span aria-hidden="true" className="arrow_carrot-right"></span>
+                                </li>
+                            )
+                        }) : (
                             <span>Chưa chọn ngành hàng</span>
                         )
                     }
                 </div>
-
-                {isMaxLevel && <Button > Tiếp theo </Button>}
                 
             </WidgetResultSelect>
 

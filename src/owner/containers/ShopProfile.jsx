@@ -44,6 +44,7 @@ function ShopProfile() {
     });
 
     // effect
+    // call api get data
     useEffect(() =>{
         const getShopInformation = async () =>{
             const res = await shopAPI.get();
@@ -95,36 +96,48 @@ function ShopProfile() {
             description: shop.description.value
         }
 
-        const promiseUploadImages = uploadImages(
-            shop.images.map(image => image.localImage),
-            (url) =>{
-                shopInfo.images.push(url)
-            }
-        );
-        const promiseUploadAvatar = uploadImages(
-            [shop.avatar.localImage],
-            (url) =>{
-                shopInfo.avatar = url;
-            }
-        );
-        const promiseUploadBackground = uploadImages(
-            [shop.backgroundImage.localImage],
-            (url) =>{
-                shopInfo.backgroundImage = url;
-            }
-        );
+        const promises = [];
 
+        if(shop.images.length){
+            promises.push(...uploadImages(
+                shop.images.map(image => image.localImage),
+                (url) =>{
+                    shopInfo.images.push(url)
+                }
+            ));
+        }
+        
+        if(shop.avatar.localImage){
+            promises.push(...uploadImages(
+                [shop.avatar.localImage],
+                (url) =>{
+                    shopInfo.avatar = url;
+                }
+            ));
+        }
 
+        if(shop.backgroundImage.localImage){
+            promises.push(...uploadImages(
+                [shop.backgroundImage.localImage],
+                (url) =>{
+                    shopInfo.backgroundImage = url;
+                }
+            ));
+        }
 
-        Promise.all([
-            ...promiseUploadImages, 
-            ...promiseUploadAvatar, 
-            ...promiseUploadBackground
-        ])
-        .then(() => console.log("Completed Upload"))
-        .catch(err => console.log("Failed Upload"));
-
-        console.log({shopInfo})
+        if(promises.length){
+            Promise.all([...promises])
+            .then(() => {
+                console.log({shopInfo})
+            })
+            .catch(err => console.log("Failed Upload"));
+    
+            
+            // shopAPI.update(shopInfo)
+        }else{
+            console.log("Thiếu hình ảnh")
+        }
+        
     }
     
     return (

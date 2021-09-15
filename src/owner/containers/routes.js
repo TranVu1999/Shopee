@@ -26,17 +26,17 @@ const routes = [
 
     // Management Product
     {
-        path: `${URL.PORTAL_PRODUCT}list/:alias?`,
+        path: `/portal/settings/list/:alias?`,
         component: ProductManagement,
         exact: true
     },
     {
-        path: `${URL.PORTAL_PRODUCT}category`,
+        path: `/portal/product/category`,
         component: ProductCategory,
         exact: true
     },
     {
-        path: `${URL.PORTAL_PRODUCT}new`,
+        path: `/portal/product/new`,
         component: ProductNew,
         exact: true
     },

@@ -95,11 +95,11 @@ function Sidebar() {
     const subMenuProduct = [
         {
             title: "Tất Cả Sản Phẩm",
-            url: `${URL.PORTAL_PRODUCT}list/all`
+            url: `/ban-hang/portal/settings/list/list/all`
         },
         {
             title: "Thêm Sản Phẩm",
-            url: `#/`
+            url: `/ban-hang/portal/product/category`
         },
         {
             title: "Sản Phẩm Vi Phạm",

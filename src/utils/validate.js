@@ -4,7 +4,7 @@ const validate = {
         return re.test(String(str).toLowerCase());
     },
     checkSpecialCharacter: str =>{
-        const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        const re = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
         return re.test(str);
     }
 
