@@ -39,7 +39,7 @@ function ProductCategory() {
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            productName: ""
+            productName: "",
         }
     });
     const [listProdCate, setListProdCate] = useState(false);
@@ -48,6 +48,7 @@ function ProductCategory() {
     
 
     // handle event
+    // handle nabigation next page
     const onHandleSubmit = data =>{
         if(setListProdCate.length){
             localStorage.setItem("productName", data.productName);
@@ -73,10 +74,7 @@ function ProductCategory() {
                 <WidgetRow className="mb-5 d-flex ">
                     <span>Tên sản phẩm:</span>
 
-                    <InputLimitBox 
-                        control={control}
-                        name = "productName"
-                    />
+                    <InputLimitBox control={control} name = "productName"/>
                 </WidgetRow>
 
                 <ListCategoryOption getProductCategory = {getProductCategory}/>

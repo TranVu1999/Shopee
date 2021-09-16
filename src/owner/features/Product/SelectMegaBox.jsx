@@ -7,12 +7,13 @@ import {BorderColor} from '../../theme';
 
 const WidgetContent = styled.div`
     position: relative;
+    width: 100%;
     font-size: .875rem;
 `;
 
 const WidgetResultSelected = styled.div`
     position: relative;
-    padding: .5rem .875rem;
+    padding: .375rem .875rem;
 
     border-radius: 4px;
     border: 1px solid ${BorderColor.mainColor};

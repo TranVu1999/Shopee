@@ -103,6 +103,29 @@
             color: #999;
         }
     }
+
+    .button-add{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: .5rem .875rem;
+        width: 100%;
+
+        color: #1791f2;
+        background-color: transparent;
+        border: 1px dashed #1791f2;
+        border-radius: 4px;
+
+        span{
+            margin-right: .5rem;
+            font-size: 1.125rem;
+        }
+    }
+}
+
+div[class*="button"], div[class*="btn"]{
+    cursor: pointer;
 }
 
 

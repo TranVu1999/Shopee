@@ -27,7 +27,7 @@ function InputLimitBox(props, ref) {
                     type = "text" 
                     {...field}
                 />
-                <span>{field.value.length}/{120}</span>
+                <span>{field.value ? field.value.length : "0"}/{120}</span>
             </div>
             <p className="notify">{fieldState.error && fieldState.error.message}</p>
         </WidgetContent>

@@ -18,7 +18,7 @@ const FormClassify = styled.div`
 
     background-color: #FAFAFA;
 
-    button.close{
+    div.button-close{
         position: absolute;
         right: 0rem;
         top: 0rem;
@@ -43,26 +43,6 @@ const FormClassify = styled.div`
             }
         }
     }
-`;
-
-const ButtonAdd = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: .5rem .875rem;
-    width: 100%;
-
-    color: #1791f2;
-    background-color: transparent;
-    border: 1px dashed #1791f2;
-    border-radius: 4px;
-
-    span{
-        margin-right: .5rem;
-        font-size: 1.125rem;
-    }
-
 `;
 
 const WidgetApplyAll = styled.div`
@@ -149,7 +129,7 @@ const WidgetTablePrice = styled.div`
 `;
 
 // Icons
-const iconTrash = <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill-rule="nonzero"><path d="M14.516 3.016h-4v-1a.998.998 0 0 0-.703-.955.99.99 0 0 0-.297-.045h-3a.998.998 0 0 0-.955.703.99.99 0 0 0-.045.297v1h-4a.5.5 0 1 0 0 1h1v10a.998.998 0 0 0 .703.955.99.99 0 0 0 .297.045h9a.998.998 0 0 0 .955-.703.99.99 0 0 0 .045-.297v-10h1a.5.5 0 1 0 0-1zm-8-1h3v1h-3v-1zm6 12h-9v-10h9v10z"></path><path d="M5.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5zM8.016 12.016a.5.5 0 0 0 .5-.5v-5a.5.5 0 1 0-1 0v5a.5.5 0 0 0 .5.5zM10.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5z"></path></g></svg>
+const iconTrash = <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fillRule="nonzero"><path d="M14.516 3.016h-4v-1a.998.998 0 0 0-.703-.955.99.99 0 0 0-.297-.045h-3a.998.998 0 0 0-.955.703.99.99 0 0 0-.045.297v1h-4a.5.5 0 1 0 0 1h1v10a.998.998 0 0 0 .703.955.99.99 0 0 0 .297.045h9a.998.998 0 0 0 .955-.703.99.99 0 0 0 .045-.297v-10h1a.5.5 0 1 0 0-1zm-8-1h3v1h-3v-1zm6 12h-9v-10h9v10z"></path><path d="M5.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5zM8.016 12.016a.5.5 0 0 0 .5-.5v-5a.5.5 0 1 0-1 0v5a.5.5 0 0 0 .5.5zM10.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5z"></path></g></svg>
 
 
 WidgetClassifyInput.propTypes = {
@@ -423,10 +403,10 @@ function WidgetClassifyInput(props) {
                         <div className="label">{listClassify[key].label}</div>
     
                         <FormClassify>
-                            <button 
-                                className = "close"
+                            <div 
+                                className = "button-close"
                                 onClick = {handleCloseForm}
-                            ><span aria-hidden="true" className="icon_close"></span></button>
+                            ><span className="icon_close"></span></div>
 
                             <div className="d-flex row-input">
                                 <div className="label">Tên nhóm phân loại</div>
@@ -448,12 +428,12 @@ function WidgetClassifyInput(props) {
                                 <div className="label"></div>
     
                                 <div className="flex-fill">
-                                    <ButtonAdd
+                                    <div className="button-add"
                                         onClick = {() => addNewTypeOfClassify(key)}
                                     >
                                         <span aria-hidden="true" className="icon_plus_alt2"></span>
                                         Thêm phân loại hàng
-                                    </ButtonAdd>
+                                    </div>
                                 </div>
     
                                 <div className="control-button">
@@ -471,12 +451,12 @@ function WidgetClassifyInput(props) {
                 <div className="label">{listClassify.second.label}</div>
 
                 <div style={{width: '60%'}}>
-                    <ButtonAdd
+                    <button className = "button-add"
                         onClick = {() => handleOpenForm()}
                     >
                         <span aria-hidden="true" className="icon_plus_alt2"></span>
                         Thêm phân loại hàng
-                    </ButtonAdd>
+                    </button>
                 </div>
 
             </div>);

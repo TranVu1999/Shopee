@@ -58,8 +58,8 @@ function TextareaLimitBox({
     }
 
     return (
-        <div className="input-box">
-            <WidgetContent>
+        <div>
+            <WidgetContent className="input-box">
                 <textarea 
                     placeholder={placeholder} 
                     value={value}

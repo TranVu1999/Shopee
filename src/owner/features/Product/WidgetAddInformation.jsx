@@ -1,17 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import {useForm} from 'react-hook-form';
+import * as Yup from 'yup';
+import {yupResolver } from '@hookform/resolvers/yup';
+import {useHistory} from 'react-router-dom';
 
 // Components
 import InputImage from './InputImage';
 import SelectMegaBox from './SelectMegaBox';
-import InputLimitBox from './../../components/InputLimitBox';
-import TextareaLimitBox from './../../components/TextareaLimitBox';
-import InputPriceNumber from './InputPriceNumber';
-import InputInventoryNumber from './InputInventoryNumber';
+import InputLimitBox from './../../components/InputLimitBox2';
+import TextareaLimitBox from './../../components/TextareaLimitBox2';
+import InputPriceNumber from './InputPriceNumber2';
+import InputInventoryNumber from './InputInventoryNumber2';
 import WidgetClassifyInput from './WidgetClassifyInput';
 
-const WidgetContent = styled.div`
+const WidgetContent = styled.form`
     background-color: #F6F6F6; 
 
     &>div{
@@ -22,9 +27,18 @@ const WidgetContent = styled.div`
     }
 `;
 
+const GroupInput = styled.div`
+
+`;
+
 const OptionalFields = styled.div``;
 
 const WidgetCategory = styled.div`
+    .arrow_carrot-right{
+        margin: 0 .5rem;
+        font-size: 1.125rem;
+    }
+
     button{
         margin-left: .5rem;
         font-size: 1.125rem;
@@ -41,13 +55,70 @@ const WidgetCategory = styled.div`
     }
 `;
 
+const WidgetButtons = styled.div`
+    position: sticky;
+    bottom: 0;
+    left: 0;
+
+    font-size: .875rem;
+    text-align: right;
+`;
+
+const DefaultButton = styled.button`
+    margin-left: 1rem;
+    padding: .25rem 0;
+    min-width: 8rem;
+
+    color: #333;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+`;
+const SaveButton = styled(DefaultButton)`
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    color: #fff;
+`;
 
 WidgetAddInformation.propTypes = {
     
 };
 
 function WidgetAddInformation(props) {
+    // validate
+    const validationSchema = Yup.object().shape({
+        productName: Yup.string()
+                    .required("Không được để trống tên sản phẩm")
+                    .max(120, "Tên sản phẩm không vượt quá 120 ký tự")
+                    .min(10, "Tên sản phẩm phải có ít nhất 10 ký tự"),
+        productDescription: Yup.string()
+                    .required("Không được để trống mô tả sản phẩm")
+                    .max(5000, "Mô tả sản phẩm không vượt quá 5000 ký tự")
+                    .min(1, "Mô tả sản phẩm phải có ít nhất 100 ký tự"),
+        productPrice: Yup.number()
+                    .required("Không được để trống giá sản phẩm")
+                    .max(1000000000, "Giá sản phẩm không vượt quá 100 triệu đồng")
+                    .min(1000, "Giá sản phẩm ít nhất 1 nghìn đồng")
+                    .positive("Giá sản phẩm là một số dương"),
+        productInventory: Yup.number()
+                    .required("Không được để trống trường này")
+                    .min(5, "Bạn phải có ít nhất 5 sản phẩm")
+                    .positive("Dữ liệ trường này phải là một số dương"),        
+    });
+    
     // data
+    const productCategory = JSON.parse(localStorage.getItem("productCategory"));
+
+    const {handleSubmit, control} = useForm({
+        resolver: yupResolver(validationSchema),
+        defaultValues:{
+            productName: localStorage.getItem("productName") || "",
+            productDescription: "",
+            productCategory,
+            productPrice: 1000,
+            productInventory: 5
+        }
+    });
+    const [isShowClassification, setIsShowClassification] = useState(false);
     const [fields, setFields] = useState({
         brand: {
             type: "mega-select-input",
@@ -205,10 +276,11 @@ function WidgetAddInformation(props) {
             ]
         },
         
-    })
+    });
+
 
     // use effect
-    React.useEffect(() =>{
+    useEffect(() =>{
         function updateState(){
             let stateTemp = {...fields};
             for(let [key, value] of Object.entries(stateTemp)){
@@ -251,15 +323,19 @@ function WidgetAddInformation(props) {
         setFields({...stateTemp});
     }
 
+    const handleSubmitProductInfomation = product =>{
+        console.log({product})
+    }
+
     // render
     const renderOptionalFields = () =>{
         let elm = [];
         for(let [key, value] of Object.entries(fields)){
             elm.push(
-                <div className="widget-input-row align-items-center" key = {key}>
+                <div className="w-50 widget-input-row align-items-center" key = {key}>
                     <div className="label">{value.label} </div>
 
-                    <div style={{width: '50%'}}>
+                    <div className="flex-fill">
                         <SelectMegaBox 
                             name = {value.nameInput} 
                             listOption = {value.database} 
@@ -278,10 +354,10 @@ function WidgetAddInformation(props) {
     }
 
     return (
-        <WidgetContent>
+        <WidgetContent onSubmit = {handleSubmit(handleSubmitProductInfomation)}>
 
-            <div>
-                <h5>Thông tin cơ bản </h5>
+            <GroupInput>
+                <h5>Thông tin cơ bản</h5>
 
                 {/* Image */}
                 <div className="widget-input-row">
@@ -304,7 +380,7 @@ function WidgetAddInformation(props) {
                 <div className="widget-input-row">
                     <div className="label">Video sản phẩm</div>
 
-                    <div className="d-flex">
+                    <div className="d-flex flex-fill">
                         <InputImage label="Video bìa" name="video"/>
 
                         <ul>
@@ -323,7 +399,7 @@ function WidgetAddInformation(props) {
                     <div className="label">*Tên sản phẩm</div>
 
                     <div className="flex-fill">
-                        <InputLimitBox value="Dinhr cuar ddinhr luon" limit={120}/>
+                        <InputLimitBox control={control} name = "productName"/>
                     </div>
                     
                 </div>
@@ -333,7 +409,7 @@ function WidgetAddInformation(props) {
                     <div className="label">*Mô tả sản phẩm</div>
 
                     <div className="flex-fill">
-                        <TextareaLimitBox value="" limit={3000} large/>
+                        <TextareaLimitBox control={control} name = "productDescription" large/>
                     </div>
                     
                 </div>
@@ -344,14 +420,19 @@ function WidgetAddInformation(props) {
 
                     <div className="flex-fill">
                         <WidgetCategory>
-                            <div>
-                                <span>Thời Trang Nữ
-                                    <span aria-hidden="true" className="arrow_carrot-right"></span>
-                                </span>
-                                <span>Áo<span aria-hidden="true" className="arrow_carrot-right"></span></span>
-                                <span>Áo hai dây và ba lỗ</span>
+                            <div className="d-flex">
+                                {productCategory.map(item =>{
+                                    return (
+                                        <div className="d-flex align-items-center">
+                                            {item}
+                                            <span className="arrow_carrot-right"></span>
+                                        </div>
+                                    );
+                                })}
+
                                 <button><span className="icon icon-pencil"></span></button>
                             </div>
+
                             <p>Cài đặt thuộc tính sản phẩm chính xác, <a href="#/">bấm vào đây để tìm hiểu</a> </p>
                             
                             
@@ -363,36 +444,98 @@ function WidgetAddInformation(props) {
 
 
 
-                <OptionalFields>
+                <OptionalFields className="d-flex flex-wrap">
                     {renderOptionalFields()}
                 </OptionalFields>
-            </div>
+            </GroupInput>
     
-            <div>
+            <GroupInput>
                 <h5>Thông tin bán hàng</h5>
 
-                {/* Price */}
-                <div className="widget-input-row align-items-center">
-                    <div className="label">* Giá</div>
+                {!isShowClassification && (
+                    <>
+                        {/* Price */}
+                        <div className="widget-input-row align-items-center">
+                            <div className="label">* Giá</div>
 
-                    <div style={{width: '50%'}}>
-                        <InputPriceNumber/>
+                            <div className="w-50">
+                                <InputPriceNumber control={control} name = "productPrice"/>
+                            </div>
+                        </div>
+
+                        {/* Inventory */}
+                        <div className="widget-input-row align-items-center">
+                            <div className="label">* Kho hàng</div>
+
+                            <div className="w-50">
+                                <InputInventoryNumber control={control} name = "productInventory"/>
+                            </div>
+                        </div>
+
+                        {/* classification */}
+                        <div className="widget-input-row align-items-center">
+                            <div className="label">Phân loại hàng</div>
+
+                            <div 
+                                className="w-50 button-add"
+                                onClick = {() => setIsShowClassification(true)}
+                            >
+                                <span className="icon_plus_alt2"></span>
+                                Thêm nhóm phân loại
+                            </div>
+                        </div>
+                    </>
+                    
+                )}
+                
+
+                {isShowClassification && <WidgetClassifyInput/>}
+
+                
+
+                {/* promotion */}
+                <div className="widget-input-row align-items-center">
+                    <div className="label">Mua nhiều giảm giá</div>
+
+                    <div className="w-50 button-add">
+                        <span className="icon_plus_alt2"></span>
+                        Thêm khoảng giá
+                    </div>
+                </div>
+            </GroupInput>
+
+            <GroupInput>
+                <h5>Thông tin khác</h5>
+
+                {/* Situation */}
+                <div className="widget-input-row align-items-center">
+                    <div className="label">Tình trạng</div>
+
+                    <div className="w-50">
+                        <SelectMegaBox 
+                            name = "productSituation"
+                            listOption = {["Mới", "Đã sử dụng"]} 
+                            indexSelected = {0} 
+                            handleChoseOption = {handleChoseOption}
+                        />
                     </div>
                 </div>
 
-                {/* Inventory */}
+                {/* SKU */}
                 <div className="widget-input-row align-items-center">
-                    <div className="label">* Kho hàng</div>
+                    <div className="label">SKU sản phẩm</div>
 
-                    <div style={{width: '50%'}}>
-                        <InputInventoryNumber/>
+                    <div className="w-50">
+                        <InputLimitBox control={control} name = "productSKU"/>
                     </div>
                 </div>
-            </div>
-            
-            <div>
-                <WidgetClassifyInput/>
-            </div>
+            </GroupInput>
+
+            <WidgetButtons>
+                <DefaultButton>Hủy</DefaultButton>
+                <DefaultButton>Lưu & Ẩn</DefaultButton>
+                <SaveButton>Lưu & Hiển thị</SaveButton>
+            </WidgetButtons>
 
         </WidgetContent>
     );
