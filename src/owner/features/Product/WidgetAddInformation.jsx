@@ -11,10 +11,12 @@ import {useHistory} from 'react-router-dom';
 import InputImage from './InputImage';
 import SelectMegaBox from './SelectMegaBox';
 import InputLimitBox from './../../components/InputLimitBox2';
+import InputBox from './../../components/InputBox2';
 import TextareaLimitBox from './../../components/TextareaLimitBox2';
 import InputPriceNumber from './InputPriceNumber2';
 import InputInventoryNumber from './InputInventoryNumber2';
 import WidgetClassifyInput from './WidgetClassifyInput';
+import WidgetGroupPrice from './WidgetGroupPrice';
 
 const WidgetContent = styled.form`
     background-color: #F6F6F6; 
@@ -93,9 +95,8 @@ function WidgetAddInformation(props) {
         productDescription: Yup.string()
                     .required("Không được để trống mô tả sản phẩm")
                     .max(5000, "Mô tả sản phẩm không vượt quá 5000 ký tự")
-                    .min(1, "Mô tả sản phẩm phải có ít nhất 100 ký tự"),
+                    .min(100, "Mô tả sản phẩm phải có ít nhất 100 ký tự"),
         productPrice: Yup.number()
-                    .required("Không được để trống giá sản phẩm")
                     .max(1000000000, "Giá sản phẩm không vượt quá 100 triệu đồng")
                     .min(1000, "Giá sản phẩm ít nhất 1 nghìn đồng")
                     .positive("Giá sản phẩm là một số dương"),
@@ -119,6 +120,7 @@ function WidgetAddInformation(props) {
         }
     });
     const [isShowClassification, setIsShowClassification] = useState(false);
+    const [isShowMorePrice, setIsShowMorePrice] = useState(false);
     const [fields, setFields] = useState({
         brand: {
             type: "mega-select-input",
@@ -278,6 +280,10 @@ function WidgetAddInformation(props) {
         
     });
 
+    const [product, setProduct] = useState({
+        listPrice: []
+    })
+
 
     // use effect
     useEffect(() =>{
@@ -325,6 +331,13 @@ function WidgetAddInformation(props) {
 
     const handleSubmitProductInfomation = product =>{
         console.log({product})
+    }
+
+    const handleNotSave = () =>{
+        let newProduct = {...product};
+        newProduct.listPrice = [];
+        setProduct(newProduct);
+        setIsShowMorePrice(false);
     }
 
     // render
@@ -441,9 +454,6 @@ function WidgetAddInformation(props) {
                     
                 </div>
 
-
-
-
                 <OptionalFields className="d-flex flex-wrap">
                     {renderOptionalFields()}
                 </OptionalFields>
@@ -489,7 +499,7 @@ function WidgetAddInformation(props) {
                 )}
                 
 
-                {isShowClassification && <WidgetClassifyInput/>}
+                {isShowClassification && <div className="flex-fill"><WidgetClassifyInput/></div>}
 
                 
 
@@ -497,10 +507,19 @@ function WidgetAddInformation(props) {
                 <div className="widget-input-row align-items-center">
                     <div className="label">Mua nhiều giảm giá</div>
 
-                    <div className="w-50 button-add">
+                    {!isShowMorePrice && <div 
+                        className="w-50 button-add"
+                        onClick = {() => setIsShowMorePrice(true)}
+                    >
                         <span className="icon_plus_alt2"></span>
                         Thêm khoảng giá
-                    </div>
+                    </div>}
+                    
+
+                    {isShowMorePrice && <WidgetGroupPrice 
+                        handleNotSave = {handleNotSave}
+                    />}
+                    
                 </div>
             </GroupInput>
 
@@ -526,7 +545,7 @@ function WidgetAddInformation(props) {
                     <div className="label">SKU sản phẩm</div>
 
                     <div className="w-50">
-                        <InputLimitBox control={control} name = "productSKU"/>
+                        <InputBox control={control} name = "productSKU"/>
                     </div>
                 </div>
             </GroupInput>

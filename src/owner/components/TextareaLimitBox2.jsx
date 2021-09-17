@@ -28,7 +28,7 @@ function TextareaLimitBox(props, ref) {
     const {field, fieldState} = useController(props);
 
     return (
-        <WidgetContent>
+        <WidgetContent className = {fieldState.error ? "error" : ""}>
             <WidgetInput className="input-box">
                 <textarea 
                     placeholder={props.placeholder} 

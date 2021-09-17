@@ -17,11 +17,13 @@ const FormClassify = styled.div`
     width: 60%;
 
     background-color: #FAFAFA;
+    
 
     div.button-close{
         position: absolute;
         right: 0rem;
         top: 0rem;
+        font-size: 1.25rem;
     }
 
     .row-input{
@@ -29,6 +31,7 @@ const FormClassify = styled.div`
 
         .label{
             max-width: 5rem;
+            line-height: 1.125rem;
         }
 
         .control-button{
@@ -48,6 +51,8 @@ const FormClassify = styled.div`
 const WidgetApplyAll = styled.div`
 
     .group-input-apply-all{
+        width: 75%;
+
         &>div:first-child{
             .widget-input-box{
                 margin-right: -10px;
@@ -418,6 +423,7 @@ function WidgetClassifyInput(props) {
                                         handleChange = {onHandleChange}
                                     />
                                 </div>
+                                <div className="control-button"></div>
                             </div>
                             <div className="mb-4"></div>
 
@@ -547,7 +553,7 @@ function WidgetClassifyInput(props) {
             <div className="widget-input-row">
                 <div className="label">Mẹo thiết lập phân loại hàng</div>
 
-                <WidgetApplyAll className="d-flex">
+                <WidgetApplyAll className="flex-fill d-flex">
                     <div className="d-flex group-input-apply-all">
                         <div className="flex-fill">
                             <InputPriceNumber/>
