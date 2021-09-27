@@ -11,12 +11,39 @@ const WidgetContent = styled.div`
     left: 0;
 
     height: calc(100% - 4rem);
-    width: 13.75rem;
-    padding: 1.5rem 1rem 1.5rem;
+    width: 14.25rem;
+    padding: 1rem 0rem 0rem 1rem;
 
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     overflow-y: scroll;
     z-index: 100;
+    line-height: 1.25rem;
+
+    /* width */
+    &::-webkit-scrollbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+
+        width: .5rem;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: transparent; 
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 15px; 
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #888; 
+    }
 `;
 
 function Sidebar() {
@@ -95,7 +122,7 @@ function Sidebar() {
     const subMenuProduct = [
         {
             title: "Tất Cả Sản Phẩm",
-            url: `/ban-hang/portal/settings/list/list/all`
+            url: `/ban-hang/portal/product/list/all`
         },
         {
             title: "Thêm Sản Phẩm",

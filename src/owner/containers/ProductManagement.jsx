@@ -47,7 +47,7 @@ function ProductManagement(props) {
     }
 
     return (
-        <WidgetContent>
+        <WidgetContent className="owner-page-content">
             <TabBoxButton 
                 listTab={tab.listTab} 
                 indexActive={tab.indexActive}

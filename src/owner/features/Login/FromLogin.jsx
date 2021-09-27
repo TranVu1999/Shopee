@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Form validation
+import {useForm} from 'react-hook-form';
+import * as Yup from 'yup';
+import {yupResolver } from '@hookform/resolvers/yup';
+
 // Components
 import CheckBox from './../../components/CheckBox';
 
@@ -68,123 +73,61 @@ FromLogin.propTypes = {
 };
 
 function FromLogin({onHandleSubmit}) {
-    // data
-    const [loginData, setLoginData] = React.useState({
-        username: {
-            value: "",
-            error: ""
-        },
+    // validate
+    const validationSchema = Yup.object().shape({
+        userLogin: Yup.string()
+                    .required("Không được để trống thông tin đăng nhập"),
+        password: Yup.string()
+                    .required("Không được để trống mật khẩu")
+    });
 
-        password: {
-            value: "",
-            error: ""
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        resolver: yupResolver(validationSchema),
+        defaultValues: {
+            userLogin: "",
+            password: ""
         }
     });
 
-    const {username, password} = loginData;
+    const onHandleSubmitLogin = loginInfo => {
+        console.log({loginInfo});
 
-    // handle event
-    const handleChange = event =>{
-        const {name, value} = event.target;
-
-        const newData = {
-            ...loginData,
-            [name]: {
-                value,
-                error: ""
-            }
+        if(!onHandleSubmit) return;
+        const data = {
+            userLogin: loginInfo.userLogin,
+            password: loginInfo.password,
+            role: "owner"
         }
-
-        setLoginData(newData);
+        onHandleSubmit(data);
     }
-
-    const handleSubmit = event => {
-        event.preventDefault();
-
-        let flag = false;
-        let newData = {
-            ...loginData
-        }
-
-        if(!username.value){
-            flag = true;
-            newData = {
-                ...newData,
-                username: {
-                    value: newData.username.value,
-                    error: "Không được để trống ô này!"
-                }
-            }
-        }else if(!Validate.email(username.value)){
-            
-            flag = true;
-            newData = {
-                ...newData,
-                username: {
-                    value: username.value,
-                    error: "Dữ liệu bạn nhập vào không đúng!"
-                }
-            }
-        }
-
-        if(!password.value){
-            flag = true;
-            newData = {
-                ...newData,
-                password: {
-                    value: newData.password.value,
-                    error: "Không được để trống ô này!"
-                }
-            }
-        }
-
-
-        if(flag){
-            setLoginData({...newData});
-        }else{
-            if(!onHandleSubmit) return;
-
-            const data = {
-                email: username.value,
-                password: password.value,
-                role: "owner"
-            }
-            onHandleSubmit(data);
-        }
-        
-    }
-    
 
     return (
         <WidgetContent>
             <form
-               onSubmit = {handleSubmit} 
+               onSubmit = {handleSubmit(onHandleSubmitLogin)} 
             >
                 <WidgetInput 
-                    className= {username.error && "ping-pong"}
+                    className= {errors.userLogin && "ping-pong"}
                 >
                     <input 
                         type="text" 
                         placeholder="Email/Số điện thoại/Tên đăng nhập"
-                        name = "username"
-                        value = {username.value}
-                        onChange = {handleChange}
+                        {...register("userLogin")}
                     />
 
-                    {username.error && <p>{username.error}</p>}
+                    {errors.userLogin && <p className="notify">{errors.userLogin.message}</p>}
+                    
                     
                 </WidgetInput>
                 <WidgetInput
-                    className= {password.error && "ping-pong"}
+                    className= {errors.password && "ping-pong"}
                 >
                     <input 
                         type="text" 
                         placeholder="Password"
-                        name = "password"
-                        value = {password.value}
-                        onChange = {handleChange}
+                        {...register("password")}
                     />
-                    {password.error && <p>{password.error}</p>}
+                    {errors.password && <p className="notify">{errors.password.message}</p>}
                 </WidgetInput>
 
                 <WidgetInput>

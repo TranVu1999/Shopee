@@ -54,7 +54,7 @@ const WidgetDropDown = styled.div`
 
     &:hover{
         .list-option{
-            max-height: 90px;
+            max-height: 102px;
         }
     }
 `;
@@ -156,6 +156,7 @@ function Title(props) {
                         <div>Cập Nhật Hàng Loạt</div>
                         <div>Cập Nhật Thuộc Tính</div>
                     </WidgetListOption>
+
                 </WidgetDropDown>
 
                 <ButtonControl className="ml-3 align-self-stretch d-flex">

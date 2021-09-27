@@ -26,7 +26,7 @@ const routes = [
 
     // Management Product
     {
-        path: `/portal/settings/list/:alias?`,
+        path: `/portal/product/list/:alias?`,
         component: ProductManagement,
         exact: true
     },

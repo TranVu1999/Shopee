@@ -16,6 +16,7 @@ function Login() {
     
     // handle event
     const handleLogin = async data =>{
+        console.log(data)
         try{
             const res = await authAPI.login(data);
 
@@ -23,7 +24,7 @@ function Login() {
                 localStorage.setItem("accessToken", res.accessToken);
                 history.push(`/ban-hang`);
             }else{
-                setLoginNotify("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại.")
+                setLoginNotify("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại.");
             }
             
         }catch(err){
