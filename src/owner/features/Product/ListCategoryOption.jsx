@@ -113,12 +113,12 @@ const Button = styled.button`
     
 `;
 
-
 ListCategoryOption.propTypes = {
+    categories: PropTypes.array.isRequired,
     getProductCategory: PropTypes.func.isRequired,
 };
 
-function ListCategoryOption(props) {
+function ListCategoryOption({categories, getProductCategory}) {
     // Data
     const listCategory = [
         {
@@ -784,17 +784,17 @@ function ListCategoryOption(props) {
 
         if(level !== -1){
             let step = 0;
-            let listSubCate = [...listCategory];
+            let listSubCate = [...categories];
 
             do{
-                listSubCate = indexActive[step] > -1 ? [...listSubCate[indexActive[step]].subList] : [];
+                listSubCate = indexActive[step] > -1 ? [...listSubCate[indexActive[step]].subCategories] : [];
                 step++;
             }while(step <= level);
 
-            if(!listSubCate.length > 0 && props.getProductCategory){
-                props.getProductCategory(getCategory());
-            }else if(props.getProductCategory){
-                props.getProductCategory([]);
+            if(!listSubCate.length > 0 && getProductCategory){
+                getProductCategory(getCategory());
+            }else if(getProductCategory){
+                getProductCategory([]);
             }
         }
         
@@ -820,12 +820,12 @@ function ListCategoryOption(props) {
 
         let level = indexActive.findIndex(item => item < 0) - 1;
         let step = 0;
-        let listSubCate = [...listCategory];
+        let listSubCate = [...categories];
 
         while(step <= level){
             
             let title = listSubCate[indexActive[step]].title;
-            listSubCate = [...listSubCate[indexActive[step]].subList];
+            listSubCate = [...listSubCate[indexActive[step]].subCategories];
             listProdCate.push(title);
             step++;
         }
@@ -836,15 +836,15 @@ function ListCategoryOption(props) {
     const renderListCategory = (listCategory, level) =>{
         let elmWidget = (<ListCategory>
             {
-                listCategory.map((item, index) =>{
-                    let lengthSub = item.subList.length;
+                listCategory.map((category, index) =>{
+                    let lengthSub = category.subCategories.length;
                     return (
                         <div 
-                            key = {index}
+                            key = {category._id}
                             onClick = {() => handleChoseCategory(index, level)}
-                            className = {indexActive[level] === index && "active"}
+                            className = {indexActive[level] === index ? "active" : ""}
                         >
-                            {item.title}
+                            {category.title}
 
                             {lengthSub > 0 && <span aria-hidden="true" className="arrow_carrot-right"></span>}
                             
@@ -863,12 +863,12 @@ function ListCategoryOption(props) {
 
         if(level >= 0){
             let step = 0;
-            let listOptions = listCategory[indexActive[step]].subList;            
+            let listOptions = categories[indexActive[step]].subCategories;            
 
             while(step <= level && listOptions.length > 0){                
                 elm.push(renderListCategory(listOptions, step + 1));
                 step++;
-                listOptions = indexActive[step] > -1 ? listOptions[indexActive[step]].subList : [];
+                listOptions = indexActive[step] > -1 ? listOptions[indexActive[step]].subCategories : [];
             }
         }
 
@@ -890,7 +890,7 @@ function ListCategoryOption(props) {
                 </WidgetFilter>
 
                 <WidgetListCategory>
-                    {renderListCategory(listCategory, 0)}
+                    {renderListCategory(categories, 0)}
                     {renderListLevel()}
                 </WidgetListCategory>  
             </div>

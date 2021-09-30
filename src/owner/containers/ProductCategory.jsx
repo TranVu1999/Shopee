@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import * as Yup from 'yup';
@@ -9,6 +9,9 @@ import {useHistory} from 'react-router-dom';
 import TitleContent from '../components/TitleContent';
 import InputLimitBox from '../components/InputLimitBox2';
 import ListCategoryOption from '../features/Product/ListCategoryOption';
+
+// API
+import productCategoryApi from '../../api/productCategoryAPI';
 
 const WidgetForm = styled.form`
     padding: 1.125rem 1.5rem;
@@ -43,8 +46,22 @@ function ProductCategory() {
         }
     });
     const [listProdCate, setListProdCate] = useState(false);
+    const [categories, setCategories] = useState([]);
     const history = useHistory();
 
+    // Effect
+    useEffect(() =>{
+        productCategoryApi.getAll()
+        .then(response =>{
+            console.log(response);
+            setCategories([
+                ...response.productCategories
+            ])
+        })
+        .catch(error =>{
+            console.log("product category: ", error)
+        })
+    }, []);
     
 
     // handle event
@@ -74,10 +91,16 @@ function ProductCategory() {
                 <WidgetRow className="mb-5 d-flex ">
                     <span>Tên sản phẩm:</span>
 
-                    <InputLimitBox control={control} name = "productName"/>
+                    <InputLimitBox 
+                        control={control} 
+                        name = "productName"
+                    />
                 </WidgetRow>
 
-                <ListCategoryOption getProductCategory = {getProductCategory}/>
+                <ListCategoryOption 
+                    categories = {categories}
+                    getProductCategory = {getProductCategory}
+                />
 
                 <button 
                     className = {listProdCate.length ? "shopee-primary-btn" : "shopee-primary-btn disabled"}

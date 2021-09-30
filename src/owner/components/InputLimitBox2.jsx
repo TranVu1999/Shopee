@@ -25,6 +25,7 @@ function InputLimitBox(props, ref) {
             <div className="input-box d-flex">
                 <input 
                     type = "text" 
+                    placeholder = "Nhập vào"
                     {...field}
                 />
                 <span>{field.value ? field.value.length : "0"}/{120}</span>
