@@ -82,7 +82,7 @@ const SaveButton = styled(DefaultButton)`
 `;
 
 WidgetAddInformation.propTypes = {
-    
+    optionalAttributes: PropTypes.array.isRequired,
 };
 
 function WidgetAddInformation(props) {
@@ -108,6 +108,7 @@ function WidgetAddInformation(props) {
     
     // data
     const productCategory = JSON.parse(localStorage.getItem("productCategory"));
+    const {optionalAttributes} = props;
 
     const {handleSubmit, control} = useForm({
         resolver: yupResolver(validationSchema),
@@ -282,27 +283,67 @@ function WidgetAddInformation(props) {
 
     const [product, setProduct] = useState({
         listPrice: []
-    })
+    });
+
+
+    console.log("Optional Attributes: ", optionalAttributes)
 
 
     // use effect
     useEffect(() =>{
-        function updateState(){
-            let stateTemp = {...fields};
-            for(let [key, value] of Object.entries(stateTemp)){
-                if(value.moreSelections){
-                    stateTemp[key] = {
-                        ...stateTemp[key], 
-                        arrIndexSelected: new Array(stateTemp[key].database.length).fill(false),
+        let fields = [];
+
+        for(let attribute of optionalAttributes){
+            let field = null; 
+            if(attribute.moreSelections){
+                field = {
+                    [attribute.nameInput]: {
+                        indexSelected: -1,
+                    }
+                }
+            }else{
+                field = {
+                    [attribute.nameInput]: {
+                        arrIndexSelected: new Array(attribute.database.length).fill(false)
                     }
                 }
             }
-            
-            setFields({...stateTemp});
-        }
-        updateState();
 
-    }, [])
+            field = {
+                ...field,
+                type: "mega-select-input",
+                label: attribute.title,
+                nameInput: attribute.nameInput,
+                moreSelections: attribute.nameInput,
+                database: attribute.database,
+                isExtended: attribute.isExtended,
+            }
+
+            fields.push(field);
+        }
+
+        console.log({fields})
+        setFields(fields);
+
+    }, [optionalAttributes]);
+
+    useEffect(() =>{
+        // function updateState(){
+        //     let stateTemp = {...fields};
+        //     for(let [key, value] of Object.entries(stateTemp)){
+        //         if(value.moreSelections){
+        //             stateTemp[key] = {
+        //                 ...stateTemp[key], 
+        //                 arrIndexSelected: new Array(stateTemp[key].database.length).fill(false),
+        //             }
+        //         }
+        //     }
+            
+        //     setFields({...stateTemp});
+        // }
+        // updateState();
+
+    }, []);
 
     // handle event
     const handleChoseOption = event =>{

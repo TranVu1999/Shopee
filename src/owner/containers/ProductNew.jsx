@@ -1,27 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, {useState, useEffect} from 'react';
 
 // Components
 import WidgetAddInformation from '../features/Product/WidgetAddInformation';
 
-const WidgetContent = styled.div``;
+// API
+import productCategoryAPI from './../../api/productCategoryAPI';
 
-const WidgetSidebar = styled.div`
-    width: 235px;
-    margin-left: 40px;
-`;
+function ProductNew() {
+    // Data
+    const [optionalAttributes, setOptionalAttributes] = useState([]);
 
-ProductNew.propTypes = {
-    
-};
 
-function ProductNew(props) {
+    // Effect
+    useEffect(() =>{
+        const fetchOptionalAttributes = async () =>{
+            const prodCatId = localStorage.getItem("prodCatId");
+
+            if(prodCatId){
+                const res = await productCategoryAPI.get(prodCatId, "skeleton-attribute");
+
+
+                if(res.success){
+                    const {skeletonAttribute} = res.productCategory;
+                    
+                    setOptionalAttributes(skeletonAttribute)
+                }
+            }
+        }
+
+        fetchOptionalAttributes();
+    }, []);
 
     return (
-        <WidgetContent className="owner-product-add">
-            <WidgetAddInformation/>
-        </WidgetContent>
+        <div className="owner-product-add">
+            <WidgetAddInformation 
+                optionalAttributes = {optionalAttributes}
+            />
+        </div>
     );
 }
 

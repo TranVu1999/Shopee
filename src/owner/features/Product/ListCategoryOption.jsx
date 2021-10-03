@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -775,7 +775,8 @@ function ListCategoryOption({categories, getProductCategory}) {
         },
     ]
 
-    const [indexActive, setIndexActive] = React.useState([-1, -1, -1, -1, -1]);
+    const [indexActive, setIndexActive] = useState([-1, -1, -1, -1, -1]);
+    const [prodCatId, setprodCatId] = useState(null);
 
     // effect 
     // check max level
@@ -792,7 +793,7 @@ function ListCategoryOption({categories, getProductCategory}) {
             }while(step <= level);
 
             if(!listSubCate.length > 0 && getProductCategory){
-                getProductCategory(getCategory());
+                getProductCategory(getCategory(), prodCatId);
             }else if(getProductCategory){
                 getProductCategory([]);
             }
@@ -802,7 +803,7 @@ function ListCategoryOption({categories, getProductCategory}) {
 
 
     // handle event
-    const handleChoseCategory = (index, level) =>{
+    const handleChoseCategory = (index, level, prodCatId) =>{
 
         let tempIndexActive = [...indexActive];
         tempIndexActive[level] = index;
@@ -812,6 +813,7 @@ function ListCategoryOption({categories, getProductCategory}) {
             tempIndexActive[i] = -1;
         }
         setIndexActive(tempIndexActive);
+        setprodCatId(prodCatId);
     }
 
     // functions
@@ -841,7 +843,7 @@ function ListCategoryOption({categories, getProductCategory}) {
                     return (
                         <div 
                             key = {category._id}
-                            onClick = {() => handleChoseCategory(index, level)}
+                            onClick = {() => handleChoseCategory(index, level, category._id)}
                             className = {indexActive[level] === index ? "active" : ""}
                         >
                             {category.title}
@@ -907,6 +909,7 @@ function ListCategoryOption({categories, getProductCategory}) {
                                     key = {prodCate}
                                     className="d-inline-flex align-items-center"
                                 >
+              
                                     {prodCate} 
                                     <span aria-hidden="true" className="arrow_carrot-right"></span>
                                 </li>

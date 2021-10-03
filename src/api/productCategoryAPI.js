@@ -6,6 +6,11 @@ const productCategoryApi = {
         const url = '/product-category';
         return axiosClient.get(url);
     },
+
+    get(id, type) {
+        const url = `/product-category/${id}/${type}`;
+        return axiosClient.get(url);
+    },
 }
 
 export default productCategoryApi;

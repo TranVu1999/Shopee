@@ -47,13 +47,13 @@ function ProductCategory() {
     });
     const [listProdCate, setListProdCate] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [prodCatId, setProdCatId] = useState(null);
     const history = useHistory();
 
     // Effect
     useEffect(() =>{
         productCategoryApi.getAll()
         .then(response =>{
-            console.log(response);
             setCategories([
                 ...response.productCategories
             ])
@@ -69,15 +69,16 @@ function ProductCategory() {
     const onHandleSubmit = data =>{
         if(setListProdCate.length){
             localStorage.setItem("productName", data.productName);
-            localStorage.setItem("productCategory", JSON.stringify(listProdCate))
+            localStorage.setItem("productCategory", JSON.stringify(listProdCate));
+            localStorage.setItem("prodCatId", prodCatId);
 
             history.push('/ban-hang/portal/product/new');
         }
-        
     }
 
-    const getProductCategory = listProdCate =>{
+    const getProductCategory = (listProdCate, prodCatId) =>{
         setListProdCate(listProdCate);
+        setProdCatId(prodCatId);
     }
 
     return (
