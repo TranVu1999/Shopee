@@ -171,3 +171,33 @@ button.shopee-primary-btn{
     }
 }
 
+
+
+div.custom-scrollbar{
+    /* width */
+    &::-webkit-scrollbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+
+        width: .375rem;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: transparent; 
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 15px; 
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #888; 
+    }
+}
+

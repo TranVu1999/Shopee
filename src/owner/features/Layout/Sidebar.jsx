@@ -18,32 +18,6 @@ const WidgetContent = styled.div`
     overflow-y: scroll;
     z-index: 100;
     line-height: 1.25rem;
-
-    /* width */
-    &::-webkit-scrollbar {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-
-        width: .5rem;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-        background: transparent; 
-    }
-    
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border-radius: 15px; 
-    }
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-        background: #888; 
-    }
 `;
 
 function Sidebar() {
@@ -135,7 +109,7 @@ function Sidebar() {
     ]
 
     return (
-        <WidgetContent className="bg-white">
+        <WidgetContent className="bg-white custom-scrollbar">
             <SidebarItem 
                 icon="https://cf.shopee.vn/file/c15905d5a6284687c4a6ad00d0feb511" 
                 span="Vận chuyển" 

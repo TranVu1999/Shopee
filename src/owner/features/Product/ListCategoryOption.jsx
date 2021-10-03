@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Components
+import Nodata from './../../components/NoData';
+
 // Theme
 import {BorderColor} from './../../theme';
-import { useEffect } from 'react';
+
 
 const WidgetContent = styled.div`
     .widget-list-cat{
@@ -836,7 +839,7 @@ function ListCategoryOption({categories, getProductCategory}) {
 
     // render
     const renderListCategory = (listCategory, level) =>{
-        let elmWidget = (<ListCategory>
+        let elmWidget = (<ListCategory className="custom-scrollbar">
             {
                 listCategory.map((category, index) =>{
                     let lengthSub = category.subCategories.length;
@@ -878,6 +881,7 @@ function ListCategoryOption({categories, getProductCategory}) {
     }
 
     const elmResultSelected = getCategory();
+    const lengthCat = categories.length;
 
     return (
         <WidgetContent>
@@ -892,8 +896,16 @@ function ListCategoryOption({categories, getProductCategory}) {
                 </WidgetFilter>
 
                 <WidgetListCategory>
-                    {renderListCategory(categories, 0)}
-                    {renderListLevel()}
+
+                    {!lengthCat && <Nodata/>}
+                    {lengthCat && (
+                        <>
+                            {renderListCategory(categories, 0)}
+                            {renderListLevel()}
+                        </>
+                    )}
+
+                    
                 </WidgetListCategory>  
             </div>
                       

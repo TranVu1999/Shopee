@@ -285,10 +285,6 @@ function WidgetAddInformation(props) {
         listPrice: []
     });
 
-
-    console.log("Optional Attributes: ", optionalAttributes)
-
-
     // use effect
     useEffect(() =>{
         let fields = [];
