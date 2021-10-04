@@ -83,14 +83,23 @@ InputImage.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
+    index: PropTypes.number,
+    onGetImage: PropTypes.func.isRequired,
 };
 
 InputImage.defaultProps = {
     label: "Ảnh bìa",
     required: false,
+    index: -1
 }
 
-function InputImage({label, required, name}) {
+function InputImage({
+    label, 
+    required, 
+    name,
+    index,
+    onGetImage
+}) {
     // Data
     const inputFile = React.useRef();
     const [image, setImage] = React.useState("");
@@ -106,11 +115,20 @@ function InputImage({label, required, name}) {
     const handleGetImage = event =>{
         const files = Array.from(event.target.files);
         setImage(URL.createObjectURL(files[0]));
+
+        if(onGetImage){
+            onGetImage({
+                index,
+                name: event.target.name,
+                value: files[0]
+            })
+        }
     }
 
     return (
         <WidgetContent>
             <input 
+                name = {name}
                 type="file" 
                 ref={inputFile} 
                 style={{display: "none"}}

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import * as Yup from 'yup';
 import {yupResolver } from '@hookform/resolvers/yup';
-import {useHistory} from 'react-router-dom';
 
 // Components
 import InputImage from './InputImage';
@@ -29,9 +28,7 @@ const WidgetContent = styled.form`
     }
 `;
 
-const GroupInput = styled.div`
-
-`;
+const GroupInput = styled.div``;
 
 const OptionalFields = styled.div``;
 
@@ -120,202 +117,45 @@ function WidgetAddInformation(props) {
             productInventory: 5
         }
     });
+
     const [isShowClassification, setIsShowClassification] = useState(false);
     const [isShowMorePrice, setIsShowMorePrice] = useState(false);
-    const [fields, setFields] = useState({
-        brand: {
-            type: "mega-select-input",
-            label: "*Thương hiệu",
-            nameInput: "brand",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "AAA JEANS",
-                "ABC",
-                "ADDA",
-                "ADORE DRESS",
-                "ADRIENNE VITTADINI",
-                "AFTERBEFORE",
-                "AFTF BASIC",
-                "Alice",
-                "Ameo",
-                "Anadi Home",
-                "Angelavic",
-                "Angelic Pretty",
-            ],
-            isExtended: true
-        },
-
-        originPlace: {
-            type: "mega-select-input",
-            label: "Xuất xứ",
-            nameInput: "originPlace",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "Indonesia",
-                "Nhật Bản",
-                "Hàn Quốc",
-                "Đài Loan",
-                "Việt Nam",
-                "Thái Lan "
-            ]
-        },
-        
-        material: {
-            type: "mega-select-input",
-            label: "Chất liệu",
-            nameInput: "material",
-            limitSelection: 5,
-            moreSelections: true,
-            database: [
-                "voan",
-                "chinos",
-                "Cotton",
-                "Denim",
-                "Lông vũ",
-                "Nỉ",
-                "Lông cừu",
-                "Nỉ mỏng",
-                "kaki",
-                "Đan",
-                "Ren",
-                "Da",
-            ],
-            arrIndexSelected: [],
-            isExtended: true,
-        },
-
-        coppedTop: {
-            type: "mega-select-input",
-            label: "Cropped Top",
-            nameInput: "coppedTop",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "Không",
-                "Có",
-            ],
-            isExtended: false,
-        },
-
-        petite: {
-            type: "mega-select-input",
-            label: "Petite",
-            nameInput: "petite",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "Không",
-                "Có",
-            ],
-        },
-
-        pattern: {
-            type: "mega-select-input",
-            label: "Mẫu",
-            nameInput: "pattern",
-            limitSelection: 5,
-            moreSelections: true,
-            database: [
-                "Họa tiết",
-                "Sọc caro",
-                "Hoa",
-                "Trơn",
-                "Chấm bi",
-                "In",
-                "Sọc",
-                "Nhuộm",
-            ],
-            arrIndexSelected: [],
-            isExtended: true,
-        },
-
-        season: {
-            type: "mega-select-input",
-            label: "Mùa",
-            nameInput: "season",
-            limitSelection: 5,
-            moreSelections: true,
-            database: [
-                "Mùa đông",
-                "Mùa hè",
-                "Mùa xuân",
-                "Mùa Thu",
-            ],
-            arrIndexSelected: [],
-        },
-
-        style: {
-            type: "mega-select-input",
-            label: "Phong cách",
-            nameInput: "style",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "Thể thao",
-                "Cơ bản",
-                "Boho",
-                "Tối giản",
-                "Hàn Quốc",
-                "Retro",
-                "sexy",
-                "Đường phố",
-                "Công sở",
-                "Cổ điển",
-            ],
-            isExtended: true,
-        },
-
-        shirtLength: {
-            type: "mega-select-input",
-            label: "Chiều dài áo",
-            nameInput: "shirtLength",
-            moreSelections: false,
-            indexSelected: -1,
-            database: [
-                "Dài",
-                "Đều đặn",
-            ]
-        },
-        
-    });
+    const [fields, setFields] = useState({});
 
     const [product, setProduct] = useState({
+        title: "",
+        arvatar: null,
+        images: [null, null, null, null, null, null, null, null],
+        video: "",
+        productAttributes: [],
         listPrice: []
     });
 
     // use effect
     useEffect(() =>{
-        let fields = [];
+        let fields = {};
 
         for(let attribute of optionalAttributes){
-            let field = null; 
-            if(attribute.moreSelections){
-                field = {
-                    [attribute.nameInput]: {
-                        indexSelected: -1,
-                    }
-                }
+            console.log({attribute});
+
+            if(!attribute.moreSelection){
+                fields[attribute.nameInput] = { indexSelected: -1 };
             }else{
-                field = {
-                    [attribute.nameInput]: {
-                        arrIndexSelected: new Array(attribute.database.length).fill(false)
-                    }
+                fields[attribute.nameInput] = {
+                    arrIndexSelected: new Array(attribute.database.length).fill(false)
                 }
             }
 
-            field = {
-                ...field,
+            fields[attribute.nameInput] = {
+                ...fields[attribute.nameInput],
                 type: "mega-select-input",
                 label: attribute.title,
                 nameInput: attribute.nameInput,
-                moreSelections: attribute.nameInput,
+                moreSelections: attribute.moreSelection,
                 database: attribute.database,
                 isExtended: attribute.isExtended,
+                limitSelection: attribute.limitSelection || 0
             }
-
-            fields.push(field);
         }
 
         console.log({fields})
@@ -348,6 +188,7 @@ function WidgetAddInformation(props) {
         for(let [key, value] of Object.entries(stateTemp)){
             if(value.nameInput === event.name){
                 // update for multi selections input
+
                 if(value.moreSelections){
                     let listSelected = value.arrIndexSelected.filter(item => item);
                     stateTemp[key].arrIndexSelected[event.index] = !stateTemp[key].arrIndexSelected[event.index];
@@ -355,6 +196,8 @@ function WidgetAddInformation(props) {
                     if(listSelected.length > stateTemp[key].limitSelection){
                         stateTemp[key].arrIndexSelected[event.index] = !stateTemp[key].arrIndexSelected[event.index];
                     }
+
+                    console.log( stateTemp[key])
 
                 }else{ // update for single selection input
                     stateTemp[key].indexSelected = event.index;
@@ -366,8 +209,11 @@ function WidgetAddInformation(props) {
         setFields({...stateTemp});
     }
 
-    const handleSubmitProductInfomation = product =>{
-        console.log({product})
+    const handleSubmitProductInfomation = prodForm =>{
+        console.log({prodForm})
+        console.log({product});
+        console.log({fields});
+
     }
 
     const handleNotSave = () =>{
@@ -375,6 +221,32 @@ function WidgetAddInformation(props) {
         newProduct.listPrice = [];
         setProduct(newProduct);
         setIsShowMorePrice(false);
+    }
+
+    const onHandleGetImage = image => {
+        const {value, name, index} = image;
+
+        switch (name){
+            case "avatar":
+                setProduct({
+                    ...product,
+                    avatar: value
+                });
+                break;
+
+            case "images":
+                const images = product.images;
+                images[index] = value;
+
+                setProduct({
+                    ...product,
+                    images
+                })
+                break;
+
+            default:
+                break;
+        }
     }
 
     // render
@@ -403,6 +275,20 @@ function WidgetAddInformation(props) {
         return elm;
     }
 
+    const renderInputImage = () =>{
+        return product.images.map((inputImage, index) =>{
+            return (
+                <InputImage 
+                    key = {index} 
+                    label = {`Hình ảnh ${index + 1}` }
+                    name = "images"
+                    index = {index}
+                    onGetImage = {onHandleGetImage}
+                />
+            );
+        });
+    }
+
     return (
         <WidgetContent onSubmit = {handleSubmit(handleSubmitProductInfomation)}>
 
@@ -414,15 +300,13 @@ function WidgetAddInformation(props) {
                     <div className="label">Hình ảnh sản phẩm</div>
 
                     <div className="flex-fill d-flex flex-wrap" style = {{gap: '12px'}}>
-                        <InputImage required/>
-                        <InputImage label="Hình ảnh 1" name="images"/>
-                        <InputImage label="Hình ảnh 2" name="images"/>
-                        <InputImage label="Hình ảnh 3" name="images"/>
-                        <InputImage label="Hình ảnh 4" name="images"/>
-                        <InputImage label="Hình ảnh 5" name="images"/>
-                        <InputImage label="Hình ảnh 6" name="images"/>
-                        <InputImage label="Hình ảnh 7" name="images"/>
-                        <InputImage label="Hình ảnh 8" name="images"/>
+                        <InputImage 
+                            required 
+                            name = "avatar" 
+                            index = {-1}
+                            onGetImage = {onHandleGetImage}
+                        />
+                        {renderInputImage()}                        
                     </div>
                 </div>
 

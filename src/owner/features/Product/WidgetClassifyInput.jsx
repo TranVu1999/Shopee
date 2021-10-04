@@ -202,6 +202,7 @@ function WidgetClassifyInput(props) {
             }
         }
 
+        
         setTablePrice(tempTablePrice);
 
     }, [listClassify])
