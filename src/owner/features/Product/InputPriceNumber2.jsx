@@ -17,7 +17,7 @@ const WidgetContent = styled.div`
 
 function InputPriceNumber(props) {
     // validation
-    const {field, formState} = useController(props);
+    const {field} = useController(props);
    
 
     return (

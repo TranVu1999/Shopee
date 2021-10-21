@@ -80,6 +80,7 @@ const SaveButton = styled(DefaultButton)`
 
 WidgetAddInformation.propTypes = {
     optionalAttributes: PropTypes.array.isRequired,
+    handleSubmitProduct: PropTypes.func.isRequired,
 };
 
 function WidgetAddInformation(props) {
@@ -99,13 +100,17 @@ function WidgetAddInformation(props) {
                     .positive("Giá sản phẩm là một số dương"),
         productInventory: Yup.number()
                     .required("Không được để trống trường này")
-                    .min(5, "Bạn phải có ít nhất 5 sản phẩm")
-                    .positive("Dữ liệ trường này phải là một số dương"),        
+                    .min(50, "Bạn phải có ít nhất 50 sản phẩm")
+                    .positive("Dữ liệu trường này phải là một số dương"),   
+        productSKU: Yup.string()
+                    .required("Không được để trống trường này")
+                    .min(5, "Mã sản phẩm có ít nhất 5 ký tự")
+                    .max(15, "Mã sản phẩm có tối đa 15 ký tự"),    
     });
     
     // data
     const productCategory = JSON.parse(localStorage.getItem("productCategory"));
-    const {optionalAttributes} = props;
+    const {optionalAttributes, handleSubmitProduct} = props;
 
     const {handleSubmit, control} = useForm({
         resolver: yupResolver(validationSchema),
@@ -114,7 +119,8 @@ function WidgetAddInformation(props) {
             productDescription: "",
             productCategory,
             productPrice: 1000,
-            productInventory: 5
+            productInventory: 50, 
+            productSKU: ""
         }
     });
 
@@ -124,10 +130,14 @@ function WidgetAddInformation(props) {
 
     const [product, setProduct] = useState({
         title: "",
-        arvatar: null,
+        avartar: null,
         images: [null, null, null, null, null, null, null, null],
         video: "",
-        productAttributes: [],
+        listPrice: [],
+        categories: [], 
+        sku: "",
+        situation: "mới",
+        classification: null,
         listPrice: []
     });
 
@@ -136,7 +146,6 @@ function WidgetAddInformation(props) {
         let fields = {};
 
         for(let attribute of optionalAttributes){
-            console.log({attribute});
 
             if(!attribute.moreSelection){
                 fields[attribute.nameInput] = { indexSelected: -1 };
@@ -157,29 +166,9 @@ function WidgetAddInformation(props) {
                 limitSelection: attribute.limitSelection || 0
             }
         }
-
-        console.log({fields})
         setFields(fields);
 
     }, [optionalAttributes]);
-
-    useEffect(() =>{
-        // function updateState(){
-        //     let stateTemp = {...fields};
-        //     for(let [key, value] of Object.entries(stateTemp)){
-        //         if(value.moreSelections){
-        //             stateTemp[key] = {
-        //                 ...stateTemp[key], 
-        //                 arrIndexSelected: new Array(stateTemp[key].database.length).fill(false),
-        //             }
-        //         }
-        //     }
-            
-        //     setFields({...stateTemp});
-        // }
-        // updateState();
-
-    }, []);
 
     // handle event
     const handleChoseOption = event =>{
@@ -197,8 +186,6 @@ function WidgetAddInformation(props) {
                         stateTemp[key].arrIndexSelected[event.index] = !stateTemp[key].arrIndexSelected[event.index];
                     }
 
-                    console.log( stateTemp[key])
-
                 }else{ // update for single selection input
                     stateTemp[key].indexSelected = event.index;
                 }
@@ -210,17 +197,48 @@ function WidgetAddInformation(props) {
     }
 
     const handleSubmitProductInfomation = prodForm =>{
-        console.log({prodForm})
-        console.log({product});
-        console.log({fields});
 
-    }
+        const prodInfo = {
+            ...product,
+            title: prodForm.productName,
+            price: prodForm.productPrice,
+            inventory: prodForm.productInventory,
+            description: prodForm.productDescription,
+            categories: prodForm.productCategory,
+            sku: prodForm.productSKU, 
+            optionalAttributes: {}
+        }
 
-    const handleNotSave = () =>{
-        let newProduct = {...product};
-        newProduct.listPrice = [];
-        setProduct(newProduct);
-        setIsShowMorePrice(false);
+        for(let optAttrKey in fields){
+            const {
+                moreSelections, 
+                indexSelected, 
+                arrIndexSelected,
+                database
+            } = fields[optAttrKey];
+
+            if(moreSelections){
+                prodInfo.optionalAttributes[optAttrKey] = [];
+
+                let length = arrIndexSelected.length;
+                for(let idx = 0; idx < length; idx++){
+                    if(arrIndexSelected[idx]){
+                        prodInfo.optionalAttributes[optAttrKey].push(database[idx]);
+                    }
+                }
+
+            }else{
+                prodInfo.optionalAttributes[optAttrKey] = "";
+                if(indexSelected !== -1){
+                    prodInfo.optionalAttributes[optAttrKey] = database[indexSelected] 
+                }
+            }
+        }
+
+        setProduct(prodInfo);
+        if(handleSubmitProduct){
+            handleSubmitProduct(prodInfo)
+        }
     }
 
     const onHandleGetImage = image => {
@@ -230,7 +248,7 @@ function WidgetAddInformation(props) {
             case "avatar":
                 setProduct({
                     ...product,
-                    avatar: value
+                    avartar: value
                 });
                 break;
 
@@ -247,6 +265,28 @@ function WidgetAddInformation(props) {
             default:
                 break;
         }
+    }
+
+    const onHandleGetClassify = classifyData =>{
+        setProduct({
+            ...product,
+            classification: classifyData
+        })
+    }
+
+    // Handle section promo price
+    const handleNotSave = () =>{
+        let newProduct = {...product};
+        newProduct.listPrice = [];
+        setProduct(newProduct);
+        setIsShowMorePrice(false);
+    }
+
+    const handleGetPromo = listPrice =>{
+        setProduct({
+            ...product,
+            listPrice
+        })
     }
 
     // render
@@ -420,7 +460,11 @@ function WidgetAddInformation(props) {
                 )}
                 
 
-                {isShowClassification && <div className="flex-fill"><WidgetClassifyInput/></div>}
+                {isShowClassification && <div className="flex-fill">
+                    <WidgetClassifyInput
+                        onHandleGetClassify = {onHandleGetClassify}
+                    />
+                </div>}
 
                 
 
@@ -439,6 +483,7 @@ function WidgetAddInformation(props) {
 
                     {isShowMorePrice && <WidgetGroupPrice 
                         handleNotSave = {handleNotSave}
+                        handleGetPromo = {handleGetPromo}
                     />}
                     
                 </div>

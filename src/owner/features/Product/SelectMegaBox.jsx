@@ -199,9 +199,16 @@ function SelectMegaBox({
     // handle event
     const handleChose = index =>{
         if(!handleChoseOption) return;
-        if(!arrIndexSelected[index] && amountSelected === limit) return;
 
-        handleChoseOption({name, index});
+        if(limit && !arrIndexSelected[index] && amountSelected === limit) return;
+
+        if(limit){
+            if(!arrIndexSelected[index] && amountSelected === limit) return;
+
+            handleChoseOption({name, index});
+        }else{
+            handleChoseOption({name, index});
+        }
     }
 
     // render
@@ -213,7 +220,7 @@ function SelectMegaBox({
                     <WidgetOption 
                         key = {item}
                         onClick = {() => handleChose(index)}
-                        className = {indexSelected ? "active" : ""}
+                        className = {indexSelected === index ? "active" : ""}
                     >{item}</WidgetOption>
                 );
             })

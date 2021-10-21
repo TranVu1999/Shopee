@@ -131,9 +131,6 @@ function ShopProfile() {
                 console.log({shopInfo})
             })
             .catch(err => console.log("Failed Upload"));
-    
-            
-            // shopAPI.update(shopInfo)
         }else{
             console.log("Thiếu hình ảnh")
         }

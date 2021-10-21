@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Components
+import InputImage from './InputImage';
 import InputLimitBox from '../../components/InputLimitBox';
 import InputBox from '../../components/InputBox';
 import InputPriceNumber from './InputPriceNumber';
@@ -133,15 +134,19 @@ const WidgetTablePrice = styled.div`
     
 `;
 
+const WidgetClassifyImage = styled.div`
+    gap: .5rem;
+`;
+
 // Icons
 const iconTrash = <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fillRule="nonzero"><path d="M14.516 3.016h-4v-1a.998.998 0 0 0-.703-.955.99.99 0 0 0-.297-.045h-3a.998.998 0 0 0-.955.703.99.99 0 0 0-.045.297v1h-4a.5.5 0 1 0 0 1h1v10a.998.998 0 0 0 .703.955.99.99 0 0 0 .297.045h9a.998.998 0 0 0 .955-.703.99.99 0 0 0 .045-.297v-10h1a.5.5 0 1 0 0-1zm-8-1h3v1h-3v-1zm6 12h-9v-10h9v10z"></path><path d="M5.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5zM8.016 12.016a.5.5 0 0 0 .5-.5v-5a.5.5 0 1 0-1 0v5a.5.5 0 0 0 .5.5zM10.516 12.016a.5.5 0 0 0 .5-.5v-4a.5.5 0 1 0-1 0v4a.5.5 0 0 0 .5.5z"></path></g></svg>
 
 
 WidgetClassifyInput.propTypes = {
-    
+    onHandleGetClassify: PropTypes.func.isRequired,
 };
 
-function WidgetClassifyInput(props) {
+function WidgetClassifyInput({onHandleGetClassify}) {
     // Data
     const [listClassify, setListClassify] = useState({
         first: {
@@ -149,7 +154,8 @@ function WidgetClassifyInput(props) {
             limit: 14,
             isOpen: true,
             classifyName: "",
-            listType: [""]
+            listType: [""],
+            images: [null]
         },
         second: {
             label: "Nhóm phân loại 2",
@@ -169,6 +175,7 @@ function WidgetClassifyInput(props) {
             inventory: 0
         }
     ]);
+
 
     // Effect
     useEffect(() =>{
@@ -201,11 +208,31 @@ function WidgetClassifyInput(props) {
                 
             }
         }
-
         
         setTablePrice(tempTablePrice);
 
-    }, [listClassify])
+    }, [listClassify]);
+
+    useEffect(() =>{
+        if(!onHandleGetClassify) return;
+
+        const classifies = {
+            first: {
+                title: listClassify.first.classifyName,
+                types: listClassify.first.listType,
+                images: listClassify.first.images,
+            },
+            second: {
+                title: listClassify.second.classifyName,
+                types: listClassify.second.listType,
+            }
+        };
+
+        onHandleGetClassify({
+            classifies: {...classifies},
+            tablePrice: {...tablePrice}
+        })
+    }, [listClassify, tablePrice]);
 
     // functions
     const resetForm = (key) =>{
@@ -265,6 +292,10 @@ function WidgetClassifyInput(props) {
     const addNewTypeOfClassify = classifyKey =>{
         let tempState = {...listClassify};
         tempState[classifyKey].listType.push("");
+
+        if(classifyKey === 'first'){
+            tempState[classifyKey].images.push(null);
+        }
         setListClassify(tempState);
     }
 
@@ -299,9 +330,7 @@ function WidgetClassifyInput(props) {
             secondTypeName,
             type,
             value
-        } = event;
-
-        
+        } = event;        
 
         let tempTablePrice = [...tablePrice];        
 
@@ -328,6 +357,15 @@ function WidgetClassifyInput(props) {
             }
             setTablePrice(tempTablePrice);
         }
+    }
+
+    const onHandleGetImage = image => {
+        const {value, index} = image;
+        let tempState = {...listClassify};
+        tempState.first.images[index] = value;
+        
+        setListClassify(tempState)
+        
     }
 
     // render
@@ -473,7 +511,7 @@ function WidgetClassifyInput(props) {
     }
 
     const renderSubRow = (firstClassifyName) =>{
-        return listClassify.second.listType.map(item =>{
+        return listClassify.second.listType.map((item, index) =>{
             let verify = {
                 firstTypeName: firstClassifyName,
                 secondTypeName: item,
@@ -490,8 +528,21 @@ function WidgetClassifyInput(props) {
                             onHandleChange = {onHandleGetValueTable}
                         />
                     </div>
-                    <div className="inventory"><InputBox/></div>
-                    <div className="sku-classify"><InputBox/></div>
+                    <div className="inventory">
+                            <InputBox
+                                verify = {{...verify, type: "inventory"}}
+                                value = {tablePrice[index] ? tablePrice[index].inventory : 0}
+                                onHandleChange = {onHandleGetValueTable}
+                            />
+                        </div>
+
+                        <div className="sku-classify">
+                            <InputBox
+                                verify = {{...verify, type: "sku"}}
+                                value = {tablePrice[index] ? tablePrice[index].sku : 0}
+                                onHandleChange = {onHandleGetValueTable}
+                            />
+                        </div>
                 </div>
             );
         })
@@ -544,7 +595,20 @@ function WidgetClassifyInput(props) {
         })
     }
 
-    
+    const renderInputImage = () =>{
+        const {images, listType} = listClassify.first;
+        return images.map((image, index) =>{
+            return (
+                <InputImage 
+                    key = {index}
+                    label = {listType[index] || "Phân loại..." }
+                    name = "images" 
+                    index = {index}
+                    onGetImage = {onHandleGetImage}
+                />
+            );
+        })
+    }
 
     return (
         <WidgetContent>
@@ -593,6 +657,15 @@ function WidgetClassifyInput(props) {
                     </div>
                     
                 </WidgetTablePrice>
+            </div>
+
+            {/* Image */}
+            <div className="widget-input-row">
+                <div className="label">{listClassify.first.classifyName || "Nhóm phân loại 1"}</div>
+
+                <WidgetClassifyImage className="d-flex flex-fill">
+                    {renderInputImage()}
+                </WidgetClassifyImage>
             </div>
         </WidgetContent>
     );

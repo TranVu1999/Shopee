@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -71,9 +71,10 @@ const Foot = styled.div`
 
 WidgetGroupPrice.propTypes = {
     handleNotSave: PropTypes.func.isRequired,
+    handleGetPromo: PropTypes.func.isRequired,
 };
 
-function WidgetGroupPrice({handleNotSave}) {
+function WidgetGroupPrice({handleNotSave, handleGetPromo}) {
     // data
     const [listPrice, setListPrice] = useState([
         {
@@ -87,6 +88,13 @@ function WidgetGroupPrice({handleNotSave}) {
         index: 0,
         type: "from"
     });
+
+    // Effect
+    useEffect(() =>{
+        if(!handleGetPromo || error.message) return;
+
+        handleGetPromo(listPrice);
+    }, [listPrice])
 
     // handle event
     const handleAddNewRange = () =>{
@@ -131,7 +139,6 @@ function WidgetGroupPrice({handleNotSave}) {
         newListPrice.splice(index, 1);
         setListPrice(newListPrice);
     }
-
 
     // render
     const renderListPrice = () =>{

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import {useController} from 'react-hook-form';
 
 function InputBox(props, ref) {
     // validate
-    const {field, fieldState} = useForm(props);
+    const {field} = useController(props);
     
 
     return (

@@ -36,9 +36,11 @@ const WidgetAddImageButton = styled.div`
     height: 100%;
     border-radius: 4px;
 
-    button{
-        display: block;
-        width: 100%;
+    div.btn-add{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         height: 100%;
         font-size: 1.5rem;
         color: #1791f2;
@@ -61,7 +63,7 @@ const WidgetButtonUpdate = styled.div`
     width: 100%;
     background-color: rgba(0,0,0,.5);
 
-    button{
+    div{
         display: flex;
         align-items: center;
         justify-content: center;
@@ -139,14 +141,14 @@ function InputImage({
                 {image && <WidgetImage image = {image}/>}
 
                 {image && <WidgetButtonUpdate className="align-items-center justify-content-center width-button-edit">
-                    <button><span aria-hidden="true" className="icon_pencil-edit"></span></button>
-                    <button><span aria-hidden="true" className="icon_trash_alt"></span></button>
+                    <div><span aria-hidden="true" className="icon_pencil-edit"></span></div>
+                    <div><span aria-hidden="true" className="icon_trash_alt"></span></div>
                 </WidgetButtonUpdate>}                
                 
                 {!image && <WidgetAddImageButton>
-                    <button
+                    <div className="btn-add"
                         onClick = {handleOpenInputFile}
-                    ><span aria-hidden="true" className="icon_plus_alt2"></span></button>
+                    ><span aria-hidden="true" className="icon_plus_alt2"></span></div>
                 </WidgetAddImageButton>}
                 
 
