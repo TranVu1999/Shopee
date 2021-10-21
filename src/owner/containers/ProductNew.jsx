@@ -36,8 +36,73 @@ function ProductNew() {
 
     // Handle event
     const handleSubmitProduct = product =>{
+        let data = {
+            ...product,
+            avatar: "",
+            images: [],
+            video: ""
+        };
+
+        const promises = [];
+        if(product.avatar){
+            promises.push(...uploadImages(
+                [product.avatar], url =>{
+                    data.avatar = url;
+                }
+            ));
+        }
+
         
-        console.log({product});
+        const prodImages = product.images.filter(img => img)
+        promises.push(...uploadImages(
+            prodImages,
+            url => {
+                data.images.push(url);
+            }
+        ));
+
+        if(product.classification && product.classification.first.images.length){
+            data = {
+                ...data,
+                classification: {
+                    ...product.classification,
+                    classifies: {
+                        ...product.classification.classifies,
+                        first: {
+                            ...product.classification.classifies.first,
+                            images: []
+                        }
+                    }
+                }
+            }
+
+            const classifyImages = product.classification.first.images.filter(img => img)
+            promises.push(...uploadImages(
+                classifyImages,
+                url => {
+                    data.classification.classifies.first.images.push(url);
+                }
+            ));
+        }
+
+        if(product.video){
+            promises.push(...uploadImages(
+                [product.video]
+            ), url =>{
+                data.video = url;
+            })
+        }
+
+        if(promises.length){
+            Promise.all([...promises])
+            .then(() => {
+                console.log({data});
+            })
+            .catch(err => console.log("Failed Upload"));
+        }else{
+            console.log("Thiếu hình ảnh")
+        }
+
     }
 
     return (

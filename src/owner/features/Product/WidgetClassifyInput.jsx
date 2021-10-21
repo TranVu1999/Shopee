@@ -330,12 +330,13 @@ function WidgetClassifyInput({onHandleGetClassify}) {
             secondTypeName,
             type,
             value
-        } = event;        
+        } = event;   
+        
+        
 
         let tempTablePrice = [...tablePrice];        
 
         if(!listClassify.second.isOpen && firstTypeName){   
-                    
             for(let row of tempTablePrice){
                 
                 if(row.firstClassifyName === firstTypeName){
@@ -346,7 +347,9 @@ function WidgetClassifyInput({onHandleGetClassify}) {
 
             setTablePrice(tempTablePrice);
         }else if(firstTypeName && secondTypeName){
+            
             for(let row of tempTablePrice){
+                
                 if(
                     row.firstClassifyName === firstTypeName && 
                     row.secondClassifyName === secondTypeName
@@ -531,7 +534,7 @@ function WidgetClassifyInput({onHandleGetClassify}) {
                     <div className="inventory">
                             <InputBox
                                 verify = {{...verify, type: "inventory"}}
-                                value = {tablePrice[index] ? tablePrice[index].inventory : 0}
+                                value = {tablePrice[getIndexRowTablePrice(firstClassifyName, item)] ? tablePrice[getIndexRowTablePrice(firstClassifyName, item)].inventory : 0}
                                 onHandleChange = {onHandleGetValueTable}
                             />
                         </div>
@@ -539,7 +542,7 @@ function WidgetClassifyInput({onHandleGetClassify}) {
                         <div className="sku-classify">
                             <InputBox
                                 verify = {{...verify, type: "sku"}}
-                                value = {tablePrice[index] ? tablePrice[index].sku : 0}
+                                value = {tablePrice[getIndexRowTablePrice(firstClassifyName, item)] ? tablePrice[getIndexRowTablePrice(firstClassifyName, item)].sku : 0}
                                 onHandleChange = {onHandleGetValueTable}
                             />
                         </div>

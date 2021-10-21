@@ -130,7 +130,7 @@ function WidgetAddInformation(props) {
 
     const [product, setProduct] = useState({
         title: "",
-        avartar: null,
+        avatar: null,
         images: [null, null, null, null, null, null, null, null],
         video: "",
         listPrice: [],
@@ -248,7 +248,7 @@ function WidgetAddInformation(props) {
             case "avatar":
                 setProduct({
                     ...product,
-                    avartar: value
+                    avatar: value
                 });
                 break;
 

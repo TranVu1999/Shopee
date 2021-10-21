@@ -21,7 +21,7 @@ export const uploadImages = (images, setUrls) =>{
                 .child(image.name)
                 .getDownloadURL()
                 .then(url =>{
-                    setUrls(url)
+                    setUrls(url);
                 })
             }
         )
