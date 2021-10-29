@@ -1,32 +1,58 @@
-import {storage} from './../config/firebase-config';
+import firebase from "./../config/firebase-config";
 
-export const uploadImages = (images, setUrls) =>{
-    const promises = [];
+export const uploadImages = (images, setUrls) => {
+  const promises = [];
 
-    images.map(image =>{
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
-        
-        promises.push(uploadTask);
+  images.forEach((image) => {
+    const uploadTask = firebase.storage.ref(`images/${image.name}`).put(image);
 
-        uploadTask.on(
-            "state-changed",
-            snapshot => {},
-            error =>{
-                console.log("upload image", error)
-            },
+    promises.push(uploadTask);
 
-            async () =>{
-                await storage
-                .ref("images")
-                .child(image.name)
-                .getDownloadURL()
-                .then(url =>{
-                    setUrls(url);
-                })
-            }
-        )
-    })
+    uploadTask.on(
+      "state-changed",
+      (snapshot) => {},
+      (error) => {
+        console.log("upload image", error);
+      },
 
-    return promises;
-    
-}
+      async () => {
+        await firebase.storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrls(url);
+          });
+      }
+    );
+  });
+
+  return promises;
+};
+
+
+export const uploadImages2 = async (image, setUrls) => {
+ 
+    const uploadTask = firebase.storage.ref(`images/${image.name}`).put(image);
+
+
+    uploadTask.on(
+        "state-changed",
+        (snapshot) => {},
+        (error) => {
+            console.log("upload image", error);
+        },
+
+        () => {
+          firebase.storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+                setUrls(url);
+            });
+        }
+    );
+
+    return uploadTask;
+  };

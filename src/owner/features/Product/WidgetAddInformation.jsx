@@ -131,6 +131,7 @@ function WidgetAddInformation(props) {
     const [product, setProduct] = useState({
         title: "",
         avatar: null,
+        tableSize: null,
         images: [null, null, null, null, null, null, null, null],
         video: "",
         listPrice: [],
@@ -261,7 +262,12 @@ function WidgetAddInformation(props) {
                     images
                 })
                 break;
-
+            case "tableSize": 
+                setProduct({
+                    ...product,
+                    [name]: value
+                });
+                break;
             default:
                 break;
         }
@@ -486,6 +492,19 @@ function WidgetAddInformation(props) {
                         handleGetPromo = {handleGetPromo}
                     />}
                     
+                </div>
+
+                {/* Price */}
+                <div className="widget-input-row align-items-center">
+                    <div className="label">Bảng quy đổi kích cỡ</div>
+
+                    <div className="w-50">
+                        <InputImage 
+                            name = "tableSize" 
+                            label = ""
+                            onGetImage = {onHandleGetImage}
+                        />
+                    </div>
                 </div>
             </GroupInput>
 
