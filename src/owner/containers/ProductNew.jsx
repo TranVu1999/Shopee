@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Components
 import WidgetAddInformation from '../features/Product/WidgetAddInformation';
 
 // Module 
-import {uploadImages2} from './../../utils/firebase';
 import firebase from "./../../config/firebase-config";
 
 // API
 import productCategoryAPI from './../../api/productCategoryAPI';
 import productApi from '../../api/productAPI';
+import Loading from '../features/Layout/Loading';
 
 function ProductNew() {
     // Data
+    const [isLoading, setIsLoading] = useState(false);
+
     const [optionalAttributes, setOptionalAttributes] = useState([]);
 
     const [amountImageUploaded, setAmountImageUploaded] = useState(0);
@@ -42,34 +46,48 @@ function ProductNew() {
     }, []);
 
     useEffect(() =>{
+        const prepareData = function() {
+            const data = {
+                ...newProduct,
+                avatar: imageAsUrl.filter(img => img.key === "avatar")[0].imageAsUrl,
+                images: imageAsUrl.filter(img => img.key === "images").map(img => img.imageAsUrl),
+            }
+
+            const tableSizeImageUrl = imageAsUrl.filter(img => img.key === "tableSize");
+            if(tableSizeImageUrl.length) {
+                data.tableSize = tableSizeImageUrl[0].imageAsUrl
+            }
+
+            const classificationImageAsUrl = imageAsUrl.filter(img => img.key === "classifications");
+            if(classificationImageAsUrl.length) {
+                data.classification.classifies.first.images = classificationImageAsUrl.map(img => img.imageAsUrl);
+            }
+
+            productApi.add(data)
+            .then(res => {
+                if(res.success){
+                    setIsLoading(false);
+                    toast.dismiss();
+                    toast.success("Thêm thành công!");
+
+                    console.log(res.product)
+                }
+            })
+            .catch(err => {
+                toast.dismiss();
+                toast.error("Thêm thất bại!");
+                console.log(err);
+            })
+        }
+
         const amountImage = imageAsUrl.length
         if(amountImage && amountImageUploaded === amountImage){
-            console.log({newProduct});
-            console.log(imageAsUrl);
+            prepareData();
         }
     }, [imageAsUrl]);
 
 
-    // Function
-
-    const uploadImage = image =>{
-        return new Promise(function (resolve, reject) {
-            var storageRef = firebase.storage().ref("images/" + image.name);
-    
-            //Upload file
-            var task = storageRef.put(image);
-    
-            //Update progress bar
-            task.on('state_changed',
-                (snapshot) => {},
-                (err) => {},
-                () => {
-                    var downloadURL = task.snapshot.downloadURL;
-                    console.log({downloadURL});
-                }
-            );
-        });
-    }
+    // Function    
     const prepareData = plainData =>{
         const {avatar, images, tableSize} = plainData;
         let listImage = [
@@ -102,6 +120,7 @@ function ProductNew() {
             }
         }
 
+        setIsLoading(true);
         setAmountImageUploaded(listImage.length);
 
         let storage = firebase.storage();
@@ -142,6 +161,10 @@ function ProductNew() {
                 optionalAttributes = {optionalAttributes}
                 handleSubmitProduct = {handleSubmitProduct}
             />
+            
+            {isLoading && <Loading/>}
+            <ToastContainer autoClose={8000} />
+            
         </div>
     );
 }
