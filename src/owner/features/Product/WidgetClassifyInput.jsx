@@ -76,7 +76,7 @@ const WidgetApplyAll = styled.div`
 
     
 
-    button{ 
+    div.shopee-primary-btn{ 
         margin-left: .75rem;
     }
 `;
@@ -175,6 +175,12 @@ function WidgetClassifyInput({onHandleGetClassify}) {
             inventory: 0
         }
     ]);
+
+    const [applyAll, setApplyAll] = useState({
+        price: 1000,
+        inventory: 50,
+        sku: ""
+    })
 
 
     // Effect
@@ -369,6 +375,25 @@ function WidgetClassifyInput({onHandleGetClassify}) {
         
         setListClassify(tempState)
         
+    }
+
+    const handleUpdateAllChange = event => {
+        const {name, value} = event;
+        setApplyAll({
+            ...applyAll,
+            [name]: value
+        })
+    }
+
+    const handleUpdateAllSubmit = () => {
+        let tempTablePrice = [...tablePrice];
+        for(let key in applyAll) {
+            for(let rowPrice of tempTablePrice) {
+                rowPrice[key] = applyAll[key];
+            }
+        }
+
+        setTablePrice(tempTablePrice);
     }
 
     // render
@@ -624,20 +649,35 @@ function WidgetClassifyInput({onHandleGetClassify}) {
                 <WidgetApplyAll className="flex-fill d-flex">
                     <div className="d-flex group-input-apply-all">
                         <div className="flex-fill">
-                            <InputPriceNumber/>
+                            <InputPriceNumber
+                                verify = {{name: "price"}}
+                                onHandleChange = {handleUpdateAllChange}
+                                value = {applyAll.price}
+                            />
                         </div>
                         
                         <div className="flex-fill">
-                            <InputBox large/>
+                            <InputBox 
+                                large 
+                                verify = {{name: "inventory"}}
+                                onHandleChange = {handleUpdateAllChange}
+                                value = {applyAll.inventory}
+                            />
                         </div>
 
                         <div className="flex-fill">
-                            <InputBox large/>
+                            <InputBox 
+                                large 
+                                verify = {{name: "sku"}}
+                                onHandleChange = {handleUpdateAllChange}
+                                value = {applyAll.sku}
+                            />
                         </div>
-                    </div>
-
-                    <button className="shopee-primary-btn">Áp dụng cho tất cả phân loại</button>
-                    
+                    </div>   
+                    <div 
+                        onClick = {handleUpdateAllSubmit}
+                        className="shopee-primary-btn"
+                    >Áp dụng cho tất cả phân loại</div>               
                 </WidgetApplyAll>
             </div>
 

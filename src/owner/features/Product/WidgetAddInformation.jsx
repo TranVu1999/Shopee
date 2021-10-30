@@ -138,14 +138,12 @@ function WidgetAddInformation(props) {
         categories: [], 
         sku: "",
         situation: "mới",
-        classification: null,
-        listPrice: []
+        classification: null
     });
 
     // use effect
     useEffect(() =>{
         let fields = {};
-
         for(let attribute of optionalAttributes){
 
             if(!attribute.moreSelection){
@@ -155,7 +153,7 @@ function WidgetAddInformation(props) {
                     arrIndexSelected: new Array(attribute.database.length).fill(false)
                 }
             }
-
+            
             fields[attribute.nameInput] = {
                 ...fields[attribute.nameInput],
                 type: "mega-select-input",
@@ -298,6 +296,7 @@ function WidgetAddInformation(props) {
     // render
     const renderOptionalFields = () =>{
         let elm = [];
+        console.log({fields})
         for(let [key, value] of Object.entries(fields)){
             elm.push(
                 <div className="w-50 widget-input-row align-items-center" key = {key}>

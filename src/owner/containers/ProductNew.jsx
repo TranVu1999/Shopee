@@ -36,7 +36,6 @@ function ProductNew() {
 
                 if(res.success){
                     const {skeletonAttribute} = res.productCategory;
-                    
                     setOptionalAttributes(skeletonAttribute)
                 }
             }
