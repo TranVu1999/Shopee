@@ -7,8 +7,6 @@ import Loading from './user/feature/Layout/Loading';
 const OwnerRoll = lazy(() => import("./owner"));
 const UserRoll = lazy(() => import("./user"));
 
-
-
 function App() {
   return (
     <div className="App">

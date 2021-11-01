@@ -1,5 +1,4 @@
-import React, {Suspense} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 // Components
@@ -9,10 +8,6 @@ import Header from './../feature/Layout/Header';
 // Others
 import routes from './routes';
 
-
-Layout.propTypes = {
-    
-};
 
 function Layout(props) {
     console.log(props);

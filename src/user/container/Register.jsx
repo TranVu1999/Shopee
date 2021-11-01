@@ -31,7 +31,13 @@ function Login(props) {
     // handle event
     // validate email at client
     const handleLogin = async data =>{
-        if(data.socialToken) {
+        
+        if(!Validate.email(data.email)){
+            setLoginNotify({
+                ...loginNotify,
+                indexActive: 1
+            })
+        }else{
             try{
                 const res = await authAPI.login(data);
     
@@ -47,30 +53,6 @@ function Login(props) {
                 
             }catch(err){
                 console.log("login err", err)
-            }
-        } else {
-            if(!Validate.email(data.email)){
-                setLoginNotify({
-                    ...loginNotify,
-                    indexActive: 1
-                })
-            }else{
-                try{
-                    const res = await authAPI.login(data);
-        
-                    if(res.success){
-                        localStorage.setItem("accessToken", res.accessToken);
-                        history.push("/");
-                    }else{
-                        setLoginNotify({
-                            ...loginNotify,
-                            indexActive: 2
-                        })
-                    }
-                    
-                }catch(err){
-                    console.log("login err", err)
-                }
             }
         }
         

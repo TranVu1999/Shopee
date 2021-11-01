@@ -10,6 +10,7 @@ const iconInstagram = <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg
 
 const WidgetContent = styled.header`
     padding: .8125rem 1rem;
+    background-color: #fff;
     box-shadow: 0 1px 4px 0 rgba(74,74,78,.12);
 
     .left{

@@ -205,7 +205,12 @@ function FormLogin({error, handleSubmit}) {
             const {user} = res;
 
             console.log("data", user);
-            console.log("social token", user._delegate.accessToken)
+            console.log("social token", user._delegate.accessToken);
+            const data = {
+                socialToken: user._delegate.accessToken,
+                role: "user"
+            }
+            handleSubmit(data);
         }).catch((error) => {
             console.log(error.message)
         })

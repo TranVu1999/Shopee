@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import jwt from 'jwt-decode';
 import styled from 'styled-components';
 import {
     Switch, 
@@ -11,7 +11,6 @@ import {
 // Components
 import Sidebar from './Sidebar';
 import Header from './Header';
-import ShopReport from '../../containers/ShopReport';
 
 // Others
 import routes from '../../containers/routes';
@@ -37,12 +36,24 @@ function PageWidthSidebar(props) {
     const history = useHistory();
     const {path} = useRouteMatch();
 
-    // Chưa check accessToken có phải là role owner hay không.
-    const accessToken = localStorage.getItem("accessToken");
+    useEffect(() => {
+        // Chưa check accessToken có phải là role owner hay không.
+        const accessToken = localStorage.getItem("accessToken");
+        
+        if(!accessToken){
+            const user = jwt(accessToken);
+            
+            if(user.role === "user") {
+                history.push(`/ban-hang/onboarding`);
+            }
 
-    if(!accessToken){
-        history.push(`/ban-hang/login`);
-    }
+        } else {
+            history.push(`/ban-hang/login`);
+        }
+
+    }, []);
+
+    
 
     return (
         <>

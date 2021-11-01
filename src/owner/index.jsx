@@ -1,4 +1,4 @@
-import React, {lazy} from 'react';
+import React, {lazy, useEffect} from 'react';
 import {
     Switch, 
     Route, 
@@ -11,12 +11,13 @@ import './style.scss';
 
 // Components
 const Login = lazy(() => import("./containers/Login"));
+const Onboarding = lazy(() => import("./containers/Onboarding"));
 const PageWidthSidebar = lazy(() => import("./features/Layout/PageWidthSidebar"));
 
 
 function OwnerRoll() {
     // data
-    const {path} = useRouteMatch();
+    const {path} = useRouteMatch();    
 
     return (
         <div className = "main-wrapper">
@@ -24,6 +25,11 @@ function OwnerRoll() {
                 <Route
                     path = {`${path}/login`} 
                     component = {Login}
+                    exact = {true}
+                />
+                <Route
+                    path = {`${path}/onboarding`} 
+                    component = {Onboarding}
                     exact = {true}
                 />
                 <Route

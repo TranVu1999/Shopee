@@ -16,7 +16,6 @@ function Login() {
     
     // handle event
     const handleLogin = async data =>{
-        console.log(data)
         try{
             const res = await authAPI.login(data);
 

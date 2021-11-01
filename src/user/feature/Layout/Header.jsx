@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import {useSelector} from 'react-redux';
 
 // API
 import accountApi from '../../../api/accountAPI';
-
 
 // Icons
 const iconNotify = <svg viewBox="3 2.5 14 14" x="0" y="0" ><path d="m17 15.6-.6-1.2-.6-1.2v-7.3c0-.2 0-.4-.1-.6-.3-1.2-1.4-2.2-2.7-2.2h-1c-.3-.7-1.1-1.2-2.1-1.2s-1.8.5-2.1 1.3h-.8c-1.5 0-2.8 1.2-2.8 2.7v7.2l-1.2 2.5-.2.4h14.4zm-12.2-.8.1-.2.5-1v-.1-7.6c0-.8.7-1.5 1.5-1.5h6.1c.8 0 1.5.7 1.5 1.5v7.5.1l.6 1.2h-10.3z"></path><path d="m10 18c1 0 1.9-.6 2.3-1.4h-4.6c.4.9 1.3 1.4 2.3 1.4z"></path></svg>
@@ -125,6 +125,67 @@ const Logo = styled.div`
     }
 `;
 
+const UserControlBox = styled.li`
+    position: relative;
+
+    &:hover .user-control{
+        transform: scale(1);
+    }
+
+    .user-control {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        transition: all .3s linear;
+
+        width: 180px;
+        transform: scale(0);
+        transform-origin: 65% 0%;
+
+        background-color: #fff;
+        color: #333;
+        box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+        border-radius: 2px;
+        z-index: 1;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0%;
+            left: 65%;
+            transform: translate(-50%, -50%) rotateZ(45deg);
+
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+        }
+
+        li {
+            display: block;
+            margin: 0;
+
+            &:first-child {
+                margin-top: .625rem;
+            }
+
+            &:last-child {
+                margin-bottom: .625rem;
+            }
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            a, button {
+                display: block;
+                padding: .25rem 1.25rem;
+            }
+        }
+        
+        
+    }
+`;
+
 const Cart = styled.div`
     .number{
         position: relative;
@@ -191,44 +252,12 @@ const SearchBox = styled.div`
 
 `;
 
-
-Header.propTypes = {
-    
-};
-
-function Header(props) {  
+function Header() {  
     // Data
-    const [accountInfo, setAccountInfo] = useState({
-        avatar: "",
-        username: ""
-    });
+    const username = useSelector(state => state.accountReducer.username)
+    const avatar = useSelector(state => state.accountReducer.avatar);
 
-    // Effect
-    // Get infomation of account
-    useEffect(() =>{
-        if(localStorage.getItem("accessToken")){
-            const fetchAccountInfo = async () =>{    
-                try{
-                    const res = await accountApi.getShortInfo();
-                    console.log({res})
-
-                    if(res.success){
-                        setAccountInfo({
-                            avatar: res.user.avatar,
-                            username: res.user.username
-                        })
-                    }
-                    
-                }catch(err){
-                    console.log("header err", err)
-                }
-                
-            }
-            fetchAccountInfo();
-        }
-        
-
-    }, []);
+    console.log(username)
 
     return (
         <WidgetContent>
@@ -270,19 +299,33 @@ function Header(props) {
                             </li>
 
                             {
-                                accountInfo.username && <li>
+                                username && <UserControlBox>
                                     <a href="#/" className="account">
-                                        {accountInfo.avatar ? <img src="https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn" alt="avatar" /> : <div className="d-inline-block avatar-thumbnail">
-                                            {accountInfo.username.slice(0, 1)}
+                                        {avatar ? <img src={avatar} alt="avatar" /> : <div className="d-inline-block avatar-thumbnail">
+                                            {username.slice(0, 1)}
                                         </div>}
                                         
-                                        <span>{accountInfo.username}</span>
+                                        <span>{username}</span>
                                     </a>
-                                </li>
+
+                                    <div className="user-control">
+                                        <ul>
+                                            <li>
+                                                <a href="#">Tài khoản của tôi</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Đơn mua</a>
+                                            </li>
+                                            <li>
+                                                <button>Đăng xuất</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </UserControlBox>
                             }
 
                             {
-                                !accountInfo.username && (<>
+                                !username && (<>
                                     <li className="sign-up">
                                         <a href="#/">Đăng ký</a>
                                     </li>
