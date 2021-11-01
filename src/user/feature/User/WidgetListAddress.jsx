@@ -79,12 +79,15 @@ WidgetListAddress.propTypes = {
 
 function WidgetListAddress(props) {
 
-    const [isOpenModal,setIsOpenModal] = React.useState(true);
+    const [isOpenModal, setIsOpenModal] = React.useState(false);
 
+    // handle event
     const OpenModalToAdd = () =>{
-        document.body.style.overflow = 'hidden';
-        // document.body.style.overflow = 'unset';
         setIsOpenModal(true);
+    }
+
+    const handleClose = () => {
+        setIsOpenModal(false);
     }
 
     return (
@@ -159,12 +162,9 @@ function WidgetListAddress(props) {
                 </AddressItem>
             </div>
 
-            {isOpenModal ? (
-                <div className="modal-box">
-                    <ModalAddress/>
-                </div>
-                
-            ) : ""}
+            {isOpenModal && <ModalAddress 
+                onHandleClose = {handleClose}
+            />}
             
         </WidgetContent>
     );

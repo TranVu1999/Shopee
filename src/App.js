@@ -1,5 +1,5 @@
 import {Suspense, lazy} from 'react'
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 // Components
 import Loading from './user/feature/Layout/Loading';
@@ -11,15 +11,19 @@ function App() {
   return (
     <div className="App">
         <Suspense fallback={<Loading/>}>
+          <Switch>
             <Route 
                 path = "/ban-hang"
                 component = {OwnerRoll}
             />
-
+            
             <Route 
                 path = "/"
                 component = {UserRoll}
             />
+            </Switch>
+
+             
             
         </Suspense>
         

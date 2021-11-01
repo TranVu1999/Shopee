@@ -9,13 +9,12 @@ import Header from './../feature/Layout/Header';
 import routes from './routes';
 
 
-function Layout(props) {
-    console.log(props);
+function Layout() {
 
     return (
         <div className = "main-wrapper">
             <Header/>
-
+            
             <Switch>
                 {routes.map((item, index) =>{
                 return <Route 

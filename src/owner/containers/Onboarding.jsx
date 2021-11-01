@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // Components
 import Header from '../features/Login/Header';
 import FormInfo from '../features/Onboarding/FormInfo';
+import NavigationPage from '../features/Onboarding/NavigationPage';
 import Step from '../features/Onboarding/Step';
 import Welcome from '../features/Onboarding/Welcome';
 
@@ -20,13 +21,14 @@ const WidgetContent = styled.section`
 
 function Onboarding(props) {
     const [indexContent, setIndexContent] = useState(0);
-    const [indexStep, setIndexStep] = useState(0);
 
     // render
     const renderWidgetContent = () => {
         switch(indexContent) {
             case 0: 
                 return <FormInfo/>
+            case 2: 
+                return <NavigationPage/>
             default: 
                 return <Welcome/>
         }
@@ -38,7 +40,7 @@ function Onboarding(props) {
 
             <WidgetContent>
                 <div className="container">
-                    <Step indexStep = {indexStep}/>
+                    <Step indexStep = {indexContent}/>
                     {renderWidgetContent()}
                 </div>
             </WidgetContent>

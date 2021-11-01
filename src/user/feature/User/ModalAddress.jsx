@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -11,14 +11,23 @@ import SupperSelect from '../Layout/Input/SupperSelect';
 import Map from './../../assets/image/other/map.png';
 import { BorderColor, Color } from '../../theme';
 
+const WidgetWrapper = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.14);
+`;
+
 
 const WidgetModalContent = styled.div`
     position: absolute;
     left: 50%;
     top: 50%;
-    padding: 1.5rem 1.5rem .75rem;
+    padding: 2.5rem 2rem .75rem;
 
-    width: 550px;
+    width: 500px;
     font-size: 16px;
     background-color: #fff;
 
@@ -29,6 +38,7 @@ const WidgetModalContent = styled.div`
         font-size: 1.375em;
         text-transform: capitalize;
         color: rgba(0,0,0,.8);
+        margin-bottom: 1.5rem;
     }
 `;
 
@@ -36,7 +46,7 @@ const WrapInput = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 
     .MuiInputLabel-outlined{
         transform: translate(14px, calc(50% + 6px)) scale(1);
@@ -87,58 +97,74 @@ const ControlCheckbox = styled.div`
     }
 `;
 
-const Button = styled.button`
+const Button = styled.div`
     display: inline-block;
-    padding: .25rem 1rem;
+    padding: .375rem 1rem;
     font-size: .875rem;
     text-transform: uppercase;
+    cursor: pointer;
 `;
 
 const CommitButton = styled(Button)`
-    background-color: ${Color.mainColor};
+    background-color: #ee4d2d;
     color: #fff;
 `;
 
 ModalAddress.propTypes = {
-    
+    onHandleClose: PropTypes.func.isRequired,
 };
 
-function ModalAddress(props) {
+function ModalAddress({onHandleClose}) {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'initial';
+        }
+    }, [])
+
+    // handle event
+    const handleClose = () => {
+        if(!onHandleClose) return;
+        onHandleClose();
+    }
 
     return (
-        <WidgetModalContent>
-            <h5>Địa chỉ mới</h5>
+        <WidgetWrapper>
+            <WidgetModalContent>
+                <h5>Địa chỉ mới</h5>
 
-            <WrapInput>
-                <TextField label = "Họ và tên" variant = "outlined"/>
-                <TextField label = "Số điện thoại" variant = "outlined"/>
-            </WrapInput>
+                <WrapInput>
+                    <TextField label = "Họ và tên" variant = "outlined"/>
+                    <TextField label = "Số điện thoại" variant = "outlined"/>
+                </WrapInput>
 
-            <WrapInput>
-                <div className = "flex-fill"><SupperSelect/></div>
+                <WrapInput>
+                    <div className = "flex-fill"><SupperSelect/></div>
+                    
+                </WrapInput>
+                <WrapInput>
+                    <TextField label = "Địa chỉ cụ thể" variant = "outlined"/>
+                </WrapInput>
+
+                <Banner>
+                    <img src={Map} alt="map" />
+                </Banner>
+
+                <WrapInput>
+                    <ControlCheckbox className = "active"/>
+                    Đặt làm địa chỉ mặc đinh
+                </WrapInput>
+
+                <WrapInput className = "justify-content-end">
+                    <Button onClick = {handleClose}>Trở Lại</Button>
+                    <CommitButton>Hoàn thành</CommitButton>
+                    
+                </WrapInput>
+
                 
-            </WrapInput>
-            <WrapInput>
-                <TextField label = "Địa chỉ cụ thể" variant = "outlined"/>
-            </WrapInput>
-
-            <Banner>
-                <img src={Map} alt="map" />
-            </Banner>
-
-            <WrapInput>
-                <ControlCheckbox className = "active"/>
-                Đặt làm địa chỉ mặc đinh
-            </WrapInput>
-
-            <WrapInput className = "justify-content-end">
-                <Button>Trở Lại</Button>
-                <CommitButton>Hoàn thành</CommitButton>
-                
-            </WrapInput>
-
-            
-        </WidgetModalContent>
+            </WidgetModalContent>
+        </WidgetWrapper>
     );
 }
 

@@ -25,7 +25,8 @@ const routes = [
     },
     {
         path: "/cart",
-        component: CartPage
+        component: CartPage,
+        exact: true
     },
     {
         path: "/article",

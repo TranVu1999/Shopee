@@ -257,8 +257,6 @@ function Header() {
     const username = useSelector(state => state.accountReducer.username)
     const avatar = useSelector(state => state.accountReducer.avatar);
 
-    console.log(username)
-
     return (
         <WidgetContent>
             <HeaderTop className="container">

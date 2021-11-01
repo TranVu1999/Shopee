@@ -43,7 +43,9 @@ function UserRoll() {
         if(accessToken) {
             fetchAccountInfo();
         }
-    }, [])
+    }, []);
+
+    console.log("user")
 
     return (
         <div className = "main-wrapper">
@@ -51,16 +53,12 @@ function UserRoll() {
                 <Route 
                     path = "/login" 
                     component = {Login}
-                    exact = {true}
                 />
 
                 <Route 
                     path = "/" 
                     component = {Layout}
-                    exact = {true}
                 />
-
-                
             </Switch>
         </div>
     );
