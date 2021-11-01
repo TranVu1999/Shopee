@@ -1,4 +1,4 @@
-import React, { useRef }  from 'react';
+import React, { useRef, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Cropper from "react-easy-crop";
@@ -7,12 +7,15 @@ import Cropper from "react-easy-crop";
 import {Color, BorderColor} from '../../theme';
 import { useState } from 'react';
 
-// Modules
-import {generateDownload } from "../../util/cropImage";
+// Components
+import LoadingData from '../Layout/LoadingData';
 
 const WidgetContent = styled.div`
+    position: relative;
     padding: 1.125rem 1.5rem;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    min-height: 600px;
+    z-index: 0;
 `;
 
 const WidgetTextForm = styled.form`
@@ -164,11 +167,18 @@ const WidgetButtonAddImage = styled.div`
 `;
 
 WidgetUserProfile.propTypes = {
-    
+    user: PropTypes.object,
 };
 
-function WidgetUserProfile(props) {
-    const [avatar, setAvatar] = useState("https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e");
+function WidgetUserProfile({user}) {
+    const [userInfo, setUserInfo] = useState({
+        avatar: "",
+        fullName: "",
+        email: "admin123@gmail.com",
+        phoneNumber: "",
+        brand: "",
+        gender: "male"
+    });
     
 
     let inputImageRef = useRef(null);
@@ -179,6 +189,14 @@ function WidgetUserProfile(props) {
 	const [crop, setCrop] = React.useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = React.useState(1);
 
+    // effect
+    useEffect(() => {
+        if(user) {
+            setUserInfo(user);
+        }
+    }, [user])
+
+    // handle event
     const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
 		setCroppedArea(croppedAreaPixels);
 	};
@@ -193,10 +211,44 @@ function WidgetUserProfile(props) {
 		}
 	};
 
+    // function
+    const encodeForEmail = () => {
+        const emailPattern = userInfo.email.split('@');
+        let beforePattern = emailPattern[0][0] + emailPattern[0][1];
+
+        const length = emailPattern[0].length;
+        for(let i = 2; i < length; i++){
+            beforePattern += "*";
+        }
+
+        return beforePattern + "@" + emailPattern[1];
+    }
+
+    const encodeForPhoneNumber = () => {
+        let {phoneNumber} = userInfo;
+        const length = phoneNumber.length - 2;
+        console.log({length})
+        let resStr = "";
+
+        if(length > 0) {
+            
+            for(let i = 0; i < length; i++){
+                resStr += "*";
+            }  
+
+            resStr += phoneNumber[length - 1] + phoneNumber[length];
+        }
+        
+
+        return resStr;
+    }
+
     return (
         <WidgetContent className = "page-user--content">
+            {!user && <LoadingData/>}
 
-            {image ? (
+            {user && <>
+                {image ? (
                 <>
                     <div className='cropper'>
                         <Cropper
@@ -223,7 +275,7 @@ function WidgetUserProfile(props) {
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput>Tên đăng nhập</LabelInput>
                         <InputBox>
-                            <ConstValue>tranvudpqn123</ConstValue>
+                            <ConstValue>{userInfo.username}</ConstValue>
                         </InputBox>
                     </InputControl>
 
@@ -231,7 +283,12 @@ function WidgetUserProfile(props) {
                         <LabelInput>Tên</LabelInput>
                         <InputBox>
                             <InputText>
-                                <input type="text" />
+                                <input 
+                                    name = "fullName"
+                                    type="text" 
+                                    placeholder="Nhập vào" 
+                                    value = {userInfo.fullName}
+                                />
                             </InputText>
                         </InputBox>
                     </InputControl>
@@ -239,14 +296,14 @@ function WidgetUserProfile(props) {
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput>Email</LabelInput>
                         <InputBox>
-                            <ConstValue>tr********@gmail.com <a href="#/">Thay đổi</a></ConstValue>
+                            <ConstValue>{encodeForEmail()} <a href="#/">Thay đổi</a></ConstValue>
                         </InputBox>
                     </InputControl>
 
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput>Số điện thoại</LabelInput>
                         <InputBox>
-                            <ConstValue>********09 <a href="#/">Thay đổi</a></ConstValue>
+                            <ConstValue>{encodeForPhoneNumber()} <a href="#/">Thay đổi</a></ConstValue>
                         </InputBox>
                     </InputControl>
 
@@ -255,7 +312,13 @@ function WidgetUserProfile(props) {
                         <LabelInput>Tên Shop</LabelInput>
                         <InputBox>
                             <InputText>
-                                <input type="text" value = {"Barista Coffee"}/>
+                                <input 
+                                    name = "brand"
+                                    type="text" 
+                                    value = {userInfo.brand}
+                                    placeholder = "Nhập vào"
+                                    
+                                />
                             </InputText>
                         </InputBox>
                     </InputControl>
@@ -263,15 +326,15 @@ function WidgetUserProfile(props) {
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput>Giới tính</LabelInput>
                         <InputBox>
-                            <InputRadio className = "active">
+                            <InputRadio className = {userInfo.gender === "male" && "active"}>
                                 <div></div>
                                 <span>Nam</span>
                             </InputRadio>
-                            <InputRadio>
+                            <InputRadio className = {userInfo.gender === "female" && "active"}>
                                 <div></div>
                                 <span>Nữ</span>
                             </InputRadio>
-                            <InputRadio>
+                            <InputRadio className = {userInfo.gender === "other" && "active"}>
                                 <div></div>
                                 <span>Khác</span>
                             </InputRadio>
@@ -341,7 +404,7 @@ function WidgetUserProfile(props) {
                 
                 <WidgetImageForm>
                     <div>
-                        <Thumbnail className = "bg-image" image = {avatar}>
+                        <Thumbnail className = "bg-image" image = {userInfo.avatar}>
                         </Thumbnail>
 
                         <WidgetButtonAddImage>
@@ -359,6 +422,7 @@ function WidgetUserProfile(props) {
                     </div>
                 </WidgetImageForm>
             </div>
+            </>}
 
             
         </WidgetContent>

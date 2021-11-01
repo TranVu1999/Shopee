@@ -2,14 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 
 // Components
-import TitleContent from '../components/TitleContent';
-import ChoseTransport from '../features/Transport/ChoseTransport';
+import TitleContent from '../../components/TitleContent';
+import ChoseTransport from './../Transport/ChoseTransport';
 
-const WidgetContent = styled.div`
+
+const WidgetButton = styled.div`
+    padding: 1rem 0;
+    justify-content: flex-end;
+    gap: .875rem;
+    border-top: 1px solid #e5e5e5;
+
+    .btn {
+        min-width: 5rem;
+        font-size: .875rem;
+        border: 1px solid #e5e5e5;
+    }
+
+    .btn-save {
+        min-width: 6rem;
+        border-color: #ee4d2d;
+        background-color: #ee4d2d;
+        color: #fff;
+    }
 
 `;
 
-function SetupTransport() {
+
+function TransportSetting() {
     // Data
     const [listTransport] = React.useState([
         {
@@ -238,14 +257,15 @@ function SetupTransport() {
     ]);
 
     return (
-        <WidgetContent>
-            <TitleContent 
-                title="Cài Đặt Vận Chuyển " 
-                subTitle="Thiết lập vận chuyển"
-            />
+        <section>
             <ChoseTransport listTransport = {listTransport}/>
-        </WidgetContent>
+
+            <WidgetButton className = "d-flex align-items-center">
+                <div className = "btn">Lưu</div>
+                <button className = "btn btn-save">Tiếp theo</button>
+            </WidgetButton>
+        </section>
     );
 }
 
-export default SetupTransport;
+export default TransportSetting;

@@ -6,6 +6,7 @@ import Header from '../features/Login/Header';
 import FormInfo from '../features/Onboarding/FormInfo';
 import NavigationPage from '../features/Onboarding/NavigationPage';
 import Step from '../features/Onboarding/Step';
+import TransportSetting from '../features/Onboarding/TransportSetting';
 import Welcome from '../features/Onboarding/Welcome';
 
 const WidgetContent = styled.section`
@@ -20,13 +21,15 @@ const WidgetContent = styled.section`
 `;
 
 function Onboarding(props) {
-    const [indexContent, setIndexContent] = useState(0);
+    const [indexContent, setIndexContent] = useState(1);
 
     // render
     const renderWidgetContent = () => {
         switch(indexContent) {
             case 0: 
                 return <FormInfo/>
+            case 1: 
+                return <TransportSetting/>
             case 2: 
                 return <NavigationPage/>
             default: 

@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Link, useRouteMatch} from 'react-router-dom';
+import {Link, useRouteMatch, NavLink} from 'react-router-dom';
 
 // Theme
 import {BorderColor} from './../../theme';
@@ -42,6 +41,10 @@ const WidgetAccountText = styled.div`
 const WidgetDropdown = styled.div`
     margin-bottom: .875rem;
     font-size: 15px;
+
+    a.active {
+        color: #ee4d2d;
+    }
 `;
 
 const WidgetDropdownIcon = styled.div`
@@ -64,14 +67,10 @@ const WidgetListDropdownItem = styled.div`
 
 const WidgetDropdownItem = styled.div`
     padding-left: 2.25rem;
-    line-height: 1.875rem;
+    line-height: 1.875rem;    
 `;
 
-WidgetSidebar.propTypes = {
-    
-};
-
-function WidgetSidebar(props) {
+function WidgetSidebar() {
     // Data
     let {path} = useRouteMatch();
     const [indexOpen, setIndexOpen] = useState(0);
@@ -104,18 +103,18 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <Link to={`${path}/information`} onClick = {() =>{onHandleChoseTab(0)}}>Tài khoản của tôi</Link>
+                        <NavLink to={`${path}/information`} onClick = {() =>{onHandleChoseTab(0)}}>Tài khoản của tôi</NavLink>
                     </div>
 
                     <WidgetListDropdownItem className = {indexOpen === 0 ? "open" : ""}>
                         <WidgetDropdownItem>
-                            <Link to={`${path}/information`}>Hồ sơ</Link>
+                            <NavLink to={`${path}/information`} activeClassName = "active">Hồ sơ</NavLink>
                         </WidgetDropdownItem>
                         <WidgetDropdownItem>
-                            <Link to={`${path}/address`}>Địa chỉ</Link>
+                            <NavLink activeClassName = "active" to={`${path}/address`}>Địa chỉ</NavLink>
                         </WidgetDropdownItem>
                         <WidgetDropdownItem>
-                            <Link to={`${path}/update-password`}>Đổi mật khẩu</Link>
+                            <NavLink activeClassName = "active" to={`${path}/update-password`}>Đổi mật khẩu</NavLink>
                         </WidgetDropdownItem>
                     </WidgetListDropdownItem>
                 </WidgetDropdown>
@@ -126,7 +125,7 @@ function WidgetSidebar(props) {
                             <img src="https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078" alt="icon" />
                         </WidgetDropdownIcon>
 
-                        <Link to={`${path}/purchase`} onClick = {() =>{onHandleChoseTab(1)}}>Đơn Mua</Link>
+                        <NavLink activeClassName = "active" to={`${path}/purchase`} onClick = {() =>{onHandleChoseTab(1)}}>Đơn Mua</NavLink>
                     </div>
                 </WidgetDropdown>
 

@@ -1,21 +1,46 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    Switch, 
-    Route, 
-    useRouteMatch
-} from 'react-router-dom';
+import React, {useEffect, useState, lazy, Suspense} from "react";
+import { Switch, Route } from 'react-router-dom';
 
 // Components
 import WidgetSidebar from "../../feature/User/WidgetSidebar";
 
-import routes from './routes';
+// Apis
+import accountApi from "../../../api/accountAPI";
 
-UserPage.propTypes = {};
+// routes
+import routes from './routes';
+const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
+
+
 
 function UserPage(props) {
     // Data
-    let {path, url} = useRouteMatch();
+    const {path} = props.match;
+    const {pathname} = props.location;
+
+    const [user, setUser] = useState(null);
+
+
+    useEffect(() => {
+        const fetchUserInfo = async function() {
+            const res = await accountApi.getFullInfo();
+            if(res.success) {
+                setUser(res.user);
+            }
+        }
+
+        switch(pathname) {
+            case "/user":
+            case "/user/information":
+                if(!user) {
+                    fetchUserInfo();
+                }
+                
+                break;
+            default: 
+                break;
+        }
+    }, [pathname]);
 
     return (
         <div className="mt-80 mb-40 user-page-content">
@@ -25,17 +50,25 @@ function UserPage(props) {
                         <WidgetSidebar />
                     </div>
                     <div className="pl-5 col-lg-10">
-                        <Switch>
-                        {routes.map((item, index) =>{
-                            console.log(`${path}/${item.path}`)
-                            return <Route 
-                                key = {index} 
-                                path = {`${path}/${item.path}`} 
-                                component = {item.component}
-                                exact = {item.exact || false}
-                            />
-                        })}
-                        </Switch>
+                        <Suspense>
+                            <Switch>
+                                <Route exact path = {'/user'} >
+                                    <WidgetUserPortfolio user = {user}/>
+                                </Route>
+                                <Route path = {'/user/information'} >
+                                    <WidgetUserPortfolio user = {user}/>
+                                </Route>
+
+                            {/* {routes.map((item, index) =>{
+                                return <Route 
+                                    key = {index} 
+                                    path = {`${path}/${item.path}`} 
+                                    component = {item.component}
+                                    exact = {item.exact || false}
+                                />
+                            })} */}
+                            </Switch>
+                        </Suspense>
                     
                     </div>
                 </div>

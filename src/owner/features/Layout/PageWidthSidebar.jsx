@@ -35,18 +35,14 @@ PageWidthSidebar.propTypes = {
 function PageWidthSidebar(props) {
     const history = useHistory();
     const {path} = useRouteMatch();
+    
 
     useEffect(() => {
         // Chưa check accessToken có phải là role owner hay không.
         const accessToken = localStorage.getItem("accessToken");
-        
-        if(!accessToken){
-            const user = jwt(accessToken);
-            
-            if(user.role === "user") {
-                history.push(`/ban-hang/onboarding`);
-            }
 
+        if(accessToken){
+            const user = jwt(accessToken);
         } else {
             history.push(`/ban-hang/login`);
         }

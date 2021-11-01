@@ -43,9 +43,7 @@ function UserRoll() {
         if(accessToken) {
             fetchAccountInfo();
         }
-    }, []);
-
-    console.log("user")
+    }, []); 
 
     return (
         <div className = "main-wrapper">

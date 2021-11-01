@@ -9,20 +9,9 @@ const WidgetShopeeCoin = lazy(() => import("../../feature/User/WidgetShopeeCoin"
 const WidgetPurchase = lazy(() => import("../../feature/User/WidgetPurchase"));
 const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));
 const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
-const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
 
 
 const routes = [
-    {
-        path: "",
-        component: WidgetUserPortfolio,
-        exact: true
-    },
-    {
-        path: "information",
-        component: WidgetUserPortfolio,
-        exact: true
-    },
     {
         path: "address",
         component: WidgetListAddress
