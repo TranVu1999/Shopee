@@ -1,10 +1,9 @@
 import React, { useRef, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Cropper from "react-easy-crop";
 
 // Theme
-import {Color, BorderColor} from '../../theme';
+import {BorderColor} from '../../theme';
 import { useState } from 'react';
 
 // Components
@@ -18,19 +17,21 @@ const WidgetContent = styled.div`
     z-index: 0;
 `;
 
-const WidgetTextForm = styled.form`
+const WidgetTextForm = styled.div`
     flex: 4;
     font-size: 16px;
 
     button{
-        padding: .25em 1.5em;
+        padding: .5em 1.625em;
         color: #fff;
-        background-color: ${Color.mainColor};
-        border: 1px solid ${BorderColor.primaryColor};
+        background-color: #ee4d2d;
+
+        border-radius: .25rem;
+        border: 1px solid #ee4d2d;
         transition: all .5s ease;
 
         &:hover{
-            color: ${Color.mainColor};
+            color: #ee4d2d;
             background-color: transparent;
         }
     }
@@ -78,7 +79,7 @@ const InputRadio = styled.div`
 
     &.active{
         div{
-            border-color: ${BorderColor.primaryColor};
+            border-color: #ee4d2d;
         }
         
         div::after{
@@ -87,7 +88,7 @@ const InputRadio = styled.div`
             height: 0.625rem;
             width: 0.625rem;
 
-            background-color: ${Color.mainColor};
+            background-color: #ee4d2d;
             border-radius: 50%;
         }
     }
@@ -115,7 +116,7 @@ const ConstValue = styled.span`
 
     a{
         margin-left: .5rem;
-        color: ${Color.mainColor};
+        color: #05a;
         text-decoration: underline;
     }
 `;
@@ -168,26 +169,27 @@ const WidgetButtonAddImage = styled.div`
 
 WidgetUserProfile.propTypes = {
     user: PropTypes.object,
+    handleUpdateUser: PropTypes.func.isRequired,
 };
 
-function WidgetUserProfile({user}) {
+function WidgetUserProfile({user, handleUpdateUser}) {
+    const months = [31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
     const [userInfo, setUserInfo] = useState({
         avatar: "",
         fullName: "",
         email: "admin123@gmail.com",
         phoneNumber: "",
         brand: "",
-        gender: "male"
+        gender: "male",
+        birthday: new Date()
     });
+
+    const [avatarAsFile, setAvatarAsFile] = useState(null);
     
 
     let inputImageRef = useRef(null);
     const openComputer = () => inputImageRef.current.click();
-
-    const [image, setImage] = React.useState(null);
-	const [croppedArea, setCroppedArea] = React.useState(null);
-	const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-	const [zoom, setZoom] = React.useState(1);
 
     // effect
     useEffect(() => {
@@ -197,19 +199,98 @@ function WidgetUserProfile({user}) {
     }, [user])
 
     // handle event
-    const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
-		setCroppedArea(croppedAreaPixels);
-	};
 
-	const onSelectFile = (event) => {
-		if (event.target.files && event.target.files.length > 0) {
-			const reader = new FileReader();
-			reader.readAsDataURL(event.target.files[0]);
-			reader.addEventListener("load", () => {
-				setImage(reader.result);
-			});
-		}
-	};
+    const handleChange = e => {
+        const {name, value} = e.target;
+
+        switch(name) {
+            case "fullName":
+            case "brand": 
+                setUserInfo({
+                    ...userInfo,
+                    [name]: value
+                })
+                break;
+            
+            case "day":
+            case "month":
+            case "year":
+                const birthday = {
+                    day, month, year
+                }
+                birthday[name] = value;
+                setUserInfo({
+                    ...userInfo,
+                    birthday: new Date(birthday.year, birthday.month - 1, birthday.day)
+                })
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handleChoseGender = gender => {
+        setUserInfo({
+            ...userInfo,
+            gender
+        })
+    }
+
+    const hanldeGetImage = e => {
+        const files = Array.from(e.target.files);
+        setAvatarAsFile(files[0]);
+        setUserInfo({
+            ...userInfo,
+            avatar: URL.createObjectURL(files[0])
+        });
+    }
+
+    const handleSubmitUser = () => {
+        if(!handleUpdateUser) return;
+
+        const dataUser = {
+            ...userInfo,
+            avatarAsFile
+        }
+        handleUpdateUser(dataUser);
+    }
+
+    // render
+    const checkLeapYear = year => {
+        return (year % 4===0 &&year%100 !==0 && year % 400 !==0)||(year%100===0 && year % 400===0);
+    }
+    const renderListYear = (start, end) => {
+        const years = makeRangeYear(start, end);
+        
+        return years.map(year => (
+            <option key = {year} value = {year}>{year}</option>
+        ))
+    }
+
+    const renderListMonth = () => {
+        let elms = [];
+        for(let month = 1; month <= 12; month++) {
+            elms.push(
+                <option key = {month} value = {month}>Tháng {month}</option>
+            )
+        }
+        return elms;
+    }
+
+    const renderListDate = (year, month) => {
+        const isLeapYear = checkLeapYear(year);
+        if(isLeapYear) {
+            months[2] = 29;
+        }
+
+        let elms = [];
+        for(let i = 1; i <= months[month]; i++) {
+            elms.push(
+                <option key = {i} value = {i}>{i}</option>
+            )
+        }
+        return elms
+    }
 
     // function
     const encodeForEmail = () => {
@@ -227,7 +308,6 @@ function WidgetUserProfile({user}) {
     const encodeForPhoneNumber = () => {
         let {phoneNumber} = userInfo;
         const length = phoneNumber.length - 2;
-        console.log({length})
         let resStr = "";
 
         if(length > 0) {
@@ -243,27 +323,25 @@ function WidgetUserProfile({user}) {
         return resStr;
     }
 
+    const makeRangeYear = (start, end) => {
+        let arr = [];
+
+        for(let i = start; i <= end; i++){
+            arr.push(i);
+        }
+        return arr;
+    }
+
+    let birthday = new Date(userInfo.birthday);
+    const year = birthday.getFullYear();
+    const month = birthday.getMonth() + 1;
+    const day = birthday.getDate();
+
     return (
         <WidgetContent className = "page-user--content">
             {!user && <LoadingData/>}
 
             {user && <>
-                {image ? (
-                <>
-                    <div className='cropper'>
-                        <Cropper
-                            image={image}
-                            crop={crop}
-                            zoom={zoom}
-                            aspect={1}
-                            onCropChange={setCrop}
-                            onZoomChange={setZoom}
-                            onCropComplete={onCropComplete}
-                        />
-                    </div>
-                </>
-            ) : null}
-
 
             <div className = "page-user--header">
                 <p>Hồ sơ của tôi</p>
@@ -288,6 +366,7 @@ function WidgetUserProfile({user}) {
                                     type="text" 
                                     placeholder="Nhập vào" 
                                     value = {userInfo.fullName}
+                                    onChange = {handleChange}
                                 />
                             </InputText>
                         </InputBox>
@@ -317,7 +396,7 @@ function WidgetUserProfile({user}) {
                                     type="text" 
                                     value = {userInfo.brand}
                                     placeholder = "Nhập vào"
-                                    
+                                    onChange = {handleChange}
                                 />
                             </InputText>
                         </InputBox>
@@ -326,15 +405,24 @@ function WidgetUserProfile({user}) {
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput>Giới tính</LabelInput>
                         <InputBox>
-                            <InputRadio className = {userInfo.gender === "male" && "active"}>
+                            <InputRadio 
+                                className = {userInfo.gender === "male" && "active"}
+                                onClick = {() => handleChoseGender("male")}
+                            >
                                 <div></div>
                                 <span>Nam</span>
                             </InputRadio>
-                            <InputRadio className = {userInfo.gender === "female" && "active"}>
+                            <InputRadio 
+                                className = {userInfo.gender === "female" && "active"}
+                                onClick = {() => handleChoseGender("female")}
+                            >
                                 <div></div>
                                 <span>Nữ</span>
                             </InputRadio>
-                            <InputRadio className = {userInfo.gender === "other" && "active"}>
+                            <InputRadio 
+                                className = {userInfo.gender === "other" && "active"}
+                                onClick = {() => handleChoseGender("other")}
+                            >
                                 <div></div>
                                 <span>Khác</span>
                             </InputRadio>
@@ -346,45 +434,28 @@ function WidgetUserProfile({user}) {
                         <InputBox>
                             <InputSelect>
                                 <div>
-                                    <select>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                    </select>
+                                    <select
+                                        name = "day"
+                                        value = {day}
+                                        onChange = {handleChange}
+                                    >{renderListDate(year, month)}</select>
                                 </div>
                                 
 
                                 <div>
-                                    <select>
-                                        <option>Tháng 1</option>
-                                        <option>Tháng 2</option>
-                                        <option>Tháng 3</option>
-                                        <option>Tháng 4</option>
-                                        <option>Tháng 5</option>
-                                        <option>Tháng 6</option>
-                                        <option>Tháng 7</option>
-                                        <option>Tháng 8</option>
-                                        <option>Tháng 9</option>
-                                        <option>Tháng 10</option>
-                                        <option>Tháng 11</option>
-                                        <option>Tháng 12</option>
-                                    </select>
+                                    <select
+                                        name = "month"
+                                        value = {month}
+                                        onChange = {handleChange}
+                                    >{renderListMonth()}</select>
                                 </div>
                                 
                                 <div>
-                                    <select>
-                                        <option>1990</option>
-                                        <option>1992</option>
-                                        <option>1993</option>
-                                        <option>1994</option>
-                                        <option>1995</option>
-                                        <option>1996</option>
-                                        <option>1997</option>
-                                    </select>
+                                    <select
+                                        name = "year"
+                                        value = {year}
+                                        onChange = {handleChange}
+                                    >{renderListYear(1980, 2021)}</select>
                                 </div>
                                 
                             </InputSelect>
@@ -394,12 +465,11 @@ function WidgetUserProfile({user}) {
                     <InputControl className = "d-flex align-items-center">
                         <LabelInput></LabelInput>
                         <InputBox>
-                            <button>Lưu</button>
+                            <button
+                                onClick = {handleSubmitUser}
+                            >Lưu</button>
                         </InputBox>
                     </InputControl>
-
-                    
-                    
                 </WidgetTextForm>
                 
                 <WidgetImageForm>
@@ -412,7 +482,7 @@ function WidgetUserProfile({user}) {
                                 ref = {inputImageRef}
                                 type="file" 
                                 accept = ".jpg,.jpeg,.png"
-                                onChange = {onSelectFile}
+                                onChange = {hanldeGetImage}
                             />
                             <button
                                 onClick = {openComputer}
