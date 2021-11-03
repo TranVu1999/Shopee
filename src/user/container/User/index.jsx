@@ -9,6 +9,7 @@ import HandlingData from "../../feature/Layout/HandlingData";
 
 // Apis
 import accountApi from "../../../api/accountAPI";
+import addressApi from "../../../api/addressAPI";
 
 // Modules
 import firebase from "../../../config/firebase-config";
@@ -30,6 +31,7 @@ function UserPage(props) {
     const [avatarAsUrl, setAvatarAsUrl] = useState([]);
 
     const [user, setUser] = useState(null);
+    const [listAddress, setListAddress] = useState(null);
 
     // effect
     useEffect(() => {
@@ -40,13 +42,24 @@ function UserPage(props) {
             }
         }
 
+        const fetchListAddress = async function() {
+            const res = await addressApi.get();
+            if(res.success) {
+                console.log(res.listAddress)
+                setListAddress(res.listAddress)
+            }
+        }
+
         switch(pathname) {
             case `${path}`:
             case `${path}/information`:
                 if(!user) {
                     fetchUserInfo();
                 }
-                
+                break;
+
+            case `${path}/address`:
+                fetchListAddress();
                 break;
             default: 
                 break;
@@ -130,6 +143,21 @@ function UserPage(props) {
         
     }
 
+    const onHandleRemoveAddress = address => {
+        setIsLoading(true);
+
+        addressApi.remove(address._id)
+        .then(res => {
+            setIsLoading(false);
+            if(res.success) {
+                const addressId = res.address._id;
+                const tempListAddress = listAddress.filter(address => address._id !== addressId);
+                setListAddress(tempListAddress);
+            }
+        })
+        .catch(err => console.log({err}));
+    }
+
     const onClosePopup = () => {
         setIsSuccess(false)
     }
@@ -157,7 +185,10 @@ function UserPage(props) {
                                     />
                                 </Route>
                                 <Route path = {`${path}/address`} >
-                                    <WidgetListAddress/>
+                                    <WidgetListAddress 
+                                        listAddress={listAddress}
+                                        onHandleRemoveAddress = {onHandleRemoveAddress}
+                                    />
                                 </Route>
 
                             {/* {routes.map((item, index) =>{
