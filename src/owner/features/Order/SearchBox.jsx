@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -19,11 +18,7 @@ const WidgetContent = styled.div`
     }
 `;
 
-SearchBox.propTypes = {
-    
-};
-
-function SearchBox(props) {
+function SearchBox() {
     return (
         <WidgetContent className="d-flex">
             <input className="flex-fill" type="text" placeholder="Tìm đơn hàng"/>

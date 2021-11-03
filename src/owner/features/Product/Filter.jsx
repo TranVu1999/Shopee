@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Components
@@ -79,11 +78,8 @@ const HighlightButton = styled(Button)`
 `;
 
 
-Filter.propTypes = {
-    
-};
 
-function Filter(props) {
+function Filter() {
     // data
     const [listOption, setListOption] = React.useState({
         indexSelected: 0,

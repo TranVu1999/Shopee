@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -31,11 +30,7 @@ const WidgetContent = styled.div`
     }
 `;
 
-TabBox.propTypes = {
-    
-};
-
-function TabBox(props) {
+function TabBox() {
     // Data
     const [indexOpenTab, setIndexOpenTab] = React.useState(0);
 

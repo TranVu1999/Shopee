@@ -1,8 +1,11 @@
 import React, {useEffect, useState, lazy, Suspense} from "react";
 import { Switch, Route } from 'react-router-dom';
+import jwt from 'jwt-decode';
 
 // Components
 import WidgetSidebar from "../../feature/User/WidgetSidebar";
+import SuccessPopup from "../../feature/Layout/SuccessPopup";
+import HandlingData from "../../feature/Layout/HandlingData";
 
 // Apis
 import accountApi from "../../../api/accountAPI";
@@ -15,12 +18,13 @@ import routes from './routes';
 const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
 
 
-
 function UserPage(props) {
     // Data
     const {path} = props.match;
     const {pathname} = props.location;
     const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const [amountImageUploaded, setAmountImageUploaded] = useState(0);
     const [avatarAsUrl, setAvatarAsUrl] = useState([]);
 
@@ -55,7 +59,15 @@ function UserPage(props) {
                 avatar: avatarAsUrl[0]
             }
 
-            console.log({dataUser})
+            accountApi.update(user.accountId, dataUser)
+            .then(res => {
+                setIsLoading(false);
+
+                if(res.success) {
+                    setIsSuccess(true);
+                }
+            })
+            .catch(err => console.log({err}))
         }
 
         if(amountImageUploaded && amountImageUploaded === avatarAsUrl.length) {
@@ -91,7 +103,23 @@ function UserPage(props) {
                 console.log({err});
             });
         } else {
-            console.log({user})
+            const accessToken = localStorage.getItem("accessToken");
+            if(accessToken) {
+                const user = jwt(accessToken);
+                
+
+                accountApi.update(user.accountId, user)
+                .then(res => {
+                    setIsLoading(false);
+
+                    if(res.success) {
+                        setIsSuccess(true);
+                    }
+                })
+                .catch(err => console.log({err}))
+                
+            }
+            
         }
         
     }
@@ -133,6 +161,10 @@ function UserPage(props) {
                     </div>
                 </div>
             </div>
+            
+            {isSuccess &&  <SuccessPopup/>}
+            {isLoading && <HandlingData/>}
+            
         </div>
     );
 }

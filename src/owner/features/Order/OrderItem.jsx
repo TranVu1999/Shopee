@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -129,11 +128,8 @@ const ThumbnailProduct = styled.div`
     background-repeat: no-repeat;
 `;
 
-OrderItem.propTypes = {
-    
-};
 
-function OrderItem(props) {
+function OrderItem() {
     return (
         <WidgetContent>
             <Title className="d-flex align-items-center justify-content-between">

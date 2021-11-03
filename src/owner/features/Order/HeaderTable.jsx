@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -88,19 +87,9 @@ const WidgetOptions = styled.div`
     }
 `;
 
-HeaderTable.propTypes = {
-    
-};
 
 function HeaderTable(props) {
     // data
-    const [selectInfo, setSelectInfo] = React.useState({
-        indexSelected: 0,
-        listOption: [
-            "Ngày xác nhận đặt đơn giảm dần",
-            "Ngày xác nhận đặt đơn tang dần"
-        ]
-    });
     const [isShowListTypeTransport, setIsShowTypeTransport] = React.useState(false);
 
     return (

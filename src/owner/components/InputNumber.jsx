@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -55,11 +54,8 @@ const WidgetContent = styled.div`
     }
 `;
 
-InputNumber.propTypes = {
-    
-};
 
-function InputNumber(props) {
+function InputNumber() {
     return (
         <WidgetContent>
             <input type="text" placeholder="Nhập vào"/>

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Components
@@ -64,11 +63,8 @@ const Body = styled.div`
     border-radius: 0 0 4px 4px;
 `;
 
-DataTable.propTypes = {
-    
-};
 
-function DataTable(props) {
+function DataTable() {
     return (
         <WidgetContent>
             <Header className="d-flex align-items-center">

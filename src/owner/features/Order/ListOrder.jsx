@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
-import {BorderColor} from './../../theme';
 import OrderItem from './OrderItem';
 
 const WidgetContent = styled.div`
@@ -12,12 +10,7 @@ const WidgetContent = styled.div`
 `;
 
 
-
-ListOrder.propTypes = {
-    
-};
-
-function ListOrder(props) {
+function ListOrder() {
     return (
         <WidgetContent>
             <OrderItem/>

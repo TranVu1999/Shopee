@@ -12,6 +12,11 @@ const accountApi = {
         return axiosClient.get(url);
     },
 
+    update: (id, user) => {
+        const url = `/account/${id}`;
+        return axiosClient.put(url, user);
+    },
+
     
 }
 
