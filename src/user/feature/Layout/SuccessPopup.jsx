@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TranslateAnimation = keyframes`
     0% {
@@ -240,17 +241,27 @@ const CloseButton = styled.div`
     }
 `;
 
-function SuccessPopup() {
+SuccessPopup.propTypes = {
+    onClosePopup: PropTypes.func.isRequired,
+}
+
+function SuccessPopup({onClosePopup}) {
 
     useEffect(() => {
         const bodyElm = document.querySelector("body")
         
         bodyElm.style.overflow = "hidden";
         return () => {
-            bodyElm.style.overflow = "auto";
+            bodyElm.style.overflowY = "scroll";
         }
         
-    }, [])
+    }, []);
+
+    // handle event
+    const handleClick = () => {
+        if(!onClosePopup) return;
+        onClosePopup();
+    }
 
     return (
         <WidgetContainer>
@@ -270,13 +281,13 @@ function SuccessPopup() {
                     <h4>Done!</h4>
                     <p>Your account has been created successfully.</p>
 
-                    <button>
+                    <button onClick = {handleClick}>
                         Start Exploring <i class="fas fa-arrow-right"></i>
                     </button>
                 </SuccessContent>
 
                 <CloseButton>
-                    <button>
+                    <button onClick = {handleClick}>
                         <i class="fas fa-times"></i>
                     </button>
                 </CloseButton>

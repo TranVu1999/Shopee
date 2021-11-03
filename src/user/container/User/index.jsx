@@ -16,6 +16,7 @@ import firebase from "../../../config/firebase-config";
 // routes
 import routes from './routes';
 const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
+const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
 
 
 function UserPage(props) {
@@ -40,8 +41,8 @@ function UserPage(props) {
         }
 
         switch(pathname) {
-            case "/user":
-            case "/user/information":
+            case `${path}`:
+            case `${path}/information`:
                 if(!user) {
                     fetchUserInfo();
                 }
@@ -129,6 +130,10 @@ function UserPage(props) {
         
     }
 
+    const onClosePopup = () => {
+        setIsSuccess(false)
+    }
+
     return (
         <div className="mt-80 mb-40 user-page-content">
             <div className="container">
@@ -139,17 +144,20 @@ function UserPage(props) {
                     <div className="pl-5 col-lg-10">
                         <Suspense>
                             <Switch>
-                                <Route exact path = {'/user'} >
+                                <Route exact path = {path} >
                                     <WidgetUserPortfolio 
                                         user = {user}
                                         handleUpdateUser = {handleUpdateUser}
                                     />
                                 </Route>
-                                <Route path = {'/user/information'} >
+                                <Route path = {`${path}/information`} >
                                     <WidgetUserPortfolio 
                                         user = {user}
                                         handleUpdateUser = {handleUpdateUser}
                                     />
+                                </Route>
+                                <Route path = {`${path}/address`} >
+                                    <WidgetListAddress/>
                                 </Route>
 
                             {/* {routes.map((item, index) =>{
@@ -167,7 +175,7 @@ function UserPage(props) {
                 </div>
             </div>
             
-            {isSuccess &&  <SuccessPopup/>}
+            {isSuccess &&  <SuccessPopup onClosePopup = {onClosePopup}/>}
             {isLoading && <HandlingData/>}
             
         </div>

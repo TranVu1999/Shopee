@@ -8,7 +8,13 @@ import {Color, BorderColor} from './../../theme';
 
 
 const WidgetContent = styled.div`
+    padding: 1rem 1.5rem;
+    background-color: #fff;
     font-size: 16px;
+`;
+
+const WidgetTitle = styled.div`
+
 `;
 
 const ButtonAdd = styled.button`
@@ -37,11 +43,11 @@ const AddressItem = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
 
     font-size: .875em;
 
-    border-bottom: 1px solid ${BorderColor.mainColor};
+    border-top: 1px solid #efefef;
 
     label{
         width: 10em;
@@ -74,10 +80,10 @@ const ButtonSetDefault = styled.button`
 `;
 
 WidgetListAddress.propTypes = {
-    
+    listAddress: PropTypes.array.isRequired,
 };
 
-function WidgetListAddress(props) {
+function WidgetListAddress({listAddress}) {
 
     const [isOpenModal, setIsOpenModal] = React.useState(false);
 
@@ -92,7 +98,7 @@ function WidgetListAddress(props) {
 
     return (
         <WidgetContent className = "user-content">
-            <div className = "d-flex align-items-start justify-content-between page-user--header">
+            <WidgetTitle className = "d-flex align-items-start justify-content-between page-user--header">
                 <p>Địa chỉ của tôi</p>
                 <ButtonAdd 
                     onClick = {OpenModalToAdd}
@@ -100,67 +106,65 @@ function WidgetListAddress(props) {
                     <span class="icon_plus"></span>
                     Thêm địa chỉ mới
                 </ButtonAdd>
-            </div>
+            </WidgetTitle>
 
-            <div>
-                <AddressItem>
-                    <div>
-                        <div className="d-flex">
-                            <label>Họ và tên</label>
-                            <div className="content">
-                                <strong>Trần Lê Anh Vũ</strong>
-                                <span className = "default-badge">Mặc định</span>
-                            </div>
-                        </div>
-                        <div className="d-flex">
-                            <label>Số điện thoại</label>
-                            <div className="content">(+84) 377670509</div>
-                        </div>
-                        <div className="d-flex">
-                            <label>Địa chỉ</label>
-                            <div className="content">
-                                <span>156 Lã Xuân Oai<br/>Phường Phước Long B<br/>Quận 9<br/>TP. Hồ Chí Minh</span>
-                            </div>
+            <AddressItem>
+                <div>
+                    <div className="d-flex">
+                        <label>Họ và tên</label>
+                        <div className="content">
+                            <strong>Trần Lê Anh Vũ</strong>
+                            <span className = "default-badge">Mặc định</span>
                         </div>
                     </div>
-                    <div>
-                        <div className = "mb-3 text-right">
-                            <ButtonAction>Sửa</ButtonAction>
-                            <ButtonAction>Xóa</ButtonAction>
-                        </div>
-                        <div><ButtonSetDefault disabled>Thiết lập mặc định</ButtonSetDefault></div>
+                    <div className="d-flex">
+                        <label>Số điện thoại</label>
+                        <div className="content">(+84) 377670509</div>
                     </div>
-                </AddressItem>
-
-                <AddressItem>
-                    <div>
-                        <div className="d-flex">
-                            <label>Họ và tên</label>
-                            <div className="content">
-                                <strong>Trần Lê Anh Vũ</strong>
-                                <span className = "default-badge">Mặc định</span>
-                            </div>
-                        </div>
-                        <div className="d-flex">
-                            <label>Số điện thoại</label>
-                            <div className="content">(+84) 377670509</div>
-                        </div>
-                        <div className="d-flex">
-                            <label>Địa chỉ</label>
-                            <div className="content">
-                                <span>156 Lã Xuân Oai<br/>Phường Phước Long B<br/>Quận 9<br/>TP. Hồ Chí Minh</span>
-                            </div>
+                    <div className="d-flex">
+                        <label>Địa chỉ</label>
+                        <div className="content">
+                            <span>156 Lã Xuân Oai<br/>Phường Phước Long B<br/>Quận 9<br/>TP. Hồ Chí Minh</span>
                         </div>
                     </div>
-                    <div>
-                        <div className = "mb-3 text-right">
-                            <ButtonAction>Sửa</ButtonAction>
-                            <ButtonAction>Xóa</ButtonAction>
-                        </div>
-                        <div><ButtonSetDefault disabled>Thiết lập mặc định</ButtonSetDefault></div>
+                </div>
+                <div>
+                    <div className = "mb-3 text-right">
+                        <ButtonAction>Sửa</ButtonAction>
+                        <ButtonAction>Xóa</ButtonAction>
                     </div>
-                </AddressItem>
-            </div>
+                    <div><ButtonSetDefault disabled>Thiết lập mặc định</ButtonSetDefault></div>
+                </div>
+            </AddressItem>
+            
+            <AddressItem>
+                <div>
+                    <div className="d-flex">
+                        <label>Họ và tên</label>
+                        <div className="content">
+                            <strong>Trần Lê Anh Vũ</strong>
+                            <span className = "default-badge">Mặc định</span>
+                        </div>
+                    </div>
+                    <div className="d-flex">
+                        <label>Số điện thoại</label>
+                        <div className="content">(+84) 377670509</div>
+                    </div>
+                    <div className="d-flex">
+                        <label>Địa chỉ</label>
+                        <div className="content">
+                            <span>156 Lã Xuân Oai<br/>Phường Phước Long B<br/>Quận 9<br/>TP. Hồ Chí Minh</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className = "mb-3 text-right">
+                        <ButtonAction>Sửa</ButtonAction>
+                        <ButtonAction>Xóa</ButtonAction>
+                    </div>
+                    <div><ButtonSetDefault disabled>Thiết lập mặc định</ButtonSetDefault></div>
+                </div>
+            </AddressItem>
 
             {isOpenModal && <ModalAddress 
                 onHandleClose = {handleClose}
