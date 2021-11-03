@@ -54,20 +54,25 @@ function UserPage(props) {
 
     useEffect(() => {
         const prepareData = function() {
-            const dataUser = {
-                ...user,
-                avatar: avatarAsUrl[0]
-            }
-
-            accountApi.update(user.accountId, dataUser)
-            .then(res => {
-                setIsLoading(false);
-
-                if(res.success) {
-                    setIsSuccess(true);
+            const accessToken = localStorage.getItem("accessToken");
+            if(accessToken) {
+                const dataUser = {
+                    ...user,
+                    avatar: avatarAsUrl[0]
                 }
-            })
-            .catch(err => console.log({err}))
+    
+                const accountId = jwt(accessToken).accountId;
+                accountApi.update(accountId, dataUser)
+                .then(res => {
+                    setIsLoading(false);
+    
+                    if(res.success) {
+                        setIsSuccess(true);
+                    }
+                })
+                .catch(err => console.log({err}))
+            }
+            
         }
 
         if(amountImageUploaded && amountImageUploaded === avatarAsUrl.length) {
@@ -105,10 +110,10 @@ function UserPage(props) {
         } else {
             const accessToken = localStorage.getItem("accessToken");
             if(accessToken) {
-                const user = jwt(accessToken);
-                
+                const accountId = jwt(accessToken).accountId;
 
-                accountApi.update(user.accountId, user)
+
+                accountApi.update(accountId, user)
                 .then(res => {
                     setIsLoading(false);
 
