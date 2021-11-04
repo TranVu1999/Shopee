@@ -15,6 +15,11 @@ const addressApi = {
     add: (address) => {
         const url = `/address`;
         return axiosClient.post(url, address);
+    },
+
+    edit: (address) => {
+        const url = `/address/${address._id}`;
+        return axiosClient.put(url, address);
     }
 
     

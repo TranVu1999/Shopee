@@ -114,6 +114,7 @@ WidgetListAddress.propTypes = {
     onHandleRemoveAddress: PropTypes.func.isRequired,
     onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
     onHandleAddAddress: PropTypes.func.isRequired,
+    onHanldeEditAddress: PropTypes.func.isRequired,
 };
 
 function WidgetListAddress({
@@ -121,7 +122,8 @@ function WidgetListAddress({
     listOptionAddress,
     onHandleRemoveAddress,
     onHanldeChoseAdministrativeUnit,
-    onHandleAddAddress
+    onHandleAddAddress,
+    onHanldeEditAddress
 }) {
 
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -134,6 +136,7 @@ function WidgetListAddress({
     }
 
     const handleClose = () => {
+        setItemFocus(null);
         setIsOpenModal(false);
     }
 
@@ -152,6 +155,11 @@ function WidgetListAddress({
         setIsOpenConfirmModal(true);
     }
 
+    const onEdit = address => {
+        setItemFocus(address);
+        setIsOpenModal(true);
+    }
+
     const onHanldeChose = dataChose => {
         if(!onHanldeChoseAdministrativeUnit) return;
         onHanldeChoseAdministrativeUnit(dataChose);
@@ -160,6 +168,11 @@ function WidgetListAddress({
     const onHanldeAdd = addressData => {
         if(!onHandleAddAddress) return;
         onHandleAddAddress(addressData)
+    }
+
+    const onHandleEdit = addressData => {
+        if(!onHanldeEditAddress) return;
+        onHanldeEditAddress(addressData)
     }
 
     // render
@@ -192,7 +205,7 @@ function WidgetListAddress({
                         </div>
                         <div>
                             <div className = "mb-3 text-right">
-                                <ButtonAction>Sửa</ButtonAction>
+                                <ButtonAction onClick = {() => onEdit(address)}>Sửa</ButtonAction>
 
                                 {!address.isDefault && <ButtonAction
                                     onClick = {() => onRemove(address)}
@@ -230,10 +243,13 @@ function WidgetListAddress({
             
 
             {isOpenModal && <ModalAddress 
+                itemFocus = {itemFocus}
+
                 listOptionAddress = {listOptionAddress}
                 onHandleClose = {handleClose}
                 onHanldeChoseAdministrativeUnit = {onHanldeChose}
                 onHandleAdd = {onHanldeAdd}
+                onHandleEdit = {onHandleEdit}
             />}
 
             {isOpenConfirmModal && <ConfirmPopup

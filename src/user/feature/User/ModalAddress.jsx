@@ -111,20 +111,25 @@ const CommitButton = styled(Button)`
 `;
 
 ModalAddress.propTypes = {
+    itemFocus: PropTypes.object.isRequired,
     listOptionAddress: PropTypes.array.isRequired,
     onHandleClose: PropTypes.func.isRequired,
     onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
     onHandleAdd: PropTypes.func.isRequired,
+    onHandleEdit: PropTypes.func.isRequired,
 };
 
 function ModalAddress({
+    itemFocus,
     onHandleClose, 
     listOptionAddress,
     onHanldeChoseAdministrativeUnit,
-    onHandleAdd
+    onHandleAdd,
+    onHandleEdit
 }) {
     // data
-    const [address, setAddress] = useState({
+    const [address, setAddress] = useState(() => itemFocus ? itemFocus : {
+
         fullname: "",
         phoneNumber: "",
         houseNumber: "",
@@ -177,22 +182,30 @@ function ModalAddress({
 
     const handleAddNewAddress = () => {
         if(!onHandleAdd) return;
-        onHandleAdd(address);
+
+        if(!itemFocus) {
+            onHandleAdd(address);
+        }else {
+            onHandleEdit(address);
+        }
+        
     }
 
     return (
         <WidgetWrapper>
             <WidgetModalContent>
-                <h5>Địa chỉ mới</h5>
+                <h5>{itemFocus ? "Chỉnh sửa địa chỉ" : "Địa chỉ mới"}</h5>
 
                 <WrapInput>
                     <TextField 
+                        value = {address.fullname}
                         name = "fullname"
                         label = "Họ và tên" 
                         variant = "outlined"
                         onChange = {onHandleChange}
                     />
                     <TextField 
+                        value = {address.phoneNumber}
                         name = "phoneNumber"
                         label = "Số điện thoại" 
                         variant = "outlined"
@@ -203,6 +216,10 @@ function ModalAddress({
                 <WrapInput>
                     <div className = "flex-fill">
                         <SupperSelect 
+                            province = {address.province}
+                            district = {address.district}
+                            ward = {address.ward}
+
                             listOption = {listOptionAddress}
                             onHanldeChoseAdministrativeUnit = {onHanldeChose}
                             onHanldeSubmit = {onHanldeSubmitSelection}
@@ -212,6 +229,7 @@ function ModalAddress({
                 </WrapInput>
                 <WrapInput>
                     <TextField 
+                        value = {address.houseNumber}
                         name = "houseNumber"
                         label = "Địa chỉ cụ thể" 
                         variant = "outlined"

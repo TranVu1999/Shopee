@@ -8,14 +8,10 @@ const WidgetVoucher = lazy(() => import("../../feature/User/WidgetVoucher"));
 const WidgetShopeeCoin = lazy(() => import("../../feature/User/WidgetShopeeCoin"));
 const WidgetPurchase = lazy(() => import("../../feature/User/WidgetPurchase"));
 const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));
-const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
 
 
 const routes = [
-    {
-        path: "address",
-        component: WidgetListAddress
-    },
+   
     {
         path: "update-password",
         component: WidgetUpdatePassword

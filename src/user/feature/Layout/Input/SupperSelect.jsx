@@ -134,6 +134,9 @@ const Option = styled.div`
 `;
 
 SupperSelect.propTypes = {
+    province: PropTypes.string.isRequired,
+    district: PropTypes.string.isRequired,
+    ward: PropTypes.string.isRequired,
     onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
     listOption: PropTypes.array.isRequired,
     onHanldeSubmit: PropTypes.func.isRequired,
@@ -141,6 +144,9 @@ SupperSelect.propTypes = {
 
 
 function SupperSelect({
+    province,
+    district,
+    ward,
     listOption, 
     onHanldeChoseAdministrativeUnit,
     onHanldeSubmit
@@ -152,9 +158,9 @@ function SupperSelect({
     // State
     const [address, setAddress] = useState({   
         indexTab: 0,     
-        province: "",
-        district: "",
-        ward: "" 
+        province,
+        district,
+        ward 
     });
 
     // effect

@@ -19,6 +19,7 @@ import firebase from "../../../config/firebase-config";
 import routes from './routes';
 const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
 const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
+const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));
 
 
 function UserPage(props) {
@@ -207,6 +208,34 @@ function UserPage(props) {
         .catch(err => console.log({err}));
     }
 
+    const onHanldeEditAddress = address => {
+        setIsLoading(true);
+        addressApi.edit(address)
+        .then(res => {
+            setIsLoading(false);
+            if(res.success) {
+                const updateAddress = res.address;
+                let tempListAddress = [...listAddress];
+                let indx = tempListAddress.findIndex(item => item._id === updateAddress._id);
+
+                if(indx !== -1) {
+                    if(updateAddress.isDefault) {
+                        tempListAddress = tempListAddress.map(address => ({
+                            ...address,
+                            isDefault: false
+                        }))
+                    }
+
+                    tempListAddress[indx] = updateAddress;
+                    setListAddress(tempListAddress);
+                }
+
+                
+            }
+        })
+        .catch(err => console.log({err}));
+    }
+
     return (
         <div className="mt-80 mb-40 user-page-content">
             <div className="container">
@@ -237,7 +266,11 @@ function UserPage(props) {
                                         listAddress={listAddress}
                                         onHandleRemoveAddress = {onHandleRemoveAddress}
                                         onHandleAddAddress = {onHanldeAddNewAddress}
+                                        onHanldeEditAddress = {onHanldeEditAddress}
                                     />
+                                </Route>
+                                <Route path = {`${path}/update-password`} >
+                                    <WidgetUpdatePassword/>
                                 </Route>
 
                             {/* {routes.map((item, index) =>{
