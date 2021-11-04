@@ -110,12 +110,18 @@ const ButtonSetDefaultActive = styled(ButtonSetDefault)`
 
 WidgetListAddress.propTypes = {
     listAddress: PropTypes.array.isRequired,
+    listOptionAddress: PropTypes.array.isRequired,
     onHandleRemoveAddress: PropTypes.func.isRequired,
+    onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
+    onHandleAddAddress: PropTypes.func.isRequired,
 };
 
 function WidgetListAddress({
     listAddress,
-    onHandleRemoveAddress
+    listOptionAddress,
+    onHandleRemoveAddress,
+    onHanldeChoseAdministrativeUnit,
+    onHandleAddAddress
 }) {
 
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -144,6 +150,16 @@ function WidgetListAddress({
     const onRemove = address => {
         setItemFocus(address);
         setIsOpenConfirmModal(true);
+    }
+
+    const onHanldeChose = dataChose => {
+        if(!onHanldeChoseAdministrativeUnit) return;
+        onHanldeChoseAdministrativeUnit(dataChose);
+    }
+
+    const onHanldeAdd = addressData => {
+        if(!onHandleAddAddress) return;
+        onHandleAddAddress(addressData)
     }
 
     // render
@@ -195,7 +211,7 @@ function WidgetListAddress({
     }
 
     return (
-        <WidgetContent className = "user-content">
+        <WidgetContent className = "user-content">        
             <WidgetTitle className = "d-flex align-items-center justify-content-between page-user--header">
                 <p>Địa chỉ của tôi</p>
                 <ButtonAdd 
@@ -214,7 +230,10 @@ function WidgetListAddress({
             
 
             {isOpenModal && <ModalAddress 
+                listOptionAddress = {listOptionAddress}
                 onHandleClose = {handleClose}
+                onHanldeChoseAdministrativeUnit = {onHanldeChose}
+                onHandleAdd = {onHanldeAdd}
             />}
 
             {isOpenConfirmModal && <ConfirmPopup

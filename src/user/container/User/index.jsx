@@ -10,6 +10,7 @@ import HandlingData from "../../feature/Layout/HandlingData";
 // Apis
 import accountApi from "../../../api/accountAPI";
 import addressApi from "../../../api/addressAPI";
+import administrativeUnitApi from "../../../api/administrativeUnitAPI";
 
 // Modules
 import firebase from "../../../config/firebase-config";
@@ -32,6 +33,7 @@ function UserPage(props) {
 
     const [user, setUser] = useState(null);
     const [listAddress, setListAddress] = useState(null);
+    const [listOptionAddress, setListOPtionAddress] = useState([]);
 
     // effect
     useEffect(() => {
@@ -43,10 +45,14 @@ function UserPage(props) {
         }
 
         const fetchListAddress = async function() {
-            const res = await addressApi.get();
-            if(res.success) {
-                console.log(res.listAddress)
-                setListAddress(res.listAddress)
+            const [resListAddress, resListProvince] = await Promise.all([
+                addressApi.get(),
+                administrativeUnitApi.getListProvince()
+            ]);
+
+            if(resListAddress.success && resListProvince.success) {
+                setListAddress(resListAddress.listAddress);
+                setListOPtionAddress(resListProvince.listProvince);
             }
         }
 
@@ -162,6 +168,45 @@ function UserPage(props) {
         setIsSuccess(false)
     }
 
+    const onHanldeChoseAdministrativeUnit = dataChose => {
+        const {type, code} = dataChose;
+        if(type === "province") {
+            administrativeUnitApi.getListDistrict(code)
+            .then(res => {
+                console.log({res})
+                if(res.success) {
+                    setListOPtionAddress(res.listDistrict);
+                }
+            })
+            .catch(err => console.log({err}));
+        } else if(type === "district") {
+            administrativeUnitApi.getListWard(code)
+            .then(res => {
+                console.log({res})
+                if(res.success) {
+                    setListOPtionAddress(res.listWard);
+                }
+            })
+            .catch(err => console.log({err}))
+        }
+    }
+
+    const onHanldeAddNewAddress = address => {
+        setIsLoading(true);
+        addressApi.add(address)
+        .then(res => {
+            setIsLoading(false);
+            if(res.success) {
+                const newAddress = res.address;
+                setListAddress([
+                    ...listAddress,
+                    newAddress
+                ])
+            }
+        })
+        .catch(err => console.log({err}));
+    }
+
     return (
         <div className="mt-80 mb-40 user-page-content">
             <div className="container">
@@ -186,8 +231,12 @@ function UserPage(props) {
                                 </Route>
                                 <Route path = {`${path}/address`} >
                                     <WidgetListAddress 
+                                        listOptionAddress = {listOptionAddress}
+                                        onHanldeChoseAdministrativeUnit = {onHanldeChoseAdministrativeUnit}
+
                                         listAddress={listAddress}
                                         onHandleRemoveAddress = {onHandleRemoveAddress}
+                                        onHandleAddAddress = {onHanldeAddNewAddress}
                                     />
                                 </Route>
 

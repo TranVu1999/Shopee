@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -18,8 +18,8 @@ const WidgetWrapper = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,.14);
+    z-index: 100;
 `;
-
 
 const WidgetModalContent = styled.div`
     position: absolute;
@@ -111,10 +111,29 @@ const CommitButton = styled(Button)`
 `;
 
 ModalAddress.propTypes = {
+    listOptionAddress: PropTypes.array.isRequired,
     onHandleClose: PropTypes.func.isRequired,
+    onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
+    onHandleAdd: PropTypes.func.isRequired,
 };
 
-function ModalAddress({onHandleClose}) {
+function ModalAddress({
+    onHandleClose, 
+    listOptionAddress,
+    onHanldeChoseAdministrativeUnit,
+    onHandleAdd
+}) {
+    // data
+    const [address, setAddress] = useState({
+        fullname: "",
+        phoneNumber: "",
+        houseNumber: "",
+        isDefault: false,
+        province: "",
+        district: "",
+        ward: "" 
+    });
+
     useEffect(() => {
         document.body.style.overflow = 'hidden';
 
@@ -129,22 +148,75 @@ function ModalAddress({onHandleClose}) {
         onHandleClose();
     }
 
+    const onHanldeChose = dataChose => {
+        if(!onHanldeChoseAdministrativeUnit) return;
+        onHanldeChoseAdministrativeUnit(dataChose);
+    }
+
+    const onHanldeSubmitSelection = addressData => {
+        setAddress({
+            ...address,
+            ...addressData
+        });
+    }
+
+    const onHandleChange = e => {
+        const {name, value} = e.target;
+        setAddress({
+            ...address,
+            [name]: value
+        });
+    }
+
+    const hanldeCheckbox = () => {
+        setAddress({
+            ...address,
+            isDefault: !address.isDefault
+        })
+    }
+
+    const handleAddNewAddress = () => {
+        if(!onHandleAdd) return;
+        onHandleAdd(address);
+    }
+
     return (
         <WidgetWrapper>
             <WidgetModalContent>
                 <h5>Địa chỉ mới</h5>
 
                 <WrapInput>
-                    <TextField label = "Họ và tên" variant = "outlined"/>
-                    <TextField label = "Số điện thoại" variant = "outlined"/>
+                    <TextField 
+                        name = "fullname"
+                        label = "Họ và tên" 
+                        variant = "outlined"
+                        onChange = {onHandleChange}
+                    />
+                    <TextField 
+                        name = "phoneNumber"
+                        label = "Số điện thoại" 
+                        variant = "outlined"
+                        onChange = {onHandleChange}
+                    />
                 </WrapInput>
 
                 <WrapInput>
-                    <div className = "flex-fill"><SupperSelect/></div>
+                    <div className = "flex-fill">
+                        <SupperSelect 
+                            listOption = {listOptionAddress}
+                            onHanldeChoseAdministrativeUnit = {onHanldeChose}
+                            onHanldeSubmit = {onHanldeSubmitSelection}
+                        />
+                    </div>
                     
                 </WrapInput>
                 <WrapInput>
-                    <TextField label = "Địa chỉ cụ thể" variant = "outlined"/>
+                    <TextField 
+                        name = "houseNumber"
+                        label = "Địa chỉ cụ thể" 
+                        variant = "outlined"
+                        onChange = {onHandleChange}
+                    />
                 </WrapInput>
 
                 <Banner>
@@ -152,13 +224,16 @@ function ModalAddress({onHandleClose}) {
                 </Banner>
 
                 <WrapInput>
-                    <ControlCheckbox className = "active"/>
+                    <ControlCheckbox 
+                        onClick = {hanldeCheckbox}
+                        className = {address.isDefault ? "active" : ""}
+                    />
                     Đặt làm địa chỉ mặc đinh
                 </WrapInput>
 
                 <WrapInput className = "justify-content-end">
                     <Button onClick = {handleClose}>Trở Lại</Button>
-                    <CommitButton>Hoàn thành</CommitButton>
+                    <CommitButton onClick = {handleAddNewAddress}>Hoàn thành</CommitButton>
                     
                 </WrapInput>
 

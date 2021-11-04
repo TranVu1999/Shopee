@@ -10,6 +10,11 @@ const addressApi = {
     remove: (id) => {
         const url = `/address/${id}`;
         return axiosClient.delete(url);
+    },
+
+    add: (address) => {
+        const url = `/address`;
+        return axiosClient.post(url, address);
     }
 
     

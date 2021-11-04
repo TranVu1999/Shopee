@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+
 
 // Theme
 import {Color, BorderColor} from './../../../theme';
@@ -133,19 +134,56 @@ const Option = styled.div`
 `;
 
 SupperSelect.propTypes = {
-    
+    onHanldeChoseAdministrativeUnit: PropTypes.func.isRequired,
+    listOption: PropTypes.array.isRequired,
+    onHanldeSubmit: PropTypes.func.isRequired,
 };
 
 
-function SupperSelect(props) {
+function SupperSelect({
+    listOption, 
+    onHanldeChoseAdministrativeUnit,
+    onHanldeSubmit
+}) {
+    const [listProvince, setListProvince] = useState([]);
+    const [listDistrict, setListDistrict] = useState([]);
+    const [listWard, setListWard] = useState([]);
 
     // State
-    const [address, setAddress] = React.useState({   
+    const [address, setAddress] = useState({   
         indexTab: 0,     
         province: "",
         district: "",
         ward: "" 
     });
+
+    // effect
+    useEffect(() => {
+        switch(address.indexTab) {
+            case 0:
+                setListProvince(listOption);
+                break;
+            case 1:
+                setListDistrict(listOption);
+                break;
+            case 2:
+                setListWard(listOption);
+                break;
+            default:
+                break;
+        }
+    }, [listOption])
+
+    useEffect(() => {
+        const {province, district, ward} = address;
+        if(onHanldeSubmit && province && district && ward) {
+            onHanldeSubmit({
+                province,
+                district,
+                ward
+            })
+        }
+    }, [address])
 
     // Custom Hooks
     const {visible, setVisible, ref} = useOutsideElement(false);
@@ -156,17 +194,34 @@ function SupperSelect(props) {
     }
 
     const onchange = span =>{
+        if(!onHanldeChoseAdministrativeUnit) return;
         if(address.indexTab === 0){
-            setAddress({...address, province: span, indexTab: 1})
+            onHanldeChoseAdministrativeUnit({type: "province", code: span.code});
+            setAddress({
+                ...address, 
+                province: span.name, 
+                district: "",
+                ward: "",
+                indexTab: 1
+            })
         };
 
         if(address.indexTab === 1){
-            setAddress({...address, district: span, indexTab: 2})
+            onHanldeChoseAdministrativeUnit({type: "district", code: span.code});
+            setAddress({
+                ...address, 
+                district: span.name, 
+                ward: "",
+                indexTab: 2
+            })
         };
 
         if(address.indexTab === 2){
-            setAddress({...address, ward: span})
+            setAddress({...address, ward: span.name})
         };
+
+        
+        
     }
 
     const onHandleChoseTab = indexTab =>{
@@ -190,8 +245,31 @@ function SupperSelect(props) {
         return span;
     }
 
+    const renderListOption = () => {
+        if(listOption) {
+            let tempListOption = [];
+            const {indexTab} = address;
+            if(indexTab === 0) {
+                tempListOption = listProvince;
+            } else if(indexTab === 1) {
+                tempListOption = listDistrict;
+            } else if(indexTab === 2) {
+                tempListOption = listWard;
+            }
+
+            return tempListOption.map(opt => {
+                return <Option 
+                    key = {opt._id}
+                    onClick = {() => {onchange(opt)}}
+                >{opt.name}</Option>
+            });
+        }
+        
+    }
+
     return (
         <WidgetContent>
+
             <WidgetResult
                 onClick = {OpenOptionBox}
             >
@@ -223,15 +301,7 @@ function SupperSelect(props) {
                         >Phường/ Xã</div>
                     </Tabs>
 
-                    <WidgetOption>
-                        <Option onClick = {() => {onchange("An Giang")}}>An Giang</Option>
-                        <Option>An Giang</Option>
-                        <Option>An Giang</Option>
-                        <Option>An Giang</Option>
-                        <Option>An Giang</Option>
-                        <Option>An Giang</Option>
-                        <Option>An Giang</Option>
-                    </WidgetOption>
+                    <WidgetOption>{renderListOption()}</WidgetOption>
                 </ToggleSelect>
             ) : ""}
         </WidgetContent>
