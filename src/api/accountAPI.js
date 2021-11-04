@@ -12,9 +12,19 @@ const accountApi = {
         return axiosClient.get(url);
     },
 
+    getPassword: () => {
+        const url = '/account/password';
+        return axiosClient.get(url);
+    },
+
     update: (id, user) => {
         const url = `/account/${id}`;
         return axiosClient.put(url, user);
+    },
+
+    getVerifyCode: () => {
+        const url = `/account/password/send-verify-code`;
+        return axiosClient.get(url);
     },
 
     

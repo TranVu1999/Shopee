@@ -35,6 +35,8 @@ function UserPage(props) {
     const [user, setUser] = useState(null);
     const [listAddress, setListAddress] = useState(null);
     const [listOptionAddress, setListOPtionAddress] = useState([]);
+    const [oldPassword, setOldPassword] = useState("");
+    const [verifyCode, setVerifyCode] = useState("");
 
     // effect
     useEffect(() => {
@@ -57,6 +59,13 @@ function UserPage(props) {
             }
         }
 
+        const fetchPassword = async function() {
+            const res = await accountApi.getPassword();
+            if(res.success) {
+                setOldPassword(res.password);
+            }
+        }
+
         switch(pathname) {
             case `${path}`:
             case `${path}/information`:
@@ -67,6 +76,10 @@ function UserPage(props) {
 
             case `${path}/address`:
                 fetchListAddress();
+                break;
+
+            case `${path}/update-password`:
+                fetchPassword();
                 break;
             default: 
                 break;
@@ -236,6 +249,16 @@ function UserPage(props) {
         .catch(err => console.log({err}));
     }
 
+    const onSendVerifyCode = () => {
+        accountApi.getVerifyCode()
+        .then(res => {
+            if(res.success) {
+                setVerifyCode(res.verifyCode);
+            }
+        })
+        .catch(err => console.log({err}))
+    }
+
     return (
         <div className="mt-80 mb-40 user-page-content">
             <div className="container">
@@ -270,7 +293,11 @@ function UserPage(props) {
                                     />
                                 </Route>
                                 <Route path = {`${path}/update-password`} >
-                                    <WidgetUpdatePassword/>
+                                    <WidgetUpdatePassword 
+                                        oldPassword = {oldPassword}
+                                        onSendVerifyCode = {onSendVerifyCode}
+                                        verifyCode = {verifyCode}
+                                    />
                                 </Route>
 
                             {/* {routes.map((item, index) =>{
