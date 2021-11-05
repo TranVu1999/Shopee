@@ -35,7 +35,7 @@ function UserPage(props) {
     const [user, setUser] = useState(null);
     const [listAddress, setListAddress] = useState(null);
     const [listOptionAddress, setListOPtionAddress] = useState([]);
-    const [oldPassword, setOldPassword] = useState("");
+    const [oldPassword, setOldPassword] = useState(null);
     const [verifyCode, setVerifyCode] = useState("");
 
     // effect
@@ -259,6 +259,17 @@ function UserPage(props) {
         .catch(err => console.log({err}))
     }
 
+    const onHandleSubmitNewPassword = passData => {
+        accountApi.updatePassword(passData)
+        .then(res => {
+            if(res.success) {
+                setIsSuccess(true);
+            }
+        })
+        .catch(err => console.log({err}));
+    }
+
+    
     return (
         <div className="mt-80 mb-40 user-page-content">
             <div className="container">
@@ -297,6 +308,7 @@ function UserPage(props) {
                                         oldPassword = {oldPassword}
                                         onSendVerifyCode = {onSendVerifyCode}
                                         verifyCode = {verifyCode}
+                                        onSubmitNewPassword = {onHandleSubmitNewPassword}
                                     />
                                 </Route>
 

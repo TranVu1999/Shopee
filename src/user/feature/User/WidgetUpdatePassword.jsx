@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// UI
-import {TextField} from '@material-ui/core';
+// components
+import ProcessingEffect from './../Layout/ProcessingEffect';
 
 // Theme 
 import {BorderColor, Color} from './../../theme';
@@ -23,14 +23,19 @@ const Title = styled.div`
 `;
 
 const FormUpdate = styled.form`
+    position: relative;
     padding-bottom: 3rem;
 `;
 
 const InputControl = styled.div`
-    display: flex;
-    align-items: center;
     margin-bottom: 1.5em;
     font-size: .875em;
+
+    &>div {
+        display: flex;
+        align-items: center;
+    }
+    
 
     label{
         width: 20%;
@@ -49,6 +54,12 @@ const InputControl = styled.div`
         &:focus {
             border-color: #666;
         }
+    }
+
+    p.notify {
+        margin-bottom: 0;
+        margin-left: calc(19.5% + 2.5rem);
+        color: #ff424f;
     }
 
 `;
@@ -163,23 +174,41 @@ const ContactButton = styled.button`
 
 WidgetUpdatePassword.propTypes = {
     verifyCode: PropTypes.string.isRequired,
-    oldPassword: PropTypes.string.isRequired,
+    oldPassword: PropTypes.string,
     onSendVerifyCode: PropTypes.func.isRequired,
+    onSubmitNewPassword: PropTypes.func.isRequired,
+}
+
+WidgetUpdatePassword.defaultProps = {
+    oldPassword: null
 }
 
 function WidgetUpdatePassword({
     oldPassword,
     onSendVerifyCode,
-    verifyCode
+    verifyCode,
+    onSubmitNewPassword
 }) {
     
     // State
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [passwordInfo, setPasswordInfo] = useState({
-        oldPassword: "",
-        newPassword: "",
-        verifyPassword: "",
-        verifyCode: ""
+        oldPassword: {
+            value: "",
+            error: ""
+        },
+        newPassword: {
+            value: "",
+            error: ""
+        },
+        verifyPassword: {
+            value: "",
+            error: ""
+        },
+        verifyCode: {
+            value: "",
+            error: ""
+        }
     });
 
     
@@ -204,7 +233,51 @@ function WidgetUpdatePassword({
 
     useEffect(() => {
         return clear;
-    }, [])
+    }, []);
+
+    // functions
+    const validateData = () =>{
+        let flag = true;
+
+        if(oldPassword) {
+
+        } else {
+            const {newPassword, verifyPassword} = passwordInfo;
+
+            if(!currentSecond) {
+                flag = false;
+                setPasswordInfo({
+                    ...passwordInfo,
+                    verifyCode: {
+                        ...verifyCode,
+                        error: "Mã này đã quá thời gian sử dụng. Vui lòng nhập mã khác"
+                    }
+                })
+            } else if(passwordInfo.verifyCode.value !== verifyCode) {
+                flag = false;
+                setPasswordInfo({
+                    ...passwordInfo,
+                    verifyCode: {
+                        ...passwordInfo.verifyCode,
+                        error: "Mã xác nhận không đúng. Vui lòng nhập lại!"
+                    }
+                })
+            }
+
+            if(verifyPassword.value !== newPassword.value) {
+                flag = false;
+                setPasswordInfo({
+                    ...passwordInfo,
+                    verifyPassword: {
+                        ...verifyCode,
+                        error: "Không trùng khớp"
+                    }
+                })
+            }
+        }
+
+        return flag;
+    }
 
     // handle event
     const onHandleOpenModal = isOpen =>{
@@ -213,30 +286,59 @@ function WidgetUpdatePassword({
     
     const onHandleSubmit = event =>{
         event.preventDefault();
+
+        const flag = validateData();
+        if(flag) {
+            onSubmitNewPassword({
+                type: oldPassword ? "update" : "add",
+                newPassword: passwordInfo.newPassword.value,
+                oldPassword: passwordInfo.oldPassword.value
+            });
+        } else {
+            onSubmitNewPassword({
+                type: oldPassword ? "update" : "add",
+                newPassword: passwordInfo.newPassword.value,
+                oldPassword: passwordInfo.oldPassword.value
+            });
+        }
+        
     }
 
     const onHandleChange = e => {
         const {name, value} = e.target;
         setPasswordInfo({
             ...passwordInfo,
-            [name]: value
+            [name]: {
+                error: "",
+                value
+            }
         });
     }
 
     const onHandleSendVerifyCode = () => {
         if(!onSendVerifyCode) return;
         onSendVerifyCode();
+        setCurrentSecond(180);
     }
 
     // render
     const renderButtonSubmit = () => {
         if(oldPassword) {
-            if(passwordInfo.newPassword && passwordInfo.verifyPassword && passwordInfo.oldPassword) return <Button>Xác nhận</Button>
+
+            if(
+                passwordInfo.newPassword.value && 
+                passwordInfo.verifyPassword.value && 
+                passwordInfo.oldPassword.value
+            ) return <Button>Xác nhận</Button>
 
             return  <DivButton>Xác nhận</DivButton>
         }
 
-        if(passwordInfo.newPassword && passwordInfo.verifyPassword && passwordInfo.verifyCode) return <Button>Xác nhận</Button>
+        if(
+            passwordInfo.newPassword.value && 
+            passwordInfo.verifyPassword.value && 
+            passwordInfo.verifyCode.value && currentSecond
+        ) return <Button>Xác nhận</Button>
 
         return  <DivButton>Xác nhận</DivButton>
 
@@ -245,84 +347,127 @@ function WidgetUpdatePassword({
     const renderFormUpdate = () => {
         if(!oldPassword) {
             return (
-                <FormUpdate onSubmit = {onHandleSubmit}>
+                <>
                     <InputControl>
-                        <label>Mật khẩu mới</label>
-                        <input 
-                            type="text" 
-                            name = "newPassword"
-                            value = {passwordInfo.newPassword}
-                            onChange = {onHandleChange}
-                        />
+                        <div>
+                            <label>Mật khẩu mới</label>
+                            <input 
+                                type="text" 
+                                name = "newPassword"
+                                value = {passwordInfo.newPassword.value}
+                                onChange = {onHandleChange}
+                            />
+                        </div>
 
-                        {oldPassword && <TransparentButton onClick = {() => {onHandleOpenModal(true)}}>Quên mật khẩu?</TransparentButton>}
+                        {passwordInfo.newPassword.error && <p className="notify">{passwordInfo.newPassword.error}</p>}
+  
+                    </InputControl>
+
+                    <InputControl>
+                        <div>
+                            <label>Xác nhận mật khẩu</label>
+                            <input 
+                                type="text" 
+                                name = "verifyPassword"
+                                value = {passwordInfo.verifyPassword.value}
+                                onChange = {onHandleChange}
+                            />
+                        </div>
+                        {passwordInfo.verifyPassword.error && <p className="notify">{passwordInfo.verifyPassword.error}</p>}
                         
                     </InputControl>
 
                     <InputControl>
-                        <label>Xác nhận mật khẩu</label>
-                        <input 
-                            type="text" 
-                            name = "verifyPassword"
-                            value = {passwordInfo.verifyPassword}
-                            onChange = {onHandleChange}
-                        />
-                    </InputControl>
+                        <div>
+                            <label>Mã xác minh</label>
+                            <GroupInput>
+                                <input 
+                                    type="text" 
+                                    name = "verifyCode"
+                                    value = {passwordInfo.verifyCode.value}
+                                    onChange = {onHandleChange}
+                                />
+                                <div 
+                                    className="button"
+                                    onClick = {onHandleSendVerifyCode}
+                                >Gửi Mã xác minh</div>
 
-                    <InputControl>
-                        <label>Mã xác minh</label>
-                        <GroupInput>
-                            <input 
-                                type="text" 
-                                name = "verifyCode"
-                                value = {passwordInfo.verifyCode}
-                                onChange = {onHandleChange}
-                            />
-                            <div 
-                                className="button"
-                                onClick = {onHandleSendVerifyCode}
-                            >Gửi Mã xác minh</div>
-
-                            {currentSecond && verifyCode && <span>({currentSecond}s)</span>}
-                            
-                        </GroupInput>
+                                {currentSecond && verifyCode && <span>({currentSecond}s)</span>}
+                                
+                            </GroupInput>
+                        </div>
+                        {passwordInfo.verifyCode.error && <p className="notify">{passwordInfo.verifyCode.error}</p>}
+                        
                         
                     </InputControl>
                     
                     <InputControl>
-                        <label></label>
-
-                        {renderButtonSubmit()}
+                        <div>
+                            <label></label>{renderButtonSubmit()}
+                        </div>
+                        
                     </InputControl>
-                </FormUpdate>
+                </>
             );
         } 
 
         return (
-            <FormUpdate onSubmit = {onHandleSubmit}>
+            <>
                 <InputControl>
-                    <label>Mật khẩu hiện tại</label>
-                    <TextField variant="outlined" className = "mr-1"/>
-                    <TransparentButton onClick = {() => {onHandleOpenModal(true)}}>Quên mật khẩu?</TransparentButton>
+                    <div>
+                        <label>Mật khẩu hiện tại</label>
+                        <input 
+                            type="text" 
+                            name = "oldPassword"
+                            value = {passwordInfo.oldPassword.value}
+                            onChange = {onHandleChange}
+                        />
+                        <TransparentButton onClick = {() => {onHandleOpenModal(true)}}>Quên mật khẩu?</TransparentButton>
+                    </div>
+                    {passwordInfo.oldPassword.error && <p className="notify">{passwordInfo.oldPassword.error}</p>}
+                    
                 </InputControl>
 
                 <InputControl>
-                    <label>Mật khẩu mới</label>
-                    <TextField variant="outlined"/>
+                    <div>
+                        <label>Mật khẩu mới</label>
+                        <input 
+                            type="text" 
+                            name = "newPassword"
+                            value = {passwordInfo.newPassword.value}
+                            onChange = {onHandleChange}
+                        />
+                    </div>
+                    {passwordInfo.newPassword.error && <p className="notify">{passwordInfo.newPassword.error}</p>}
+                    
                 </InputControl>
 
                 <InputControl>
-                    <label>Xác nhận mật khẩu</label>
-                    <TextField variant="outlined"/>
+                    <div>
+                        <label>Xác nhận mật khẩu</label>
+                        <input 
+                            type="text" 
+                            name = "verifyPassword"
+                            value = {passwordInfo.verifyPassword.value}
+                            onChange = {onHandleChange}
+                        />
+                    </div>
+                    {passwordInfo.verifyPassword.error && <p className="notify">{passwordInfo.verifyPassword.error}</p>}
+                    
                 </InputControl>
                 
                 <InputControl>
-                    <label></label>
-                    {renderButtonSubmit()}
+                    <div>
+                        <label></label>
+                        {renderButtonSubmit()}
+                    </div>
+                    
                 </InputControl>
-            </FormUpdate>
+            </>
         );
     }
+
+    console.log("old", typeof oldPassword)
 
     return (
         <WidgetContent className = "page-user--content br-2">
@@ -331,7 +476,13 @@ function WidgetUpdatePassword({
                 <span>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</span>
             </Title>
 
-            {renderFormUpdate()}
+            
+            <FormUpdate onSubmit = {onHandleSubmit}>
+                {!oldPassword && typeof oldPassword !== "string" &&  <ProcessingEffect/>}
+               
+                {renderFormUpdate()}
+            </FormUpdate>
+            
 
             {isOpenModal ? (
                 <div className="modal-box bg-white">

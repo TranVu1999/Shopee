@@ -16,6 +16,9 @@ const WidgetContent = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
+
+    background-color: #fff;
+    z-index: 10;
     
     span {
         display: inline-block;
@@ -28,7 +31,7 @@ const WidgetContent = styled.section`
 
 function ProcessingEffect(props) {
     return (
-        <WidgetContent>
+        <WidgetContent className="d-flex align-items-center justify-content-center">
             <span class="icon icon-spinner10"></span>
         </WidgetContent>
 

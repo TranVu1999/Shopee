@@ -27,6 +27,11 @@ const accountApi = {
         return axiosClient.get(url);
     },
 
+    updatePassword: (password) => {
+        const url = `/account/password`;
+        return axiosClient.put(url, password);
+    },
+
     
 }
 

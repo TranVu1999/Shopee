@@ -10,7 +10,7 @@ const UserRoll = lazy(() => import("./user"));
 function App() {
   return (
     <div className="App">
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<div></div>}>
           <Switch>
             <Route 
                 path = "/ban-hang"
