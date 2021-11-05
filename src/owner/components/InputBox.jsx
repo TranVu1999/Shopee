@@ -25,7 +25,7 @@ function InputBox({placeholder, large, value, verify, onHandleChange}) {
 
     return (
         <div
-            className="d-inline-block widget-input-box" 
+            className="d-inline-block w-100 widget-input-box" 
             style = {{padding: large ? ".5rem .875rem" : ".25rem .875rem"}}
         >
             <input 

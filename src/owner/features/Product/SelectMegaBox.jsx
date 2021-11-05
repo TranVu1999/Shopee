@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Hooks
+import useOutsideElement from './../../hooks/outsideElement';
+
 // Theme
 import {BorderColor} from '../../theme';
 
@@ -73,7 +76,7 @@ const WidgetDropDown = styled.div`
 
     background-color: #fff;
 
-    transition: all .5s linear;
+    transition: all .5s ease;
     overflow: hidden;
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     z-index: 100;
@@ -196,6 +199,9 @@ function SelectMegaBox({
     const [isOpenFormAddNew, setIsOpenFormAddNew] = React.useState(false);
     const amountSelected = arrIndexSelected.filter(item => item).length;
 
+    // Custom Hooks
+    const {visible, setVisible, ref} = useOutsideElement(false);
+
     // handle event
     const handleChose = index =>{
         if(!handleChoseOption) return;
@@ -209,6 +215,10 @@ function SelectMegaBox({
         }else{
             handleChoseOption({name, index});
         }
+    }
+
+    const OpenOptionBox = () =>{
+        setVisible(true);
     }
 
     // render
@@ -269,7 +279,8 @@ function SelectMegaBox({
         <WidgetContent>
             <WidgetResultSelected 
                 className="d-flex align-items-center justify-content-between"
-                onClick = {() => setIsShowListOption(!isShowListOption)}
+                // onClick = {() => setIsShowListOption(!isShowListOption)}
+                onClick = {OpenOptionBox}
             >
                 <div>
                     {renderResultSelected()}
@@ -281,7 +292,10 @@ function SelectMegaBox({
                 </div>
             </WidgetResultSelected>
 
-            <WidgetDropDown style = {{maxHeight: isShowListOption ? "345px" : "0px"}}>
+            <WidgetDropDown 
+                ref = {ref}
+                style = {{maxHeight: visible ? "345px" : "0px"}}
+            >
                 <WidgetSearch>
                     <div className="d-flex align-items-center ">
                         <span aria-hidden="true" className="icon_search"></span>

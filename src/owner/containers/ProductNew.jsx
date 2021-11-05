@@ -73,6 +73,7 @@ function ProductNew() {
                 }
             })
             .catch(err => {
+                setIsLoading(false);
                 toast.dismiss();
                 toast.error("Thêm thất bại!");
                 console.log(err);

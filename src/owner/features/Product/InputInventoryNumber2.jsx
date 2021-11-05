@@ -4,17 +4,19 @@ import styled from 'styled-components';
 
 const WidgetContent = styled.div`
     padding: .5rem .875rem;
+    border: 1px solid #d5d5d5;
+    border-radius: .25rem;
 `;
 
 function InputInventoryNumber(props) {
     // validation
-    const {field, formState} = useController(props);
+    const {field} = useController(props);
 
     return (
         <WidgetContent className="widget-input-box">
             <input 
                 type="text" 
-                placeholder="0"
+                placeholder="Nhập vào"
                 {...field}
             />
         </WidgetContent>

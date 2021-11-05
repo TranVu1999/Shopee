@@ -1,5 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 import {useController} from 'react-hook-form';
+
+const WidgetContent = styled.div`
+    width: 100%;
+    border: 1px solid #d5d5d5;
+    border-radius: .25rem;
+`;
 
 function InputBox(props, ref) {
     // validate
@@ -7,7 +14,7 @@ function InputBox(props, ref) {
     
 
     return (
-        <div
+        <WidgetContent
             className="d-inline-block widget-input-box" 
             style = {{padding: true ? ".5rem .875rem" : ".25rem .875rem"}}
         >
@@ -16,7 +23,7 @@ function InputBox(props, ref) {
                 placeholder = "Nhập vào"
                 {...field}
             />
-        </div>
+        </WidgetContent>
     );
 }
 

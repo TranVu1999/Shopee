@@ -7,6 +7,8 @@ import {BorderColor} from './../../theme';
 
 const WidgetContent = styled.div`
     padding: .5rem .875rem;
+    border: 1px solid #d5d5d5;
+    border-radius: .25rem;
 
     span{
         margin-right: .75rem;
