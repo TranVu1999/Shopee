@@ -52,7 +52,7 @@ function ProductCategoryThumbnail(props) {
 
     return (
         <WidgetContent className="product-category-thumbnail">
-            <Link to = "/products-of-category" className = "thumbnail">
+            <Link to = "/products-of-category/thoi-trang-nam" className = "thumbnail">
                 <img src = {image} alt="brand" />
                 <div>{title}</div>
             </Link>

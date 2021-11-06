@@ -57,7 +57,7 @@ const routes = [
         component: StoreDetailPage
     },
     {
-        path: "/products-of-category",
+        path: "/products-of-category/:slug",
         component: ProductOfCategoryPage
     },
     {

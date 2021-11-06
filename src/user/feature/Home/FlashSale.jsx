@@ -5,15 +5,20 @@ import styled from 'styled-components';
 
 // Component
 import {Swiper, SwiperSlide} from 'swiper/react';
-import ThumbnailSale from '../Product/ThumbnailSale';
+
+// Modules
+import Number from './../../util/number';
 
 // Style
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 
 const WidgetContent = styled.div`
+    padding: 1rem 0rem;
+
     h5{
-    padding: 15px 20px;
+        padding: 15px 20px;
+    }
 
     a{
         text-transform: capitalize;
@@ -39,6 +44,29 @@ const WidgetContent = styled.div`
 }
 `;
 
+const WidgetProduct = styled.div`
+    display: block;
+
+    .product__thumbnail{
+        height: 173px;
+        border: none;
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .pice{
+        font-size: 20px;
+        color: #ee4d2d;
+        text-align: center;
+    }
+
+    .sale-progress{
+        font-size: .75rem;
+    }
+`;
+
 FlashSale.propTypes = {
     items: PropTypes.array,
 };
@@ -53,9 +81,43 @@ function FlashSale(props) {
 
     const renderItems = () =>{
         return items.map(item => {
+            const {
+                image, 
+                discount, 
+                price, 
+                numOrder,
+                numSale
+            } = item;
+            const remain =  (numOrder / numSale * 100).toFixed(0);
+
             return (
                 <SwiperSlide key = {item.id}>
-                    <ThumbnailSale item = {item}/>
+                    <WidgetProduct className = "product">
+                        <div 
+                            className="my-2 product__thumbnail" 
+                            style = {{backgroundImage: `url(${image})`}}
+                        >
+                            {discount ? (
+                                <div className="box-discount">
+                                    <div><b>{discount}%</b> Sale</div>
+                                </div>
+                            ) : ""}
+                        </div>
+                        <div className="box-text">
+                            <div className="mb-2 pice">₫ {Number.convertToMoney(price) }</div>
+                            <div className="sale-progress">
+                                <div className="num-sold">
+                                    <div className="progress-mark" style={{width: `${100 - remain}%`}}></div>
+
+                                    {remain > 50 ? <div className="bar-fire"></div> : ""}
+                                    
+
+                                    <span> {remain > 70 ? "Sap Chay Hang" : `Da ban ${numOrder}`}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </WidgetProduct>
                 </SwiperSlide>
             );
         });
@@ -80,6 +142,7 @@ function FlashSale(props) {
                     {renderItems()}
                 </Swiper>
             </div>
+
         </WidgetContent>
     );
 }

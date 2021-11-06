@@ -8,9 +8,6 @@ import Thumbnail from '../Product/Thumbnail.jsx';
 
 
 const WidgetContent = styled.div`
-    .product__thumbnail{
-        margin: 4px 4px;
-    }
 
     .row{
         div[class|="col"]:nth-child(6n+1){
@@ -29,6 +26,14 @@ const WidgetContent = styled.div`
         }
         
     }
+`;
+
+const ListProduct = styled.div`
+    gap: 5px;
+`;
+
+const Product = styled.div`
+    width: calc((100% - 25px) /6);
 `;
 
 const Tabs = styled.div`
@@ -82,7 +87,6 @@ const WidgetButton = styled.div`
     }
 `;
 
-
 ProductHint.propTypes = {
     items: PropTypes.array,
 };
@@ -108,9 +112,9 @@ function ProductHint(props) {
     const renderItems = () =>{
         return items.map(item =>{
             return (
-                <div className="col-lg-2" key = {item.id}>
+                <Product key = {item.id}>
                     <Thumbnail item = {item}/>
-                </div>
+                </Product>
             );
         })
     }
@@ -123,9 +127,9 @@ function ProductHint(props) {
                 <div>Thanh toan bang xu</div>
             </Tabs>
 
-            <div className="mt-2 mb-3 row" style={{backgroundColor: "#EAE7DE"}}>
+            <ListProduct className="mt-2 mb-3 row">
                 {renderItems()}
-            </div>
+            </ListProduct>
 
             <WidgetButton className="text-center">
                 <a href="#/">Xem thêm</a>

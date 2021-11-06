@@ -46,7 +46,7 @@ function UserRoll() {
     }, []); 
 
     return (
-        <div className = "main-wrapper">
+        <div className = "main-wrapper user-roll">
             <Switch>
                 <Route 
                     path = "/login" 

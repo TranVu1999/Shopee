@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 
 // Components
 import HeroSlider from './../feature/Layout/HeroSlider';
@@ -22,7 +23,8 @@ import banner4 from './../assets/image/banners/banner4.jpeg';
 import NavigationBar from '../feature/Layout/NavigationBar';
 
 
-function ProductOfCategory(props) {
+function ProductOfCategory() {
+    const params = useParams();
 
     const [listSlideMainBanner] = useState([
         {
@@ -369,6 +371,11 @@ function ProductOfCategory(props) {
        indexActive: 0,
     });
 
+    // effect
+    useEffect(() => {
+        
+    }, []);
+
     // handle event
     const handleChosePage = event =>{
         const {type, value} = event;
@@ -491,7 +498,7 @@ function ProductOfCategory(props) {
                         </div>
 
                         <div className="col-lg-10">
-                            <div className="pl-5 list-product__right">
+                            <div className="pl-3 list-product__right">
                                 <WidgetControl/>
                                 <div className="mb-3"></div>
                                 <WidgetListProduct items = {listProduct}/>

@@ -8,52 +8,19 @@ import Number from './../../util/number';
 
 const WidgetContent = styled(Link)`
     background-color: #fff;
-
     display: block;
-    min-height: 300px;
-
-    border: 1px solid rgba(0,0,0,.05);
-
+    padding-bottom: 1rem;
+    border: 1px solid #e5e5e5;
     transition: all .3s ease;
 
-    .box-img{
-        text-align: center;
-        overflow: hidden;
-        position: relative;
+    .product__thumbnail{
+        border: none;
 
         img{
-            display: inline-block;
-            max-width: 190px;
             height: 190px;
-
             transition: all .3s ease;
         }
-    }
-
-    .box-text{
-        padding: .75rem .5rem;
-
-        .title{
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            min-height: 36px;
-            max-height: 36px;
-            
-            font-size: 0.8125rem;
-            text-overflow: ellipsis;
-
-            color: #222;
-
-            line-height: 18px;
-            word-wrap: break-word;
-            overflow: hidden;
-        }
-
-        .price{
-            font-size: 1.125rem;
-        }
-    }
+    }    
 
     &:hover{
         border-color: #ee4d2e;
@@ -83,8 +50,8 @@ function Thumbnail({item}) {
     }
 
     return (
-        <WidgetContent to="/product-detail" className = "product__thumbnail">
-            <div className="box-img">
+        <WidgetContent to="/product-detail" className = "product">
+            <div className="product__thumbnail">
                 <img src = {img} alt = "product"/>
 
                 {discount ? (
@@ -94,7 +61,7 @@ function Thumbnail({item}) {
                 ) : ""}
                 
             </div>
-            <div className="box-text">
+            <div className="product__text">
                 <div className = "mb-2 title">{title}</div>
 
                 <div className="d-flex justify-content-between number">
