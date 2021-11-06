@@ -23,8 +23,9 @@ const productApi = {
     return axiosClient.get(url);
   },
 
-  getByCategory: (category) => {
-    const url = `/product/category/${category}`;
+  getList: (filter) => {
+    const url = `/product?${filter}`;
+    console.log({ url });
     return axiosClient.get(url);
   },
 };

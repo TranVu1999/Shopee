@@ -56,11 +56,15 @@ function WidgetListProduct(props) {
 
     // render
 
+    const renderPrice = product => {
+        
+    }
+
     const renderItems = () =>{
         return items.map(prod =>{
             const {
-                id, 
-                image, 
+                _id, 
+                avatar, 
                 discount, 
                 title, 
                 price,
@@ -68,10 +72,10 @@ function WidgetListProduct(props) {
             } = prod;
 
             return (
-                <ProductBox key = {id} className = "product">
+                <ProductBox key = {_id} className = "product">
                     <div 
                         className = "product__thumbnail" 
-                        style = {{backgroundImage: `url(${image})`}}
+                        style = {{backgroundImage: `url(${avatar})`}}
                     >
                         {discount ? (
                             <div className="box-discount">
@@ -87,8 +91,11 @@ function WidgetListProduct(props) {
 
                         <div className="d-flex align-items-center justify-content-between price">
                             <div>
-                                <del>{price}.00$</del>
-                                <span className="price">{price}.00<span className="currency-unit">$</span></span>
+                                <del>{price}</del>
+                                <span className="price">
+                                    <small>₫</small>
+                                    {price}
+                                </span>
                             </div>
                             
                             {iconCart}
