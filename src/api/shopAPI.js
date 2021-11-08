@@ -6,9 +6,9 @@ const shopApi = {
         const url = '/shop';
         return axiosClient.get(url);
     },
-    update: (shop) => {
-        const url = '/shop';
-        return axiosClient.post(url, shop);
+    update: (id, data) => {
+        const url = `/shop/shop-management/${id}`;
+        return axiosClient.put(url, data);
     },
 }
 

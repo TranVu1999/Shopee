@@ -215,8 +215,8 @@ const Delivery = styled.div`
 const WidgetButton = styled.div`  
     button{
         position: relative;
-        min-width: 5rem;
-        height: 2.125rem;
+        min-width: 6rem;
+        padding: .125rem 0;
         margin-right: .5rem;
         
         border: 1px solid rgba(0,0,0,.09);
@@ -276,6 +276,7 @@ const WidgetFormUpdate = styled.div`
     .number{
         min-width: 2.5rem;
         height: 2rem; 
+        line-height: 2rem;
 
         font-size: 1rem;
         text-align: center;
@@ -288,12 +289,14 @@ const ButtonAddToCart = styled.button`
     display: inline-block;
     min-width: 11.25rem;
     margin-right: 1rem;
-    padding: .75rem 0;
+    padding: .75rem 1rem;
 
     color: #ee4d2d;
     background-color: #FFEEE8;
     border: 1px solid #ee4d2d;
     border-radius: 2px;
+
+    text-transform: capitalize;
 
     svg{
         margin-right: .5rem;
@@ -374,22 +377,21 @@ function WidgetDetail({product}) {
     const renderClassifications = () => {
         const {classification} = product;
         if(classification) {
+            const firstClassifications = classification.classifies.first.types;
+            const secondClassifications = classification.classifies.second.types;
+
             return <WidgetClassify>
                 <Row>
                     <Label>Màu sắc</Label>
                     <WidgetButton>
-                        <button className="active">
-                            Đen
-                            <div className="ticker">
-                                {iconTicker}
-                            </div>
-                        </button>
-                        <button>
-                            Đen
-                            <div className="ticker">
-                                {iconTicker}
-                            </div>
-                        </button>
+                        {firstClassifications.map(item => {
+                            return <button>
+                                {item}
+                                <div className="ticker">
+                                    {iconTicker}
+                                </div>
+                            </button>
+                        })}
                         
                     </WidgetButton>
                     
@@ -398,18 +400,14 @@ function WidgetDetail({product}) {
                 <Row className="mb-3">
                     <Label>Size</Label>
                     <WidgetButton>
-                        <button className="active">
-                            S
-                            <div className="ticker">
-                                {iconTicker}
-                            </div>
-                        </button>
-                        <button>
-                            M
-                            <div className="ticker">
-                                {iconTicker}
-                            </div>
-                        </button>
+                        {secondClassifications.map(item => {
+                            return <button>
+                                {item}
+                                <div className="ticker">
+                                    {iconTicker}
+                                </div>
+                            </button>
+                        })}
                         
                     </WidgetButton>
                     
