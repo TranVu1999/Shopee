@@ -132,154 +132,180 @@ function Home() {
         {
             id: 1,
             image: "https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn",
-            title: "Thoi trang nam"
+            title: "Thời trang nam",
+            alias: "thoi-trang-nam"
         },
         {
             id: 2,
             image: "https://cf.shopee.vn/file/75ea42f9eca124e9cb3cde744c060e4d_tn",
-            title: "Thoi trang nu"
+            title: "Thoi trang nu",
+            alias: "thoi-trang-nu"
         },
         {
             id: 3,
             image: "https://cf.shopee.vn/file/31234a27876fb89cd522d7e3db1ba5ca_tn",
-            title: "Dien thoai & phu kien"
+            title: "Dien thoai & phu kien",
+            alias: ""
         },
         {
             id: 4,
             image: "https://cf.shopee.vn/file/099edde1ab31df35bc255912bab54a5e_tn",
-            title: "Me & be"
+            title: "Me & be",
+            alias: ""
         }
         ,
         {
             id: 5,
             image: "https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn",
-            title: "Thiet bi dien tu"
+            title: "Thiet bi dien tu",
+            alias: ""
         }
         ,
         {
             id: 6,
             image: "https://cf.shopee.vn/file/24b194a695ea59d384768b7b471d563f_tn",
-            title: "nha cua & doi song"
+            title: "nha cua & doi song",
+            alias: ""
         }
         ,
         {
             id: 7,
             image: "https://cf.shopee.vn/file/c3f3edfaa9f6dafc4825b77d8449999d_tn",
-            title: "May tinh & laptop"
+            title: "May tinh & laptop",
+            alias: ""
         }
         ,
         {
             id: 8,
             image: "https://cf.shopee.vn/file/c765998fda99b2be9eb6e348df29af28_tn",
-            title: "lam dep"
+            title: "lam dep",
+            alias: ""
         }
         ,
         {
             id: 9,
             image: "https://cf.shopee.vn/file/ec14dd4fc238e676e43be2a911414d4d_tn",
-            title: "May anh & may quay phim"
+            title: "May anh & may quay phim",
+            alias: ""
         }
         ,
         {
             id: 10,
             image: "https://cf.shopee.vn/file/bf87b50b463f646bb7fb8a1a606d9ed2_tn",
-            title: "Suc khoe"
+            title: "Suc khoe",
+            alias: ""
         }
         ,
         {
             id: 11,
             image: "https://cf.shopee.vn/file/86c294aae72ca1db5f541790f7796260_tn",
-            title: "Dong ho"
+            title: "Dong ho",
+            alias: ""
         }
         ,
         {
             id: 12,
             image: "https://cf.shopee.vn/file/48630b7c76a7b62bc070c9e227097847_tn",
-            title: "giay dep nu"
+            title: "giay dep nu",
+            alias: ""
         }
         ,
         {
             id: 13,
             image: "https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn",
-            title: "Giay dep nam"
+            title: "Giay dep nam",
+            alias: ""
         }
         ,
         {
             id: 14,
             image: "https://cf.shopee.vn/file/fa6ada2555e8e51f369718bbc92ccc52_tn",
-            title: "Tui vi nu"
+            title: "Tui vi nu",
+            alias: ""
         }
         ,
         {
             id: 15,
             image: "https://cf.shopee.vn/file/7abfbfee3c4844652b4a8245e473d857_tn",
-            title: "Thiet bi dien gia dung"
+            title: "Thiet bi dien gia dung",
+            alias: ""
         }
         ,
         {
             id: 16,
             image: "https://cf.shopee.vn/file/8e71245b9659ea72c1b4e737be5cf42e_tn",
-            title: "phu kien & trang suc nu"
+            title: "phu kien & trang suc nu",
+            alias: ""
         }
         ,
         {
             id: 17,
             image: "https://cf.shopee.vn/file/6cb7e633f8b63757463b676bd19a50e4_tn",
-            title: "The thao & du lich"
+            title: "The thao & du lich",
+            alias: ""
         }
         ,
         {
             id: 18,
             image: "https://cf.shopee.vn/file/c432168ee788f903f1ea024487f2c889_tn",
-            title: "Bach hoa online"
+            title: "Bach hoa online",
+            alias: ""
         }
         ,
         {
             id: 19,
             image: "https://cf.shopee.vn/file/3fb459e3449905545701b418e8220334_tn",
-            title: "O to & xe may & xe dap"
+            title: "O to & xe may & xe dap",
+            alias: ""
         }
         ,
         {
             id: 20,
             image: "https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn",
-            title: "Nha sach online"
+            title: "Nha sach online",
+            alias: ""
         }
         ,
         {
             id: 21,
             image: "https://cf.shopee.vn/file/18fd9d878ad946db2f1bf4e33760c86f_tn",
-            title: "Ba lo & tui vi nam"
+            title: "Ba lo & tui vi nam",
+            alias: ""
         }
         ,
         {
             id: 22,
             image: "https://cf.shopee.vn/file/4540f87aa3cbe99db739f9e8dd2cdaf0_tn",
-            title: "Thoi trang tre em"
+            title: "Thoi trang tre em",
+            alias: ""
         }
         ,
         {
             id: 23,
             image: "https://cf.shopee.vn/file/ce8f8abc726cafff671d0e5311caa684_tn",
-            title: "Do choi"
+            title: "Do choi",
+            alias: ""
         }
         ,
         {
             id: 24,
             image: "https://cf.shopee.vn/file/cd8e0d2e6c14c4904058ae20821d0763_tn",
-            title: "giat giu & cham soc nha cua"
+            title: "giat giu & cham soc nha cua",
+            alias: ""
         }
         ,
         {
             id: 25,
             image: "https://cf.shopee.vn/file/cdf21b1bf4bfff257efe29054ecea1ec_tn",
-            title: "Cham soc thu cung"
+            title: "Cham soc thu cung",
+            alias: ""
         }
         ,
         {
             id: 26,
             image: "https://cf.shopee.vn/file/b0f78c3136d2d78d49af71dd1c3f38c1_tn",
-            title: "Voucher & dich vu"
+            title: "Voucher & dich vu",
+            alias: ""
         }
     ]);
 

@@ -312,80 +312,69 @@ const ButtonBuyNow = styled(ButtonAddToCart)`
     border: 1px solid #ee4d2d;
 `;
 
+const WidgetSkeleton = styled.div`
+    .title {
+        height: 53px;
+        margin-bottom: 1rem;
+    }
+
+    .statistics {
+        label {
+            display: block;
+            height: 26px;
+            width: 24px;
+
+            &:after {
+                display: none;
+            }
+        }
+        
+    }
+
+    .price-box {
+        height: 58px;
+    }
+
+    .classification {
+        height: 200px;
+    }
+`;
+
 WidgetDetail.propTypes = {
-    
+    product: PropTypes.object,
 };
 
-function WidgetDetail(props) {
-    return (
-        <WidgetContent>
-            <Title>
-                <span className="badge">Yêu thích+</span>
-                <span>Váy cổ vuông ly ngực Tia19. Đầm ulzzang dáng xoè rớt vai ( Ảnh thật)</span>
-            </Title>
+WidgetDetail.defaultProps = {
+    product: null
+}
 
-            <Statistics className="d-flex">
-                <div className="d-flex align-items-center rating">
-                    <label>5.0</label>
-                    <div className="d-flex align-items-center">
-                        {iconStart}
-                        {iconStart}
-                        {iconStart}
-                        {iconStart}
-                        {iconStart}
-                    </div>
-                </div>
-                <div>
-                    <label>39</label>
-                    <span>đánh giá</span>
-                </div>
-                <div>
-                    <label>72</label>
-                    <span>đã bán</span>
-                </div>
-            </Statistics>
+function WidgetDetail({product}) {
+    // render
+    const renderPrice = () => {
+        const {price, classification} = product;
 
-            <PriceBox className="d-flex align-items-center">
-                <span className="old">
-                    <small>₫</small>
-                    199.000
-                </span>
-                <span className="new">
-                    <small>₫</small>
-                    199.000
-                </span>
-                <span className="badge">23% giảm</span>
-            </PriceBox>
+        if(classification) {
+            const {tablePrice} = classification;
+            const arrPrice = [];
+            for(let indx in tablePrice) {
+                arrPrice.push(tablePrice[indx]);
+            }
 
-            <Row>
-                <Label>Combo khuyến mãi</Label>
+            return arrPrice.reduce((minPrice, currentPrice) => {
+                if(currentPrice < minPrice) {
+                    return currentPrice;
+                }
 
-                <ComboPromo>
-                    <div className="promo-box">Mua 2 & giảm ₫5.000</div>
-                    <div className="promo-box">Mua 2 & giảm ₫5.000</div>
-                    <button className="d-inline-flex align-items-center">Xem thêm<span aria-hidden="true" className="arrow_triangle-down"></span></button>
-                </ComboPromo>
-            </Row>
+                return minPrice;
+            }, tablePrice[0].price);
+        }
+        return price;
+    }
 
-            <Row>
-                <Label>Vận chuyển</Label>
-
-                <Delivery>
-                    <div className="d-flex item">
-                        <div className="thumbnail">
-                            <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/1cdd37339544d858f4d0ade5723cd477.png" alt="icon" />
-                        </div>
-
-                        <div>
-                            <p>Miễn Phí Vận Chuyển</p>
-                            <div>Miễn Phí Vận Chuyển khi đơn đạt giá trị tối thiểu</div>
-                        </div>
-                    </div>
-                    
-                </Delivery>
-            </Row>
-
-            <WidgetClassify>
+    const renderClassifications = () => {
+        const {classification} = product;
+        if(classification) {
+            return <WidgetClassify>
                 <Row>
                     <Label>Màu sắc</Label>
                     <WidgetButton>
@@ -427,6 +416,146 @@ function WidgetDetail(props) {
                 </Row>
 
                 <Row>
+                    <Label></Label>
+                    <p className="warning">Vui lòng chọn Phân loại hàng</p>
+                </Row>
+            </WidgetClassify>
+        }
+    }
+
+    return (
+        <WidgetContent>
+            {!product && 
+                <WidgetSkeleton>
+                <div className="title skeleton"></div>
+
+                <Statistics className="d-flex align-items-center statistics">
+                    <div className="d-flex align-items-center rating">
+                        <label className="skeleton"></label>
+                        <div className="d-flex align-items-center">
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                        </div>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <label className="skeleton"></label>
+                        <span>đánh giá</span>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <label className="skeleton"></label>
+                        <span>đã bán</span>
+                    </div>
+                </Statistics>
+
+                <PriceBox className="price-box skeleton"></PriceBox>
+
+                <Row>
+                    <Label>Combo khuyến mãi</Label>
+
+                    <ComboPromo>
+                        <div className="promo-box">Mua 2 & giảm ₫5.000</div>
+                        <div className="promo-box">Mua 2 & giảm ₫5.000</div>
+                        <button className="d-inline-flex align-items-center">Xem thêm<span aria-hidden="true" className="arrow_triangle-down"></span></button>
+                    </ComboPromo>
+                </Row>
+
+                <Row>
+                    <Label>Vận chuyển</Label>
+
+                    <Delivery>
+                        <div className="d-flex item">
+                            <div className="thumbnail">
+                                <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/1cdd37339544d858f4d0ade5723cd477.png" alt="icon" />
+                            </div>
+
+                            <div>
+                                <p>Miễn Phí Vận Chuyển</p>
+                                <div>Miễn Phí Vận Chuyển khi đơn đạt giá trị tối thiểu</div>
+                            </div>
+                        </div>
+                        
+                    </Delivery>
+                </Row>
+
+                <WidgetClassify className="skeleton classification"></WidgetClassify>
+
+
+            </WidgetSkeleton>
+            }
+
+            {product && <>
+                <Title>
+                    <span className="badge">Yêu thích+</span>
+                    <span>{product.title}</span>
+                </Title>
+
+                <Statistics className="d-flex">
+                    <div className="d-flex align-items-center rating">
+                        <label>5.0</label>
+                        <div className="d-flex align-items-center">
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                            {iconStart}
+                        </div>
+                    </div>
+                    <div>
+                        <label>{product.viewedNumber}</label>
+                        <span>đánh giá</span>
+                    </div>
+                    <div>
+                        <label>{product.soldNumber}</label>
+                        <span>đã bán</span>
+                    </div>
+                </Statistics>
+
+                <PriceBox className="d-flex align-items-center">
+                    <span className="old">
+                        <small>₫</small>
+                        199.000
+                    </span>
+                    <span className="new">
+                        <small>₫</small>
+                        {renderPrice()}
+                    </span>
+                    <span className="badge">23% giảm</span>
+                </PriceBox>
+
+                <Row>
+                    <Label>Combo khuyến mãi</Label>
+
+                    <ComboPromo>
+                        <div className="promo-box">Mua 2 & giảm ₫5.000</div>
+                        <div className="promo-box">Mua 2 & giảm ₫5.000</div>
+                        <button className="d-inline-flex align-items-center">Xem thêm<span aria-hidden="true" className="arrow_triangle-down"></span></button>
+                    </ComboPromo>
+                </Row>
+
+                <Row>
+                    <Label>Vận chuyển</Label>
+
+                    <Delivery>
+                        <div className="d-flex item">
+                            <div className="thumbnail">
+                                <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/1cdd37339544d858f4d0ade5723cd477.png" alt="icon" />
+                            </div>
+
+                            <div>
+                                <p>Miễn Phí Vận Chuyển</p>
+                                <div>Miễn Phí Vận Chuyển khi đơn đạt giá trị tối thiểu</div>
+                            </div>
+                        </div>
+                        
+                    </Delivery>
+                </Row>
+
+                {renderClassifications()}
+
+                <Row className="mb-4">
                     <Label>Số lượng</Label>
 
                     <WidgetFormUpdate className="d-flex align-items-center">
@@ -437,18 +566,10 @@ function WidgetDetail(props) {
                         </div>
 
                         <span>119 sản phẩm có sẵn</span>
-                       
+                    
                     </WidgetFormUpdate>
                 </Row>
-
-                <Row>
-                    <Label></Label>
-                    <p className="warning">Vui lòng chọn Phân loại hàng</p>
-                </Row>
-
-            </WidgetClassify>
-            
-            
+            </>}                
 
             <div>
                 <ButtonAddToCart>

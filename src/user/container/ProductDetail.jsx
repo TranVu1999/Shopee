@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import {useParams} from 'react-router-dom';
 
 // Components
 import WidgetBreadcrumb from '../feature/Layout/WidgetBreadcrumb';
@@ -16,9 +17,14 @@ import WidgetCommentStatistics from '../feature/ProductDetail/WidgetCommentStati
 
 // Hooks
 import useOutsideElement from '../hooks/outsideElement';
+
+// Comnents
 import WidgetDetail from '../feature/ProductDetail/WidgetDetail';
 import ComboPromo from '../feature/ProductDetail/ComboPromo';
 import WidgetListProduct from '../feature/ProductDetail/WidgetListProduct';
+
+// api
+import productApi from '../../api/productAPI';
 
 
 const ModalImageBox = styled.div`
@@ -46,6 +52,7 @@ const ImageBoxContent = styled.div`
 
 
 function ProductDetail(props) {
+    const params = useParams();
     // State
     const [breadcrumb] = useState([
         {
@@ -321,6 +328,8 @@ function ProductDetail(props) {
         }
     ]);
 
+    const [product, setProduct] = useState(null);
+
 
     // Hook
     const {visible, setVisible, ref} = useOutsideElement(false);
@@ -335,6 +344,49 @@ function ProductDetail(props) {
             document.body.style.overflow = 'unset';
         }
     }, [visible]);
+
+    useEffect(() => {
+        const arrPatternUrl = params.slug.split(".");
+        const productId = arrPatternUrl[arrPatternUrl.length - 1];
+        console.log(productId);
+
+        const fetchProduct = () => {
+            productApi.get(productId)
+            .then(res => {
+                const {product, success} = res;
+
+                const prepareImages = () => {
+                    const images = [product.avatar];
+                    const {classification} = product;
+
+                    if(product.images.length) {
+                        images.push(...product.images);
+                    }
+
+                    if(classification) {
+                        
+                        const classificationImages = classification.classifies.first.images;
+                        if(classificationImages.length) {
+                            images.push(...classificationImages);
+                        }
+                    }
+
+                    return images;
+                }
+
+                if(success) {
+
+                    setProduct({
+                        ...product,
+                        images: prepareImages()
+                    })
+                }
+            })
+            .catch(err => console.log({err}))
+        }
+
+        fetchProduct();
+    }, [])
    
 
     const onHandleOpenModalImage = index =>{
@@ -344,17 +396,18 @@ function ProductDetail(props) {
 
     return (
         <div className = "user-page-content product-detail-page-content">
+            
             <div className="container">
-                <WidgetBreadcrumb items = {breadcrumb}/>
+                <WidgetBreadcrumb items = {product ? product.categories : []}/>
 
                 <div className="d-flex bg-white br-4 my-3">
                     <WidgetImage 
-                        items = {images}
+                        items = {product ? product.images : []}
                         onHandleOpenModalImage = {onHandleOpenModalImage}
                     />
 
                     <div className = "flex-fill">
-                        <WidgetDetail/>
+                        <WidgetDetail product = {product}/>
                     </div>
 
                     {visible ? (

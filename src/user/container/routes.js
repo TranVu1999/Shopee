@@ -37,7 +37,7 @@ const routes = [
         component: SalePage
     },
     {
-        path: "/product-detail",
+        path: "/product-detail/:slug",
         component: ProductDetailPage
     },
     {

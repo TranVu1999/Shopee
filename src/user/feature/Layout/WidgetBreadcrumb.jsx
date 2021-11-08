@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
 
 const WidgetContent = styled.div`
     font-size: .8125rem;
@@ -15,7 +14,7 @@ const BreadcrumbBox = styled.li`
 
     text-transform: capitalize;
 
-    a{
+    div{
         transition: all .3s ease;
         margin-right: 5px;
     }
@@ -43,13 +42,15 @@ function WidgetBreadcrumb(props) {
 
     const {items} = props;
 
+    console.log({items})
+
     // Render
     const renderItems = () =>{
         return items.map(item =>{
             return (
-                <BreadcrumbBox key = {item.title}>
-                    <Link to={item.url}>{item.title}</Link>
-                    <span aria-hidden="true" className="arrow_carrot-right"></span>
+                <BreadcrumbBox key = {item}>
+                    <div>{item}</div>
+                    <span className="arrow_carrot-right"></span>
                 </BreadcrumbBox>
             );
         });

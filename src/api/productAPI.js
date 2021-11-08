@@ -19,12 +19,12 @@ const productApi = {
   },
 
   get: (id) => {
-    const url = `/products/${id}`;
+    const url = `/product/${id}`;
     return axiosClient.get(url);
   },
 
   getList: (filter) => {
-    const url = `/product?${filter}`;
+    const url = `/product/filter?${filter}`;
     console.log({ url });
     return axiosClient.get(url);
   },
