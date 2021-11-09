@@ -12,6 +12,10 @@ const iconStore = <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x="0
 
 const StoreThumbnail = styled.div`
     position: relative;
+
+    .skeleton{
+        height: 95px;
+    }
 `;
 
 const StoreBackground = styled.div`
@@ -81,61 +85,65 @@ const ButtonHighlight = styled(Button)`
     color: #ee4d2d;
     background-color: rgba(255, 87, 34, .1);
     border-color: #ee4d2d;
-`
+`;
+
+const WidgetSkeleton = styled.div`
+
+`;
 
 ThumbnailStore.propTypes = {
-    info: PropTypes.object,
+    store: PropTypes.object,
 };
 
 ThumbnailStore.defaultProps = {
-    info: null
+    store: null
 }  
 
 function ThumbnailStore(props) {
-    const {
-        title,
-        avatar, 
-        bgImage,
-        onlineTime
-    } = props.info;
+    const {store} = props;
 
-    const time = Number.convertToHour(onlineTime);
+    // const time = Number.convertToHour(onlineTime);
+
+    const time = 1;
 
     return (
         <StoreThumbnail>
-            <StoreBackground 
-                className = "bg-image" 
-                bgImage = {bgImage}
-            />
+            {!store && <div className="pt-3 mx-4 thumnail skeleton"></div>}
+            
+            {store && <>
+                <div className = "d-flex mt-3 px-4">
+                    <StoreAvatar>
+                        <img src={store.avatar} alt="avatar" />
 
-            <div className = "d-flex mt-3 px-4">
-                <StoreAvatar>
-                    <img src={avatar} alt="avatar" />
-                    <StoreAvatarLabel src = {"https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/483071c49603aa7163a7f51708bff61b.png"}/>
-                </StoreAvatar>
+                        {store.type === "admin" && <StoreAvatarLabel src = {"https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/483071c49603aa7163a7f51708bff61b.png"}/>}
+                        
+                    </StoreAvatar>
 
-                <StoreText>
-                    <p>{title}</p>
-                    {time > 0 ? (
-                        <span>Online {time} giờ trước</span>
-                    ) : (
-                        <span>Online {onlineTime} phut trước</span>
-                    )}
+                    <StoreText>
+                        <p>{store.brand}</p>
+                        {time > 0 ? (
+                            <span>Online {time} giờ trước</span>
+                        ) : (
+                            <span>Online {1} phut trước</span>
+                        )}
 
-                    
-                    <div>
-                        <ButtonHighlight className = "mt-1 mr-2"> 
-                            {iconChat}
-                            Chat Ngay
-                        </ButtonHighlight>
-                        <Button>
-                            {iconStore}
-                            Xem Shop
-                        </Button>
-                    </div>
-                    
-                </StoreText>
-            </div>
+                        
+                        <div>
+                            <ButtonHighlight className = "mt-1 mr-2"> 
+                                {iconChat}
+                                Chat Ngay
+                            </ButtonHighlight>
+                            <Button>
+                                {iconStore}
+                                Xem Shop
+                            </Button>
+                        </div>
+                        
+                    </StoreText>
+                </div>
+            </>}
+
+            
             
         </StoreThumbnail>
             

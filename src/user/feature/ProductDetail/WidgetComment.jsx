@@ -8,29 +8,41 @@ const CommentBox = styled.div`
     padding: 1.4rem 1.5rem;
 `;
 
+const WidgetEmpty = styled.div`
+    height: 300px;
+`;
+
 WidgetComment.propTypes = {
+    comments: PropTypes.array,
     commentStatistics: PropTypes.element,
 };
 
 WidgetComment.defaultProps = {
+    comments: [],
     commentStatistics: <></>,
 }
 
-function WidgetComment(props) {
-    const {commentStatistics} = props;
+function WidgetComment({commentStatistics, comments}) {
 
     return (
         <CommentBox className = "bg-white">
             <h5 className = "page-product__content--header">ĐÁNH GIÁ SẢN PHẨM</h5> 
-            {commentStatistics}
 
-            <div className="mb-4"></div>
-            <WidgetCommentItems/>
-            <hr />
-            <WidgetCommentItems/>
-            <hr />
-            <WidgetCommentItems/>
-            <hr />
+            {!comments.length && <WidgetEmpty className="d-flex align-items-center justify-content-center">
+                <span>Chưa có nhận xét nào về sản phẩm này!</span>
+            </WidgetEmpty>}
+
+            {comments.length > 0 && <>
+                {commentStatistics}
+                <div className="mb-4"></div>
+                <WidgetCommentItems/>
+                <hr />
+                <WidgetCommentItems/>
+                <hr />
+                <WidgetCommentItems/>
+                <hr />
+            </>}
+            
         </CommentBox>
     );
 }

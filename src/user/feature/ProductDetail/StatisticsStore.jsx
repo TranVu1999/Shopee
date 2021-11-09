@@ -2,8 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// Components
-import WidgetStoreStatistics from '../Store/WidgetStoreStatistics';
+const WidgetContainer = styled.div`
+    flex: 1;
+
+    .skeleton {
+        width: 100%;
+        height: 72px;
+        margin-right: 24px;
+    }
+`;
 
 const WidgetStatisticsItem = styled.div`
     width: 33.333333%;
@@ -12,31 +19,61 @@ const WidgetStatisticsItem = styled.div`
 `;
 
 StatisticsStore.propTypes = {
-    items: PropTypes.array,
+    store: PropTypes.object,
 };
 
 StatisticsStore.defaultProps = {
-    items: []
+    store: null
 }
 
 function StatisticsStore(props) {
-    const {items} = props;
+    const {store} = props;
 
-    // Render
-    const renderItems = () =>{
-        return items.map(item =>{
-            return (
-                <WidgetStatisticsItem>
-                    <WidgetStoreStatistics item = {item}/>
-                </WidgetStatisticsItem>
-            );
-        });
+    // render
+    const renderJoinedDate = () => {
+        return "5 tháng trước"
     }
 
     return (
-        <div className = "ml-5 d-flex flex-wrap">
-            {renderItems()}
-        </div>
+        <WidgetContainer className = "ml-5 d-flex flex-wrap">
+            {!store && <div className="skeleton"></div>}
+
+            {store && <>
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Đánh giá: <span>{store.rating}</span>
+                    </div>
+                </WidgetStatisticsItem>
+
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Tỉ lệ phản hồi: <span>{store.responseRate}%</span>
+                    </div>
+                </WidgetStatisticsItem>
+                
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Tham gia: <span>{renderJoinedDate()}</span>
+                    </div>
+                </WidgetStatisticsItem>
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Sản phẩm: <span>{store.amountProduct}</span>
+                    </div>
+                </WidgetStatisticsItem>
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Thời gian phản hồi: <span>{store.responseTime}</span>
+                    </div>
+                </WidgetStatisticsItem>
+                <WidgetStatisticsItem>
+                    <div className="store__aspect--statistics">
+                        Người theo dõi: <span>{store.amountTracker}</span>
+                    </div>
+                </WidgetStatisticsItem>
+            </>}
+            
+        </WidgetContainer>
     );
 }
 

@@ -190,6 +190,22 @@
         margin-bottom: 0;
         width: 80%;
     }
+
+    .store {
+        &__aspect--statistics {
+            text-transform: capitalize;
+
+            span{
+                margin-right: 5px;
+            }
+
+            span{
+                margin-left: 8px;
+                color: #ee4d2d;
+                text-transform: lowercase;
+            }
+        }
+    }
 }
 
 @keyframes skeleton-loading {

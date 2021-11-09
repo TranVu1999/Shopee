@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 
 // Components
 import Thumbnail from '../Product/Thumbnail';
+import NormalThumbnail from '../Product/NormalThumbnail';
 
 
 const WidgetContent = styled.div`
@@ -40,6 +41,11 @@ const ListProduct = styled.div`
 
 const Product = styled.div`
     width: calc((100% - 40px) / 5);
+    border: 1px solid #e5e5e5;
+
+    &:hover {
+        border-color: #ee4d2d;
+    }
 `;
 
 
@@ -53,14 +59,14 @@ WidgetListProduct.defaultProps = {
     url: ""
 }
 
-function WidgetListProduct({url, title, listProduct}) {    
+function WidgetListProduct({url, title, listProduct}) {   
 
     // render
     const renderListProduct = () =>{
-        return listProduct.map(item =>{
+        return listProduct.map(prod =>{
             return (
-                <Product key = {item.id}>
-                    <Thumbnail item = {item}/>
+                <Product key = {prod._id}>
+                    <NormalThumbnail product = {prod}/>
                 </Product>
             );
         })

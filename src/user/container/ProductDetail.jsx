@@ -54,24 +54,6 @@ const ImageBoxContent = styled.div`
 function ProductDetail(props) {
     const params = useParams();
     // State
-    const [breadcrumb] = useState([
-        {
-            title: "Shopee",
-            url: "#/"
-        },
-        {
-            title: "Thoi Trang Nu",
-            url: "#/"
-        },
-        {
-            title: "Dam",
-            url: "#/"
-        },
-        {
-            title: "Váy babydoll hoa nhí, váy hoa nhí dáng rộng - ullzang dáng dài cổ tim voan tơ Vintage Sota Shop",
-            url: "#/"
-        }
-    ]);
     const [images] = useState([
         "https://cf.shopee.vn/file/a23c5f36c458f623cfe57cddc209162f_tn",
         "https://cf.shopee.vn/file/63a9eb9ed833ad94db2194b7242c1065_tn",
@@ -81,38 +63,7 @@ function ProductDetail(props) {
         "https://cf.shopee.vn/file/6331fd1e46ba2df1cdd46dbad064115c_tn"
     ]);
     const [indexImageActive, setIndexImageActive] = useState(0);
-    const [storeInformation] = useState({
-        title: "4U SHOP",
-        onlineTime: "70",
-        avatar: "https://cf.shopee.vn/file/efb9073e1dfbabf429278b9e2e592363_tn",
-        bgImage: "https://cf.shopee.vn/file/30e84c8c66e5d13ea95d729c443ee214_tn",
-        statistics: [
-            {
-                label: "Đánh giá",
-                number: "6,9k"
-            },
-            {
-                label: "Sản phẩm",
-                number: "330"
-            },
-            {
-                label: "tỉ lệ phản hồi",
-                number: "100%"
-            },
-            {
-                label: "thời gian phản hồi",
-                number: "trong vài giờ"
-            },
-            {
-                label: "tham gia",
-                number: "12 tháng trước"
-            },
-            {
-                label: "Người theo dõi",
-                number: "43k"
-            }
-        ]
-    });
+
     const [listDiscount] = useState([
         {
             id: 1,
@@ -348,7 +299,6 @@ function ProductDetail(props) {
     useEffect(() => {
         const arrPatternUrl = params.slug.split(".");
         const productId = arrPatternUrl[arrPatternUrl.length - 1];
-        console.log(productId);
 
         const fetchProduct = () => {
             productApi.get(productId)
@@ -431,21 +381,28 @@ function ProductDetail(props) {
                 </div>
                 
                 {/* Store */}
-                <div className="row bg-white py-4">
+                <div className="row bg-white py-4 store">
                     <div className="col-lg-4">
-                        <ThumbnailStore info = {storeInformation}/>
+                        <ThumbnailStore 
+                            store = {product ? product.store : null}
+                        />
                     </div>
                     <div className="col-lg-8 d-flex align-items-center">
                         <div className="vertical-line-1"></div>
-                        <StatisticsStore items = {storeInformation.statistics}/>
+                        <StatisticsStore store = {product ? product.store : null}/>
                     </div>
                 </div>
 
             
                 <div className="py-3 row ">
                     <div className = "mr-3" style = {{flex: 1}}>
-                        <WidgetDescription item = {productDescription}/>
-
+                        {product && <WidgetDescription
+                            categories = {product.categories}
+                            description = {product.description}
+                            attributes = {product.optionalAttributes}
+                        />
+}
+                        
                         <div className="my-3">
                             <WidgetComment
                                 commentStatistics = {
@@ -458,13 +415,14 @@ function ProductDetail(props) {
                             />
                         </div>
                         
-                        <div className="mb-3">
+                        {product && <div className="mb-3">
                             <WidgetListProduct 
                                 title="Các sản phẩm khác của Shop"
                                 url = "/from-same-shop" 
-                                listProduct={listProduct}
+                                listProduct={product.listProductOfStore}
                             />
-                        </div>
+                        </div>}
+                        
 
                         <div className="mb-3">
                             <WidgetListProduct 
