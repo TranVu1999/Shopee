@@ -97,7 +97,7 @@ function WidgetDescription(props) {
         },
         {
             EN: "sleeveStyle",
-            VI: "Kiểu cổ áo"
+            VI: "Kiểu tay áo"
         },
         {
             EN: "cuffStyle",

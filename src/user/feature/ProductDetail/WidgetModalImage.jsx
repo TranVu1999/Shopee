@@ -5,15 +5,14 @@ import styled from 'styled-components';
 
 const WidgetSlider = styled.div`
     position: relative;
-    height: 100%;
+    
     flex: 1;
-    background-color: yellow;
 `;
 
 const BigThumbnail = styled.div`
-    height: 100%;
     cursor: pointer;
-
+    height: 100%;
+    
     img{
         object-fit: cover;
         height: 100%;
@@ -62,11 +61,19 @@ const WidgetListImage  = styled.div`
 `;
 
 const Title = styled.h5`
-    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+
+    margin-bottom: 1.25rem;
+    height: 2.25rem;
+    word-wrap: break-word;
+    overflow: hidden;
+
     font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    text-transform: capitalize;
+    font-size: 1.0625rem;
+    line-height: 1.25rem;
 `;
 
 const SmallThumbnail = styled.div`
@@ -84,22 +91,21 @@ const SmallThumbnail = styled.div`
     }
 `;
 
-
 WidgetModalImage.propTypes = {
+    title: PropTypes.string,
     indexActive: PropTypes.number,
-    items: PropTypes.array,
+    images: PropTypes.array,
 };
 
 WidgetModalImage.defaultProps = {
-    indexActive: 0,
-    items: []
+    indexActive: 0
 }
 
-function WidgetModalImage(props) {
+function WidgetModalImage({indexActive, images, title}) {
 
-    const {items, indexActive} = props;
-    const lengthItems = items.length;
+    const lengthItems = images.length;
     const [indexShow, setIndexShow] = useState(indexActive);
+
 
     // Logic
     const onHandleChangeAvatar = index =>{
@@ -109,13 +115,14 @@ function WidgetModalImage(props) {
 
     // Render
     const renderItems = () =>{
-        return items.map((item, index) => {
+        return images.map((img, index) => {
             return (
                 <SmallThumbnail 
+                    key = {index}
                     className = {indexShow === index ? "active" : ""}
                     onMouseOver = {() => {onHandleChangeAvatar(index)}}
                 >
-                    <img src={item} alt="product" />
+                    <img src={img} alt="product" />
                 </SmallThumbnail>
             );
         });
@@ -125,7 +132,7 @@ function WidgetModalImage(props) {
         <div className = "p-4 d-flex h-100" style = {{gap: '15px'}}>
             <WidgetSlider>
                 <BigThumbnail>
-                    <img src={items[indexShow]} alt="product" />
+                    <img src={images[indexShow]} alt="product" />
                 </BigThumbnail>
 
                 <ButtonPrev
@@ -141,7 +148,7 @@ function WidgetModalImage(props) {
             </WidgetSlider>
 
             <WidgetListImage>
-                <Title>(Hàng có sẵn) Váy trắng midi vintage nơ tay</Title>
+                <Title>{title}</Title>
 
                 <div className="d-flex flex-wrap" style = {{gap: '15px'}}>
                     {renderItems()}

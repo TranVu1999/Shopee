@@ -344,14 +344,29 @@ const WidgetSkeleton = styled.div`
 `;
 
 WidgetDetail.propTypes = {
+    firstClassification: PropTypes.string,
+    secondClassification: PropTypes.string,
     product: PropTypes.object,
+    choseClassifyProduct: PropTypes.func,
 };
 
 WidgetDetail.defaultProps = {
     product: null
 }
 
-function WidgetDetail({product}) {
+function WidgetDetail({
+    product, 
+    firstClassification,
+    secondClassification,
+    choseClassifyProduct
+}) {
+
+    // handle event
+    const handleChoseClassification = classification => {
+        if(!choseClassifyProduct) return;
+        choseClassifyProduct(classification)
+    }
+
     // render
     const renderPrice = () => {
         const {price, classification} = product;
@@ -385,7 +400,14 @@ function WidgetDetail({product}) {
                     <Label>Màu sắc</Label>
                     <WidgetButton>
                         {firstClassifications.map(item => {
-                            return <button>
+                            return <button
+                                key = {item}
+                                onClick = {() => handleChoseClassification({
+                                    type: "first",
+                                    value: item
+                                })}
+                                className = {firstClassification === item ? "active" : ""}
+                            >
                                 {item}
                                 <div className="ticker">
                                     {iconTicker}
@@ -401,7 +423,14 @@ function WidgetDetail({product}) {
                     <Label>Size</Label>
                     <WidgetButton>
                         {secondClassifications.map(item => {
-                            return <button>
+                            return <button
+                                key = {item}
+                                onClick = {() => handleChoseClassification({
+                                    type: "second",
+                                    value: item
+                                })}
+                                className = {secondClassification === item ? "active" : ""}
+                            >
                                 {item}
                                 <div className="ticker">
                                     {iconTicker}
@@ -419,6 +448,25 @@ function WidgetDetail({product}) {
                 </Row>
             </WidgetClassify>
         }
+    }
+
+    const renderAmountProduct = () => {
+        const {classification, inventory} = product;
+
+        if(classification) {
+            if(firstClassification && secondClassification) {
+                const {tablePrice} = classification;
+                for(let row of tablePrice) {
+                    console.log(row)
+                    if(row.firstClassifyName === firstClassification && 
+                    row.secondClassifyName === secondClassification) {
+                        return row.inventory;
+                    }
+                }
+            }
+        }
+
+        return inventory;
     }
 
     return (
@@ -563,7 +611,7 @@ function WidgetDetail({product}) {
                             <button className="btn-plus"><span aria-hidden="true" className="icon_plus"></span></button>
                         </div>
 
-                        <span>119 sản phẩm có sẵn</span>
+                        <span>{renderAmountProduct()} sản phẩm có sẵn</span>
                     
                     </WidgetFormUpdate>
                 </Row>

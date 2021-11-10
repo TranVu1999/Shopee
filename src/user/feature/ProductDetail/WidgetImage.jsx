@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -35,6 +35,7 @@ const SmallThumbnail = styled(BigThumbnail)`
 WidgetImage.propTypes = {
     items: PropTypes.array,
     onHandleOpenModalImage: PropTypes.func,  
+    indexImageActive: PropTypes.number,
 };
 
 WidgetImage.defaultProps = {
@@ -42,10 +43,15 @@ WidgetImage.defaultProps = {
     onHandleOpenModalImage: null
 }
 
-function WidgetImage(props) {
-    const {items, onHandleOpenModalImage} = props;
+function WidgetImage({items, onHandleOpenModalImage, indexImageActive}) {
     const [indexShow, setIndexShow] = useState(0);
 
+    // useEffect
+    useEffect(() => {
+        setIndexShow(indexImageActive)
+    }, [indexImageActive])
+
+    // handle event
     const onHandleChangeAvatar = index =>{
         if(index !== indexShow){
             setIndexShow(index);
@@ -58,6 +64,7 @@ function WidgetImage(props) {
         }
     }
 
+    // render
     const renderItems = () =>{
         return items.map((item, index) => {
             return (

@@ -54,14 +54,6 @@ const ImageBoxContent = styled.div`
 function ProductDetail(props) {
     const params = useParams();
     // State
-    const [images] = useState([
-        "https://cf.shopee.vn/file/a23c5f36c458f623cfe57cddc209162f_tn",
-        "https://cf.shopee.vn/file/63a9eb9ed833ad94db2194b7242c1065_tn",
-        "https://cf.shopee.vn/file/1ee6718cabd94a720e8aaa8484f384c4_tn",
-        "https://cf.shopee.vn/file/28428ae673c8c452e7b33b82902d2526_tn",
-        "https://cf.shopee.vn/file/16399f4dd2b077946a3b859a3d593a91_tn",
-        "https://cf.shopee.vn/file/6331fd1e46ba2df1cdd46dbad064115c_tn"
-    ]);
     const [indexImageActive, setIndexImageActive] = useState(0);
 
     const [listDiscount] = useState([
@@ -116,46 +108,6 @@ function ProductDetail(props) {
             discount: 40
         }
     ]);
-    const [productDescription] = useState({
-        breadcrumb: [
-            {
-                title: "Shopee",
-                url: "#/"
-            },
-            {
-                title: "Thời Trang Nữ",
-                url: "#/"
-            },
-            {
-                title: "Đầm",
-                url: "#/"
-            }
-        ],
-
-        moreDetail: [
-            {
-                label: "Chiều dài tay áo",
-                content: "Dài tay"
-            },
-            {
-                label: "Mẫu",
-                content: "Hoa"
-            },
-            {
-                label: "Kiểu váy",
-                content: "váy xòe"
-            },
-            {
-                label: "Kho hàng",
-                content: "41"
-            },
-            {
-                label: "Gửi từ",
-                content: "Quận Nam Từ Liêm, Hà Nội"
-            }
-        ],
-        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores, error. Eius quae dolorum eaque. Quo doloremque dolorem magni error laudantium quaerat quos alias vel suscipit? Minus adipisci consequatur voluptatibus voluptatem deserunt, aut esse blanditiis, libero quis illum ipsa a facere magni ad impedit explicabo, atque sapiente earum harum praesentium laborum eum dolore. Rerum nam cupiditate est quasi, ad impedit. Eum magni tenetur debitis temporibus ducimus eligendi quia minus eos amet, molestiae vitae unde enim ipsa ipsam? Consequuntur sit rerum quod perferendis voluptate. Accusamus, voluptatibus officia deleniti consequuntur reprehenderit maiores voluptas illo iste, saepe dicta suscipit animi laborum iusto qui molestiae."
-    });
     const [comments] = useState({
         average: 4.8,
         filter: "5 Sao",
@@ -236,50 +188,11 @@ function ProductDetail(props) {
         }
     ]);
 
-    const [listProduct] = useState([
-        {
-            id: 1,
-            title: "Paper Pouch (The good approach)",
-            img: "https://res.cloudinary.com/doem0ysxl/image/upload/v1611851630/BaristaCoffee/shop/prod2_xocw36.jpg",
-            price: 24000,
-            discount: 50,
-            numOrder: 128
-        },
-        {
-            id: 2,
-            title: "Kho heo chay toi dac biet TOKYOLIFE TolyoSelect",
-            img: "https://cf.shopee.vn/file/ea9500849bf4d871dae72724fd29ca49_tn",
-            price: 24000,
-            discount: 50,
-            numOrder: 128
-        },
-        {
-            id: 3,
-            title: "Dam ngan tay phong kieu Retro Phap Thiet ke xinh xan kho cuong lai",
-            img: "https://cf.shopee.vn/file/6e9402796a259240eee3d318ddc5b879_tn",
-            price: 165000,
-            discount: 25,
-            numOrder: 5
-        },
-        {
-            id: 4,
-            title: "Vay 2 day babydoll dang suong Korean - V8",
-            img: "https://cf.shopee.vn/file/adfe6fdb185fa4a0e05d7899f18a417e_tn",
-            price: 69000,
-            discount: 34,
-            numOrder: 4300
-        },
-        {
-            id: 5,
-            title: "Dam nu dang om Phoi khoa Keo kieu Vintage Thoi Trang So 1",
-            img: "https://cf.shopee.vn/file/a5bcdad5e07cd5a7aa17897a07da19b2_tn",
-            price: 99000,
-            discount: 18,
-            numOrder: 15
-        }
-    ]);
-
     const [product, setProduct] = useState(null);
+    const [classification, setClassification] = useState({
+        first: "",
+        second: ""
+    })
 
 
     // Hook
@@ -328,7 +241,7 @@ function ProductDetail(props) {
 
                     setProduct({
                         ...product,
-                        images: prepareImages()
+                        moreImages: prepareImages()
                     })
                 }
             })
@@ -338,10 +251,24 @@ function ProductDetail(props) {
         fetchProduct();
     }, [])
    
-
+    // hanlde event
     const onHandleOpenModalImage = index =>{
         setIndexImageActive(index);
         setVisible(true);
+    }
+
+    const onHanldeChoseClassifyProduct = classification => {
+        const {type, value} = classification;
+        setClassification(prev => ({
+            ...prev,
+            [type]: value
+        }));
+
+        if(type === "first") {
+            const classificationTypes = product.classification.classifies.first.types;
+            const index = product.images.length + classificationTypes.findIndex(type => type === value) + 1;
+            setIndexImageActive(index);
+        }
     }
 
     return (
@@ -352,12 +279,18 @@ function ProductDetail(props) {
 
                 <div className="d-flex bg-white br-4 my-3">
                     <WidgetImage 
-                        items = {product ? product.images : []}
+                        indexImageActive = {indexImageActive}
+                        items = {product ? product.moreImages : []}
                         onHandleOpenModalImage = {onHandleOpenModalImage}
                     />
 
                     <div className = "flex-fill">
-                        <WidgetDetail product = {product}/>
+                        <WidgetDetail 
+                            product = {product}
+                            firstClassification = {classification.first}
+                            secondClassification = {classification.second}
+                            choseClassifyProduct = {onHanldeChoseClassifyProduct}
+                        />
                     </div>
 
                     {visible ? (
@@ -367,7 +300,8 @@ function ProductDetail(props) {
                             >
                                 <WidgetModalImage 
                                     indexActive = {indexImageActive}
-                                    items = {images}
+                                    title = {product.title}
+                                    images = {product ? product.moreImages : []}
                                 />
                             </ImageBoxContent>
                         </ModalImageBox>
@@ -422,21 +356,22 @@ function ProductDetail(props) {
                                 listProduct={product.listProductOfStore}
                             />
                         </div>}
-                        
 
-                        <div className="mb-3">
+                        {product && <div className="mb-3">
                             <WidgetListProduct 
-                                title="Sản phẩm tương tự" 
-                                listProduct={listProduct}
+                                title="Sản phẩm tương tự"
                                 url = "/similar-products" 
+                                listProduct={product.listProductOfStore}
                             />
-                        </div>
+                        </div>}
 
-                        <WidgetListProduct 
-                            title="Có thể bạn cũng thích" 
-                            listProduct={listProduct}
-                            url = "/you-may-also-like" 
-                        />
+                        {product && <div className="mb-3">
+                            <WidgetListProduct 
+                                title="Có thể bạn thích"
+                                url = "/you-may-also-like" 
+                                listProduct={product.listProductOfStore}
+                            />
+                        </div>}
                         
                     </div>
 
