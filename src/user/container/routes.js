@@ -4,7 +4,6 @@ import NotFountPage from './NotFound';
 
 import UserPage from './User';
 import ArticlePage from './Article';
-import CartPage from './Cart';
 
 const ProductOfCategoryPage = lazy(() => import("./ProductOfCategory"));
 const HomePage = lazy(() => import("./Home"));
@@ -17,6 +16,7 @@ const ProductSimilarPage = lazy(() => import("./ProductSimilar.jsx"));
 const ProductSameShopPage = lazy(() => import("./ProductSameShop"));
 const ProductMayLikePage = lazy(() => import("./ProductMayLike"));
 const TopSearchPage = lazy(() => import("./TopSearch.jsx"));
+const CartPage = lazy(() => import("./Cart.jsx"));
 
 const routes = [
     {

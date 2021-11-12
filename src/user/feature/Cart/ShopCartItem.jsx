@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Components
 import CheckBox from '../../common/component/CheckBox';
 
 // Theme 
 import {BorderColor} from './../../theme';
+
+// Modules
+import formatNumber from './../../../utils/formatNumber';
+
+const iconTicker = <svg enableBackground="new 0 0 12 12" viewBox="0 0 12 12" x="0" y="0" ><g><path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path></g></svg>
 
 const WidgetContent = styled.div`
     padding: 1.125rem 1.5rem;
@@ -97,19 +103,29 @@ const WidgetContent = styled.div`
             }
 
             p{
+                margin-bottom: .5rem;
                 text-transform: capitalize;
                 color: rgba(0,0,0,0.54);
                 font-size: 1rem;
             }
 
+            &>div {
+                margin-bottom: 1rem;
+            }
+
             .product-variation{
                 display: inline-bock;
-                padding: .5rem 1.5rem;
-                margin-right: .875rem;
-                margin-bottom: .5rem;
+                padding: .375rem;
+                margin: 0 .875rem .5rem 0;
+                min-width: 5rem;
 
                 border: 1px solid ${BorderColor.mainColor};
                 border-radius: 2px;
+
+                &:hover {
+                    color: #ee4d2d;
+                    border-color: #ee4d2d;
+                }
             }
 
             .button-control{
@@ -168,6 +184,10 @@ const WidgetContent = styled.div`
             }
         }
     }
+
+    .product__variant--button {
+        margin-bottom: .5rem;
+    }
 `;
 
 const CartUpdate = styled.div`
@@ -195,45 +215,121 @@ const CartUpdate = styled.div`
         border-top: 1px solid ${BorderColor.mainColor};
         border-bottom: 1px solid ${BorderColor.mainColor};
         line-height: 2rem;
+
+        font-size: .875rem;
     }
 `;
 
 ShopCartItem.propTypes = {
-    
+    cart: PropTypes.object.isRequired,
 };
 
-function ShopCartItem(props) {
+function ShopCartItem({cart}) {
     // Data
+    const {product, amount, classification} = cart;
+    console.log({cart})
     const [isShowClassifyModal, setIsShowClassifyModal] = React.useState(false);
 
+    // render
+    const renderPrice = () => {
+        if(classification) {
+            const {tablePrice} = product.classification;
+            const {first, second} = classification;
+
+            if(second) {
+                return tablePrice.find(row => row.firstClassifyName === first && row.secondClassifyName === second).price;
+            } else {
+                return tablePrice.find(row => row.firstClassifyName === first).price;
+            }
+        }
+
+        return product.price;
+    }
+
+    const renderClassification = () => {
+        if(classification) {
+            const {first, second} = classification;
+
+            return first + (second && ", ") + (second || "");
+        }
+
+        return "";
+    }
+
+    const renderAvatar = () => {
+        if(classification) {
+            const {first} = classification;
+            const {types} = product.classification.classifies.first
+
+            return types.find(type => type.label === first).image;
+
+        }
+
+        return product.avatar;
+    }
+
+    const renderClassificationOption = () => {
+        const elm = [];
+        if(classification) {
+            const {first, second} = product.classification.classifies;
+
+            elm.push(<>
+                <p>{first.title}:</p>
+
+                <div>
+                    {first.types.map(type => (
+                        <button 
+                            className={classification.first === type.label ? "product__variant--button active" : "product__variant--button"}
+                            key = {type.label}
+                        >{type.label}<div className="ticker">
+                        {iconTicker}
+                    </div></button>
+                    ))}
+                </div>
+            </>);
+
+            if(second) {
+                elm.push(<>
+                    <p>{second.title}:</p>
+    
+                    <div>
+                        {second.types.map(type => (
+                            <button 
+                                className={classification.second === type.label ? "product__variant--button active" : "product__variant--button"}
+                                key = {type.label}
+                            >{type.label}<div className="ticker">
+                                    {iconTicker}
+                                </div></button>
+                        ))}
+                    </div>
+                </>);
+            }
+        }
+
+        return elm;
+    }
+
+
     return (
-        <WidgetContent className="d-flex">
+        <WidgetContent className="d-flex product">
             <div className="check-box">
                 <CheckBox/>
             </div>
             <div className="d-flex product-name">
-                <a href="#/" className="d-block thumbnail">
-                    <div className="bg-image" style={{backgroundImage: `url(https://cf.shopee.vn/file/3effb9b72a51c606076e82ea4fd3929a_tn)`}}></div>
-                </a>
-                <a href="#/" className="title">Áo Lót Nam Cotton Có Tay Mặc Ở Nhà , Áo Đông Xuân Nam Cộc Tay Bộ Đội Trắng Siêu Rẻ Siêu Đẹp</a>
+                <Link to={`/product-detail/${product.alias}.${product._id}`} className="d-block thumbnail">
+                    <div className="bg-image" style={{backgroundImage: `url(${renderAvatar()})`}}></div>
+                </Link>
+                <Link to={`/product-detail/${product.alias}.${product._id}`} className="title">{product.title}</Link>
 
                 <div className="classify">
                     <label 
                         className="d-flex align-items-center"
                         onClick = {() => {setIsShowClassifyModal(!isShowClassifyModal)}}
-                    >Phân loại hàng: <span aria-hidden="true" className="arrow_triangle-down"></span> </label>
-                    <span>L ( 65 - 72 kg)</span>
+                    >Phân loại hàng: <span className="arrow_triangle-down"></span> </label>
+                    <span>{renderClassification()}</span>
 
                     <div className={isShowClassifyModal ? "classify-modal active" : "classify-modal"}>
-                        <p>Variation:</p>
-
-                        <div>
-                            <button className="product-variation">S (50 - 62kg)</button>
-                            <button className="product-variation">M ( 60 - 67 kg)</button>
-                            <button className="product-variation">L ( 65 - 72 kg)</button>
-                            <button className="product-variation">XL ( 70 - 77kg)</button>
-                            <button className="product-variation">XXL &gt; 77kg</button>
-                        </div>
+                        {renderClassificationOption()}
 
                         <div className="button-control text-right">
                             <button>Trở Lại</button>
@@ -243,24 +339,24 @@ function ShopCartItem(props) {
                 </div>
             </div>
 
-            <div className="unit-price text-center">₫40.000</div>
+            <div className="unit-price text-center">₫{formatNumber.convertToMoney(renderPrice())}</div>
 
             <div className="amount text-center">
                 <CartUpdate className="d-inline-flex">
-                    <button><span aria-hidden="true" className="icon_minus-06"></span></button>
-                    <span>1</span>
-                    <button><span aria-hidden="true" className="icon_plus"></span></button>
+                    <button><span className="icon_minus-06"></span></button>
+                    <span>{amount}</span>
+                    <button><span className="icon_plus"></span></button>
                 </CartUpdate>
             </div>
 
-            <div className="total text-center">₫80.000</div>
+            <div className="total text-center">₫{formatNumber.convertToMoney(renderPrice() * amount)}</div>
 
             <div className="control text-center">
                 <button className="delete">Xóa</button>
 
                 <button className="d-flex align-items-center see-more">
                     <span>Tìm sản phẩm tương tự</span>
-                    <span><span aria-hidden="true" className="arrow_triangle-down"></span></span>
+                    <span><span className="arrow_triangle-down"></span></span>
                 </button>
             </div>
         </WidgetContent>

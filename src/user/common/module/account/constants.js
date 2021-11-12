@@ -1,1 +1,1 @@
-export const INIT_ACCOUNT = "INIT"
+export const INIT_ACCOUNT = "INIT_ACCOUNT"

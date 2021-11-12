@@ -42,8 +42,6 @@ function WidgetBreadcrumb(props) {
 
     const {items} = props;
 
-    console.log({items})
-
     // Render
     const renderItems = () =>{
         return items.map(item =>{

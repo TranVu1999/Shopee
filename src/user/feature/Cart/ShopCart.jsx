@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Components
 import ShopCartItem from './ShopCartItem';
@@ -8,6 +9,7 @@ import CheckBox from '../../common/component/CheckBox';
 
 // Theme 
 import {BorderColor} from './../../theme';
+
 
 
 const WidgetContent = styled.div`
@@ -44,9 +46,7 @@ const ShopInfo = styled.div`
     }
 `;
 
-const Body = styled.div`
-
-`;
+const Body = styled.div``;
 
 const Footer = styled.div`
     font-size: .875rem;
@@ -103,24 +103,31 @@ const Footer = styled.div`
 
 
 ShopCart.propTypes = {
-    
+    shop: PropTypes.object,
 };
 
-function ShopCart(props) {
+function ShopCart({shop}) {
+    const {_id, brand, alias, listProduct} = shop;
+
+    // render 
+    const renderListProduct = () => {
+        return listProduct.map(prod => {
+            return <ShopCartItem key = {prod._id} cart = {prod}/>
+        })
+    }
+
     return (
         <WidgetContent className='bg-white'>
             <Header className="d-flex align-items-center">
                 <CheckBox/>
                 <ShopInfo className="d-flex align-items-center">
                     <span className="badge">Yêu thích +</span>
-                    <a href="#/">ỐP LƯNG IPHONE - SHIN CASE</a>
+                    <Link to = {`/store-detail/${alias}.${_id}`}>{brand}</Link>
                     <button><span className="icon_chat_alt"></span></button>
                 </ShopInfo>
             </Header>
 
-            <Body>
-                <ShopCartItem/>
-            </Body>
+            <Body>{renderListProduct()}</Body>
 
             <Footer>
                 <div className="d-flex align-items-center">

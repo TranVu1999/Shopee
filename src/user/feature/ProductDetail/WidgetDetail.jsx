@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+// Modules
+import formatNumber from './../../../utils/formatNumber';
 
 // icons
 const iconStart = <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" ><polygon points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></polygon></svg>
@@ -160,7 +163,6 @@ const Label = styled.div`
 const WidgetClassify = styled.div`
     padding: .5rem 0 0;
     margin-bottom: 1rem;
-    background-color: #FFF5F5;
 `;
 
 const ComboPromo = styled.div`
@@ -213,50 +215,7 @@ const Delivery = styled.div`
 `;
 
 const WidgetButton = styled.div`  
-    button{
-        position: relative;
-        min-width: 6rem;
-        padding: .125rem 0;
-        margin-right: .5rem;
-        
-        border: 1px solid rgba(0,0,0,.09);
-        border-radius: 2px;
-        line-height: 1.875rem;
-        overflow: hidden;
-
-        .ticker{
-            position: absolute;
-            right: -14px;
-            bottom: -9px;
-            transform: rotate(-45deg);
-
-            display: none;
-            width: 32px;
-            height: 24px;
-
-            background-color: #EE4D2D;
-
-            svg{
-                position: absolute;
-                top: 30%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(45deg);
-
-                width: .5rem;
-                height: .5rem;
-                fill: #fff;
-            }
-        }
-    }
-
-    button.active{
-        color: #EE4D2D;
-        border-color: #EE4D2D;
-
-        .ticker{
-            display: block;
-        }
-    }
+    
 `;
 
 const WidgetFormUpdate = styled.div`
@@ -348,6 +307,8 @@ WidgetDetail.propTypes = {
     secondClassification: PropTypes.string,
     product: PropTypes.object,
     choseClassifyProduct: PropTypes.func,
+    onAddToCart: PropTypes.func,
+    addToCartNotify: PropTypes.string,
 };
 
 WidgetDetail.defaultProps = {
@@ -358,13 +319,30 @@ function WidgetDetail({
     product, 
     firstClassification,
     secondClassification,
-    choseClassifyProduct
+    choseClassifyProduct,
+    addToCartNotify,
+    onAddToCart
 }) {
+    const [number, setNumber] = useState(1);
 
     // handle event
     const handleChoseClassification = classification => {
         if(!choseClassifyProduct) return;
         choseClassifyProduct(classification)
+    }
+
+    const addToCart = () => {
+        if(!onAddToCart) return;
+        onAddToCart(number);
+    }
+
+    const updateAmountProduct = num => {
+        
+        const tempNumber = num + number;
+        if(tempNumber > 0 && tempNumber < 50) {
+            setNumber(tempNumber);
+        }
+        
     }
 
     // render
@@ -400,15 +378,19 @@ function WidgetDetail({
                     <Label>Màu sắc</Label>
                     <WidgetButton>
                         {firstClassifications.map(item => {
+                            const {label} = item;
+
+                            console.log({label})
+                            console.log({firstClassification})
                             return <button
-                                key = {item}
+                                key = {label}
                                 onClick = {() => handleChoseClassification({
                                     type: "first",
-                                    value: item
+                                    value: label
                                 })}
-                                className = {firstClassification === item ? "active" : ""}
+                                className = {firstClassification === label ? "product__variant--button active" : "product__variant--button"}
                             >
-                                {item}
+                                {label}
                                 <div className="ticker">
                                     {iconTicker}
                                 </div>
@@ -423,15 +405,16 @@ function WidgetDetail({
                     <Label>Size</Label>
                     <WidgetButton>
                         {secondClassifications.map(item => {
-                            return <button
-                                key = {item}
+                            const {label} = item;
+                            return <button 
+                                key = {label}
                                 onClick = {() => handleChoseClassification({
                                     type: "second",
-                                    value: item
+                                    value: label
                                 })}
-                                className = {secondClassification === item ? "active" : ""}
+                                className = {secondClassification === label ? "product__variant--button active" : "product__variant--button"}
                             >
-                                {item}
+                                {label}
                                 <div className="ticker">
                                     {iconTicker}
                                 </div>
@@ -442,10 +425,11 @@ function WidgetDetail({
                     
                 </Row>
 
-                <Row>
+
+                {addToCartNotify && <Row>
                     <Label></Label>
-                    <p className="warning">Vui lòng chọn Phân loại hàng</p>
-                </Row>
+                    <p className="warning">{addToCartNotify}</p>
+                </Row>}                
             </WidgetClassify>
         }
     }
@@ -457,7 +441,6 @@ function WidgetDetail({
             if(firstClassification && secondClassification) {
                 const {tablePrice} = classification;
                 for(let row of tablePrice) {
-                    console.log(row)
                     if(row.firstClassifyName === firstClassification && 
                     row.secondClassifyName === secondClassification) {
                         return row.inventory;
@@ -468,9 +451,10 @@ function WidgetDetail({
 
         return inventory;
     }
+    
 
     return (
-        <WidgetContent>
+        <WidgetContent className="product">
             {!product && 
                 <WidgetSkeleton>
                 <div className="title skeleton"></div>
@@ -566,7 +550,7 @@ function WidgetDetail({
                     </span>
                     <span className="new">
                         <small>₫</small>
-                        {renderPrice()}
+                        {formatNumber.convertToMoney(renderPrice())}
                     </span>
                     <span className="badge">23% giảm</span>
                 </PriceBox>
@@ -606,9 +590,15 @@ function WidgetDetail({
 
                     <WidgetFormUpdate className="d-flex align-items-center">
                         <div className="d-flex mr-3">
-                            <button className="btn-minus"><span aria-hidden="true" className="icon_minus-06"></span></button>
-                            <div className="number">1</div>
-                            <button className="btn-plus"><span aria-hidden="true" className="icon_plus"></span></button>
+                            <button 
+                                className="btn-minus"
+                                onClick = {() => updateAmountProduct(-1)}
+                            ><span aria-hidden="true" className="icon_minus-06"></span></button>
+                            <div className="number">{number}</div>
+                            <button 
+                                className="btn-plus"
+                                onClick = {() => updateAmountProduct(1)}
+                            ><span aria-hidden="true" className="icon_plus"></span></button>
                         </div>
 
                         <span>{renderAmountProduct()} sản phẩm có sẵn</span>
@@ -618,7 +608,7 @@ function WidgetDetail({
             </>}                
 
             <div>
-                <ButtonAddToCart>
+                <ButtonAddToCart onClick = {addToCart}>
                     {iconCart}
                     <span>thêm vào giỏ hàng</span>
                 </ButtonAddToCart>

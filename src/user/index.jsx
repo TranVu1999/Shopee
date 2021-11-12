@@ -4,13 +4,16 @@ import {useDispatch} from 'react-redux';
 
 // Actions
 import {actInitAccount} from './common/module/account/action';
+import {actInitCart} from './common/module/cart/action';
 
 // Apis
 import accountAPI from '../api/accountAPI';
+import cartAPI from '../api/cartAPI';
 
 // Components
 import Login from './container/Login';
 import Layout from './container/Layout';
+import Cart from './container/Cart';
 
 // Css
 import './assets/sass/index.scss';
@@ -41,6 +44,8 @@ function UserRoll() {
         const accessToken = localStorage.getItem("accessToken");
 
         if(accessToken) {
+            
+            dispatch(actInitCart());
             fetchAccountInfo();
         }
     }, []); 
@@ -51,6 +56,10 @@ function UserRoll() {
                 <Route 
                     path = "/login" 
                     component = {Login}
+                />
+                <Route 
+                    path = "/cart" 
+                    component = {Cart}
                 />
 
                 <Route 

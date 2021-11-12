@@ -22,9 +22,11 @@ import useOutsideElement from '../hooks/outsideElement';
 import WidgetDetail from '../feature/ProductDetail/WidgetDetail';
 import ComboPromo from '../feature/ProductDetail/ComboPromo';
 import WidgetListProduct from '../feature/ProductDetail/WidgetListProduct';
+import SuccessPopup from './../feature/Layout/SuccessPopup'
 
 // api
 import productApi from '../../api/productAPI';
+import cartApi from '../../api/cartAPI';
 
 
 const ModalImageBox = styled.div`
@@ -55,6 +57,7 @@ function ProductDetail(props) {
     const params = useParams();
     // State
     const [indexImageActive, setIndexImageActive] = useState(0);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const [listDiscount] = useState([
         {
@@ -192,7 +195,8 @@ function ProductDetail(props) {
     const [classification, setClassification] = useState({
         first: "",
         second: ""
-    })
+    });
+    const [addToCartNotify, setAddToCartNotify] = useState("")
 
 
     // Hook
@@ -221,17 +225,17 @@ function ProductDetail(props) {
                 const prepareImages = () => {
                     const images = [product.avatar];
                     const {classification} = product;
-
                     if(product.images.length) {
                         images.push(...product.images);
                     }
 
                     if(classification) {
-                        
-                        const classificationImages = classification.classifies.first.images;
-                        if(classificationImages.length) {
-                            images.push(...classificationImages);
-                        }
+                        const {types} = classification.classifies.first;
+                        types.forEach(type => {
+                            if(type.image) {
+                                images.push(type.image);
+                            }
+                        })
                     }
 
                     return images;
@@ -239,10 +243,11 @@ function ProductDetail(props) {
 
                 if(success) {
 
-                    setProduct({
+                    const productData = {
                         ...product,
                         moreImages: prepareImages()
-                    })
+                    }
+                    setProduct(productData);
                 }
             })
             .catch(err => console.log({err}))
@@ -257,18 +262,52 @@ function ProductDetail(props) {
         setVisible(true);
     }
 
-    const onHanldeChoseClassifyProduct = classification => {
+    const onHanldeChoseVariantProduct = classification => {
         const {type, value} = classification;
         setClassification(prev => ({
             ...prev,
             [type]: value
         }));
+        setAddToCartNotify("");
 
         if(type === "first") {
-            const classificationTypes = product.classification.classifies.first.types;
-            const index = product.images.length + classificationTypes.findIndex(type => type === value) + 1;
+            const {types} = product.classification.classifies.first;
+            const index = product.images.length + types.findIndex(type => type.label === value) + 1;
             setIndexImageActive(index);
         }
+    }
+
+    const onHandleAddToCart = (productNumber) => {
+        const classifyProduct = product.classification;
+
+        if(classifyProduct) {
+            const {first, second} = classifyProduct.classifies;
+
+            if(first && second) {
+                if(!classification.first || !classification.second) {
+                    setAddToCartNotify("Vui lòng chọn phân loại sản phẩm");
+                    return;
+                }
+            }
+        }
+
+        const prepareData = {
+            product: product._id,
+            classification,
+            amount: productNumber
+        }
+        // add to cart
+        cartApi.add(prepareData)
+        .then(res => {
+            if(res.success) {
+                setIsSuccess(true);
+            }
+        })
+        .catch(err => {})
+    }
+
+    const onClosePopup = () => {
+        setIsSuccess(false);
     }
 
     return (
@@ -286,10 +325,12 @@ function ProductDetail(props) {
 
                     <div className = "flex-fill">
                         <WidgetDetail 
+                            addToCartNotify = {addToCartNotify}
+                            onAddToCart = {onHandleAddToCart}
                             product = {product}
                             firstClassification = {classification.first}
                             secondClassification = {classification.second}
-                            choseClassifyProduct = {onHanldeChoseClassifyProduct}
+                            choseClassifyProduct = {onHanldeChoseVariantProduct}
                         />
                     </div>
 
@@ -386,6 +427,8 @@ function ProductDetail(props) {
                     </div>
                 </div>
             </div>
+
+            {isSuccess && <SuccessPopup onClosePopup = {onClosePopup}/>}
 
         </div>
     );
