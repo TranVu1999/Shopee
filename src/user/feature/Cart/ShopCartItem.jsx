@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 // Components
 import CheckBox from '../../common/component/CheckBox';
@@ -11,6 +12,9 @@ import {BorderColor} from './../../theme';
 
 // Modules
 import formatNumber from './../../../utils/formatNumber';
+
+// actions
+import {actUpdateCart} from './../../common/module/cart/action';
 
 const iconTicker = <svg enableBackground="new 0 0 12 12" viewBox="0 0 12 12" x="0" y="0" ><g><path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path></g></svg>
 
@@ -226,9 +230,55 @@ ShopCartItem.propTypes = {
 
 function ShopCartItem({cart}) {
     // Data
-    const {product, amount, classification} = cart;
-    console.log({cart})
+    const {_id, product, amount, classification} = cart;
     const [isShowClassifyModal, setIsShowClassifyModal] = React.useState(false);
+    const [prodVariant, setProdVariant] = useState({...classification});
+    const dispatch = useDispatch();
+    const productUpdate = {
+        product: product._id,
+        amount: amount,
+        classification
+    }
+
+    // handle event 
+    const handleUpdateNumCart = number => {
+        productUpdate.amount += number;
+
+        if(productUpdate.amount) {
+            dispatch(actUpdateCart(productUpdate, _id))
+        }
+    }
+
+    const onHadleChoseProductVariant = prod => {
+        const {type, value} = prod;
+        setProdVariant({
+            ...prodVariant,
+            [type]: value
+        })
+    }
+
+    const handleCloseClassifyBox = () => {
+        setIsShowClassifyModal(false);
+        setProdVariant(classification);
+    }
+
+    const handleUpdateProductVariant = () => {
+        let flag = false;
+        for(let key in prodVariant) {
+            if(prodVariant[key] !== classification[key]) {
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag) {
+            productUpdate.classification = {...prodVariant};
+
+            console.log({_id});
+            console.log({...productUpdate})
+            dispatch(actUpdateCart(productUpdate, _id));
+        }
+    }
 
     // render
     const renderPrice = () => {
@@ -279,7 +329,8 @@ function ShopCartItem({cart}) {
                 <div>
                     {first.types.map(type => (
                         <button 
-                            className={classification.first === type.label ? "product__variant--button active" : "product__variant--button"}
+                            onClick = {() => onHadleChoseProductVariant({type: "first", value: type.label})}
+                            className={prodVariant.first === type.label ? "product__variant--button active" : "product__variant--button"}
                             key = {type.label}
                         >{type.label}<div className="ticker">
                         {iconTicker}
@@ -295,7 +346,8 @@ function ShopCartItem({cart}) {
                     <div>
                         {second.types.map(type => (
                             <button 
-                                className={classification.second === type.label ? "product__variant--button active" : "product__variant--button"}
+                                onClick = {() => onHadleChoseProductVariant({type: "second", value: type.label})}
+                                className={prodVariant.second === type.label ? "product__variant--button active" : "product__variant--button"}
                                 key = {type.label}
                             >{type.label}<div className="ticker">
                                     {iconTicker}
@@ -308,7 +360,6 @@ function ShopCartItem({cart}) {
 
         return elm;
     }
-
 
     return (
         <WidgetContent className="d-flex product">
@@ -332,8 +383,12 @@ function ShopCartItem({cart}) {
                         {renderClassificationOption()}
 
                         <div className="button-control text-right">
-                            <button>Trở Lại</button>
-                            <button>Xác nhận</button>
+                            <button
+                                onClick = {handleCloseClassifyBox}
+                            >Trở Lại</button>
+                            <button
+                                onClick = {handleUpdateProductVariant}
+                            >Xác nhận</button>
                         </div>
                     </div>
                 </div>
@@ -343,9 +398,13 @@ function ShopCartItem({cart}) {
 
             <div className="amount text-center">
                 <CartUpdate className="d-inline-flex">
-                    <button><span className="icon_minus-06"></span></button>
+                    <button
+                        onClick = {() => handleUpdateNumCart(-1)}
+                    ><span className="icon_minus-06"></span></button>
                     <span>{amount}</span>
-                    <button><span className="icon_plus"></span></button>
+                    <button
+                        onClick = {() => handleUpdateNumCart(1)}
+                    ><span className="icon_plus"></span></button>
                 </CartUpdate>
             </div>
 

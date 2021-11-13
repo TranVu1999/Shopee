@@ -10,6 +10,11 @@ const cartApi = {
     get: () => {
         const url = '/cart';
         return axiosClient.get(url);
+    },
+
+    update: (data, id) => {
+        const url = `/cart/${id}`;
+        return axiosClient.put(url, data);
     }
     
 }

@@ -8,11 +8,11 @@ import {actInitCart} from './common/module/cart/action';
 
 // Apis
 import accountAPI from '../api/accountAPI';
-import cartAPI from '../api/cartAPI';
 
 // Components
 import Login from './container/Login';
 import Layout from './container/Layout';
+import Footer from './feature/Layout/Footer'
 import Cart from './container/Cart';
 
 // Css
@@ -67,6 +67,8 @@ function UserRoll() {
                     component = {Layout}
                 />
             </Switch>
+
+            <Footer/>
         </div>
     );
 }
