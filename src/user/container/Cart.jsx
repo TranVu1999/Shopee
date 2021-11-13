@@ -29,7 +29,7 @@ function CartPage() {
     return (
         <>
             <div className="cart-page">
-                <Header/>
+                <Header title={"Giỏ Hàng"} showFormSearch/>
                 
                 <div style={{margin: '160px 0 40px'}}>
                     <div className="container">

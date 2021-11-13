@@ -13,6 +13,7 @@ import accountAPI from '../api/accountAPI';
 import Login from './container/Login';
 import Layout from './container/Layout';
 import Cart from './container/Cart';
+import Checkout from './container/Checkout';
 import Footer from './feature/Layout/Footer.jsx';
 
 // Css
@@ -60,6 +61,10 @@ function UserRoll() {
                 <Route 
                     path = "/cart" 
                     component = {Cart}
+                />
+                <Route 
+                    path = "/checkout" 
+                    component = {Checkout}
                 />
 
                 <Route 
