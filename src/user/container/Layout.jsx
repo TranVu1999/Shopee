@@ -2,7 +2,6 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 // Components
-import Footer from './../feature/Layout/Footer';
 import Header from './../feature/Layout/Header';
 
 // Others
@@ -25,8 +24,6 @@ function Layout() {
                 />
                 })}
             </Switch>  
-
-            <Footer/>
         </div>
     );
 }

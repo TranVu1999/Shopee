@@ -15,6 +15,11 @@ const cartApi = {
     update: (data, id) => {
         const url = `/cart/${id}`;
         return axiosClient.put(url, data);
+    },
+
+    delete: (id) => {
+        const url = `/cart/${id}`;
+        return axiosClient.delete(url);
     }
     
 }

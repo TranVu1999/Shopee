@@ -12,8 +12,8 @@ import accountAPI from '../api/accountAPI';
 // Components
 import Login from './container/Login';
 import Layout from './container/Layout';
-import Footer from './feature/Layout/Footer'
 import Cart from './container/Cart';
+import Footer from './feature/Layout/Footer.jsx';
 
 // Css
 import './assets/sass/index.scss';

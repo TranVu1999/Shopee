@@ -14,7 +14,7 @@ import {BorderColor} from './../../theme';
 import formatNumber from './../../../utils/formatNumber';
 
 // actions
-import {actUpdateCart} from './../../common/module/cart/action';
+import {actUpdateCart, actDeleteCart} from './../../common/module/cart/action';
 
 const iconTicker = <svg enableBackground="new 0 0 12 12" viewBox="0 0 12 12" x="0" y="0" ><g><path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path></g></svg>
 
@@ -273,11 +273,12 @@ function ShopCartItem({cart}) {
 
         if(flag) {
             productUpdate.classification = {...prodVariant};
-
-            console.log({_id});
-            console.log({...productUpdate})
             dispatch(actUpdateCart(productUpdate, _id));
         }
+    }
+
+    const onHandleDelete = () => {
+        dispatch(actDeleteCart(_id));
     }
 
     // render
@@ -411,7 +412,10 @@ function ShopCartItem({cart}) {
             <div className="total text-center">₫{formatNumber.convertToMoney(renderPrice() * amount)}</div>
 
             <div className="control text-center">
-                <button className="delete">Xóa</button>
+                <button 
+                    className="delete"
+                    onClick = {onHandleDelete}
+                >Xóa</button>
 
                 <button className="d-flex align-items-center see-more">
                     <span>Tìm sản phẩm tương tự</span>

@@ -727,8 +727,6 @@ function Home() {
         }
     ]);
 
-    const [productList, setProductList] = useState([]);
-
     
     
 

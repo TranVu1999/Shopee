@@ -36,6 +36,23 @@ export const actUpdateCart = (cart, cartId) => {
     }
 }
 
+export const actDeleteCart = (cartId) => {
+
+    return (dispatch) => {
+        dispatch(dispatchLoading());
+        cartApi.delete(cartId)
+        .then(res => {
+            if(res.success) {
+                dispatch(dispatchSuccess(res.cart))
+            }
+        })
+        .catch(err => {
+            console.log({err});
+            dispatch(dispatchFail());
+        })
+    }
+}
+
 const dispatchSuccess = data => {
     return {
         type: ActionTypes.FETCH_SUCCESS,

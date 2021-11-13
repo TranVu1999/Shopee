@@ -3,7 +3,6 @@ import {useHistory} from 'react-router-dom';
 
 // components
 import Header from './../feature/Login/Header';
-import Footer from './../feature/Layout/Footer';
 import WrapContent from './../feature/Login/WrapContent';
 import FormLogin from './../feature/Login/FormLogin';
 
@@ -87,7 +86,6 @@ function Login(props) {
                     />
                 }
             />
-            <Footer/>
         </section>
     );
 }

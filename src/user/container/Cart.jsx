@@ -1,11 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import EmptyCart from '../feature/Cart/EmptyCart';
 
 // Components
 import Header from '../feature/Cart/Header';
 import HeaderTable from '../feature/Cart/HeaderTable';
 import ShopCart from '../feature/Cart/ShopCart';
+import CartControl from '../feature/Cart/CartControl';
+import EmptyCart from '../feature/Cart/EmptyCart';
 
 
 function CartPage() {
@@ -27,21 +28,26 @@ function CartPage() {
 
     return (
         <>
-            <Header/>
-            
-            <div style={{margin: '160px 0 40px'}}>
-                <div className="container">
-                    {!cart.length && <EmptyCart/>}
+            <div className="cart-page">
+                <Header/>
+                
+                <div style={{margin: '160px 0 40px'}}>
+                    <div className="container">
+                        {!cart.length && <EmptyCart/>}
 
-                    {cart.length && 
-                    <>
-                        <HeaderTable/>
-                        <div className="mb-2"></div>
+                        {cart.length > 0 && 
+                        <>
+                            <HeaderTable/>
+                            <div className="mb-2"></div>
 
-                        {renderListCart()} 
-                    </>}
+                            {renderListCart()} 
+                        </>}
+                    </div>
                 </div>
+
+                <CartControl/>
             </div>
+            
         </>
     );
 }

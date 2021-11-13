@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const WidgetContainer = styled.div`
     padding: 5rem 0;
@@ -10,7 +11,7 @@ const WidgetContainer = styled.div`
         margin-bottom: 1rem;
     }
 
-    button {
+    a {
         padding: .5rem 1.5rem;
         text-transform: uppercase;
         color: #fff;
@@ -24,7 +25,7 @@ function EmptyCart() {
             <div className="text-center">
                 <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd8040b334d31946f49e36beaf32db.png" alt="icon" />
                 <p>Giỏ hàng của bạn còn trống</p>
-                <button>Mua Ngay</button>
+                <Link to="/">Mua Ngay</Link>
             </div>
         </WidgetContainer>
     );
