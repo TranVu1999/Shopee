@@ -694,6 +694,58 @@
     }
 
     // ================ Cart ================
+    .cart-page, .checkout-page {
+        .shop-cart {
+            margin-bottom: 1rem;
+            background-color: #fff;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,.09);
+            border-radius: 3px;
+
+            .cart-header {
+                display: flex;
+                align-items: center;
+                padding: 1.125rem 1.5rem;
+                font-size: .875rem;
+
+                .information {
+                    display: flex;
+                    align-items: center;
+                }
+
+                span.badge{
+                    font-weight: 600;
+
+                    background-color: #ee4d2d;
+                    color: #fff;
+
+                    border-radius: 2px;
+                }
+
+                a{
+                    margin: 0 .65rem;
+                    font-size: .875rem;
+                    font-weight: 500;
+                    color: #222;
+                }
+
+                button{
+                    padding-left: .5rem;
+                    border-left: 1px solid #d5d5d5;
+                    color: #00bfa5;
+                    line-height: 1.125rem; 
+
+                    svg {
+                        width: 1.25rem;
+                        height: .9125rem;
+                        fill: currentColor;
+                    }
+                }
+                
+            }
+            
+        }
+    }
+
     .cart-page {
         padding-bottom: 3rem;
 
@@ -774,6 +826,8 @@
 
     // ================ Checkout ================
     .checkout-page {
+        padding-bottom: 3rem;
+
         .received-address__container {
             background-color: #fff;
             padding-bottom: 2rem;
@@ -890,6 +944,17 @@
             .btn-back {
                 border: 1px solid #d5d5d5;
             }
+        }
+
+        svg.icon-voucher {
+            display: inline-block;
+            width: 1.5rem;
+            height: 100%;
+            fill: #ee4d2d;
+        }
+
+        svg.icon-coin {
+            width: 1.5rem;
         }
     }
 
