@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 // Components
 import ShopCartItem from './ShopCartItem';
@@ -9,6 +10,9 @@ import CheckBox from '../../common/component/CheckBox';
 
 // Theme 
 import {BorderColor} from './../../theme';
+
+// actions
+import {actUpdateAllCartItemInShop} from './../../common/module/cart/action';
 
 
 
@@ -19,7 +23,7 @@ const WidgetContent = styled.div`
 
 const Header = styled.div`
     padding: 1.125rem 1.5rem;
-    border: 1px solid ${BorderColor.mainColor};
+    border-bottom: 1px solid #d5d5d5;
 `;
 
 const ShopInfo = styled.div`
@@ -108,6 +112,17 @@ ShopCart.propTypes = {
 
 function ShopCart({shop}) {
     const {_id, brand, alias, listProduct} = shop;
+    const dispatch = useDispatch();
+
+    // function
+    const checkAllChecked = () => {
+        return listProduct.every(prod => prod.isChose);
+    }
+
+    // handle event
+    const onHandleUpdateAll = () => {
+        dispatch(actUpdateAllCartItemInShop({shopId: _id}))
+    }
 
     // render 
     const renderListProduct = () => {
@@ -119,7 +134,11 @@ function ShopCart({shop}) {
     return (
         <WidgetContent className='bg-white'>
             <Header className="d-flex align-items-center">
-                <CheckBox/>
+                <CheckBox 
+                    isChecked = {checkAllChecked()}
+                    onChose = {onHandleUpdateAll}
+                />
+
                 <ShopInfo className="d-flex align-items-center">
                     <span className="badge">Yêu thích +</span>
                     <Link to = {`/store-detail/${alias}.${_id}`}>{brand}</Link>

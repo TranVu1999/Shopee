@@ -15,15 +15,9 @@ function CartPage() {
 
     //render
     const renderListCart = () => {
-        if(cart) {
-            if(cart.length) {
-                return cart.map(row => {
-                    return <ShopCart key={row._id} shop = {row}/>
-                })
-            }else {
-
-            }
-        }
+        return cart.map(row => {
+            return <ShopCart key={row._id} shop = {row}/>
+        })
     }
 
     return (
@@ -37,15 +31,16 @@ function CartPage() {
 
                         {cart.length > 0 && 
                         <>
-                            <HeaderTable/>
+                            <HeaderTable cart = {cart}/>
                             <div className="mb-2"></div>
 
                             {renderListCart()} 
                         </>}
                     </div>
                 </div>
-
-                <CartControl/>
+                
+                {cart.length > 0 && <CartControl cart = {cart}/>}
+                
             </div>
             
         </>

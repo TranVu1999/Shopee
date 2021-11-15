@@ -26,6 +26,7 @@ export const actUpdateCart = (cart, cartId) => {
         cartApi.update(cart, cartId)
         .then(res => {
             if(res.success) {
+                console.log({res})
                 dispatch(dispatchSuccess(res.cart))
             }
         })
@@ -51,6 +52,27 @@ export const actDeleteCart = (cartId) => {
             dispatch(dispatchFail());
         })
     }
+}
+
+export const actChoseCartItem = cartItemId => {
+    return {
+        type: ActionTypes.CHOSE_CART_ITEM,
+        payload: cartItemId
+    }  
+}
+
+export const actUpdateAllCartItemInShop = shopId => {
+    return {
+        type: ActionTypes.UPDATE_ALL_CART_ITEM_IN_SHOP,
+        payload: shopId
+    }  
+}
+
+export const actUpdateAllCartItem = shopId => {
+    return {
+        type: ActionTypes.UPDATE_ALL_CART_ITEM,
+        payload: shopId
+    }  
 }
 
 const dispatchSuccess = data => {

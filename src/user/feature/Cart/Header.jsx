@@ -31,7 +31,7 @@ const WidgetContainer = styled.header`
         font-size: 1.25rem;
         color: #ee4d2d;
 
-        a:last-child {
+        span {
             display: block;
             padding: .25rem 0 0 .75rem;
             margin: .5rem 0 0 1rem;
@@ -162,8 +162,7 @@ function Header({title, showFormSearch}) {
                 <div className="container">
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="d-flex align-items-center header__logo">
-                            <Link>{logo}</Link>
-                            <Link>{title} </Link>
+                            <Link to="/" className="d-flex align-items-center">{logo} <span>{title}</span></Link>
                         </div>
                         
                         {showFormSearch && <div className="header__form">

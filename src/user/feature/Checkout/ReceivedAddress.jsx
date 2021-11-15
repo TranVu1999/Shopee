@@ -43,10 +43,12 @@ function ReceivedAddress({
     const [receivedAddress, setReceivedAddress] = useState(null)
     const [isShowListAddress, setIsShowListAddress] = useState(false);
     const [isOpenModalAddress, setIsOpenModalAddress] = useState(false);
+    const [addressIdFocus, setAddressIdFocus] = useState("");
 
     // useEffect
     useEffect(() => {
         const receivedAddress = listAddress ? listAddress.find(address => address.isDefault) : null;
+        setAddressIdFocus(receivedAddress ? receivedAddress._id : "");
         setReceivedAddress(receivedAddress);
     }, [listAddress])
 
@@ -56,6 +58,7 @@ function ReceivedAddress({
     }
 
     const onHandleCloseListAddress = () => {
+        setAddressIdFocus(receivedAddress ? receivedAddress._id : "");
         setIsShowListAddress(false);
     }
 
@@ -78,18 +81,28 @@ function ReceivedAddress({
         onHandleAddAddress(addressData)
     }
 
+    const onHandleChose = identification => {
+        setAddressIdFocus(identification.addressId);
+    }
+
+    const onHandleUpdateReceivedAddress = () => {
+        setReceivedAddress(listAddress.find(address => address._id === addressIdFocus));
+        setIsShowListAddress(false);
+    }
+
     // render
     const renderReceivedAddress = () => {
         if(!isShowListAddress && receivedAddress) {
             return (
                 <div className="d-flex justify-content-between address-selected">
                     <div className="user-information">
-                        <span>Trần Lê Anh Vũ</span><br />
-                        <span>(84+) 377670509</span>
+                        <span>{receivedAddress.fullname}</span><br />
+                        <span>(84+) {receivedAddress.phoneNumber}</span>
                     </div>
                     <div className="user-address">
-                        156 Đường số 102, Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh
-                        <span>Mặc định</span>
+                        {`${receivedAddress.houseNumber}, ${receivedAddress.ward}, ${receivedAddress.district}, ${receivedAddress.province}`}
+                            
+                        {receivedAddress.isDefault && <span>Mặc định</span>}
                     </div>
                     <ButtonChange onClick={onHandleOpenListAddress}>Thay đổi</ButtonChange>
                 </div>
@@ -116,6 +129,32 @@ function ReceivedAddress({
         return null;
     }
 
+    const renderListAddress = () => {
+        if(isShowListAddress) {
+            return listAddress.map(address => {
+                return (
+                    <div className="address-item" key = {address._id}>
+                        <RadioBox
+                            onChose = {onHandleChose}
+                            identification = {{addressId: address._id}}
+                            isCheck = {addressIdFocus === address._id}
+                        />
+                        <div className="user-information">
+                            <span>{address.fullname}</span><br />
+                            <span>(84+) {address.phoneNumber}</span>
+                        </div>
+                        <div className="user-address">
+                            {`${address.houseNumber}, ${address.ward}, ${address.district}, ${address.province}`}
+                            
+                            {address.isDefault && <span>Mặc định</span>}
+                            
+                        </div>
+                    </div>
+                );
+            })
+        }
+    }
+
     return (
         <div className = "received-address">
             <div className="container">
@@ -139,32 +178,14 @@ function ReceivedAddress({
 
                     {isShowListAddress && <>
                         <div className="list-address">
-                            <div className="address-item">
-                                <RadioBox/>
-                                <div className="user-information">
-                                    <span>Trần Lê Anh Vũ</span><br />
-                                    <span>(84+) 377670509</span>
-                                </div>
-                                <div className="user-address">
-                                    156 Đường số 102, Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh
-                                    <span>Mặc định</span>
-                                </div>
-                            </div>
-                            <div className="address-item">
-                                <RadioBox/>
-                                <div className="user-information">
-                                    <span>Trần Lê Anh Vũ</span><br />
-                                    <span>(84+) 377670509</span>
-                                </div>
-                                <div className="user-address">
-                                    156 Đường số 102, Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh
-                                    <span>Mặc định</span>
-                                </div>
-                            </div>
+                            {renderListAddress()}
                         </div>
 
                         <div className="buttons">
-                            <button className="btn btn-save">Hoàn thành</button>
+                            <button 
+                                className="btn btn-save"
+                                onClick = {onHandleUpdateReceivedAddress}
+                            >Hoàn thành</button>
                             <button 
                                 className="btn btn-back"
                                 onClick = {onHandleCloseListAddress}

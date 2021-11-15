@@ -33,14 +33,26 @@ const WidgetContainer = styled.div`
 
 RadioBox.propTypes = {
     isCheck: PropTypes.bool,
+    identification: PropTypes.object,
+    onChose: PropTypes.func.isRequired,
 };
 
 RadioBox.defaultProps = {
-    isCheck: false
+    isCheck: false,
+    identification: null
 }
 
-function RadioBox({isCheck}) {
-    return <WidgetContainer className = {isCheck ? "active" : ""}/>;
+function RadioBox({isCheck, onChose, identification}) {
+
+    // handle event
+    const onHandleClick = () => {
+        onChose(identification);
+    }
+
+    return <WidgetContainer 
+        onClick = {onHandleClick}
+        className = {isCheck ? "active" : ""}
+    />;
 }
 
 export default RadioBox;
