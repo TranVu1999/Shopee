@@ -819,6 +819,15 @@
                     padding: .5rem 1.5rem;
                     background-color: #ee4d2d;
                     color: #fff;
+
+                    &:not(.disabled):hover {
+                        background-color: #f05d40;
+                    }
+
+                    &.disabled {
+                        opacity: .7;
+                        cursor: not-allowed;
+                    }
                 }
             }
         }

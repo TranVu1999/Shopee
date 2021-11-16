@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
 // Components
 import Header from '../feature/Cart/Header';
@@ -14,6 +15,7 @@ import addressApi from './../../api/addressAPI';
 
 
 function Checkout(props) {
+    const cart = useSelector(state => state.cartReducer.cart);
 
     const [listOptionAddress, setListOPtionAddress] = useState([]);
     const [listAddress, setListAddress] = useState(null);
@@ -97,7 +99,7 @@ function Checkout(props) {
         <div className="checkout-page">
             <Header title = {"Thanh Toán"}/>
             
-            <div style={{margin: '160px 0 40px'}}></div>
+            <div style={{marginBottom: '16px'}}></div>
             <ReceivedAddress
                 listAddress = {listAddress}
                 onHandleInitAdministrativeUnit = {onHandleInitListOptionAddress}
@@ -108,7 +110,7 @@ function Checkout(props) {
 
             <div style={{marginBottom: '40px'}}></div>
 
-            <CartInfo/>
+            <CartInfo cart = {cart}/>
 
             <Coin/>
             <div style={{marginBottom: '20px'}}></div>

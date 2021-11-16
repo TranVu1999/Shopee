@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
+// modules
+import Number from './../../../utils/formatNumber';
+
+// icons
+import {chatIcon} from './../../../asset/icon';
+
 const CartBody = styled.div`
     padding: 0 1.5rem;
     font-size: .875rem;
@@ -159,51 +165,62 @@ const CartFooter = styled.div`
 `;
 
 ShopItem.propTypes = {
-    
+    shop: PropTypes.object.isRequired,
 };
 
-function ShopItem(props) {
+function ShopItem({shop}) {
+    const {brand, alias, _id, listProduct} = shop;
+    console.log({shop});
+
+    // render
+    const renderPrice = (classification, product) => {
+        if(product.classification) {
+            const {first, second} = classification;
+            const {tablePrice} = product.classification;
+
+            if(first && second) {
+                return tablePrice.find(row => row.firstClassifyName === first && row.secondClassifyName === second).price;
+            } else if (first) {
+                return tablePrice.find(row => row.firstClassifyName === first).price; 
+            }
+        } 
+        return product.price;
+        
+    }
+
+    const renderListRowCart = () => {
+        return listProduct.filter(prod => prod.isChose).map(prod => {
+            const {classification, product, amount} = prod;
+            const price = renderPrice(classification, product);
+            return (
+                <RowCart key = {prod._id}>
+                    <div className="title">
+                        <img src={product.avatar} alt="product" />
+                        <span>{product.title}</span>
+                    </div>
+                    <div className="type">Loại: {`${classification.first || ""} ${classification.second || ""}`}</div>
+                    <div className="price"><small>₫</small> {Number.convertToMoney(price)}</div>
+                    <div className="number">{amount}</div>
+                    <div className="total-price"><small>₫</small>{Number.convertToMoney(price * amount)}</div>
+                </RowCart>
+            );
+        })
+    }
+
+
+
     return (
         <div className="container shop-cart">
             <div className="cart-header">
                 <div className="information">
                     <span className="badge">Yêu thích +</span>
-                    <Link to = {`/store-detail/`}>{"Tran Vu Clothes"}</Link>
-                    <button><svg viewBox="0 0 16 16"><g fillRule="evenodd"><path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z"></path></g></svg> Chat ngay</button>
+                    <Link to = {`/store-detail/${alias}.${_id}`}>{brand}</Link>
+                    <button>{chatIcon} Chat ngay</button>
                 </div>
             </div>
 
             <CartBody className="cart-body">
-                <RowCart>
-                    <div className="title">
-                        <img src="https://cf.shopee.vn/file/aad43a03e04af37b04e5d7cc6a2e4a94_tn" alt="product" />
-                        <span>Áo thun nam nữ unisex tay lỡ AD67 PHG PT5, áo phông tay lỡ unisex form rộng oversize streetwear</span>
-                    </div>
-                    <div className="type">Loại: Future Trắng</div>
-                    <div className="price"><small>₫</small> 55.000</div>
-                    <div className="number">1</div>
-                    <div className="total-price"><small>₫</small>55.000</div>
-                </RowCart>
-                <RowCart>
-                    <div className="title">
-                        <img src="https://cf.shopee.vn/file/aad43a03e04af37b04e5d7cc6a2e4a94_tn" alt="product" />
-                        <span>Áo thun nam nữ unisex tay lỡ AD67 PHG PT5, áo phông tay lỡ unisex form rộng oversize streetwear</span>
-                    </div>
-                    <div className="type">Loại: Future Trắng</div>
-                    <div className="price"><small>₫</small> 55.000</div>
-                    <div className="number">1</div>
-                    <div className="total-price"><small>₫</small>55.000</div>
-                </RowCart>
-                <RowCart>
-                    <div className="title">
-                        <img src="https://cf.shopee.vn/file/aad43a03e04af37b04e5d7cc6a2e4a94_tn" alt="product" />
-                        <span>Áo thun nam nữ unisex tay lỡ AD67 PHG PT5, áo phông tay lỡ unisex form rộng oversize streetwear</span>
-                    </div>
-                    <div className="type">Loại: Future Trắng</div>
-                    <div className="price"><small>₫</small> 55.000</div>
-                    <div className="number">1</div>
-                    <div className="total-price"><small>₫</small>55.000</div>
-                </RowCart>
+                {renderListRowCart()}
 
                 <RowVoucher className="d-flex justify-content-end">
                     <div className="d-flex align-items-center justify-content-between">

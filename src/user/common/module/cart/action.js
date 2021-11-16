@@ -54,6 +54,23 @@ export const actDeleteCart = (cartId) => {
     }
 }
 
+export const actDeleteMultiCartItem = (listCartItem) => {
+
+    return (dispatch) => {
+        dispatch(dispatchLoading());
+        cartApi.deleteMultiCartItem(listCartItem)
+        .then(res => {
+            if(res.success) {
+                dispatch(dispatchSuccess(res.cart))
+            }
+        })
+        .catch(err => {
+            console.log({err});
+            dispatch(dispatchFail());
+        })
+    }
+}
+
 export const actChoseCartItem = cartItemId => {
     return {
         type: ActionTypes.CHOSE_CART_ITEM,

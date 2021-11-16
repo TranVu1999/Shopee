@@ -4,14 +4,18 @@ import ShopItem from './ShopItem';
 
 
 CartInfo.propTypes = {
-    
+    cart: PropTypes.array.isRequired,
 };
 
-function CartInfo(props) {
+function CartInfo({cart}) {
+
+    // render 
+    const renderShopItem = () => {
+        return cart.map(shop => <ShopItem shop = {shop}/>)
+    }
     return (
         <>
-            <ShopItem/>
-            <ShopItem/>
+            {renderShopItem()}
         </>
     );
 }

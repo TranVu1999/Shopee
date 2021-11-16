@@ -25,7 +25,7 @@ function CartPage() {
             <div className="cart-page">
                 <Header title={"Giỏ Hàng"} showFormSearch/>
                 
-                <div style={{margin: '160px 0 40px'}}>
+                <div style={{margin: '16px 0 40px'}}>
                     <div className="container">
                         {!cart.length && <EmptyCart/>}
 

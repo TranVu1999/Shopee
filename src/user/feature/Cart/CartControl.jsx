@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom'
 
 // Components
 import CheckBox from '../../common/component/CheckBox';
+import ConfirmPopup from './../Layout/ConfirmPopup';
 
 // icons
 import {
@@ -14,7 +16,7 @@ import {
 } from './../../../asset/icon';
 
 // actions
-import {actUpdateAllCartItem} from './../../common/module/cart/action';
+import {actUpdateAllCartItem, actDeleteMultiCartItem} from './../../common/module/cart/action';
 
 // modules
 import Number from '../../../utils/formatNumber';
@@ -26,7 +28,10 @@ CartControl.propTypes = {
 };
 
 function CartControl({cart}) {
+    const [isOpenConfirmPopup, setIsOpenConfirmPopup] = useState(false);
+    const [listSelectedCartItem, setListSelectedCartItem] = useState([]);
     const dispatch = useDispatch();
+    const history = useHistory();
     // function
     const checkAllChecked = () => {
         return !cart.some(cartItem => {
@@ -34,17 +39,15 @@ function CartControl({cart}) {
         });
     }
 
-    // handle event
-    const onHandleUpdateAll = () => {
-        dispatch(actUpdateAllCartItem());
-    }
-
-    // render
-    const renderTotalPrice = () => {
+    const collectProductSelected = () => {
         let totalPrice = 0;
+        let numProduct = 0;
+        let numProductSelected = 0;
         cart.forEach(shop => {
             shop.listProduct.forEach(prod => {
+                numProduct++;
                 if(prod.isChose) {
+                    numProductSelected++;
                     const {classification: {first, second}, amount} = prod;
                     if(!prod.product.classification) {
                         totalPrice += prod.product.price * amount;
@@ -65,9 +68,48 @@ function CartControl({cart}) {
                 }
             })
         });
-
-        return totalPrice;
+        return {totalPrice, numProduct, numProductSelected};
     }
+
+    // handle event
+    const onHandleUpdateAll = () => {
+        dispatch(actUpdateAllCartItem());
+    }
+
+    const onRemoveMultiCartItem = () => {
+        const listCartItemId = [];
+        cart.forEach(shop => {
+            shop.listProduct.forEach(cartItem => {
+                if(cartItem.isChose) {
+                    listCartItemId.push(cartItem._id);
+                }
+            })
+        });
+        if(listCartItemId.length) {
+            setIsOpenConfirmPopup(true);
+        }
+        setListSelectedCartItem(listCartItemId);
+    }
+
+    const onHandleConfirmPopup = () => {
+        dispatch(actDeleteMultiCartItem({
+            listCartItem: listSelectedCartItem
+        }))
+        setIsOpenConfirmPopup(false);
+    }
+
+    const onHandleCancelPopup = () => {
+        setIsOpenConfirmPopup(false);
+    }
+
+    const onHandleCheckOut = () => {
+        if(numProductSelected) {
+            history.push("/checkout");
+        }
+    }
+
+    const {numProduct, totalPrice, numProductSelected} = collectProductSelected();
+    
 
     return (
         <WidgetContainer className="cart-control">
@@ -107,17 +149,27 @@ function CartControl({cart}) {
                                 isChecked = {checkAllChecked()}
                                 onChose = {onHandleUpdateAll}
                             />
-                            <span>Chọn Tất Cả (2)</span>
-                            <button>Xóa</button>
+                            <span>Chọn Tất Cả ({numProduct})</span>
+                            <button onClick = {onRemoveMultiCartItem}>Xóa</button>
                         </div>
 
                         <div>
-                            <span>Tổng thanh toán (0 Sản phẩm): <strong>₫{Number.convertToMoney(renderTotalPrice())}</strong></span>
-                            <button className="btn-pay">Mua Hàng</button>
+                            <span>
+                                Tổng thanh toán ({numProductSelected} Sản phẩm): <strong className="ml-2"><small>₫</small>{Number.convertToMoney(totalPrice)}</strong>
+                            </span>
+                            <button 
+                                className = {numProductSelected ? "btn-pay" : "btn-pay disabled"}
+                                onClick = {onHandleCheckOut}
+                            >Mua Hàng</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {isOpenConfirmPopup && <ConfirmPopup
+                onCancelPopup = {onHandleCancelPopup}
+                onConfirmPopup = {onHandleConfirmPopup}
+            />}
             
         </WidgetContainer>
     );

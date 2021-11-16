@@ -20,6 +20,11 @@ const cartApi = {
     delete: (id) => {
         const url = `/cart/${id}`;
         return axiosClient.delete(url);
+    },
+
+    deleteMultiCartItem: (listCartItem) => {
+        const url = `/cart/remove-multi`;
+        return axiosClient.put(url, listCartItem);
     }
     
 }
