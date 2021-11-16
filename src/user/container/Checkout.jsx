@@ -7,7 +7,8 @@ import ReceivedAddress from '../feature/Checkout/ReceivedAddress';
 import CartInfo from '../feature/Checkout/CartInfo';
 import Coin from '../feature/Checkout/Coin';
 import Footer from '../feature/Checkout/Footer';
-import HandlingData from './../feature/Layout/HandlingData'
+import HandlingData from './../feature/Layout/HandlingData';
+import EmptyCart from './../feature/Cart/EmptyCart';
 
 // apis 
 import administrativeUnitApi from './../../api/administrativeUnitAPI';
@@ -49,6 +50,20 @@ function Checkout(props) {
             }
         })
         .catch(err => console.log({err}))
+    }
+
+    const getNumProductSelected = () => {
+        let numProductSelected = 0;
+        cart.forEach(shop => {
+            shop.listProduct.forEach(prod => {
+                const {isChose} = prod;
+                if(isChose) {
+                    numProductSelected++;
+                }
+            })
+        });
+
+        return numProductSelected;
     }
 
     // handle event
@@ -95,6 +110,8 @@ function Checkout(props) {
         .catch(err => console.log({err}));
     }
 
+    const numProductSelected = getNumProductSelected();
+
     return (
         <div className="checkout-page">
             <Header title = {"Thanh Toán"}/>
@@ -110,11 +127,22 @@ function Checkout(props) {
 
             <div style={{marginBottom: '40px'}}></div>
 
-            <CartInfo cart = {cart}/>
+            {numProductSelected === 0 && 
+                <EmptyCart 
+                    title = "Bạn chưa chọn sản phẩm."
+                    button = {{title: "Quay lại giỏ hàng", url: "/cart"}}
+                />
+            }
 
-            <Coin/>
-            <div style={{marginBottom: '20px'}}></div>
-            <Footer/>
+            {numProductSelected > 0 && <>
+                <CartInfo cart = {cart}/>
+
+                <Coin/>
+                <div style={{marginBottom: '20px'}}></div>
+                <Footer cart = {cart}/>
+            </>}
+
+            
 
             {isLoading && <HandlingData/>}
         </div>

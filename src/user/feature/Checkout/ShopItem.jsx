@@ -172,6 +172,35 @@ function ShopItem({shop}) {
     const {brand, alias, _id, listProduct} = shop;
     console.log({shop});
 
+    // functions
+    const getTotalPrice = () => {
+        let totalPrice = 0;
+        let numProductSelected = 0;
+        
+        shop.listProduct.forEach(prod => {
+            if(prod.isChose) {
+                numProductSelected += prod.amount;
+                const {classification: {first, second}, amount} = prod;
+                if(!prod.product.classification) {
+                    totalPrice += prod.product.price * amount;
+                } else {
+                    const {tablePrice} = prod.product.classification;
+                    let rowPrice = null;
+                    if(first && second) {
+                        rowPrice = tablePrice.find(row => row.firstClassifyName === first && row.secondClassifyName === second);
+
+                    } else if(first) {
+                        rowPrice = tablePrice.find(row => row.firstClassifyName === first);
+                    }
+                    totalPrice += rowPrice.price * amount;
+                }
+
+            }
+        })
+        
+        return {totalPrice, numProductSelected};
+    }
+
     // render
     const renderPrice = (classification, product) => {
         if(product.classification) {
@@ -207,7 +236,7 @@ function ShopItem({shop}) {
         })
     }
 
-
+    const {totalPrice, numProductSelected} = getTotalPrice();
 
     return (
         <div className="container shop-cart">
@@ -251,7 +280,7 @@ function ShopItem({shop}) {
                                     <p>Vui lòng chọn thời gian giao hàng mong muốn</p>
                                 </div>
                                 <div className="button"><button>Thay đổi</button></div>
-                                <div className="price"><small>₫</small>55.000</div>
+                                <div className="price"><small>₫</small>38.000</div>
                             </div>
                             <p>(Do ảnh hưởng của Covid-19,thời gian giao hàng có thể dài hơn dự kiến từ 1-3 ngày)</p>
                         </div>
@@ -261,8 +290,8 @@ function ShopItem({shop}) {
 
                 <div className="d-flex justify-content-end bottom">
                     <div>
-                        <span>Tổng số tiền (12 sản phẩm):</span>
-                        <strong><small>₫</small>55.000</strong>
+                        <span>Tổng số tiền ({numProductSelected} sản phẩm):</span>
+                        <strong><small>₫</small>{Number.convertToMoney(totalPrice)}</strong>
                     </div>
                     
                 </div>

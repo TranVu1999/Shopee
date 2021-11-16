@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// modules
+import Number from '../../../utils/formatNumber';
+
 const WidgetContainer = styled.div`
     font-size: .875rem;
     .top {
@@ -66,10 +69,45 @@ const WidgetContainer = styled.div`
 `;
 
 Footer.propTypes = {
-    
+    cart: PropTypes.array.isRequired,
 };
 
-function Footer(props) {
+function Footer({cart}) {
+    // functions
+    const collectProductSelected = () => {
+        let totalPrice = 0;
+        let numProduct = 0;
+        let numProductSelected = 0;
+        cart.forEach(shop => {
+            shop.listProduct.forEach(prod => {
+                numProduct += prod.amount;
+                if(prod.isChose) {
+                    numProductSelected++;
+                    const {classification: {first, second}, amount} = prod;
+                    if(!prod.product.classification) {
+                        totalPrice += prod.product.price * amount;
+                    } else {
+                        const {tablePrice} = prod.product.classification;
+                        let rowPrice = null;
+                        if(first && second) {
+                            rowPrice = tablePrice.find(row => row.firstClassifyName === first && row.secondClassifyName === second);
+
+                        } else if(first) {
+                            rowPrice = tablePrice.find(row => row.firstClassifyName === first);
+                        }
+                        totalPrice += rowPrice.price * amount;
+                    }
+
+                    
+
+                }
+            })
+        });
+        return {totalPrice, numProduct, numProductSelected};
+    }
+
+    const {totalPrice} = collectProductSelected();
+
     return (
         <WidgetContainer>
             <div className="container">
@@ -86,15 +124,15 @@ function Footer(props) {
                     <div className="middle">
                         <div>
                             <span>Tổng tiền hàng</span>
-                            <span><small>₫</small>403.000</span>
+                            <span><small>₫</small>{Number.convertToMoney(totalPrice)}</span>
                         </div>
                         <div>
                             <span>Phí vận chuyển</span>
-                            <span><small>₫</small>403.000</span>
+                            <span><small>₫</small>38.000</span>
                         </div>
                         <div>
                             <span>Tổng thanh toán</span>
-                            <span className="price"><small>₫</small>403.000</span>
+                            <span className="price"><small>₫</small>{Number.convertToMoney(totalPrice + 38000)}</span>
                         </div>
                     </div>
 

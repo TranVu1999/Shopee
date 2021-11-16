@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -19,13 +20,18 @@ const WidgetContainer = styled.div`
     }
 `;
 
-function EmptyCart() {
+EmptyCart.propTypes = {
+    button: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+}
+
+function EmptyCart({title, button}) {
     return (
         <WidgetContainer className="d-flex align-items-center justify-content-center">
             <div className="text-center">
                 <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd8040b334d31946f49e36beaf32db.png" alt="icon" />
-                <p>Giỏ hàng của bạn còn trống</p>
-                <Link to="/">Mua Ngay</Link>
+                <p>{title}</p>
+                <Link to={button.url}>{button.title}</Link>
             </div>
         </WidgetContainer>
     );

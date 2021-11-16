@@ -27,7 +27,10 @@ function CartPage() {
                 
                 <div style={{margin: '16px 0 40px'}}>
                     <div className="container">
-                        {!cart.length && <EmptyCart/>}
+                        {!cart.length && <EmptyCart
+                            title = "Bạn chưa có sản phẩm nào trong giỏ hàng."
+                            button = {{title: "Mua hàng", url: "/"}}
+                        />}
 
                         {cart.length > 0 && 
                         <>
