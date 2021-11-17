@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {useParams} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 // Components
 import WidgetBreadcrumb from '../feature/Layout/WidgetBreadcrumb';
@@ -22,12 +23,12 @@ import useOutsideElement from '../hooks/outsideElement';
 import WidgetDetail from '../feature/ProductDetail/WidgetDetail';
 import ComboPromo from '../feature/ProductDetail/ComboPromo';
 import WidgetListProduct from '../feature/ProductDetail/WidgetListProduct';
-import SuccessPopup from './../feature/Layout/SuccessPopup'
 
 // api
 import productApi from '../../api/productAPI';
-import cartApi from '../../api/cartAPI';
 
+// actions
+import {actAddToCart} from './../common/module/cart/action';
 
 const ModalImageBox = styled.div`
     position: fixed;
@@ -53,11 +54,10 @@ const ImageBoxContent = styled.div`
 `;
 
 
-function ProductDetail(props) {
+function ProductDetail() {
     const params = useParams();
     // State
     const [indexImageActive, setIndexImageActive] = useState(0);
-    const [isSuccess, setIsSuccess] = useState(false);
 
     const [listDiscount] = useState([
         {
@@ -196,7 +196,9 @@ function ProductDetail(props) {
         first: "",
         second: ""
     });
-    const [addToCartNotify, setAddToCartNotify] = useState("")
+    const [addToCartNotify, setAddToCartNotify] = useState("");
+
+    const dispatch = useDispatch();
 
 
     // Hook
@@ -297,17 +299,7 @@ function ProductDetail(props) {
             amount: productNumber
         }
         // add to cart
-        cartApi.add(prepareData)
-        .then(res => {
-            if(res.success) {
-                setIsSuccess(true);
-            }
-        })
-        .catch(err => {})
-    }
-
-    const onClosePopup = () => {
-        setIsSuccess(false);
+        dispatch(actAddToCart(prepareData));
     }
 
     return (
@@ -427,8 +419,6 @@ function ProductDetail(props) {
                     </div>
                 </div>
             </div>
-
-            {isSuccess && <SuccessPopup onClosePopup = {onClosePopup}/>}
 
         </div>
     );

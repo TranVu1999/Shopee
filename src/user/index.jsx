@@ -14,6 +14,7 @@ import Login from './container/Login';
 import Layout from './container/Layout';
 import Cart from './container/Cart';
 import Checkout from './container/Checkout';
+import PurchaseVerify from './container/PurchaseVerify';
 import Footer from './feature/Layout/Footer.jsx';
 
 // Css
@@ -65,6 +66,10 @@ function UserRoll() {
                 <Route 
                     path = "/checkout" 
                     component = {Checkout}
+                />
+                <Route 
+                    path = "/purchase-verify/:id" 
+                    component = {PurchaseVerify}
                 />
 
                 <Route 

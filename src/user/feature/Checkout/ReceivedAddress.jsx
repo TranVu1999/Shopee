@@ -26,6 +26,7 @@ ReceivedAddress.propTypes = {
     onHandleInitAdministrativeUnit: PropTypes.func.isRequired,
     onHandleAddAddress: PropTypes.func.isRequired,
     listAddress: PropTypes.array.isRequired,
+    onChoseOtherAddress: PropTypes.func.isRequired,
 };
 
 ReceivedAddress.defaultProps = {
@@ -37,7 +38,8 @@ function ReceivedAddress({
     listOptionAddress,
     onHanldeChoseAdministrativeUnit,
     onHandleInitAdministrativeUnit,
-    onHandleAddAddress
+    onHandleAddAddress,
+    onChoseOtherAddress
 }) {
 
     const [receivedAddress, setReceivedAddress] = useState(null)
@@ -51,6 +53,12 @@ function ReceivedAddress({
         setAddressIdFocus(receivedAddress ? receivedAddress._id : "");
         setReceivedAddress(receivedAddress);
     }, [listAddress])
+
+    useEffect(() => {
+        if(onChoseOtherAddress) {
+            onChoseOtherAddress(addressIdFocus);
+        }
+    }, [addressIdFocus])
 
     // handle event
     const onHandleOpenListAddress = () => {

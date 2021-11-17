@@ -70,9 +70,10 @@ const WidgetContainer = styled.div`
 
 Footer.propTypes = {
     cart: PropTypes.array.isRequired,
+    onOrder: PropTypes.func.isRequired,
 };
 
-function Footer({cart}) {
+function Footer({cart, onOrder}) {
     // functions
     const collectProductSelected = () => {
         let totalPrice = 0;
@@ -104,6 +105,12 @@ function Footer({cart}) {
             })
         });
         return {totalPrice, numProduct, numProductSelected};
+    }
+
+    // handle function
+    const onHandleOrder = () => {
+        if(!onOrder) return;
+        onOrder();
     }
 
     const {totalPrice} = collectProductSelected();
@@ -138,7 +145,7 @@ function Footer({cart}) {
 
                     <div className="d-flex align-items-center justify-content-between bottom">
                         <span>Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo <a href="#/">Điều khoản Shopee</a></span>
-                        <button>Đặt Hàng</button>
+                        <button onClick = {onHandleOrder}>Đặt Hàng</button>
                     </div>
                 </div>
             </div>

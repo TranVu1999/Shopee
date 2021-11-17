@@ -92,6 +92,30 @@ export const actUpdateAllCartItem = shopId => {
     }  
 }
 
+export const actAttachMessage = dataMessage => {
+    return {
+        type: ActionTypes.ATTACH_MESSAGE,
+        payload: dataMessage
+    }  
+}
+
+export const actAddToCart = dataCart => {
+    return (dispatch) => {
+        dispatch(dispatchLoading());
+
+        cartApi.add(dataCart)
+        .then(res => {
+            if(res.success) {
+                dispatch(dispatchSuccess(res.cart))
+            }
+        })
+        .catch(err => {
+            console.log({err});
+            dispatch(dispatchFail());
+        })
+    }
+}
+
 const dispatchSuccess = data => {
     return {
         type: ActionTypes.FETCH_SUCCESS,

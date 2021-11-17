@@ -2,9 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 // modules
 import Number from './../../../utils/formatNumber';
+
+// actions
+import {actAttachMessage} from './../../common/module/cart/action';
 
 // icons
 import {chatIcon} from './../../../asset/icon';
@@ -170,7 +174,7 @@ ShopItem.propTypes = {
 
 function ShopItem({shop}) {
     const {brand, alias, _id, listProduct} = shop;
-    console.log({shop});
+    const dispatch = useDispatch();
 
     // functions
     const getTotalPrice = () => {
@@ -199,6 +203,12 @@ function ShopItem({shop}) {
         })
         
         return {totalPrice, numProductSelected};
+    }
+
+    // handle event
+    const onHandleAttachMessage = event => {
+        const {value} = event.target;
+        dispatch(actAttachMessage({shopId: _id, message: value}));
     }
 
     // render
@@ -266,7 +276,11 @@ function ShopItem({shop}) {
                     <div className="d-flex align-items-center message">
                         <span>Lời nhắn: </span>
                         <div>
-                            <input type="text" placeholder="Lưu ý cho Người bán..."/>
+                            <input 
+                                type="text" 
+                                placeholder="Lưu ý cho Người bán..."
+                                onChange = {onHandleAttachMessage}
+                            />
                         </div>
                         
                     </div>

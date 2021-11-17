@@ -93,6 +93,21 @@ const cartReducer = (state = initialState, action) => {
         state.cart = [...tempCart];
         return { ...state };
     }
+
+    case ActionTypes.ATTACH_MESSAGE: {
+      const tempCart = [...state.cart];
+      const lengthShop = tempCart.length;
+      const {shopId, message} = payload;
+
+      for(let i = 0; i < lengthShop; i++) {
+          if(tempCart[i]._id === shopId) {
+            tempCart[i].message = message;
+          }
+      }
+
+      state.cart = [...tempCart];
+      return { ...state };
+  }
       
 
     default:

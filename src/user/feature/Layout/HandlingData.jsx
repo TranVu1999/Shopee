@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const WidgetContent = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -114,9 +114,19 @@ const WidgetLoader = styled.div`
 
 
 function LoadingData() {
+    useEffect(() => {
+        const bodyElm = document.querySelector("body")
+        
+        bodyElm.style.overflow = "hidden";
+        return () => {
+            bodyElm.style.overflowY = "scroll";
+        }
+        
+    }, []);
+
     return (
         <WidgetContent>
-            <WidgetLoader>
+            <div className = "widget-loader">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -129,7 +139,7 @@ function LoadingData() {
                 <div></div>
                 <div></div>
                 <div></div>
-            </WidgetLoader>
+            </div>
         </WidgetContent>
     );
 }

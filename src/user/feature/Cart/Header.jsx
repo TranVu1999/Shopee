@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 // icons
 import {logoIcon, notificationIcon, questionIcon} from './../../../asset/icon';
@@ -70,9 +71,9 @@ Header.defaultProps = {
 }
 
 function Header({title, showFormSearch}) {
-
-    const username = "tranvudpqn123";
-    const avatar = "https://cf.shopee.vn/file/a480cda31decdcf26ea8b92af927328e_tn";
+    // Data
+    const username = useSelector(state => state.accountReducer.username)
+    const avatar = useSelector(state => state.accountReducer.avatar);    
 
     return (
         <WidgetContainer className = "header">
