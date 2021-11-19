@@ -17,7 +17,23 @@ function OrderItem() {
 
             <div className="d-flex invoice__item__body">
                 <div className="invoice__list-product">
-                    <div className="d-flex flex-fill text">
+                    <div className="d-flex flex-fill product">
+                        <div className = "thumbnail" style={{backgroundImage: "url(https://cf.shopee.vn/file/ebb8179179b1042ea213642eb95b4bcc_tn)"}}/>
+                        <div>
+                            <h5>Giày bata nữ hồng - pinky girl</h5>
+                            <p>Phân loại: Pink, 38</p>
+                            <p>x1</p>
+                        </div>
+                    </div>
+                    <div className="d-flex flex-fill product">
+                        <div className = "thumbnail" style={{backgroundImage: "url(https://cf.shopee.vn/file/ebb8179179b1042ea213642eb95b4bcc_tn)"}}/>
+                        <div className="text">
+                            <h5>Giày bata nữ hồng - pinky girl Giày bata nữ hồng - pinky girl Giày bata nữ hồng - pinky girl Giày bata nữ hồng - pinky girl</h5>
+                            <p>Phân loại: Pink, 38</p>
+                            <p>x1</p>
+                        </div>
+                    </div>
+                    <div className="d-flex flex-fill product">
                         <div className = "thumbnail" style={{backgroundImage: "url(https://cf.shopee.vn/file/ebb8179179b1042ea213642eb95b4bcc_tn)"}}/>
                         <div>
                             <h5>Giày bata nữ hồng - pinky girl</h5>
@@ -30,10 +46,6 @@ function OrderItem() {
                 <div className="invoice__total">1.000</div>
 
                 <div className="invoice__status">
-                    <div className="badge warning">
-                        <span aria-hidden="true" className="icon_clock_alt"></span>
-                        Cần được xử lý trong 22 giờ
-                    </div>
                     <strong>Chờ lấy hàng</strong>
                     <p>Để tránh việc giao hàng trễ, vui lòng giao hàng/chuẩn bị hàng trước: 04-08-2021</p>
                 </div>

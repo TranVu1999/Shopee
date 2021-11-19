@@ -15,28 +15,24 @@ const WidgetContent = styled.div`
         flex: 1;
     }
 
-    .product-total, .product-name, .product-status, .product-type-transport{
-        margin-right: 1rem;
-    }
-
     .product-total{
-        min-width: 6rem;
-        max-width: 6rem;
+        min-width: 8rem;
+        max-width: 8rem;
     }
 
     .product-status{
-        min-width: 11.375rem;
-        max-width: 11.375rem;
+        min-width: 11.55rem;
+        max-width: 11.55rem;
     }
 
     .product-type-transport{
-        min-width: 9rem;
-        max-width: 9rem;
+        min-width: 8rem;
+        max-width: 8rem;
     }
 
     .product-active{
-        min-width: 10.5rem;
-        max-width: 10.5rem;
+        min-width: 7rem;
+        max-width: 7rem;
     }
 `;
 
