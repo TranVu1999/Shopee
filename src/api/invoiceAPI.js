@@ -10,6 +10,11 @@ const cartApi = {
     verify: listInvoiceId => {
         const url = '/invoice/confirm';
         return axiosClient.post(url, listInvoiceId);
+    },
+
+    managementGet: () => {
+        const url = '/invoice/management';
+        return axiosClient.get(url);
     }
     
 }

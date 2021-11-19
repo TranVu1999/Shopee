@@ -1,16 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 // Components
 import TabBox from '../features/Order/TabBox';
 import ListOrder from '../features/Order/ListOrder';
 import Filter from '../features/Order/Filter';
-import { useEffect } from 'react';
 
 // Constant
 import * as URL from './../constant/url';
 import TitleContent from '../components/TitleContent';
+
+// apis
+import invoiceApi from './../../api/invoiceAPI';
 
 OrderManagement.propTypes = {
     
@@ -19,7 +20,6 @@ OrderManagement.propTypes = {
 function OrderManagement(props) {
     // Data
     const {alias} = useParams();
-
     const [tabBox, setTabBox] = React.useState({
         indexActive: 0,
         listTab: [
@@ -66,6 +66,34 @@ function OrderManagement(props) {
             }
         ]
     });
+    const [listInvoice, setListInvoice] = useState([]);
+
+    // effect
+    useEffect(() => {
+        const fetchListInvoice = () => {
+            invoiceApi.managementGet()
+            .then(res => {
+                if(res.success) {
+                    setListInvoice(res.listInvoice)
+                }
+            })
+            .catch(err => console.log({err}));
+        }
+
+        fetchListInvoice();
+    }, []);
+
+    // function
+    const filterInvoice = () => {
+        let res = [];
+        switch(tabBox.indexActive) {
+            default: 
+                res = listInvoice;
+                break;
+        }
+
+        return res;
+    }
 
     // handle event
     const onHandleChoseTab = index => {
@@ -73,6 +101,7 @@ function OrderManagement(props) {
             setTabBox({...tabBox, indexActive: index});
         }
     }
+
 
 
     return (
@@ -86,7 +115,7 @@ function OrderManagement(props) {
 
             <Filter hasTab = {alias === "toship" || alias === "cancelled"}/>
 
-            <ListOrder/>
+            <ListOrder listInvoice = {filterInvoice()}/>
         </section>
     );
 }

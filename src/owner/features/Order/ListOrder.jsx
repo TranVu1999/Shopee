@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Theme
@@ -9,13 +10,22 @@ const WidgetContent = styled.div`
     font-size: .875rem;
 `;
 
+ListOrder.propsTypes = {
+    listInvoice: PropTypes.array.isRequired,
+}
 
-function ListOrder() {
+
+function ListOrder({listInvoice}) {
+
+    // redner
+    const renderListInvoice = () => {
+        return listInvoice.map(invoice => {
+            return <OrderItem key = {invoice._id} invoice = {invoice}/>
+        })
+    }
     return (
         <WidgetContent className="list-invoice">
-            <OrderItem/>
-            <OrderItem/>
-            <OrderItem/>
+            {renderListInvoice()}
         </WidgetContent>
     );
 }
