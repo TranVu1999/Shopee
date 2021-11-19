@@ -20,7 +20,7 @@ function OwnerRoll() {
     const {path} = useRouteMatch();    
 
     return (
-        <div className = "main-wrapper">
+        <div className = "main-wrapper owner-page-content">
             <Switch>
                 <Route
                     path = {`${path}/login`} 

@@ -12,7 +12,7 @@ const WidgetContent = styled.div`
 
 function ListOrder() {
     return (
-        <WidgetContent>
+        <WidgetContent className="list-invoice">
             <OrderItem/>
             <OrderItem/>
             <OrderItem/>

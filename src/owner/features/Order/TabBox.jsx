@@ -1,61 +1,121 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-// Theme
-import { BorderColor } from './../../theme';
+// hooks
+import useOutsideElement from './../../../hooks/outsideElement';
 
-const WidgetContent = styled.div`
-    padding: 0 1.5rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid ${BorderColor.mainColor};
+TabBox.propTypes = {
+    tabBox: PropTypes.object.isRequired,
+    onChoseTab: PropTypes.func.isRequired,
+}
 
-    div{
-        position: relative;
-        padding: .375rem 1.125rem;
-        margin-right: .25rem;
-
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        border: 1px solid ${BorderColor.mainColor};
-        border-bottom: none;
-
-        cursor: pointer;
-
-        &.active{
-            font-weight: 600;
-            color: #fff;
-            background-color: #ee4d2d;
-            border-color: #ee4d2d;
-        }
-    }
-`;
-
-function TabBox() {
+function TabBox({tabBox, onChoseTab}) {
     // Data
-    const [indexOpenTab, setIndexOpenTab] = React.useState(0);
+    const {listTab, indexActive} = tabBox;
+    const [isShowRightControl, setIsShowRightControl] = useState(true);
+
+     // Custom Hooks
+     const {
+        visible: visibleRightOption, 
+        setVisible: setVisibleRightOption, 
+        ref: refRight
+    } = useOutsideElement(false);
+    const {
+        visible: visibleLeftOption, 
+        setVisible: setVisibleLeftOption, 
+        ref: refLeft
+    } = useOutsideElement(false);
 
     // Handle event
-    const handleChoseTab = index =>{
-        if(indexOpenTab !== index) setIndexOpenTab(index);
+    const onHandleChoseTab = index => {
+        const firstTabElm = document.querySelector(".widget-tabBox .tab-box__container .tab-box__item");
+
+        if(index >= 6) {
+            firstTabElm.style.marginLeft = "-280px"; 
+            setIsShowRightControl(false);
+            setVisibleRightOption(false);
+        } else if(index <= 2) {
+            firstTabElm.style.marginLeft = "0px";
+            setIsShowRightControl(true);
+            setVisibleLeftOption(false);
+        }
+
+        if(!onChoseTab) return;
+        onChoseTab(index);
+    }
+
+    const onHandleOpenOptionTab = direction => {
+        if(direction === "right") {
+            setVisibleRightOption(true);
+        } else  {
+            setVisibleLeftOption(true);
+        }
+    }
+
+    // render 
+    const renderListTabBox = () => {
+        return listTab.map((tab, index) => {
+            return (
+                <div 
+                    className = {indexActive === index ? "tab-box__item active" : "tab-box__item"}
+                    onClick = {() => onHandleChoseTab(index)}
+                >{tab.title}</div>
+            );
+            
+        })
+    }
+
+    const renderListOptionTabBoxRight = () => {
+        return listTab.slice(6).map((tab, index) => {
+            return (
+                <div 
+                    className = {indexActive === index + 6 ? "option-tab-box__item active" : "option-tab-box__item"}
+                    onClick = {() => onHandleChoseTab(index + 6)}
+                >{tab.title}</div>
+            );
+            
+        })
+    }
+
+    const renderListOptionTabBoxLeft = () => {
+        return listTab.slice(0, 3).map((tab, index) => {
+            return (
+                <div 
+                    className = {indexActive === index ? "option-tab-box__item active" : "option-tab-box__item"}
+                    onClick = {() => onHandleChoseTab(index)}
+                >{tab.title}</div>
+            );
+            
+        })
     }
 
     return (
-        <WidgetContent className="d-flex">
-            <div 
-                className = {indexOpenTab === 0 && "active"}
-                onClick = {() => {handleChoseTab(0)}}
-            >Tất cả</div>
+        <div className="d-flex widget-tabBox">
+            {!isShowRightControl && <div className="d-flex align-items-center justify-content-center tab-box__control left">
+                <button onClick = {() => onHandleOpenOptionTab("left")}><i className="fas fa-ellipsis-h"></i></button>
 
-            <div 
-                className = {indexOpenTab === 1 && "active"}
-                onClick = {() => {handleChoseTab(1)}}
-            >Chưa xử lý</div>
+                {visibleLeftOption && <div className="list-option-tab-box" ref = {refLeft}>
+                    {renderListOptionTabBoxLeft()}
+                </div>}
+            </div>}
+            
 
-            <div 
-                className = {indexOpenTab === 2 && "active"}
-                onClick = {() => {handleChoseTab(2)}}
-            >Đã xử lý</div>
-        </WidgetContent>
+            <div className="tab-box__container">
+                {renderListTabBox()}
+            </div>
+
+            {isShowRightControl && <div className="d-flex align-items-center justify-content-center tab-box__control right">
+                <button onClick = {() => onHandleOpenOptionTab("right")}><i className="fas fa-ellipsis-h"></i></button>
+
+                {visibleRightOption && <div className="list-option-tab-box" ref = {refRight}>
+                    {renderListOptionTabBoxRight()}
+                </div>}
+                
+            </div>}
+            
+            
+            
+        </div>
     );
 }
 
