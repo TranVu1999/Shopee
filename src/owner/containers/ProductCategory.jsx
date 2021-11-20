@@ -82,7 +82,7 @@ function ProductCategory() {
     }
 
     return (
-        <section className="owner-page-content">
+        <section className="product-category-page">
             <TitleContent 
                 title="Thêm 1 sản phẩm mới "
                 subTitle="Vui lòng chọn ngành hàng phù hợp cho sản phẩm của bạn. "

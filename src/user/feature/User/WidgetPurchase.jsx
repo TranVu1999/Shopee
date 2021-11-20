@@ -53,16 +53,12 @@ const Tab = styled.div`
     }
 `;
 
-const WidgetListPurchase = styled.div`
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-`;
-
 
 WidgetPurchase.propTypes = {
-    
+    listInvoice: PropTypes.array,
 };
 
-function WidgetPurchase(props) {
+function WidgetPurchase({listInvoice}) {
 
     // Data
     const [activeIndex, setActiveIndex] = React.useState(0);
@@ -70,7 +66,14 @@ function WidgetPurchase(props) {
     // Functions
     const onHandleChoseTab = indexTab =>{
         if(indexTab !== activeIndex) setActiveIndex(indexTab);
-    } 
+    }
+    
+    // render
+    const renderListInvoice = () => {
+        return listInvoice.map(invoice => {
+            return <PurchaseItem key = {invoice._id} invoice = {invoice}/>
+        })
+    }
 
     return (
         <WidgetContent>
@@ -105,9 +108,10 @@ function WidgetPurchase(props) {
                 <input type="text" placeholder="Tìm kiếm theo Tên Shop, ID đơn hàng hoặc Tên Sản phẩm"/>
             </Filter>
 
-            <WidgetListPurchase>
-                <PurchaseItem/>
-            </WidgetListPurchase>
+            {Array.isArray(listInvoice) && <div className="list-invoice">
+                {renderListInvoice()}
+            </div>}
+            
         </WidgetContent>
     );
 }

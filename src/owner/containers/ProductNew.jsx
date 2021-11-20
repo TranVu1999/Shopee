@@ -59,9 +59,15 @@ function ProductNew() {
 
             const classificationImageAsUrl = imageAsUrl.filter(img => img.key === "classifications");
             if(classificationImageAsUrl.length) {
-                data.classification.classifies.first.images = classificationImageAsUrl.map(img => img.imageAsUrl);
+                data.classification.classifies.first.types = classificationImageAsUrl.map(img => 
+                    ({
+                        image: img.imageAsUrl,
+                        label: img.label
+                    }));
             }
 
+            data.classification.classifies.second.types = data.classification.classifies.second.types.map(type => ({label: type}))
+            console.log({data})
             productApi.add(data)
             .then(res => {
                 if(res.success){
@@ -90,6 +96,7 @@ function ProductNew() {
     // Function    
     const prepareData = plainData =>{
         const {avatar, images, tableSize} = plainData;
+
         let listImage = [
             {
                 key: "avatar",
@@ -114,7 +121,8 @@ function ProductNew() {
                     ...listImage,
                     ...images.map(img => ({
                         key: "classifications",
-                        imageAsFile: img
+                        imageAsFile: img.image,
+                        label: img.label
                     }))
                 ]
             }
@@ -139,7 +147,8 @@ function ProductNew() {
             .then(url => {
                 imageAsUrl.push({
                     key: image.key,
-                    imageAsUrl: url
+                    imageAsUrl: url,
+                    label: image.label
                 });
                 setImageAsUrl([...imageAsUrl]);
             })

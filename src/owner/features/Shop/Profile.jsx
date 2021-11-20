@@ -206,14 +206,6 @@ function Profile({shop, handleUpdateProfile}) {
             }
         }
 
-        if(checkInputText(description.value)){
-            flag = false;
-            description = {
-                ...description,
-                error: "Mô tả của bạn không hợp lệ. Vui lòng nhập lại."
-            }
-        }
-
         if(flag){
             if(handleUpdateProfile){
                 handleUpdateProfile({...shopInfo})

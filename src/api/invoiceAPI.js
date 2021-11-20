@@ -15,6 +15,11 @@ const cartApi = {
     managementGet: () => {
         const url = '/invoice/management';
         return axiosClient.get(url);
+    },
+
+    get: () => {
+        const url = '/invoice';
+        return axiosClient.get(url);
     }
     
 }

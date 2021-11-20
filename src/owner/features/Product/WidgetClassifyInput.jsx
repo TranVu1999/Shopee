@@ -236,7 +236,7 @@ function WidgetClassifyInput({onHandleGetClassify}) {
 
         onHandleGetClassify({
             classifies: {...classifies},
-            tablePrice: {...tablePrice}
+            tablePrice: tablePrice
         })
     }, [listClassify, tablePrice]);
 
@@ -371,7 +371,10 @@ function WidgetClassifyInput({onHandleGetClassify}) {
     const onHandleGetImage = image => {
         const {value, index} = image;
         let tempState = {...listClassify};
-        tempState.first.images[index] = value;
+        tempState.first.images[index] = {
+            label: tempState.first.listType[index],
+            image: value
+        };
         
         setListClassify(tempState)
         

@@ -19,9 +19,10 @@ const WidgetContent = styled.div`
 
 Filter.propTypes = {
     hasTab: PropTypes.bool.isRequired,
+    listInvoice: PropTypes.array.isRequired,
 };
 
-function Filter({hasTab}) {
+function Filter({hasTab, listInvoice}) {
     // Data
     const [indexOpenTab, setIndexOpenTab] = useState(0);
     const [selectInfo, setSelectInfo] = useState({
@@ -48,7 +49,7 @@ function Filter({hasTab}) {
             
             
             <div className="d-flex align-items-center justify-content-between title">
-                <h4>29 Đơn hàng</h4>
+                <h4>{listInvoice.length} Đơn hàng</h4>
 
                 <div className="d-flex align-items-center justify-content-end flex-fill">
                     <span className="mr-3">Sắp xếp theo</span>
@@ -59,7 +60,7 @@ function Filter({hasTab}) {
                         handleSelectOption = {index => setSelectInfo({...selectInfo, indexSelected: index})}
                     />
 
-                    <button><span aria-hidden="true" className="icon_creditcard"></span>Giao Hàng Loạt</button>
+                    <button className="btn btn-primary"><span aria-hidden="true" className="icon_creditcard"></span>Giao Hàng Loạt</button>
                 </div>
             </div>
 

@@ -296,7 +296,6 @@ function WidgetAddInformation(props) {
     // render
     const renderOptionalFields = () =>{
         let elm = [];
-        console.log({fields})
         for(let [key, value] of Object.entries(fields)){
             elm.push(
                 <div className="w-50 widget-input-row align-items-center" key = {key}>

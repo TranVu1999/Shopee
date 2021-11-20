@@ -28,6 +28,10 @@ function OrderManagement(props) {
                 url: `${URL.PORTAL_SALE_ORDER}all`
             },
             {
+                title: "Đơn hàng đã đặt",
+                url: `${URL.PORTAL_SALE_ORDER}all`
+            },
+            {
                 title: "Chờ xác nhận",
                 url: `${URL.PORTAL_SALE_ORDER}unpaid`
             },
@@ -74,7 +78,7 @@ function OrderManagement(props) {
             invoiceApi.managementGet()
             .then(res => {
                 if(res.success) {
-                    setListInvoice(res.listInvoice)
+                    setListInvoice(res.listInvoice);
                 }
             })
             .catch(err => console.log({err}));
@@ -85,14 +89,10 @@ function OrderManagement(props) {
 
     // function
     const filterInvoice = () => {
-        let res = [];
-        switch(tabBox.indexActive) {
-            default: 
-                res = listInvoice;
-                break;
-        }
+        const invoiceSituation = tabBox.listTab[tabBox.indexActive].title;
+        if(invoiceSituation === "Tất cả") return listInvoice;
 
-        return res;
+        return listInvoice.filter(invoice => invoice.statuation === invoiceSituation);
     }
 
     // handle event
@@ -101,6 +101,8 @@ function OrderManagement(props) {
             setTabBox({...tabBox, indexActive: index});
         }
     }
+
+    const listShowInvoice = filterInvoice();
 
 
 
@@ -111,11 +113,17 @@ function OrderManagement(props) {
                 subTitle="Vui lòng hoàn thành các hóa đơn của bạn!"
             />
 
-            <TabBox tabBox = {tabBox} onChoseTab = {onHandleChoseTab}/>
+            <TabBox 
+                tabBox = {tabBox} 
+                onChoseTab = {onHandleChoseTab}
+            />
 
-            <Filter hasTab = {alias === "toship" || alias === "cancelled"}/>
+            <Filter 
+                hasTab = {alias === "toship" || alias === "cancelled"}
+                listInvoice = {listShowInvoice}
+            />
 
-            <ListOrder listInvoice = {filterInvoice()}/>
+            <ListOrder listInvoice = {listShowInvoice}/>
         </section>
     );
 }

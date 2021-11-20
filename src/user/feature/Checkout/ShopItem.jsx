@@ -231,10 +231,18 @@ function ShopItem({shop}) {
         return listProduct.filter(prod => prod.isChose).map(prod => {
             const {classification, product, amount} = prod;
             const price = renderPrice(classification, product);
+
+            let avatar = product.avatar;
+            const {types} = product.classification.classifies.first;
+            if(classification) {
+                avatar = types.find(type => type.label === classification.first).image;
+            }
+
+
             return (
                 <RowCart key = {prod._id}>
                     <div className="title">
-                        <img src={product.avatar} alt="product" />
+                        <img src={avatar} alt="product" />
                         <span>{product.title}</span>
                     </div>
                     <div className="type">Loại: {`${classification.first || ""} ${classification.second || ""}`}</div>

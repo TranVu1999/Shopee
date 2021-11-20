@@ -2,6 +2,26 @@ $mainBorderColor: #d5d5d5;
 $mainColor: #ee4d2d;
 
 .owner-page-content{
+    // ================= Layout =================
+    .btn.btn-primary {
+        background-color: $mainColor;
+        border-color: $mainColor;
+
+        &:hover {
+            
+        }
+    }
+
+    // ================= Product Category =================
+    .product-category-page {
+        background-color: #fff;
+    }
+
+    // ================= Shop Profile =================
+    .shop-profile-page {
+        background-color: #fff;
+    }
+
     // ================= Invoice =================
 
     .order-management-page {
@@ -80,6 +100,15 @@ $mainColor: #ee4d2d;
                         color: $mainColor;
                     }
                 }
+            }
+        }
+
+        .list-invoice {
+            min-height: 250px;
+
+            .empty-icon {
+                width: 6rem;
+                height: 6rem;
             }
         }
 

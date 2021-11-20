@@ -11,8 +11,6 @@ OrderItem.propTypes = {
 function OrderItem({invoice}) {
     const {listProduct, _id, account, total, statuation} = invoice;
 
-    console.log({invoice});
-
     // render
     const renderProduct = () => {
         return listProduct.map(prod => {

@@ -98,6 +98,10 @@ function Checkout() {
                         if(classification) {
                             const {first, second} = classification;
                             const {tablePrice} = prod.product.classification;
+                            const {types} = prod.product.classification.classifies.first;
+
+                            product.image = types.find(type => type.label === classification.first).image;
+
                             if(first && second) {
                                 product.price = tablePrice.find(row => row.firstClassifyName === first && row.secondClassifyName === second).price;
                                 product.variant = {

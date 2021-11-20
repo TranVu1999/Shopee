@@ -211,7 +211,7 @@ function ShopProfile() {
     }
     
     return (
-        <section className="owner-page-content">
+        <section className="shop-profile-page">
             <TitleContent 
                 title="Hồ Sơ Shop"
                 subTitle="Xem tình trạng Shop và cập nhật hồ sơ Shop của bạn"

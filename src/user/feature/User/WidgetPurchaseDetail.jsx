@@ -374,7 +374,7 @@ function WidgetPurchaseDetail(props) {
                 </div>
             </WidgetStones>
 
-            <Purchase full/>
+            {/* <Purchase full/> */}
         </WidgetContent>
     );
 }

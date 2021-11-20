@@ -10,6 +10,7 @@ import HandlingData from "../../feature/Layout/HandlingData";
 // Apis
 import accountApi from "../../../api/accountAPI";
 import addressApi from "../../../api/addressAPI";
+import invoiceApi from "../../../api/invoiceAPI";
 import administrativeUnitApi from "../../../api/administrativeUnitAPI";
 
 // Modules
@@ -20,8 +21,8 @@ import routes from './routes';
 const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
 const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
 const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));
-
-
+const WidgetPurchase = lazy(() => import("../../feature/User/WidgetPurchase"));
+const WidgetPurchaseDetail = lazy(() => import("../../feature/User/WidgetPurchaseDetail"));
 function UserPage(props) {
     // Data
     const {path} = props.match;
@@ -37,6 +38,7 @@ function UserPage(props) {
     const [listOptionAddress, setListOPtionAddress] = useState([]);
     const [oldPassword, setOldPassword] = useState(null);
     const [verifyCode, setVerifyCode] = useState("");
+    const [listInvoice, setListInvoice] = useState(null);
 
     // effect
     useEffect(() => {
@@ -66,6 +68,14 @@ function UserPage(props) {
             }
         }
 
+        const fetchListInvoice = async function() {
+            const res = await invoiceApi.get();
+
+            if(res.success) {
+                setListInvoice(res.listInvoice);
+            }
+        }
+
         switch(pathname) {
             case `${path}`:
             case `${path}/information`:
@@ -81,6 +91,11 @@ function UserPage(props) {
             case `${path}/update-password`:
                 fetchPassword();
                 break;
+
+            case `${path}/purchase`:
+                fetchListInvoice();
+                break;
+
             default: 
                 break;
         }
@@ -271,7 +286,7 @@ function UserPage(props) {
 
     
     return (
-        <div className="mt-80 mb-40 user-page-content">
+        <div className="mb-40 user-page">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-2">
@@ -311,6 +326,13 @@ function UserPage(props) {
                                         onSubmitNewPassword = {onHandleSubmitNewPassword}
                                     />
                                 </Route>
+                                <Route path = {`${path}/purchase-detail`} >
+                                    <WidgetPurchaseDetail/>
+                                </Route>
+                                <Route path = {`${path}/purchase`} >
+                                    <WidgetPurchase listInvoice = {listInvoice}/>
+                                </Route>
+                                
 
                             {/* {routes.map((item, index) =>{
                                 return <Route 
