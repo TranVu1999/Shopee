@@ -11,7 +11,17 @@ const Number = {
         }
 
         return str;
-    }
+    },
+    formatToNumber: (number, numDigit = 2) => {
+        const lengthNumber = number.toString().length;
+        let res = "";
+
+        for(let i = lengthNumber + 1; i <= numDigit; i++) {
+            res += "0";
+        }
+        
+        return res + number
+    } 
     
 }
 

@@ -70,9 +70,19 @@ function WidgetPurchase({listInvoice}) {
     
     // render
     const renderListInvoice = () => {
-        return listInvoice.map(invoice => {
-            return <PurchaseItem key = {invoice._id} invoice = {invoice}/>
-        })
+        if(listInvoice.length) {
+            return listInvoice.map(invoice => {
+                return <PurchaseItem key = {invoice._id} invoice = {invoice}/>
+            })
+        }
+
+        return <div className = "d-flex align-items-center justify-content-center empty">
+            <div>
+                <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/5fafbb923393b712b96488590b8f781f.png" alt="empty" />
+                <p>Chưa có đơn hàng</p>
+            </div>
+        </div>
+        
     }
 
     return (

@@ -605,6 +605,46 @@ $shopeeColor: #ee4d2d;
     }
 
 
+    // ================ List Product ================
+    .list-product-page {
+        ul.categories {
+            text-transform: capitalize;
+
+            li {
+                padding-left: 15px;
+                position: relative;
+                margin-bottom: .25rem;
+                cursor: pointer;
+
+                .arrow_carrot-right{
+                    position: absolute;
+                    left: -4px;
+                    top: 50%;
+
+                    display: none;
+
+                    transform: translateY(-50%);
+                    font-size: 1.125rem;
+                }
+
+                &:hover{
+                    color: $shopeeColor;
+                }
+
+                &.active{
+                    color: $shopeeColor;
+                    font-weight: 600;
+
+                    .arrow_carrot-right{
+                        display: block;
+                    }
+                }
+            }
+
+        }
+    }
+
+
     // ================ Product ================
     .product {
         &__thumbnail {
@@ -826,9 +866,7 @@ $shopeeColor: #ee4d2d;
         }
     }
 
-    
-
-    // ================ Store ================
+        // ================ Store ================
     .store {
         &__aspect--statistics {
             text-transform: capitalize;
@@ -1203,6 +1241,116 @@ $shopeeColor: #ee4d2d;
             }
             
         }
+
+        .empty {
+            height: 450px;
+            background-color: #fff;
+            text-align: center;
+
+            img {
+                margin-bottom: 1rem;
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .invoice-stones {
+            flex: 2;
+            padding: 2rem 0;
+    
+            &>div:first-child{
+                padding: 0 1.5rem;
+                font-size: .75rem;
+                line-height: 16px; 
+            }
+
+
+            &>div:last-child{
+                position: relative;
+                margin-top: 1.5rem;
+                padding: .5rem 1.5rem;
+                border-left: 1px solid $boderMainColor;
+
+                &:after{
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 1.875rem;
+            
+                    transform: translate(-50%, -50%);
+                    height: calc(100% - 2.5rem);
+                    width: 1px;
+                    background-color: #d8d8d8;
+                    z-index: 0;
+                }
+            }
+
+
+            .stone-item {
+                display: flex;
+                align-items: center;
+                line-height: 2rem;
+
+                font-size: .875rem;
+                color: rgba(0,0,0,.54);
+
+                &>div:first-child{
+                    position: relative;
+                    width: .75rem;
+                    height: .75rem;
+
+                    background-color: #d8d8d8;
+                    border-radius: 50%;
+                    z-index: 1;
+                }
+
+                &:first-child{
+                    &>div:first-child{
+                        background-color: #26aa99;
+                    }
+
+                    div{
+                        color: #26aa99;
+                    }
+                }
+
+                &>div:last-child{
+                    display: flex;
+                }
+
+                .time{
+                    margin: 0 .875rem 0 1rem;
+                    color: rgba(0,0,0,.8)!important;
+                }
+            }
+        }
+
+        .invoice-steps {
+            position: relative;
+            padding: 3.5rem 1.5rem;
+            
+            &:after{
+                content: "";
+                position: absolute;
+                top: 5.375rem;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                width: calc(100% - 8rem);
+                height: 4px;
+                background-color: #2dc258;
+            }
+            svg {
+                height: 30px;
+                width: 30px;
+                color: #2dc258;
+                stroke: currentColor;
+                fill: currentColor;
+                
+            }
+        }
+
+        
         
     }
 

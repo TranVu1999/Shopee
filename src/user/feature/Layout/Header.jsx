@@ -252,6 +252,12 @@ function Header() {
     const username = useSelector(state => state.accountReducer.username)
     const avatar = useSelector(state => state.accountReducer.avatar);
 
+    // handle event
+    const onHandleLogout = () => {
+        localStorage.removeItem("accessToken");
+        window.location.reload();
+    }
+
     return (
         <WidgetContent>
             <HeaderTop className="container">
@@ -310,7 +316,7 @@ function Header() {
                                                 <a href="#">Đơn mua</a>
                                             </li>
                                             <li>
-                                                <button>Đăng xuất</button>
+                                                <button onClick = {onHandleLogout}>Đăng xuất</button>
                                             </li>
                                         </ul>
                                     </div>

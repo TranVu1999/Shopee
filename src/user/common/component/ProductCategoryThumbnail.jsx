@@ -48,11 +48,14 @@ ProductCategoryThumbnail.defaultProps = {
 }
 
 function ProductCategoryThumbnail(props) {
-    const {title, image, alias} = props.item;
+    const {title, image, alias, id} = props.item;
 
     return (
         <WidgetContent className="product-category-thumbnail">
-            <Link to = {`/products-of-category/${alias}`} className = "thumbnail">
+            <Link 
+                key = {id}
+                to = {`/products-of-category/${alias}.${id}`} 
+                className = "thumbnail">
                 <img src = {image} alt="brand" />
                 <div>{title}</div>
             </Link>

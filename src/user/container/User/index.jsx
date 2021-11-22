@@ -326,7 +326,7 @@ function UserPage(props) {
                                         onSubmitNewPassword = {onHandleSubmitNewPassword}
                                     />
                                 </Route>
-                                <Route path = {`${path}/purchase-detail`} >
+                                <Route path = {`${path}/purchase-detail/:id`} >
                                     <WidgetPurchaseDetail/>
                                 </Route>
                                 <Route path = {`${path}/purchase`} >

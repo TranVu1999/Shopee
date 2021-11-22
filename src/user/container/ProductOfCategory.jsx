@@ -18,6 +18,7 @@ import ProcessingEffect from '../feature/Layout/ProcessingEffect';
 
 // apis
 import productApi from './../../api/productAPI';
+import producCategorytApi from './../../api/productCategoryAPI';
 
 // modules
 import validate from './../../utils/validate';
@@ -187,7 +188,7 @@ function ProductOfCategory() {
         }
     ]);
 
-    const [listCategory] = useState([
+    const [categories, setCategories] = useState([
         "Thời Trang Nam",
         "Áo Khoác",
         "Áo Vest và Blazer",
@@ -229,23 +230,25 @@ function ProductOfCategory() {
 
     // effect
     useEffect(() => {
+        const [prodCateAlias, prodCateId] = params.slug.split('.');
         const queryStr = queryString.stringify({
-            ...filter, category: validate.removeAccents(params.slug)
+            ...filter, category: validate.removeAccents(prodCateAlias)
         });
         setIsLoading(true);
 
-        productApi.getList(queryStr)
-        .then(res => {
+        const fetchData = async ()  => {
+            const [resProduct] = await Promise.all([
+                productApi.getList(queryStr)
+            ]);
+
             setIsLoading(false);
-            if(res.success) {
-                console.log(res.listProduct);
-                setListProduct(res.listProduct)
+            if(resProduct.success) {
+                setListProduct(resProduct.listProduct);
             }
-        })
-        .catch(err => {
-            console.log({err});
-            setIsLoading(false);
-        })
+        }
+
+        fetchData();
+        
 
     }, []);
 
@@ -326,7 +329,7 @@ function ProductOfCategory() {
     }
 
     return (
-        <div className = "user-page-content list-product-of-category-page">
+        <div className = "user-page-content list-product-page">
             <div className="container">
                 <div className="mb-20 slider-main-banner">
                     <HeroSlider items = {listSlideMainBanner} isLarge = {true}/>
@@ -347,7 +350,9 @@ function ProductOfCategory() {
                             <div className="list-product__left">
                                 <SideBar 
                                     WidgetProductCategory = {
-                                        <WidgetProductCategory items = {listCategory}/>
+                                        <WidgetProductCategory 
+                                            categories = {categories}
+                                        />
                                     }
                                     WidgetSalerooms = {
                                         <WidgetListCheck 

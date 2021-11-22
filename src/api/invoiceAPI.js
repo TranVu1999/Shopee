@@ -20,6 +20,11 @@ const cartApi = {
     get: () => {
         const url = '/invoice';
         return axiosClient.get(url);
+    },
+
+    getDetail: id => {
+        const url = `/invoice/${id}`;
+        return axiosClient.get(url);
     }
     
 }

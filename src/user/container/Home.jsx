@@ -130,13 +130,13 @@ function Home() {
 
     const [listProductCategory] = useState([
         {
-            id: 1,
+            id: "6152dc2bb1f01e09c0adadf9",
             image: "https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn",
             title: "Thời trang nam",
             alias: "thoi-trang-nam"
         },
         {
-            id: 2,
+            id: "6152dbbfb1f01e09c0adadf1",
             image: "https://cf.shopee.vn/file/75ea42f9eca124e9cb3cde744c060e4d_tn",
             title: "Thoi trang nu",
             alias: "thoi-trang-nu"

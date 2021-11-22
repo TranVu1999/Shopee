@@ -275,7 +275,7 @@ function Purchase({full,invoice}) {
                     <div>
                         <button className="button-control btn-shopee">Mua lần nữa</button>
                         <button className="button-control btn-transparent">Liên hệ Người bán</button>
-                        <Link to = {`purchase-detail`} className="button-control btn-transparent">Chi Tiết Đơn Hủy</Link>
+                        <Link to = {`purchase-detail/${_id}`} className="button-control btn-transparent">Chi Tiết Đơn Hủy</Link>
                     </div>
                 </WidgetButton>
             </>

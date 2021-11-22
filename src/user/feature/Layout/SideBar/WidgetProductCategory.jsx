@@ -4,56 +4,22 @@ import PropTypes from 'prop-types';
 // Components
 import styled from 'styled-components';
 
-const ListProductCategory = styled.ul`
-    text-transform: capitalize;
-`;
-
-const ProductCategoryItem = styled.li`
-    padding-left: 15px;
-    position: relative;
-    margin-bottom: .25rem;
-    cursor: pointer;
-
-    .arrow_carrot-right{
-        position: absolute;
-        left: -4px;
-        top: 50%;
-
-        display: none;
-
-        transform: translateY(-50%);
-        font-size: 1.125rem;
-    }
-
-    &:hover{
-        color: #c7a17a;
-    }
-
-    &.active{
-        color: #c7a17a;
-        font-weight: 600;
-
-        .arrow_carrot-right{
-            display: block;
-        }
-    }
-`;
 
 WidgetProductCategory.propTypes = {
     indexActive: PropTypes.number,
-    items: PropTypes.array,
+    categories: PropTypes.array,
 };
 
 WidgetProductCategory.defaultProps = {
     indexActive: 0,
-    items: []
+    categories: []
 }
 
 function WidgetProductCategory(props) {
-    const {indexActive, items} = props;
+    const {indexActive, categories} = props;
 
     // GLOBAL VARIABLES
-    const lengthCategory = items.length;
+    const lengthCategory = categories.length;
 
     // STATE
     const [isShowFullCategory, setIsShowFullCategory] = useState(lengthCategory > 6);
@@ -84,17 +50,17 @@ function WidgetProductCategory(props) {
 
     const renderListCategory = () => {
         let elm = [];
-        let listCategoryTemp = isShowFullCategory ? items.slice(0, 6) : items;
+        let listCategoryTemp = isShowFullCategory ? categories.slice(0, 6) : categories;
         
         elm = listCategoryTemp.map((item, index) =>{
             return (
-                <ProductCategoryItem 
+                <li 
                     key = {item} 
                     className = {indexActive === index ? "active" : ""}
                 >
                     <span aria-hidden="true" className="arrow_carrot-right"></span>
                     <span>{item}</span>
-                </ProductCategoryItem>
+                </li>
             );
         });
 
@@ -109,9 +75,9 @@ function WidgetProductCategory(props) {
     }
 
     return (
-        <ListProductCategory>
+        <ul className="categories">
             {renderListCategory()}
-        </ListProductCategory>
+        </ul>
     );
 }
 

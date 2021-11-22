@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // Theme
 import {BorderColor} from './../../theme';
+// components
+import LoadingData from './../Layout/LoadingData';
 import Purchase from './Purchase';
+// icons 
+import {orderIcon, paidIcon, truckIcon, receivedIcon, starIcon} from './../../../asset/icon';
+// modules
+import Number from './../../../utils/formatNumber';
+// apis
+import invoiceApi from './../../../api/invoiceAPI';
 
 const WidgetContent = styled.div`
 
@@ -32,23 +42,6 @@ const Header = styled.div`
 
     .purchase__status{
         padding-left: 1rem;
-    }
-`;
-
-const Step = styled.div`
-    position: relative;
-    padding: 3.5rem 1.5rem;
-    
-    &:after{
-        content: "";
-        position: absolute;
-        top: 5.375rem;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        width: calc(100% - 8rem);
-        height: 4px;
-        background-color: #2dc258;
     }
 `;
 
@@ -150,231 +143,160 @@ const DeliveryAddress = styled.div`
     }
 `;
 
-const Stones = styled.div`
-    flex: 2;
-    
-    &>div:first-child{
-        padding: 0 1.5rem;
-        font-size: .75rem;
-        line-height: 16px; 
-    }
-
-
-    &>div:last-child{
-        position: relative;
-        margin-top: 1.5rem;
-        padding: .5rem 1.5rem;
-        border-left: 1px solid ${BorderColor.mainColor};
-
-        &:after{
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 1.875rem;
-    
-            transform: translate(-50%, -50%);
-            height: calc(100% - 2.5rem);
-            width: 1px;
-            background-color: #d8d8d8;
-            z-index: 0;
-        }
-    }
-
-    
-`;
-
-const StoneItem = styled.div`
-    display: flex;
-    align-items: center;
-    line-height: 2rem;
-
-    font-size: .875rem;
-    color: rgba(0,0,0,.54);
-
-    &>div:first-child{
-        position: relative;
-        width: .75rem;
-        height: .75rem;
-
-        background-color: #d8d8d8;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-    &:first-child{
-        &>div:first-child{
-            background-color: #26aa99;
-        }
-
-        div{
-            color: #26aa99;
-        }
-    }
-
-    &>div:last-child{
-        display: flex;
-    }
-
-    .time{
-        margin: 0 .875rem 0 1rem;
-        color: rgba(0,0,0,.8)!important;
-    }
-`;
-
-WidgetPurchaseDetail.propTypes = {
-    
-};
-
 function WidgetPurchaseDetail(props) {
-    return (
-        <WidgetContent className="bg-white">
-            <Header className="d-flex align-items-center justify-content-between">
-                <a href="#/" className="d-flex align-items-center">
-                    <span className="arrow_carrot-left"></span>
-                    TRỞ LẠI 
-                </a>
-
-                <div className="d-flex">
-                    <div className="purchase__id">ID ĐƠN HÀNG. 210709FKW10K9Q</div>
-                    <div className="text-uppercase purchase__status" style={{color: "#ee4d2d"}}>Đơn hàng đã bị hủy</div>
-                </div>
-            </Header>
-
-            <Step className="d-flex justify-content-between">
-                <StepItem>
-                    <div className="d-inline-flex align-items-center justify-content-center">1</div>
-                    <p>Đơn hàng đã đặt</p>
-                    <span>20:32 09-07-2021</span>
-                </StepItem>
-                <StepItem>
-                    <div className="d-inline-flex align-items-center justify-content-center">2</div>
-                    <p>đã xác nhận thông tin thanh toán</p>
-                    <span>20:32 09-07-2021</span>
-                </StepItem>
-                <StepItem>
-                    <div className="d-inline-flex align-items-center justify-content-center">3</div>
-                    <p>Đơn hàng đã bị hủy</p>
-                    <span>20:32 09-07-2021</span>
-                </StepItem>
-                
-            </Step>
+    const params = useParams();
+    const [invoice, setInvoice] = useState(null);
+    const invoiceSteps = [
+        {
+            label: "Đơn hàng đã đặt",
+            icon: orderIcon
+        }, 
+        {
+            label: "Đã xác nhận thông tin thanh toán",
+            icon: paidIcon
+        },
+        {
+            label: "Đã giao đơn vị vận chuyển",
+            icon: truckIcon
+        },
+        {
+            label: "Đơn hàng đã nhận",
+            icon: receivedIcon
+        },
+        {
+            label: "Đơn hàng đã giao",
+            icon: starIcon
+        }
         
-            <WidgetButton>
-                <div className="d-flex align-items-center justify-content-between">
-                    <span>Đơn hàng đã bị hủy bởi hệ thống</span>
-                    <HighlightButton>Mua lần nữa</HighlightButton>
-                </div>
-                <div className="text-right">
-                    <Button>Liên hệ Người bán</Button>
-                </div>
-            </WidgetButton>
+    ]
 
-            <WidgetStones>
-                <div className="line"></div> 
-                <div className="d-flex">
-                    <DeliveryAddress>
-                        <h5>Địa chỉ nhận hàng</h5>
+    // effect 
+    useEffect(() => {
+        const invoiceId = params.id;
 
-                        <div>
-                            <strong>Trần Lê Anh Vũ</strong>
-                            <br />
-                            <span>(+84) 377670509</span> <br />
-                            <span>156 Lã Xuân Oai, Phường Phước Long B, Quận 9, TP. Hồ Chí Minh</span>
+        const fetchInvoiceDetail = async () => {
+            const res = await invoiceApi.getDetail(invoiceId);
+            if(res.success) {
+                setInvoice(res.invoice);
+            }
+        }
+
+        if(invoiceId) {
+            fetchInvoiceDetail();
+        }
+        
+    }, []);
+
+    // render
+    const renderMilestone = () => {
+        const {route} = invoice;
+
+        if(route.length) {
+            return route.reverse().map((milestone, index) => {
+                const {time, label} = milestone;
+                const d = new Date(time);
+                const hour = Number.formatToNumber(d.getHours());
+                const minute = Number.formatToNumber(d.getMinutes());
+
+                const year = d.getFullYear();
+                const month = Number.formatToNumber(d.getMonth() + 1);
+                const date = Number.formatToNumber(d.getDate());
+
+                return <div className = "stone-item" key = {index}>
+                    <div></div>
+                    <div>
+                        <div className="time">{`${hour}:${minute} ${date}-${month}-${year}`}</div>
+                        {label}
+                    </div>
+                </div>
+            })
+        }
+    }
+
+    const renderInvoiceStep = () => {
+        const {route} = invoice;
+        const elm = [];
+
+        if(route.length) {
+            invoiceSteps.forEach(step => {
+                const stone = route.find(routeItem => step.label === routeItem.label);
+
+                if(stone) {
+                    elm.push(<StepItem>
+                        <div className="d-inline-flex align-items-center justify-content-center">{step.icon}</div>
+                        <p>{step.label}</p>
+                        <span>20:32 09-07-2021</span>
+                    </StepItem>);
+                }
+            })
+        }
+
+        return elm;
+        
+    }
+
+    console.log({invoice})
+
+    return (
+        <WidgetContent>
+            {!invoice && <LoadingData/>}
+
+            {invoice && 
+                <>
+                    <Header className="bg-white d-flex align-items-center justify-content-between">
+                        <Link to="/user/purchase" className="d-flex align-items-center">
+                            <span className="arrow_carrot-left"></span>
+                            TRỞ LẠI 
+                        </Link>
+
+                        <div className="d-flex">
+                            <div className="purchase__id">ID ĐƠN HÀNG. {invoice._id}</div>
+                            <div className="text-uppercase purchase__status" style={{color: "#ee4d2d"}}>{invoice.statuation}</div>
                         </div>
-                    </DeliveryAddress>
+                    </Header>
 
-                    <Stones>
+                    <div className="bg-white d-flex justify-content-between invoice-steps">
+                        {renderInvoiceStep()}
+                    </div>
+                
+                    <WidgetButton>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <span>Đơn hàng đã bị hủy bởi hệ thống</span>
+                            <HighlightButton>Mua lần nữa</HighlightButton>
+                        </div>
                         <div className="text-right">
-                           <span>Nhanh</span><br />
-                           <span>VN010428778127</span>
+                            <Button>Liên hệ Người bán</Button>
                         </div>
-                        <div>
-                            <StoneItem>
-                                <div></div>
-                                <div>
-                                    <div className="time">13:51 18-07-2021</div>
-                                    Trả hàng thành công
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
+                    </WidgetButton>
+
+                    <WidgetStones className="bg-white mb-3">
+                        <div className="line"></div> 
+                        <div className="d-flex">
+                            <DeliveryAddress>
+                                <h5>Địa chỉ nhận hàng</h5>
 
                                 <div>
-                                    <div className="time">19:55 14-07-2021</div>
-                                    Đơn hàng sẽ được hoàn trả vì giao hàng không thành công
+                                    <strong>{invoice.receivedAddress.fullname}</strong>
+                                    <br />
+                                    <span>(+84) {invoice.receivedAddress.phoneNumber}</span> <br />
+                                    <span>{invoice.receivedAddress.houseNumber}, {invoice.receivedAddress.ward}, {invoice.receivedAddress.district}, {invoice.receivedAddress.province}</span>
                                 </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
+                            </DeliveryAddress>
 
-                                <div>
-                                    <div className="time">19:40 14-07-2021</div>
-                                    Đơn hàng đã đến kho 50-HCM Thu Duc LMHub
+                            <div className="invoice-stones">
+                                <div className="text-right">
+                                    <span>Nhanh</span><br />
+                                    <span>VN010428778127</span>
                                 </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">18:26 14-07-2021</div>
-                                    Giao hàng không thành công 
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">08:39 14-07-2021</div>
-                                    Đang giao hàng
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">21:23 13-07-2021</div>
-                                    Đơn hàng đã đến kho 50-HCM Thu Duc LMHub
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">21:04 12-07-2021</div>
-                                    Đơn hàng đã xuất khỏi kho 
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">19:25 12-07-2021</div>
-                                    Đơn hàng đã đến kho 50-HCM Binh Tan SOC
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div>
-                                    <div className="time">18:27 12-07-2021</div>
-                                    Lấy hàng thành công
-                                </div>
-                            </StoneItem>
-                            <StoneItem>
-                                <div></div>
-
-                                <div className="d-flex">
-                                    <div className="time">12:07 10-07-2021</div>
-                                    Người gửi đang chuẩn bị hàng
-                                </div>
-                            </StoneItem>
+                                <div>{renderMilestone()}</div>
+                                
+                            </div>
                         </div>
-                        
-                    </Stones>
-                </div>
-            </WidgetStones>
+                    </WidgetStones>
 
-            {/* <Purchase full/> */}
+                    <Purchase full invoice = {invoice}/>
+                </>
+            }
         </WidgetContent>
     );
 }
