@@ -25,7 +25,16 @@ const productApi = {
 
   getList: (filter) => {
     const url = `/product/filter?${filter}`;
-    console.log({ url });
+    return axiosClient.get(url);
+  },
+
+  getDeliveryAddress: (catId) => {
+    const url = `/product/list-delivery-address/${catId}`;
+    return axiosClient.get(url);
+  },
+
+  getBrand: (catId) => {
+    const url = `/product/list-brand/${catId}`;
     return axiosClient.get(url);
   },
 };

@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-// Components
-import styled from 'styled-components';
+// modules
+import validate from './../../../../utils/validate';
 
 
 WidgetProductCategory.propTypes = {
-    indexActive: PropTypes.number,
+    prodCateSelected: PropTypes.string.isRequired,
     categories: PropTypes.array,
+    onChoseCategory: PropTypes.func.isRequired,
 };
 
 WidgetProductCategory.defaultProps = {
-    indexActive: 0,
     categories: []
 }
 
-function WidgetProductCategory(props) {
-    const {indexActive, categories} = props;
+function WidgetProductCategory({
+    prodCateSelected, 
+    categories, 
+    onChoseCategory
+}) {
 
     // GLOBAL VARIABLES
     const lengthCategory = categories.length;
@@ -27,6 +29,15 @@ function WidgetProductCategory(props) {
     // SET STATE
     const showFullSidebar = () =>{
         setIsShowFullCategory(!isShowFullCategory);
+    }
+
+    // handle event
+    const onHandleChoseCategory = indexCate => {
+        if(!onChoseCategory) return;
+        onChoseCategory({
+            name: "topCategory",
+            value: categories[indexCate]
+        });
     }
 
     // RENDER
@@ -55,11 +66,12 @@ function WidgetProductCategory(props) {
         elm = listCategoryTemp.map((item, index) =>{
             return (
                 <li 
-                    key = {item} 
-                    className = {indexActive === index ? "active" : ""}
+                    key = {item._id} 
+                    className = {validate.removeAccents(prodCateSelected) === validate.removeAccents(item.alias) ? "active" : ""}
+                    onClick = {() => onHandleChoseCategory(index)}
                 >
-                    <span aria-hidden="true" className="arrow_carrot-right"></span>
-                    <span>{item}</span>
+                    <span className="arrow_carrot-right"></span>
+                    <span>{item.title}</span>
                 </li>
             );
         });

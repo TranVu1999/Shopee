@@ -29,7 +29,10 @@ const validate = {
           str = str.replace(re, char);
         }
         return str;
-      }
+    },
+    formatToUrl: str => {
+      return str.toLowerCase().replace(/\s+/g, "-");
+    }
 
 }
 

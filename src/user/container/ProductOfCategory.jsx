@@ -33,10 +33,18 @@ import NavigationBar from '../feature/Layout/NavigationBar';
 
 function ProductOfCategory() {
     const params = useParams();
+    const [prodCateAlias, prodCateId] = params.slug.split('.');
+
     const [filter, setFilter] = useState({
-        type: "category",
-        category: "",
+        category: validate.removeAccents(prodCateAlias),
         page: 0,
+        topCategory: "",
+        deliveryAddress: "",
+        brand: "",
+        selectType: "popular",
+        sort: "",
+        from: 0,
+        to: 0,
         limit: 18,
         search: ""
     });
@@ -188,38 +196,11 @@ function ProductOfCategory() {
         }
     ]);
 
-    const [categories, setCategories] = useState([
-        "Thời Trang Nam",
-        "Áo Khoác",
-        "Áo Vest và Blazer",
-        "Áo Hoodie, Áo Len & Áo Nỉ",
-        "Quần Jeans",
-        "Quần Dài/Quần Âu",
-        "Quần Short",
-        "Áo",
-        "Áo Ba Lỗ",
-    ]);
+    const [categories, setCategories] = useState([]);
 
-    const [listAddress] = useState([
-        "TP.Ho Chi Minh",
-        "Ha Noi",
-        "Vinh Phuc",
-        "Thai Nguyen",
-        "Hai Phong",
-        "Dong Nai",
-        "Bac Ninh",
-        "Da Nang"
-    ]);
+    const [listAddress, setListAddress] = useState([]);
 
-    const [listBrandProduct] = useState([
-        "LADOS",
-        "FASVIN",
-        "CIZA",
-        "Rough",
-        "POLOMAN",
-        "TSIMPLE",
-        "Calvin Klein"
-    ]);
+    const [listBrandProduct, setListBrandProduct] = useState([]);
 
     const [listProduct, setListProduct] = useState([]);
 
@@ -229,17 +210,49 @@ function ProductOfCategory() {
     });
 
     // effect
-    useEffect(() => {
-        const [prodCateAlias, prodCateId] = params.slug.split('.');
-        const queryStr = queryString.stringify({
-            ...filter, category: validate.removeAccents(prodCateAlias)
-        });
+    useEffect(() => {  
         setIsLoading(true);
 
         const fetchData = async ()  => {
-            const [resProduct] = await Promise.all([
-                productApi.getList(queryStr)
+            const [
+                resListDeliveryAddress,
+                resListBrand, 
+                resProductCate
+            ] = await Promise.all([
+                productApi.getDeliveryAddress(prodCateId),
+                productApi.getBrand(prodCateId),
+                producCategorytApi.get(prodCateId, "top-sub-categories")
             ]);
+
+            setIsLoading(false);
+
+            if(resListDeliveryAddress.success) {
+                setListAddress(resListDeliveryAddress.listAddress);
+            }
+
+            if(resListBrand.success) {
+                setListBrandProduct(resListBrand.listBrand);
+            }
+
+            if(resProductCate.success) {
+                setCategories([...resProductCate.productCategory])
+            }
+            
+        }
+
+        fetchData();
+        
+
+    }, []);
+
+    // effect filter product
+    useEffect(() => {
+        const queryStr = queryString.stringify(filter);
+
+        setIsLoading(true);
+
+        const fetchData = async ()  => {
+            const [resProduct] = await Promise.all([productApi.getList(queryStr)]);
 
             setIsLoading(false);
             if(resProduct.success) {
@@ -248,9 +261,7 @@ function ProductOfCategory() {
         }
 
         fetchData();
-        
-
-    }, []);
+    }, [filter]);
 
     // handle event
     const handleChosePage = event =>{
@@ -328,6 +339,23 @@ function ProductOfCategory() {
         
     }
 
+    const onHandleFilter = e => {
+        const {name, value} = e;
+
+        switch(name) {
+            case "topCategory":
+                setFilter({...filter, [name]: validate.removeAccents(value.alias)});
+                break;
+            case "deliveryAddress":
+                let strFormated = validate.formatToUrl(value);
+                strFormated = validate.removeAccents(strFormated);
+                setFilter({...filter, [name]: strFormated});
+                break;
+            default: 
+                break;
+        }
+    }
+
     return (
         <div className = "user-page-content list-product-page">
             <div className="container">
@@ -351,11 +379,15 @@ function ProductOfCategory() {
                                 <SideBar 
                                     WidgetProductCategory = {
                                         <WidgetProductCategory 
+                                            prodCateSelected = {filter.topCategory}
                                             categories = {categories}
+                                            onChoseCategory = {onHandleFilter}
                                         />
                                     }
                                     WidgetSalerooms = {
                                         <WidgetListCheck 
+                                            itemSelected = {filter.deliveryAddress}
+                                            onChose = {onHandleFilter}
                                             items = {listAddress} 
                                             maxLength = {4}
                                         />

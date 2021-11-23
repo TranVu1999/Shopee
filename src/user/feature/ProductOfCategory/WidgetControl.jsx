@@ -8,14 +8,13 @@ const WidgetContent = styled.div`
     background-color: #EDEDED;
 `;
 
-
 const ButtonControl = styled.button`
     padding: .25rem .875rem;
     background-color: #fff;
 
     &.active{
         color: #fff;
-        background-color: #c7a17a;
+        background-color: #ee4d2d;
     }
 `;
 
@@ -52,7 +51,7 @@ function WidgetControl(props) {
     return (
         <WidgetContent className = "d-flex align-items-center justify-content-between">
             <div className = "d-flex align-items-center">
-                <div className = "mr-4">Sap xep theo</div>
+                <div className = "mr-4">Sắp xếp theo</div>
                 <div className = "mr-3">
                     <ButtonControl className = "active">Phổ biến</ButtonControl>
                 </div>

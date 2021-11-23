@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+// components
 import Checkbox from './../../../common/component/CheckBox';
+// modules
+import validate from './../../../../utils/validate';
 
 const WidgetItem = styled.li`
     margin-bottom: .25rem;
@@ -12,8 +14,10 @@ const WidgetItem = styled.li`
 
 
 WidgetListCheck.propTypes = {
+    itemSelected: PropTypes.string,
     items: PropTypes.array,
     maxLength: PropTypes.number,
+    onChose: PropTypes.func.isRequired,
 };
 
 WidgetListCheck.defaultProps = {
@@ -21,10 +25,20 @@ WidgetListCheck.defaultProps = {
     maxLength: 0
 }
 
-function WidgetListCheck(props) {
-    const {items, maxLength} = props;
+function WidgetListCheck({
+    itemSelected,
+    items, 
+    maxLength, 
+    onChose
+}) {
     const length = items.length;
     const [isShowFullItems, setIsShowFullItems] = useState(length > maxLength);
+
+    // handle event
+    const onHandleChose = e => {
+        if(!onChose) return;
+        onChose({...e});
+    }
 
     // RENDER
     const showElmMore = () => {
@@ -32,15 +46,15 @@ function WidgetListCheck(props) {
             <span
                 onClick = {() => {setIsShowFullItems(!isShowFullItems)}}
             >
-                Xem them 
-                <span aria-hidden="true" className="arrow_carrot-down"></span>
+                Xem thêm 
+                <span className="arrow_carrot-down"></span>
             </span>
         ) : (
             <span
                 onClick = {() => {setIsShowFullItems(!isShowFullItems)}}
             >
-                Rut Gon 
-                <span aria-hidden="true" className="arrow_carrot-up"></span>
+                Rút gọn
+                <span className="arrow_carrot-up"></span>
             </span>
         )
     }
@@ -54,7 +68,11 @@ function WidgetListCheck(props) {
                     className = "d-flex align-items-center"
                     key = {item}
                 >
-                    <Checkbox/>
+                    <Checkbox 
+                        isChecked = {itemSelected === validate.removeAccents(validate.formatToUrl(item))}
+                        identification = {{name: "deliveryAddress", value: item}}
+                        onChose = {onHandleChose}
+                    />
                     <span>{item}</span>
                 </WidgetItem>
             );
