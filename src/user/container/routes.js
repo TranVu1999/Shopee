@@ -17,6 +17,7 @@ const ProductSameShopPage = lazy(() => import("./ProductSameShop"));
 const ProductMayLikePage = lazy(() => import("./ProductMayLike"));
 const TopSearchPage = lazy(() => import("./TopSearch.jsx"));
 const CartPage = lazy(() => import("./Cart.jsx"));
+const ProductOfKeywordPage = lazy(() => import("./ProductOfKeyword"));
 
 const routes = [
     {
@@ -63,6 +64,10 @@ const routes = [
     {
         path: "/products-of-store",
         component: ProductOfStorePage
+    },
+    {
+        path: "/search",
+        component: ProductOfKeywordPage
     },
     {
         path: "/list-store/:alias?",

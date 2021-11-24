@@ -1,23 +1,18 @@
 import React, {useEffect, useState, lazy, Suspense} from "react";
 import { Switch, Route } from 'react-router-dom';
 import jwt from 'jwt-decode';
-
 // Components
 import WidgetSidebar from "../../feature/User/WidgetSidebar";
 import SuccessPopup from "../../feature/Layout/SuccessPopup";
 import HandlingData from "../../feature/Layout/HandlingData";
-
 // Apis
 import accountApi from "../../../api/accountAPI";
 import addressApi from "../../../api/addressAPI";
 import invoiceApi from "../../../api/invoiceAPI";
 import administrativeUnitApi from "../../../api/administrativeUnitAPI";
-
 // Modules
 import firebase from "../../../config/firebase-config";
 
-// routes
-import routes from './routes';
 const WidgetUserPortfolio = lazy(() => import("../../feature/User/WidgetUserProfile"));
 const WidgetListAddress = lazy(() => import("../../feature/User/WidgetListAddress"));
 const WidgetUpdatePassword = lazy(() => import("../../feature/User/WidgetUpdatePassword"));

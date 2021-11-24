@@ -382,8 +382,7 @@ function ProductOfCategory() {
                 <div className="mb-40 list-product">
                     <div className="row">
                         <div className="col-lg-2">
-                            <div className="list-product__left">
-                                <SideBar 
+                            <SideBar 
                                     WidgetProductCategory = {
                                         <WidgetProductCategory 
                                             prodCateSelected = {filter.topCategory}
@@ -413,13 +412,11 @@ function ProductOfCategory() {
                                     WidgetPrice = {<WidgetPrice/>}
 
                                 >
-                                </SideBar>
-                            </div>
+                            </SideBar>
                             
                         </div>
 
                         <div className="col-lg-10">
-                            
                             <div className="position-relative pl-4 list-product__right" style={{minHeight: '500px'}}>
                                 {isLoading && <div style={{minHeight: '500px'}}><ProcessingEffect/></div>}
 

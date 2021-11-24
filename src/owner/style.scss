@@ -4,11 +4,19 @@ $mainColor: #ee4d2d;
 .owner-page-content{
     // ================= Layout =================
     .btn.btn-primary {
+        padding: .5rem .875rem;
         background-color: $mainColor;
         border-color: $mainColor;
+        font-size: .875rem;
+        border-radius: 4px;
+
+        span{
+            margin-right: .5rem;
+            font-size: 1.25rem;
+        }
 
         &:hover {
-            
+            opacity: .9;
         }
     }
 
@@ -240,6 +248,90 @@ $mainColor: #ee4d2d;
                     display: block;
                     margin-bottom: .5rem;
                     color: #4B4BF3;
+                }
+            }
+        }
+    }
+
+    // ================= Setting Address =================
+    .setting-address-page {
+        background-color: #fff;
+
+        .list-address {
+            padding: 1.125rem 1.5rem;
+
+            &>div:last-child{
+                border: none;
+            }
+        }
+
+        .address-item {
+            padding: .5rem 0;
+            margin-bottom: 1rem;
+            font-size: .875rem;
+            border-bottom: 1px solid #fafafa;
+
+            .widget-icon {
+                width: 1.75rem;
+                height: 1.75rem;
+                margin-right: 2rem;
+            
+                svg{
+                    fill: #00bfa5;
+                }
+            }
+
+            .text {
+                padding-right: 1rem;
+
+                .row {
+                    margin-bottom: .5rem;
+                }
+
+                .label {
+                    min-width: 8rem;
+                    margin-right: 2rem;
+                }
+
+                .value {
+                    color: #333;
+
+                    span.name{
+                        font-size: 1rem;
+                    }
+                }
+
+                .badge {
+                    margin-left: 1rem;
+                    font-weight: 400;
+
+                    span{
+                        display: inline-block;
+                        padding: 0 .5rem;
+                        margin-right: .25rem;
+
+                        font-size: .675rem;
+
+                        color: #40d0bd;
+                        background-color: #e8f9f7;
+                        border-radius: 2px;
+                        line-height: 1.125rem;
+                    }
+
+                    span.secondary{
+                        color: #eda500;
+                        background-color: #fff7e0;
+                    }
+
+                    span.warning{
+                        color: #ee4d2d;
+                        background-color: #fff1f0;
+                    }
+                }
+
+                button{
+                    display: block;
+                    color: #2673dd;
                 }
             }
         }
