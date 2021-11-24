@@ -59,7 +59,7 @@ function SideBar(props) {
     } = props;
 
     return (
-        <WidgetContent className = "user-sidebar-content">
+        <WidgetContent className = "sidebar">
             
             {/* Product Category */}
             <WidgetSidebar>

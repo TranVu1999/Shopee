@@ -18,6 +18,7 @@ WidgetListCheck.propTypes = {
     items: PropTypes.array,
     maxLength: PropTypes.number,
     onChose: PropTypes.func.isRequired,
+    identification: PropTypes.string.isRequired,
 };
 
 WidgetListCheck.defaultProps = {
@@ -29,13 +30,15 @@ function WidgetListCheck({
     itemSelected,
     items, 
     maxLength, 
-    onChose
+    onChose,
+    identification
 }) {
     const length = items.length;
     const [isShowFullItems, setIsShowFullItems] = useState(length > maxLength);
 
     // handle event
     const onHandleChose = e => {
+        console.log({e})
         if(!onChose) return;
         onChose({...e});
     }
@@ -70,7 +73,7 @@ function WidgetListCheck({
                 >
                     <Checkbox 
                         isChecked = {itemSelected === validate.removeAccents(validate.formatToUrl(item))}
-                        identification = {{name: "deliveryAddress", value: item}}
+                        identification = {{name: identification, value: item}}
                         onChose = {onHandleChose}
                     />
                     <span>{item}</span>

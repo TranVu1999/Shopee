@@ -351,6 +351,13 @@ function ProductOfCategory() {
                 strFormated = validate.removeAccents(strFormated);
                 setFilter({...filter, [name]: strFormated});
                 break;
+            case "brand":{
+                let strFormated = validate.formatToUrl(value);
+                strFormated = validate.removeAccents(strFormated);
+                setFilter({...filter, [name]: strFormated});
+                break;
+            }
+                
             default: 
                 break;
         }
@@ -386,6 +393,7 @@ function ProductOfCategory() {
                                     }
                                     WidgetSalerooms = {
                                         <WidgetListCheck 
+                                            identification = "deliveryAddress"
                                             itemSelected = {filter.deliveryAddress}
                                             onChose = {onHandleFilter}
                                             items = {listAddress} 
@@ -394,6 +402,9 @@ function ProductOfCategory() {
                                     }
                                     WidgetBrand = {
                                         <WidgetListCheck 
+                                            itemSelected = {filter.brand}
+                                            identification = "brand"
+                                            onChose = {onHandleFilter}
                                             items = {listBrandProduct} 
                                             maxLength = {4}
                                         />

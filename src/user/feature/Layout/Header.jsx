@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-import {useSelector} from 'react-redux';
-
+import {useSelector, useDispatch} from 'react-redux';
+// modules
+import Validate from './../../../utils/validate';
+// actions
+import {
+    actGetListMatched, 
+    actChangeKeysearch
+} from './../../common/module/keyword/action';
 // icons
-import {logoIcon, cartIcon} from './../../../asset/icon';
+import {logoIcon, cartIcon, shopIcon} from './../../../asset/icon';
 
 
 // Icons
@@ -212,50 +218,56 @@ const Cart = styled.div`
     }
 `;
 
-const SearchBox = styled.div`
-    margin: 0 3rem;
-
-    .input-box{
-        padding: .25rem;
-        border-radius: 2px;
-        background-color: #fff;
-
-        input{
-            display: block;
-            padding-left: .5rem;
-            margin-right: 1rem;
-            flex: 1;
-        }
-
-        button{
-            width: 4rem;
-            padding: .25rem 0;
-
-            font-size: 1.125rem;
-
-            background: #fb5533;
-            color: #fff;
-            border-radius: 2px;
-        }
-    }
-
-    li{
-        margin-right: 1rem;
-        font-size: .75rem;
-    }
-
-
-`;
 
 function Header() {  
     // Data
+    const [isFocusedSearchbox, setIsFocusedSearchbox] = useState(false);
     const username = useSelector(state => state.accountReducer.username)
     const avatar = useSelector(state => state.accountReducer.avatar);
+
+    const keysearch = useSelector(state => state.keywordReducer.keysearch);
+    const isLoadingKeyword = useSelector(state => state.keywordReducer.isLoading);
+    const listKeyword = useSelector(state => state.keywordReducer.listKeyword);
+    const dispatch = useDispatch();
+
+    const ref = useRef(null);
 
     // handle event
     const onHandleLogout = () => {
         localStorage.removeItem("accessToken");
         window.location.reload();
+    }
+
+    const onHandleChange = e => {
+        const {value} = e.target;
+        dispatch(actChangeKeysearch(value));
+
+        if(ref.current) {
+            clearTimeout(ref.current);
+        }
+
+        ref.current = setTimeout(() => {
+            if(value) {
+                const formatKersearch = Validate.removeAccents(value);
+                dispatch(actGetListMatched(formatKersearch.toLowerCase().replace(/\s+/g, "-")))
+            }
+            
+        }, 1000)
+    }
+
+    const onHandleBlur = () => {
+        setIsFocusedSearchbox(false)
+    }
+
+    const onHandleFocus = () => {
+        setIsFocusedSearchbox(true)
+    }
+
+    // render
+    const renderListKeyword = () => {
+        return listKeyword.map(keyword => {
+            return <a key = {keyword} href="#/" className="key-item">{keyword}</a>
+        })
     }
 
     return (
@@ -346,11 +358,28 @@ function Header() {
                         <Link to="/">{logoIcon}</Link>
                     </Logo>
 
-                    <SearchBox className="flex-fill">
-                        <div className="d-flex input-box">
-                            <input type="text" placeholder="Ở nhà không khó"/>
-                            <button><span aria-hidden="true" className="icon_search"></span></button>
+                    <div className="flex-fill header__search-box">
+                        <div className="search-box">
+                            <div className="d-flex input-box">
+                                <input 
+                                    type="text" 
+                                    placeholder="Ở nhà không khó"
+                                    value = {keysearch}
+                                    onChange = {onHandleChange}
+                                    onBlur = {onHandleBlur}
+                                    onFocus = {onHandleFocus}
+                                />
+                                <button><span aria-hidden="true" className="icon_search"></span></button>
+                            </div>
+                            
+                            {keysearch && <div className="list-keyword"> 
+                                <div className="key-top">{shopIcon} Tìm Shop "{keysearch}"</div>
+                                {renderListKeyword()}
+                            </div>}
+                            
+                            
                         </div>
+                        
 
                         <ul>
                             <li>
@@ -378,7 +407,7 @@ function Header() {
                                 <a href="#/">Khẩu Trang</a>
                             </li>
                         </ul>
-                    </SearchBox>
+                    </div>
 
                     <Cart>
                         <Link to="/cart">

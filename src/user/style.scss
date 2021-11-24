@@ -162,6 +162,72 @@ $shopeeColor: #ee4d2d;
                 width: 130px;
             }
         }
+
+        &__search-box {
+            margin: 0 3rem;
+
+            .input-box{
+                padding: .25rem;
+                border-radius: 2px;
+                background-color: #fff;
+
+                input{
+                    display: block;
+                    padding-left: .5rem;
+                    margin-right: 1rem;
+                    flex: 1;
+                }
+
+                button{
+                    width: 4rem;
+                    padding: .25rem 0;
+
+                    font-size: 1.125rem;
+
+                    background: #fb5533;
+                    color: #fff;
+                    border-radius: 2px;
+                }
+            }
+
+            li{
+                margin-right: 1rem;
+                font-size: .75rem;
+            }
+
+            .search-box {
+                position: relative;
+
+                .list-keyword {
+                    position: absolute;
+                    top: calc(100% + 6px);
+                    left: 0;
+                    
+                    width: 100%;
+                    background-color: #fff;
+                    color: rgba(0,0,0,.8);
+
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+
+                .key-item, .key-top {
+                    display: block;
+                    padding: .25rem .875rem;
+
+                    &:hover {
+                        background-color: #fafafa;
+                    }
+                }
+
+                svg.shop-icon {
+                    width: 1rem;
+                    height: 1rem;
+                    margin-right: .5rem;
+                    fill: $shopeeColor;
+                }
+            }
+        }
         
     }
 
@@ -607,40 +673,53 @@ $shopeeColor: #ee4d2d;
 
     // ================ List Product ================
     .list-product-page {
-        ul.categories {
-            text-transform: capitalize;
-
-            li {
-                padding-left: 15px;
-                position: relative;
-                margin-bottom: .25rem;
-                cursor: pointer;
-
-                .arrow_carrot-right{
-                    position: absolute;
-                    left: -4px;
-                    top: 50%;
-
-                    display: none;
-
-                    transform: translateY(-50%);
-                    font-size: 1.125rem;
-                }
-
-                &:hover{
-                    color: $shopeeColor;
-                }
-
-                &.active{
-                    color: $shopeeColor;
-                    font-weight: 600;
-
+        .sidebar {
+            ul.categories {
+                text-transform: capitalize;
+    
+                li {
+                    padding-left: 15px;
+                    position: relative;
+                    margin-bottom: .25rem;
+                    cursor: pointer;
+    
                     .arrow_carrot-right{
-                        display: block;
+                        position: absolute;
+                        left: -4px;
+                        top: 50%;
+    
+                        display: none;
+    
+                        transform: translateY(-50%);
+                        font-size: 1.125rem;
+                    }
+    
+                    &:hover{
+                        color: $shopeeColor;
+                    }
+    
+                    &.active{
+                        color: $shopeeColor;
+                        font-weight: 600;
+    
+                        .arrow_carrot-right{
+                            display: block;
+                        }
                     }
                 }
+    
             }
+        }
+        
 
+        .empty-list-product {
+            width: 100%;
+            min-height: 500px;
+            background-color: #fff;
+
+            img {
+                width: 100px;
+            }
         }
     }
 
