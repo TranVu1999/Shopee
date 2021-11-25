@@ -4,44 +4,50 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Components
 import WidgetAddInformation from '../features/Product/WidgetAddInformation';
-
+import Loading from '../features/Layout/Loading';
 // Module 
 import firebase from "./../../config/firebase-config";
 
 // API
 import productCategoryAPI from './../../api/productCategoryAPI';
 import productApi from '../../api/productAPI';
-import Loading from '../features/Layout/Loading';
+import administrativeUnitApi from './../../api/administrativeUnitAPI';
+import addressApi from './../../api/addressAPI';
+import DeliveryAddress from '../features/Product/DeliveryAddress';
 
 function ProductNew() {
     // Data
     const [isLoading, setIsLoading] = useState(false);
 
     const [optionalAttributes, setOptionalAttributes] = useState([]);
-
     const [amountImageUploaded, setAmountImageUploaded] = useState(0);
     const [newProduct, setNewProduct] = useState({
         images2: []
     });
-
     const [imageAsUrl, setImageAsUrl] = useState([]);
+    const [listAddress, setListAddress] = useState(null);
+    const [deliveryAddress, setDeliveryAddress] = useState("");
 
     // Effect
     useEffect(() =>{
-        const fetchOptionalAttributes = async () =>{
+        const fetchData = async () =>{
             const prodCatId = localStorage.getItem("prodCatId");
 
             if(prodCatId){
-                const res = await productCategoryAPI.get(prodCatId, "skeleton-attribute");
-
-                if(res.success){
-                    const {skeletonAttribute} = res.productCategory;
-                    setOptionalAttributes(skeletonAttribute)
+                const [resProdCate, resListAddress] = await Promise.all([
+                    productCategoryAPI.get(prodCatId, "skeleton-attribute"),
+                    addressApi.get()
+                ])
+                
+                if(resProdCate.success && resListAddress.success){
+                    const {skeletonAttribute} = resProdCate.productCategory;
+                    setOptionalAttributes(skeletonAttribute);
+                    setListAddress(resListAddress.listAddress);
                 }
             }
         }
 
-        fetchOptionalAttributes();
+        fetchData()
     }, []);
 
     useEffect(() =>{
@@ -67,8 +73,10 @@ function ProductNew() {
             }
 
             data.classification.classifies.second.types = data.classification.classifies.second.types.map(type => ({label: type}))
-            console.log({data})
-            productApi.add(data)
+            productApi.add({
+                ...data,
+                deliveryAddress
+            })
             .then(res => {
                 if(res.success){
                     setIsLoading(false);
@@ -164,8 +172,17 @@ function ProductNew() {
         prepareData(product);
     }
 
+    const onHandleChoseOtherAddress = addressId => {
+        setDeliveryAddress(addressId);
+    }
+
     return (
-        <div className="owner-product-add">
+        <div className="owner-product-add add-product-page">
+            <DeliveryAddress 
+                listAddress = {listAddress}
+                onChoseOtherAddress = {onHandleChoseOtherAddress}
+            />
+
             <WidgetAddInformation 
                 optionalAttributes = {optionalAttributes}
                 handleSubmitProduct = {handleSubmitProduct}

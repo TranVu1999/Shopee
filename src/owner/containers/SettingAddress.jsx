@@ -1,18 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
-
 // Components
 import ListAddress from '../features/Setting/ListAddress';
 import TitleContent from '../components/TitleContent';
 import FormAddress from '../features/Shop/FormAddress';
-
-
 // UI
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-
-
 // apis 
 import addressApi from './../../api/addressAPI';
 import administrativeUnitApi from "./../../api/administrativeUnitAPI";
@@ -26,10 +19,10 @@ function SettingAddress() {
     });
     const [listAddress, setListAddress] = useState([]);
     const [listOptionAddress, setListOPtionAddress] = useState([]);
+    const [itemFocus, setItemFocus] = useState(null);
 
     // effect
     useEffect(() => {
-
         const fetchListAddress = async function() {
             const [resListAddress, resListProvince] = await Promise.all([
                 addressApi.get(),
@@ -47,6 +40,7 @@ function SettingAddress() {
 
     // handle event
     const handleCloseForm = () =>{
+        setItemFocus(null);
         setDialogData({...{dialogData}, isShow: false});
     }
 
@@ -60,6 +54,69 @@ function SettingAddress() {
 
     }
 
+    const onHanldeChoseAdministrativeUnit = dataChose => {
+        const {type, code} = dataChose;
+        if(type === "province") {
+            administrativeUnitApi.getListDistrict(code)
+            .then(res => {
+                console.log({res})
+                if(res.success) {
+                    setListOPtionAddress(res.listDistrict);
+                }
+            })
+            .catch(err => console.log({err}));
+        } else if(type === "district") {
+            administrativeUnitApi.getListWard(code)
+            .then(res => {
+                console.log({res})
+                if(res.success) {
+                    setListOPtionAddress(res.listWard);
+                }
+            })
+            .catch(err => console.log({err}))
+        }
+    }
+
+    const onHandleFocusItem = address => {
+        setItemFocus(address);
+        setDialogData({...{dialogData}, isShow: true});
+    }
+
+    const onHandleSubmit = async (address) => {
+        if(itemFocus) {
+            const res = await addressApi.edit(address);
+            if(res.success) {
+                const updateAddress = res.address;
+                let tempListAddress = [...listAddress];
+                let indx = tempListAddress.findIndex(item => item._id === updateAddress._id);
+
+                if(indx !== -1) {
+                    if(updateAddress.isDefault) {
+                        tempListAddress = tempListAddress.map(address => ({
+                            ...address,
+                            isDefault: false
+                        }))
+                    }
+
+                    tempListAddress[indx] = updateAddress;
+                    setListAddress(tempListAddress);
+                }
+            }
+        } else {
+            const res = await addressApi.add(address);
+            if(res.success) {
+                const newAddress = res.address;
+                setListAddress([
+                    ...listAddress,
+                    newAddress
+                ])
+            }
+        }
+
+        handleCloseForm();
+
+    }
+    
     return (
         <section className = "setting-address-page">
             <TitleContent 
@@ -75,7 +132,10 @@ function SettingAddress() {
                 </button>}
             />
             
-            <ListAddress listAddress = {listAddress}/>
+            <ListAddress 
+                listAddress = {listAddress}
+                onFocusItem = {onHandleFocusItem}
+            />
 
             {/* Form update password */}
             <Dialog
@@ -85,8 +145,11 @@ function SettingAddress() {
             >
                 <DialogContent>
                     <FormAddress
+                        itemFocus = {itemFocus}
                         onClose = {handleCloseForm}
                         listOptionAddress = {listOptionAddress}
+                        onHanldeChoseAdministrativeUnit = {onHanldeChoseAdministrativeUnit}
+                        onSubmit = {onHandleSubmit}
                     />
                 </DialogContent>
             </Dialog>

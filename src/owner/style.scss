@@ -336,6 +336,128 @@ $mainColor: #ee4d2d;
             }
         }
     }
+
+    // ================= Add Product =================
+    .add-product-page {
+        .delivery-address__container {
+            margin-bottom: 1rem;
+            background-color: #fff;
+            padding-bottom: 2rem;
+            box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+
+            .border {
+                height: 5px;
+                width: 100%;
+                background-position-x: -30px;
+                background-size: 116px 3px;
+                background-image: repeating-linear-gradient(
+                    45deg,#6fa6d6,#6fa6d6 33px
+                    ,transparent 0,transparent 41px
+                    ,#f18d9b 0,#f18d9b 74px
+                    ,transparent 0,transparent 82px
+                );
+            }
+
+            .title {
+                padding: 2rem 1.5rem 1rem;
+
+                .btn:first-child {
+                    margin-right: .875rem;
+                }
+            }
+
+            h5 {
+                font-size: 1.125rem;
+                color: #ee4d2d; 
+
+                svg {
+                    margin-right: .5rem;
+                    fill: #ee4d2d;
+                }
+            }
+
+            .address-selected {
+                padding: 0 1.5rem;
+            }
+
+            .user-information {
+                max-width: 200px;
+                font-weight: 700;
+                font-size: 1rem;
+                color: #222;
+                line-height: 1.25rem;
+            }
+
+            .user-address {
+                span {
+                    display: inline-block;
+                    margin-left: .5rem;
+                    padding: 0 .25rem;
+                    border: 1px solid #00bfa5;
+                    line-height: 1rem;
+                    border-radius: .25rem;
+
+                    font-size: .75rem;
+                    color: #00bfa5;
+                }
+            }
+
+            .list-address {
+                padding: 0 1.5rem;
+                
+            }
+            .address-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+
+                .user-information {
+                    margin: 0 2rem;
+                }
+            }
+
+            .buttons {
+                padding-left: 3.125rem;
+                font-size: .875rem;
+            }
+
+            .btn {
+                min-width: 6rem;
+                font-size: .875rem;
+                text-transform: capitalize;
+
+                color: #555;
+                border-radius: 0;
+                border: 1px solid rgba(0,0,0,.09);
+                box-shadow: 0 1px 1px 0 rgba(0,0,0,.03);
+
+                &:hover {
+                    background: rgba(0,0,0,.02);
+                    border-color: rgba(0,0,0,.09)!important;
+                }
+
+                svg {
+                    height: .875rem;
+                    margin-right: .5rem;
+                    fill: #555;
+                }
+            }
+
+            .btn-save {
+                margin-right: 1rem;
+                background-color: #ee4d2d;
+                color: #fff;
+
+                &:hover {
+                    background-color: #f05d40;
+                }
+            }
+
+            .btn-back {
+                border: 1px solid #d5d5d5;
+            }
+        }
+    }
     
 }
 

@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 
 ListAddress.propTypes = {
     listAddress: PropTypes.array,
+    onFocusItem: PropTypes.func.isRequired,
 };
 
-function ListAddress({listAddress}) {
-    console.log({listAddress})
-    
+function ListAddress({listAddress, onFocusItem}) {    
+
+    // handle event
+    const onHandleFocus = address => {
+        if(!onFocusItem) return;
+        onFocusItem(address)
+    }
+
     // reder
     const renderListAddress = () => {
         return listAddress.map(address => {
@@ -44,7 +50,7 @@ function ListAddress({listAddress}) {
                             </div>
                         </div>
                         <div>
-                            <button>Sửa</button>
+                            <button onClick = {() => onHandleFocus(address)}>Sửa</button>
                             <button>Xóa</button>
                         </div>
                     </div>
