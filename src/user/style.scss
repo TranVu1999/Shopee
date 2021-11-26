@@ -945,7 +945,7 @@ $shopeeColor: #ee4d2d;
         }
     }
 
-        // ================ Store ================
+    // ================ Store ================
     .store {
         &__aspect--statistics {
             text-transform: capitalize;
@@ -1431,6 +1431,151 @@ $shopeeColor: #ee4d2d;
 
         
         
+    }
+
+
+    // ================ Product Of Keysearch ================
+    .product-of-keysearch-page {
+        margin: 150px 0 50px;
+
+        .Widget-shop {
+            margin-bottom: 1rem;
+            font-size: .875rem;
+
+            .title {
+                b, a {
+                    font-weight: 400;
+                    color: #ee4d2d;
+                }
+            
+                svg {
+                    margin-left: .5rem;
+                    height: .625rem;
+                    width: .625rem;
+                    fill: currentColor;
+                }
+            }
+
+            .shop-container {
+                background-color: #fff;
+                box-shadow: 0 1px 8px 0 rgba(0,0,0,.05);
+                padding: 1.25rem 1.75rem;
+
+                svg {
+                    fill: #ee4d2d;
+                    width: .75rem;
+                    height: .75rem;
+                }
+            }
+
+            .left {
+                flex: 4;
+            }
+            .right {
+                flex: 6;
+            }
+
+            .thumbnail {
+                position: relative;
+                width: 4.375rem;
+                height: 4.375rem;
+                margin-right: 1rem;
+                border-radius: 50%;
+                border: 0.0625rem solid rgba(0,0,0,.09); 
+            
+                svg {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+            
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    stroke: #c6c6c6;
+                }
+            
+                .label {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%, 20%);
+            
+                    width: 100%;
+                    font-size: .75rem;
+                    background-color: #ee4d2d;
+                    color: #fff;
+                    border-radius: 4px;
+                    line-height: 1.25rem;
+                }
+            }
+
+            .text {
+                h5 {
+                    margin-bottom: 0;
+                    color: #222;
+                }
+
+                p {
+                    margin: 0;
+                    line-height: 1.25rem;
+                    font-size: .75rem;
+                }
+
+                p:first-child {
+                    padding-right: .5rem;
+                    margin-right: .5rem;
+                    border-right: 1px solid #d5d5d5;
+                }
+
+                div span{
+                    margin-right: .125rem;
+                    color: $shopeeColor;
+                }
+            }
+
+            .statistics {
+
+                div {
+                    padding: 0 1rem ;
+                    border-left: 1px solid $boderMainColor;
+
+                    &:first-child {
+                        border: none;
+                    }
+                }
+
+                p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0;
+                    color: $shopeeColor;
+                }
+
+                svg {
+                    margin-right: .125rem;
+                    
+                    width: .875rem;
+                    height: .875rem;
+                    stroke: $shopeeColor;
+                    fill: $shopeeColor
+                }
+            }
+        }
+
+        .widget-keysearch {
+            margin: 1rem 0;
+            
+            svg {
+                width: 1rem;
+                margin-right: .5rem;
+                fill: #222;
+            }
+
+            span {
+                color: $shopeeColor;
+            }
+        }
     }
 
 }
