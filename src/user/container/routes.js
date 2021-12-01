@@ -66,7 +66,7 @@ const routes = [
         component: ProductOfStorePage
     },
     {
-        path: "/search",
+        path: "/search/:slug",
         component: ProductOfKeywordPage
     },
     {

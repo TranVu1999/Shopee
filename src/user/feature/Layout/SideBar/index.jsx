@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const WidgetContent = styled.div`
     font-size: .875rem;
@@ -36,27 +37,35 @@ const Button = styled.button`
     width: 100%;
     padding: 5px 15px;
 
-    background-color: #c7a17a;
+    background-color: #ee4d2d;
     color: #fff;
 
-    border: 1px solid #c7a17a;
+    border: 1px solid #ee4d2d;
     transition: all .3s ease;
 
     &:hover{
         background-color: #fff;
-        color: #c7a17a;
+        color: #ee4d2d;
     }
 `
+SideBar.propTypes = {
+    onResetFilter: PropTypes.func,
+}
 
+function SideBar({
+    WidgetProductCategory,
+    WidgetSalerooms,
+    WidgetBrand,
+    WidgetRating,
+    WidgetPrice,
+    onResetFilter
+}) {
 
-function SideBar(props) {
-    const {  
-        WidgetProductCategory,
-        WidgetSalerooms,
-        WidgetBrand,
-        WidgetRating,
-        WidgetPrice
-    } = props;
+    // handle event
+    const onHandleResetFilter = () => {
+        if(!onResetFilter) return;
+        onResetFilter();
+    }
 
     return (
         <WidgetContent className = "sidebar">
@@ -102,7 +111,9 @@ function SideBar(props) {
                 {WidgetPrice}
 
                 <div className="mt-3 mb-4 line"></div>
-                <Button>Xóa tất cả</Button>
+                <Button
+                    onClick = {onHandleResetFilter}
+                >Xóa tất cả</Button>
             </WidgetSidebar>
         </WidgetContent>
     );

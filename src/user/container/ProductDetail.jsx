@@ -26,6 +26,7 @@ import WidgetListProduct from '../feature/ProductDetail/WidgetListProduct';
 
 // api
 import productApi from '../../api/productAPI';
+import productKeywordApi from '../../api/productKeywordAPI';
 
 // actions
 import {actAddToCart} from './../common/module/cart/action';
@@ -222,7 +223,7 @@ function ProductDetail() {
         const fetchProduct = () => {
             productApi.get(productId)
             .then(res => {
-                const {product, success} = res;
+                const {product, listRelevantProduct} = res.data;
 
                 const prepareImages = () => {
                     const images = [product.avatar];
@@ -243,10 +244,11 @@ function ProductDetail() {
                     return images;
                 }
 
-                if(success) {
+                if(res.success) {
 
                     const productData = {
                         ...product,
+                        listRelevantProduct,
                         moreImages: prepareImages()
                     }
                     setProduct(productData);
@@ -254,8 +256,19 @@ function ProductDetail() {
             })
             .catch(err => console.log({err}))
         }
+        const updateKeyword = () => {
+            const keysearchInfo = JSON.parse(localStorage.getItem("keysearchInfo"));
+            if(keysearchInfo) {
+                productKeywordApi.add({
+                    listKeyword: keysearchInfo.listKeysearch,
+                    listProduct: [productId]
+                })
+            }
+        }
 
         fetchProduct();
+        updateKeyword();
+        
     }, [])
    
     // hanlde event
@@ -303,8 +316,7 @@ function ProductDetail() {
     }
 
     return (
-        <div className = "user-page-content product-detail-page-content">
-            
+        <div className = "user-page-content product-detail-page-content">            
             <div className="container">
                 <WidgetBreadcrumb items = {product ? product.categories : []}/>
 
@@ -394,15 +406,7 @@ function ProductDetail() {
                             <WidgetListProduct 
                                 title="Sản phẩm tương tự"
                                 url = "/similar-products" 
-                                listProduct={product.listProductOfStore}
-                            />
-                        </div>}
-
-                        {product && <div className="mb-3">
-                            <WidgetListProduct 
-                                title="Có thể bạn thích"
-                                url = "/you-may-also-like" 
-                                listProduct={product.listProductOfStore}
+                                listProduct={product.listRelevantProduct}
                             />
                         </div>}
                         

@@ -19,24 +19,30 @@ function WidgetProductCategory({
     categories, 
     onChoseCategory
 }) {
-
     // GLOBAL VARIABLES
     const lengthCategory = categories.length;
 
     // STATE
     const [isShowFullCategory, setIsShowFullCategory] = useState(lengthCategory > 6);
 
+    // functions
+    const checkSelected = category => {
+        const categoryFormatted = validate.removeAccents(category).toLowerCase().replace(/\s/g, "");
+        const productCategorySelectedFormatted = prodCateSelected.replace(/-/g, "");
+        
+        return categoryFormatted === productCategorySelectedFormatted
+    }
     // SET STATE
     const showFullSidebar = () =>{
         setIsShowFullCategory(!isShowFullCategory);
     }
 
     // handle event
-    const onHandleChoseCategory = indexCate => {
+    const onHandleChoseCategory = cate => {
         if(!onChoseCategory) return;
         onChoseCategory({
             name: "topCategory",
-            value: categories[indexCate]
+            value: cate
         });
     }
 
@@ -62,16 +68,16 @@ function WidgetProductCategory({
     const renderListCategory = () => {
         let elm = [];
         let listCategoryTemp = isShowFullCategory ? categories.slice(0, 6) : categories;
-        
-        elm = listCategoryTemp.map((item, index) =>{
+
+        elm = listCategoryTemp.map(cate =>{
             return (
                 <li 
-                    key = {item._id} 
-                    className = {validate.removeAccents(prodCateSelected) === validate.removeAccents(item.alias) ? "active" : ""}
-                    onClick = {() => onHandleChoseCategory(index)}
+                    key = {cate} 
+                    className = {checkSelected(cate) ? "active" : ""}
+                    onClick = {() => onHandleChoseCategory(cate)}
                 >
                     <span className="arrow_carrot-right"></span>
-                    <span>{item.title}</span>
+                    <span>{cate}</span>
                 </li>
             );
         });

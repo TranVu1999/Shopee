@@ -1,9 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {useSelector, useDispatch} from 'react-redux';
 // modules
 import Validate from './../../../utils/validate';
+// hooks
+import useOutsideElement from '../../hooks/outsideElement';
 // actions
 import {
     actGetListMatched, 
@@ -221,7 +223,6 @@ const Cart = styled.div`
 
 function Header() {  
     // Data
-    const [isFocusedSearchbox, setIsFocusedSearchbox] = useState(false);
     const username = useSelector(state => state.accountReducer.username)
     const avatar = useSelector(state => state.accountReducer.avatar);
 
@@ -229,8 +230,39 @@ function Header() {
     const isLoadingKeyword = useSelector(state => state.keywordReducer.isLoading);
     const listKeyword = useSelector(state => state.keywordReducer.listKeyword);
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const ref = useRef(null);
+    const refTime = useRef(null);
+    // Custom Hooks
+    const {visible, setVisible, ref} = useOutsideElement(false);
+
+    useEffect(() => {
+        if(keysearch) {
+            setVisible(true)
+        }
+    }, [keysearch])
+
+    // function
+    const daveKeysearchInfo = keysearch => {
+        let data = null;
+        const keysearchInfo = JSON.parse(localStorage.getItem("keysearchInfo"));
+        if(keysearchInfo) {
+            const isExist = keysearchInfo.listKeysearch.some(key => key === keysearch);
+
+            if(!isExist) {
+                keysearchInfo.listKeysearch.push(keysearch);
+                data = keysearchInfo;
+            }
+        } else {
+            data = {
+                listKeysearch: [keysearch]
+            }
+        }
+
+        if(data) {
+            localStorage.setItem("keysearchInfo", JSON.stringify(data))
+        }
+    }
 
     // handle event
     const onHandleLogout = () => {
@@ -242,11 +274,11 @@ function Header() {
         const {value} = e.target;
         dispatch(actChangeKeysearch(value));
 
-        if(ref.current) {
-            clearTimeout(ref.current);
+        if(refTime.current) {
+            clearTimeout(refTime.current);
         }
 
-        ref.current = setTimeout(() => {
+        refTime.current = setTimeout(() => {
             if(value) {
                 const formatKersearch = Validate.removeAccents(value);
                 dispatch(actGetListMatched(formatKersearch.toLowerCase().replace(/\s+/g, "-")))
@@ -255,18 +287,29 @@ function Header() {
         }, 1000)
     }
 
-    const onHandleBlur = () => {
-        setIsFocusedSearchbox(false)
+    const onHandleSearch = () => {
+        if(keysearch) {
+            daveKeysearchInfo(keysearch);
+            const slug = keysearch.replace(/\s+/g, "-");
+            history.push(`/search/${slug}`);
+        }
     }
 
-    const onHandleFocus = () => {
-        setIsFocusedSearchbox(true)
+    const onHandleChoseKey = keyword => {
+        dispatch(actChangeKeysearch(keyword));
+        daveKeysearchInfo(keyword);
+        const slug = keyword.replace(/\s+/g, "-");
+        window.location.href = `/search/${slug}`;
     }
 
     // render
     const renderListKeyword = () => {
         return listKeyword.map(keyword => {
-            return <a key = {keyword} href="#/" className="key-item">{keyword}</a>
+            return <div 
+                key = {keyword} 
+                className = "key-item"
+                onClick = {() => onHandleChoseKey(keyword)}
+            >{keyword}</div>
         })
     }
 
@@ -358,21 +401,21 @@ function Header() {
                         <Link to="/">{logoIcon}</Link>
                     </Logo>
 
-                    <div className="flex-fill header__search-box">
-                        <div className="search-box">
+                    <div className="flex-fill header__search-box" >
+                        <div className="search-box" ref = {ref}>
                             <div className="d-flex input-box">
                                 <input 
                                     type="text" 
                                     placeholder="Ở nhà không khó"
                                     value = {keysearch}
                                     onChange = {onHandleChange}
-                                    onBlur = {onHandleBlur}
-                                    onFocus = {onHandleFocus}
                                 />
-                                <button><span aria-hidden="true" className="icon_search"></span></button>
+                                <button
+                                    onClick = {onHandleSearch}
+                                ><span className="icon_search"></span></button>
                             </div>
                             
-                            {keysearch && <div className="list-keyword"> 
+                            {visible  && <div className="list-keyword"> 
                                 <div className="key-top">{shopIcon} Tìm Shop "{keysearch}"</div>
                                 {renderListKeyword()}
                             </div>}

@@ -193,6 +193,7 @@ $shopeeColor: #ee4d2d;
             li{
                 margin-right: 1rem;
                 font-size: .75rem;
+                cursor: pointer;
             }
 
             .search-box {
@@ -214,6 +215,7 @@ $shopeeColor: #ee4d2d;
                 .key-item, .key-top {
                     display: block;
                     padding: .25rem .875rem;
+                    cursor: pointer;
 
                     &:hover {
                         background-color: #fafafa;

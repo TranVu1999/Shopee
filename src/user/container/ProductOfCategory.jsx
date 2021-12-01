@@ -15,7 +15,6 @@ import ProductSale from './../feature/ProductOfCategory/ProductSale'
 import WidgetControl from '../feature/ProductOfCategory/WidgetControl';
 import WidgetListProduct from '../feature/ProductOfCategory/WidgetListProduct';
 import ProcessingEffect from '../feature/Layout/ProcessingEffect';
-
 // apis
 import productApi from './../../api/productAPI';
 import producCategorytApi from './../../api/productCategoryAPI';
@@ -72,137 +71,14 @@ function ProductOfCategory() {
             image: banner4
         }
     ]);
-
-    const [listBrand] = useState([
-        {
-            id: 1,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/eaf39f8d15c2031626c9470fdfcf253a"
-        },
-        {
-            id: 2,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/8e954b3868fc239c9206c5b2d25e10f9"
-        },
-        {
-            id: 3,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/185aa84b65234679750bc51ce74246da"
-        },
-        {
-            id: 4,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/fed4b97d2e56f102647bb6bccb086d02"
-        },
-        {
-            id: 5,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/1c2bdc665398416e2765c9a9f5b89036"
-        },
-        {
-            id: 6,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/58655e4b2935d4e57044f285769511f0"
-        },
-        {
-            id: 7,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/3b5dad3a6b8b5876aee8da20d94ffc93"
-        },
-        {
-            id: 8,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/ee67615b2871ae017c69e87184c84102"
-        },
-        {
-            id: 9,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/4eb1fd88a044d66267f56fa26be01ea0"
-        },
-        {
-            id: 10,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/6dc92d4dc66896f8a9e05661c0d0ad17"
-        },
-        {
-            id: 11,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/48f200699bf2108b66ad2a3b7d390da9"
-        },
-        {
-            id: 12,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/e071f123aed82dcc2210b301310dc024"
-        },
-        {
-            id: 13,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/b5bef91d5f7c97d6b10e4c37c58506a7"
-        },
-        {
-            id: 14,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/9973b9d111444523bcd4c733c6189f9c"
-        },
-        {
-            id: 15,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/860222879bb7d896286f28cc304f9e38"
-        },
-        {
-            id: 16,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/12d0ad1af373a7a83683b19b62ab3a87"
-        },
-        {
-            id: 17,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/b18eb18b7949c7920dd678e0c10b2854"
-        },
-        {
-            id: 18,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/5ae4a69caf8172da365898519b0d6b17"
-        },
-        {
-            id: 19,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/4eb6275c4a22f7eeb2c5f240ebffdeee"
-        },
-        {
-            id: 20,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/876700b1b6eafffe78e4cfaff78c71a9"
-        },
-        {
-            id: 21,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/ccafb8d6dc732f0c9e9945cd1ccd9c9c"
-        },
-        {
-            id: 22,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/e0affcbe60f935e8a717b1d5da75fb5c"
-        },
-        {
-            id: 23,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/c70052c81ab446213aeb8a1e54711270"
-        },
-        {
-            id: 24,
-            url: "#/",
-            image: "https://cf.shopee.vn/file/c70052c81ab446213aeb8a1e54711270"
-        }
-    ]);
-
-    const [categories, setCategories] = useState([]);
-
-    const [listAddress, setListAddress] = useState([]);
-
-    const [listBrandProduct, setListBrandProduct] = useState([]);
-
-    const [listProduct, setListProduct] = useState([]);
+    
+    const [dataPage, setDataPage] = useState({
+        listProduct: [],
+        amount: 0,
+        listBrand: [],
+        listDeliveryAddresss: [],
+        listCategory: [],
+    });
 
     const [navigationData, setNavigationData] = useState({
        start: 0, 
@@ -210,45 +86,9 @@ function ProductOfCategory() {
     });
 
     // effect
-    useEffect(() => {  
-        setIsLoading(true);
-
-        const fetchData = async ()  => {
-            const [
-                resListDeliveryAddress,
-                resListBrand, 
-                resProductCate
-            ] = await Promise.all([
-                productApi.getDeliveryAddress(prodCateId),
-                productApi.getBrand(prodCateId),
-                producCategorytApi.get(prodCateId, "top-sub-categories")
-            ]);
-
-            setIsLoading(false);
-
-            if(resListDeliveryAddress.success) {
-                setListAddress(resListDeliveryAddress.listAddress);
-            }
-
-            if(resListBrand.success) {
-                setListBrandProduct(resListBrand.listBrand);
-            }
-
-            if(resProductCate.success) {
-                setCategories([...resProductCate.productCategory])
-            }
-            
-        }
-
-        fetchData();
-        
-
-    }, []);
-
     // effect filter product
     useEffect(() => {
         const queryStr = queryString.stringify(filter);
-
         setIsLoading(true);
 
         const fetchData = async ()  => {
@@ -256,7 +96,7 @@ function ProductOfCategory() {
 
             setIsLoading(false);
             if(resProduct.success) {
-                setListProduct(resProduct.listProduct);
+                setDataPage(resProduct.data)
             }
         }
 
@@ -344,7 +184,11 @@ function ProductOfCategory() {
 
         switch(name) {
             case "topCategory":
-                setFilter({...filter, [name]: validate.removeAccents(value.alias)});
+                const data = {
+                    ...filter, 
+                    [name]: validate.removeAccents(value).replace(/\s/g, "-")
+                }
+                setFilter(data);
                 break;
             case "deliveryAddress":
                 let strFormated = validate.formatToUrl(value);
@@ -362,6 +206,29 @@ function ProductOfCategory() {
                 break;
         }
     }
+
+    const onHandleResetFilter = () => {
+        setFilter({
+            category: validate.removeAccents(prodCateAlias),
+            page: 0,
+            topCategory: "",
+            deliveryAddress: "",
+            brand: "",
+            selectType: "popular",
+            sort: "",
+            from: 0,
+            to: 0,
+            limit: 18,
+            search: ""
+        })
+    }
+
+    const {
+        listBrand, 
+        listCategory, 
+        listDeliveryAddresss, 
+        listProduct
+    } = dataPage;
 
     return (
         <div className = "user-page-content list-product-page">
@@ -386,8 +253,9 @@ function ProductOfCategory() {
                                     WidgetProductCategory = {
                                         <WidgetProductCategory 
                                             prodCateSelected = {filter.topCategory}
-                                            categories = {categories}
+                                            categories = {listCategory}
                                             onChoseCategory = {onHandleFilter}
+                                            title = ""
                                         />
                                     }
                                     WidgetSalerooms = {
@@ -395,7 +263,7 @@ function ProductOfCategory() {
                                             identification = "deliveryAddress"
                                             itemSelected = {filter.deliveryAddress}
                                             onChose = {onHandleFilter}
-                                            items = {listAddress} 
+                                            items = {listDeliveryAddresss} 
                                             maxLength = {4}
                                         />
                                     }
@@ -404,12 +272,13 @@ function ProductOfCategory() {
                                             itemSelected = {filter.brand}
                                             identification = "brand"
                                             onChose = {onHandleFilter}
-                                            items = {listBrandProduct} 
+                                            items = {listBrand} 
                                             maxLength = {4}
                                         />
                                     }
                                     WidgetRating = {<WidgetRating/>}
                                     WidgetPrice = {<WidgetPrice/>}
+                                    onResetFilter = {onHandleResetFilter}
 
                                 >
                             </SideBar>

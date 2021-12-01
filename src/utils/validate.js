@@ -8,6 +8,7 @@ const validate = {
         return re.test(str);
     },
     removeAccents: (str) => {
+      if(str) {
         var AccentsMap = [
           "aàảãáạăằẳẵắặâầẩẫấậ",
           "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
@@ -28,6 +29,8 @@ const validate = {
           var char = AccentsMap[i][0];
           str = str.replace(re, char);
         }
+      }
+        
         return str;
     },
     formatToUrl: str => {

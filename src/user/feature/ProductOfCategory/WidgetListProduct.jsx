@@ -88,7 +88,8 @@ function WidgetListProduct(props) {
                     discount, 
                     title, 
                     price,
-                    numOrder
+                    numOrder,
+                    deliveryAddress
                 } = prod;
     
                 return (
@@ -139,7 +140,7 @@ function WidgetListProduct(props) {
                         </div>
     
                         <div className="text-right delivery-address">
-                            TP. Hồ Chí Minh
+                            {deliveryAddress.province}
                         </div>
                     </div>
                     </ProductBox>

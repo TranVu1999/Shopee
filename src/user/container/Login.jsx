@@ -55,7 +55,10 @@ function Login(props) {
                 })
             }else{
                 try{
-                    const res = await authAPI.login(data);
+                    const res = await authAPI.login({
+                        userLogin: data.email,
+                        password: data.password
+                    });
         
                     if(res.success){
                         localStorage.setItem("accessToken", res.accessToken);
