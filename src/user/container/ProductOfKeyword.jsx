@@ -66,7 +66,7 @@ function ProductOfKeyword() {
             case "topCategory":
                 const data = {
                     ...filter, 
-                    [name]: validate.removeAccents(value).replace(/\s/g, "-")
+                    [name]: validate.removeAccents(value).replace(/\s/g, "-").toLowerCase()
                 }
                 setFilter(data);
                 break;
@@ -108,6 +108,7 @@ function ProductOfKeyword() {
         listDeliveryAddresss, 
         listProduct
     } = dataPage;
+    const keysearchNormally = keysearch.replace(/-/g, " ");
 
     return (
         <div className = "product-of-keysearch-page list-product-page">
@@ -152,8 +153,8 @@ function ProductOfKeyword() {
 
                         <div className="col-lg-10">
                             <div className="pl-4 list-product-right">
-                                <Shop/>
-                                <Keysearch/>
+                                <Shop keysearch = {keysearchNormally}/>
+                                <Keysearch keysearch = {keysearchNormally}/>
                                 <WidgetControl/>  
                                 <WidgetListProduct items = {listProduct}/>                              
                             </div>

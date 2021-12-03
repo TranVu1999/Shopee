@@ -298,8 +298,13 @@ function ProductDetail() {
         if(classifyProduct) {
             const {first, second} = classifyProduct.classifies;
 
-            if(first && second) {
+            if(first.title && second.title) {
                 if(!classification.first || !classification.second) {
+                    setAddToCartNotify("Vui lòng chọn phân loại sản phẩm");
+                    return;
+                }
+            } else if(first.title && !second.title) {
+                if(!classification.first) {
                     setAddToCartNotify("Vui lòng chọn phân loại sản phẩm");
                     return;
                 }

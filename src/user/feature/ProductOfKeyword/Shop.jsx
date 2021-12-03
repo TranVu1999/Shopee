@@ -12,14 +12,15 @@ import {
 } from './../../../asset/icon';
 
 Shop.propTypes = {
-    
+    keysearch: PropTypes.string.isRequired,
 };
 
-function Shop(props) {
+function Shop({keysearch}) {
+
     return (
         <div className = "Widget-shop">
             <div className="d-flex align-items-center justify-content-between title">
-                <p>Shop liên quan đến "<b>thời trang nữ</b>"</p>
+                <p>Shop liên quan đến <b>"{keysearch}"</b></p>
                 <a className="d-flex align-items-center" href="#/">Thêm Kết Quả {arrowRightIcon}</a>
             </div>
 

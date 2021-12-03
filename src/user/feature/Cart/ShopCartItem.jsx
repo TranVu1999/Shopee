@@ -348,7 +348,7 @@ function ShopCartItem({cart}) {
                 </div>
             </>);
 
-            if(second) {
+            if(second.title) {
                 elm.push(<>
                     <p>{second.title}:</p>
     

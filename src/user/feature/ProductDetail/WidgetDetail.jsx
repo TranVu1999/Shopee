@@ -342,7 +342,6 @@ function WidgetDetail({
         if(tempNumber > 0 && tempNumber < 50) {
             setNumber(tempNumber);
         }
-        
     }
 
     // render
@@ -370,18 +369,15 @@ function WidgetDetail({
     const renderClassifications = () => {
         const {classification} = product;
         if(classification) {
-            const firstClassifications = classification.classifies.first.types;
-            const secondClassifications = classification.classifies.second.types;
+            const firstClassifications = classification.classifies.first;
+            const secondClassifications = classification.classifies.second;
 
             return <WidgetClassify>
                 <Row>
-                    <Label>Màu sắc</Label>
+                    <Label>{firstClassifications.title}</Label>
                     <WidgetButton>
-                        {firstClassifications.map(item => {
+                        {firstClassifications.types.map(item => {
                             const {label} = item;
-
-                            console.log({label})
-                            console.log({firstClassification})
                             return <button
                                 key = {label}
                                 onClick = {() => handleChoseClassification({
@@ -401,10 +397,10 @@ function WidgetDetail({
                     
                 </Row>
 
-                <Row className="mb-3">
-                    <Label>Size</Label>
+                {secondClassifications.title && <Row className="mb-3">
+                    <Label>{firstClassifications.title}</Label>
                     <WidgetButton>
-                        {secondClassifications.map(item => {
+                        {secondClassifications.types.map(item => {
                             const {label} = item;
                             return <button 
                                 key = {label}
@@ -423,7 +419,8 @@ function WidgetDetail({
                         
                     </WidgetButton>
                     
-                </Row>
+                </Row>}
+                
 
 
                 {addToCartNotify && <Row>
@@ -438,11 +435,21 @@ function WidgetDetail({
         const {classification, inventory} = product;
 
         if(classification) {
-            if(firstClassification && secondClassification) {
+            const {first, second} = classification.classifies;
+            console.log({first})
+
+            if(first.title && second.title && firstClassification && secondClassification) {
                 const {tablePrice} = classification;
                 for(let row of tablePrice) {
                     if(row.firstClassifyName === firstClassification && 
                     row.secondClassifyName === secondClassification) {
+                        return row.inventory;
+                    }
+                }
+            }else if(first.title && !second.title && firstClassification && !secondClassification){
+                const {tablePrice} = classification;
+                for(let row of tablePrice) {
+                    if(row.firstClassifyName === firstClassification) {
                         return row.inventory;
                     }
                 }
